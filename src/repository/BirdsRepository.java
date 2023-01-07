@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Formatter;
 
 import constants.MyValues;
 import domains.Bird;
@@ -50,7 +53,6 @@ public class BirdsRepository {
 					+"FOREIGN KEY (PostureId) REFERENCES POSTURE (id))";
 		
 			stmt.executeUpdate(sql);
-//			System.out.println("Sql: " + sql);
 			System.out.println("Table BIRDS Created.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,7 +66,6 @@ public class BirdsRepository {
 			Statement stmt = con.createStatement();
 			String sql = "DROP TABLE IF EXISTS BIRDS CASCADE";	
 			stmt.executeUpdate(sql);
-//			System.out.println("Sql: "+sql);
 			System.out.println("Table BIRDS Droped.");
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -86,7 +87,6 @@ public class BirdsRepository {
 					System.out.println("Get Bird: " + rs.getInt(1));
 					Bird b = new Bird();
 					b.setId(rs.getInt(1));
-//					b.setNrBreeder(rs.getString(2));
 					b.setNrBreeder(breederRepository.getBreederbyId(2));
 					b.setBand(rs.getString(3));
 					b.setYear(rs.getInt(4));
@@ -123,14 +123,14 @@ public class BirdsRepository {
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy");
-			Date entryDate = sdfDate.parse(sdf.format(bird.getEntryDate()));
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String dateString = dateFormat.format(bird.getEntryDate());
+
 			
 			String sql = "INSERT INTO "
 					+ "BIRDS(Breeder,Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,State,Sex,Father,Mother,SpeciesId,MutationsId,CageId,BreederId,PostureId) "
 					+ "values('" + bird.getNrBreeder().getId() + "','" + bird.getBand() + "','" + bird.getYear() + "','"
-					+ entryDate + "','" + bird.getEntryType() + "','" + bird.getBuyPrice() + "','"
+					+ dateString + "','" + bird.getEntryType() + "','" + bird.getBuyPrice() + "','"
 					+ bird.getSellPrice() + "','" + bird.getStatel() + "','" + bird.getSex() + "','" + bird.getFather()
 					+ "','" + bird.getMother() + "','" + bird.getSpecies() + "','" + bird.getMutations() + "','"
 					+ bird.getCage() + "','" + bird.getBreeder() + "','" + bird.getPosture() + "')";

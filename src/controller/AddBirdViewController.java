@@ -11,7 +11,9 @@ import repository.BreederRepository;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
@@ -70,18 +72,8 @@ public class AddBirdViewController implements Initializable {
 	
 	
 	
-	
-	
 	@FXML
 	public void btnAdd(ActionEvent event) {
-//		if (!tfNrCriador.getText().matches("^[0-9]*$")) {
-//			tfNrCriador.setStyle("-fx-border-color: red; -fx-border-width:2px;");
-//			LabelError.setText("O numero de criador deve ser preenchido apenas com numeros");
-//		}else{
-//			tfNrCriador.setStyle(null);
-//			LabelError.setText(null);
-//		}
-		
 		boolean validate=validate();
 		if(validate) {
 			String anilha =CbCriador.getValue().getStam()+"-"+TfAno.getText()+"-"+TfNumero.getText() ;
@@ -89,8 +81,8 @@ public class AddBirdViewController implements Initializable {
 			bird.setNrBreeder(CbCriador.getValue());
 			bird.setBand(anilha);
 			bird.setYear(Integer.parseInt(TfAno.getText()));
+			bird.setEntryDate(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 	//		bird.setEntryType(TfEntryType.getText());
-	//		bird.setEntryDate(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 	//		bird.setBuyPrice(Double.parseDouble(TfBuyPrice.getText()));
 	//		bird.setSellPrice(Double.parseDouble(TfSellPrice.getText()));
 	//		bird.setStatel(TfState.getText());
@@ -146,7 +138,7 @@ public class AddBirdViewController implements Initializable {
 		if (validate) {
 			try {
 				DfDataEntrada.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-				TfNumero.setStyle(null);
+				DfDataEntrada.setStyle(null);
 				LabelError.setStyle("");
 				validate=true;
 			} catch (Exception e) {
