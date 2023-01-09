@@ -27,46 +27,75 @@ public class Specie {
 	}
 
 
-	public String getCommonName() {
-		return CommonName;
-	}
-	public void setCommonName(String commonName) {
-		CommonName = commonName;
-	}
-	public String getScientificName() {
-		return ScientificName;
-	}
-	public void setScientificName(String scientificName) {
-		ScientificName = scientificName;
-	}
-	public Integer getIncubationDays() {
-		return IncubationDays;
-	}
-	public void setIncubationDays(Integer incubationDays) {
-		IncubationDays = incubationDays;
-	}
-	public Integer getDaysToBand() {
-		return DaysToBand;
-	}
-	public void setDaysToBand(Integer daysToBand) {
-		DaysToBand = daysToBand;
-	}
-	public Integer getOutofCageAfterDays() {
-		return OutofCageAfterDays;
-	}
-	public void setOutofCageAfterDays(Integer outofCageAfterDays) {
-		OutofCageAfterDays = outofCageAfterDays;
-	}
-	public Integer getMaturityAfterDays() {
-		return MaturityAfterDays;
-	}
-	public void setMaturityAfterDays(Integer maturityAfterDays) {
-		MaturityAfterDays = maturityAfterDays;
-	}
 	public Integer getId() {
 		return Id;
 	}
+
+
 	public void setId(Integer id) {
 		Id = id;
 	}
+
+
+	public String getCommonName() {
+		return CommonName;
+	}
+
+
+	public void setCommonName(String commonName) {
+		CommonName = commonName;
+	}
+
+
+	public String getScientificName() {
+		return ScientificName;
+	}
+
+
+	public void setScientificName(String scientificName) {
+		ScientificName = scientificName;
+	}
+
+
+	public Integer getIncubationDays() {
+		return IncubationDays;
+	}
+
+
+	public void setIncubationDays(Integer incubationDays) {
+		IncubationDays = incubationDays;
+	}
+
+
+	public Integer getDaysToBand() {
+		return DaysToBand;
+	}
+
+
+	public void setDaysToBand(Integer daysToBand) {
+		DaysToBand = daysToBand;
+	}
+
+
+	public Integer getOutofCageAfterDays() {
+		return OutofCageAfterDays;
+	}
+
+
+	public void setOutofCageAfterDays(Integer outofCageAfterDays) {
+		OutofCageAfterDays = outofCageAfterDays;
+	}
+
+
+	public Integer getMaturityAfterDays() {
+		return MaturityAfterDays;
+	}
+
+
+	public void setMaturityAfterDays(Integer maturityAfterDays) {
+		MaturityAfterDays = maturityAfterDays;
+	}
+
+
+
 }
