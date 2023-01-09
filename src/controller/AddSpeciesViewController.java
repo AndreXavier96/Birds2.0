@@ -39,8 +39,7 @@ public class AddSpeciesViewController {
 	private TextField TfTimeOutOfCage;
 	@FXML
 	private TextField TfMaturityAfterDays;
-	@FXML
-	private ComboBox<Mutation>CbMutation;
+	
 	
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
 

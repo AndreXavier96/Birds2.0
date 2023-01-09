@@ -2,11 +2,18 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 import constants.MyValues;
+import domains.Mutation;
+import domains.Specie;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class MutationsRepository {
+	
+	private SpeciesRepository speciesRepository = new SpeciesRepository();
 	
 	public void CreateTableMutations() {
 		try {
@@ -16,8 +23,9 @@ public class MutationsRepository {
 			String sql = "CREATE TABLE IF NOT EXISTS MUTATIONS"
 					+" (id INTEGER auto_increment, "
 					+"Name VARCHAR(255) NOT NULL, "
-					+"Type VARCHAR(255) NOT NULL, "
-					+"Symbol INTEGER NOT NULL, "
+					+"Type VARCHAR(255), "
+					+"Symbol VARCHAR(10), "
+					+"Observations VARCHAR(500), "
 					+"SpeciesId INTEGER NOT NULL, "
 					+"PRIMARY KEY (id), "
 					+"FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id))";
@@ -44,4 +52,51 @@ public class MutationsRepository {
 			e.printStackTrace();
 		}
 	}
+	
+	public void Insert(Mutation mutation) {
+		try {
+			System.out.println("Insert Mutation in DataBase...");
+			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			
+			String sql = "INSERT INTO "
+					+"MUTATIONS(Name,Type,Symbol,Observations,SpeciesId) "
+					+"values('"+mutation.getName()+"','"+mutation.getType()+"','"
+					+mutation.getSymbol()+"','"+mutation.getObservation()
+					+"','"+mutation.getSpecie().getId()+"')";
+			int i = stmt.executeUpdate(sql);
+			System.out.println(i+" Mutation Record inserted");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public ObservableList<Mutation> getAllMutations() {
+		try {
+			System.out.println("Getting all Mutations...");
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
+					MyValues.USER, MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM MUTATIONS";
+			ResultSet rs = stmt.executeQuery(sql);
+			ObservableList<Mutation> mutations = FXCollections.observableArrayList();
+			while (rs.next()) {
+				System.out.println("Get Mutations: " + rs.getInt(1));
+				Mutation m = new Mutation();
+				m.setId(rs.getInt(1));
+				m.setName(rs.getString(2));
+				m.setType(rs.getString(3));
+				m.setSymbol(rs.getString(4));
+				m.setObservation(rs.getString(5));
+				m.setSpecie(speciesRepository.getSpecieById(rs.getInt(6)));
+				mutations.add(m);
+			}
+			return mutations;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }
