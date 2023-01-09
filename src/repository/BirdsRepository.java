@@ -94,7 +94,7 @@ public class BirdsRepository {
 					b.setEntryType(rs.getString(6));
 					b.setBuyPrice(rs.getDouble(7));
 					b.setSellPrice(rs.getDouble(8));
-					b.setStatel(rs.getString(9));
+					b.setState(rs.getString(9));
 					b.setSex(rs.getString(10));
 //					b.setFather(rs.getInt(11));
 					b.setFather(getBird(rs.getInt(11)));
@@ -131,7 +131,7 @@ public class BirdsRepository {
 					+ "BIRDS(Breeder,Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,State,Sex,Father,Mother,SpeciesId,MutationsId,CageId,BreederId,PostureId) "
 					+ "values('" + bird.getNrBreeder().getId() + "','" + bird.getBand() + "','" + bird.getYear() + "','"
 					+ dateString + "','" + bird.getEntryType() + "','" + bird.getBuyPrice() + "','"
-					+ bird.getSellPrice() + "','" + bird.getStatel() + "','" + bird.getSex() + "','" + bird.getFather()
+					+ bird.getSellPrice() + "','" + bird.getState() + "','" + bird.getSex() + "','" + bird.getFather()
 					+ "','" + bird.getMother() + "','" + bird.getSpecies() + "','" + bird.getMutations() + "','"
 					+ bird.getCage() + "','" + bird.getBreeder() + "','" + bird.getPosture() + "')";
 			int i = stmt.executeUpdate(sql);

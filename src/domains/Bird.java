@@ -11,7 +11,7 @@ public class Bird {
 	private String EntryType;
 	private Double BuyPrice;
 	private Double SellPrice;
-	private String Statel;
+	private String State;
 	private String Sex;
 	private Bird Father;
 	private Bird Mother;
@@ -24,7 +24,7 @@ public class Bird {
 	
 
 	public Bird(Integer id, domains.Breeder nrBreeder, String band, Integer year, Date entryDate, String entryType,
-			Double buyPrice, Double sellPrice, String statel, String sex, Bird father, Bird mother, Integer species,
+			Double buyPrice, Double sellPrice, String state, String sex, Bird father, Bird mother, Integer species,
 			Integer mutations, domains.Cage cage, Integer breeder, Integer posture) {
 		super();
 		this.id = id;
@@ -35,7 +35,7 @@ public class Bird {
 		EntryType = entryType;
 		BuyPrice = buyPrice;
 		SellPrice = sellPrice;
-		Statel = statel;
+		State = state;
 		Sex = sex;
 		Father = father;
 		Mother = mother;
@@ -114,12 +114,12 @@ public class Bird {
 		SellPrice = sellPrice;
 	}
 
-	public String getStatel() {
-		return Statel;
+	public String getState() {
+		return State;
 	}
 
-	public void setStatel(String statel) {
-		Statel = statel;
+	public void setState(String state) {
+		State = state;
 	}
 
 	public String getSex() {
@@ -190,7 +190,7 @@ public class Bird {
 	public String toString() {
 		return "Bird [id=" + id + ", NrBreeder=" + NrBreeder + ", Band=" + Band + ", Year=" + Year + ", EntryDate="
 				+ EntryDate + ", EntryType=" + EntryType + ", BuyPrice=" + BuyPrice + ", SellPrice=" + SellPrice
-				+ ", Statel=" + Statel + ", Sex=" + Sex + ", Father=" + Father + ", Mother=" + Mother + ", Species="
+				+ ", State=" + State + ", Sex=" + Sex + ", Father=" + Father + ", Mother=" + Mother + ", Species="
 				+ Species + ", Mutations=" + Mutations + ", Cage=" + Cage + ", Breeder=" + Breeder + ", Posture="
 				+ Posture + "]";
 	}
