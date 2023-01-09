@@ -49,8 +49,6 @@ public class AddBirdViewController implements Initializable {
 	@FXML
 	private DatePicker DfDataEntrada;
 	
-	
-	
 	@FXML
 	private TextField TfBreeder,TfPosture;
 	
@@ -197,9 +195,9 @@ public class AddBirdViewController implements Initializable {
 				}
 		
 		if (validate)
-				if (!TfSellPrice.getText().matches("^[+]?[0-9]*[.]?[0-9]+$")) {
+				if (!TfSellPrice.getText().matches("^[+]?[0-9]*[.]?[0-9]+$|^$")) {
 					TfSellPrice.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelError.setText("Preco venda tem de ser escolhido");
+					LabelError.setText("Preco venda tem formato incorreto");
 					validate=false;
 				}else {
 					TfSellPrice.setStyle(null);

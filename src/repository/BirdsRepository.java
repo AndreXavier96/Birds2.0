@@ -135,7 +135,7 @@ public class BirdsRepository {
 					+ "','" + bird.getMother() + "','" + bird.getSpecies() + "','" + bird.getMutations() + "','"
 					+ bird.getCage() + "','" + bird.getBreeder() + "','" + bird.getPosture() + "')";
 			int i = stmt.executeUpdate(sql);
-			System.out.println(i+" Record inserted");
+			System.out.println(i+" Bird Record inserted");
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -148,9 +148,8 @@ public class BirdsRepository {
 			String sql = "SELECT * FROM BIRDS WHERE BIRDS.id='"+id+"'";
 			ResultSet rs  = stmt.executeQuery(sql);
 			Bird b = new Bird();
-			while (rs.next()) {
+			while (rs.next())
 				b.setId(rs.getInt(0));
-			}
 			return b;
 		} catch (Exception e) {
 			e.printStackTrace();

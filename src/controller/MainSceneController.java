@@ -81,6 +81,19 @@ public class MainSceneController {
 	}
 	
 	@FXML
+	public void btnAddSpecies(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/AddSpeciesView.fxml").toUri().toURL());
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	private void btnCreateDB(ActionEvent event) {
 		dataBaseOperationsRepository.CreateDataBase(MyValues.DBNAME);
 	}
@@ -109,4 +122,16 @@ public class MainSceneController {
 	    return directoryToBeDeleted.delete();
 	}
 	
+	@FXML
+	public void btnViewAllSpecies(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/ViewAllSpecies.fxml").toUri().toURL());
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
