@@ -3,6 +3,7 @@ package repository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import constants.MyValues;
@@ -97,6 +98,45 @@ public class MutationsRepository {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	
+	public ObservableList<Mutation> getMutationsBySpecie(int id) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM MUTATIONS WHERE SpeciesId="+id+";";
+		ResultSet rs = stmt.executeQuery(sql);
+		ObservableList<Mutation> mutations = FXCollections.observableArrayList();
+		while (rs.next()) {
+			Mutation m = new Mutation();
+			System.out.println("Get Mutation: "+rs.getInt(1));
+			m.setId(rs.getInt(1));
+			m.setName(rs.getString(2));
+			m.setType(rs.getString(3));
+			m.setSymbol(rs.getString(4));
+			m.setObservation(rs.getString(5));
+			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(6)));
+			mutations.add(m);
+		}
+		return mutations;
+	}
+	
+	public Mutation getMutationsById(int id) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM MUTATIONS WHERE id="+id+";";
+		ResultSet rs = stmt.executeQuery(sql);
+		Mutation m = new Mutation();
+		while (rs.next()) {
+			System.out.println("Get Mutation: "+rs.getInt(1));
+			m.setId(rs.getInt(1));
+			m.setName(rs.getString(2));
+			m.setType(rs.getString(3));
+			m.setSymbol(rs.getString(4));
+			m.setObservation(rs.getString(5));
+			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(6)));
+		}
+		return m;
 	}
 	
 }

@@ -54,7 +54,7 @@
       <ComboBox fx:id="CbFather" layoutX="198.0" layoutY="259.0" prefWidth="150.0" promptText="Select" />
       <ComboBox fx:id="CbMother" layoutX="359.0" layoutY="259.0" prefWidth="150.0" promptText="Select" />
       <ComboBox fx:id="CbSpecies" layoutX="35.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
-      <ComboBox fx:id="CbMutation" layoutX="195.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
+      <ComboBox fx:id="CbMutation" disable="true" layoutX="195.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
       <ComboBox fx:id="CbCage" layoutX="359.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
       
    </children>
