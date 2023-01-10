@@ -161,7 +161,18 @@ public class MainSceneController {
 		}
 	}
 	
-	
+	@FXML
+	public void btnAddCage(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/AddCageView.fxml").toUri().toURL());
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 }
