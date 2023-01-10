@@ -15,8 +15,8 @@ public class Bird {
 	private String Sex;
 	private Bird Father;
 	private Bird Mother;
-	private Integer Species;
-	private Integer Mutations;
+	private Specie Species;
+	private Mutation Mutations;
 	private Cage Cage;
 	private Integer Breeder;
 	private Integer Posture;
@@ -24,8 +24,8 @@ public class Bird {
 	
 
 	public Bird(Integer id, domains.Breeder nrBreeder, String band, Integer year, Date entryDate, String entryType,
-			Double buyPrice, Double sellPrice, String state, String sex, Bird father, Bird mother, Integer species,
-			Integer mutations, domains.Cage cage, Integer breeder, Integer posture) {
+			Double buyPrice, Double sellPrice, String state, String sex, Bird father, Bird mother, Specie species,
+			Mutation mutations, domains.Cage cage, Integer breeder, Integer posture) {
 		super();
 		this.id = id;
 		NrBreeder = nrBreeder;
@@ -146,19 +146,19 @@ public class Bird {
 		Mother = mother;
 	}
 
-	public Integer getSpecies() {
+	public Specie getSpecies() {
 		return Species;
 	}
 
-	public void setSpecies(Integer species) {
+	public void setSpecies(Specie species) {
 		Species = species;
 	}
 
-	public Integer getMutations() {
+	public Mutation getMutations() {
 		return Mutations;
 	}
 
-	public void setMutations(Integer mutations) {
+	public void setMutations(Mutation mutations) {
 		Mutations = mutations;
 	}
 

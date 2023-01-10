@@ -19,6 +19,8 @@ public class BirdsRepository {
 	
 	private CageRepository cageRepository =  new CageRepository();
 	private BreederRepository breederRepository = new BreederRepository();
+	private SpeciesRepository speciesRepository = new SpeciesRepository();
+	private MutationsRepository mutationsRepository = new MutationsRepository();
 	
 	public void CreateTableBird() {
 		try {
@@ -100,8 +102,8 @@ public class BirdsRepository {
 					b.setFather(getBird(rs.getInt(11)));
 //					b.setMother(rs.getInt(12));
 					b.setMother(getBird(rs.getInt(12)));
-					b.setSpecies(rs.getInt(13));
-					b.setMutations(rs.getInt(14));
+					b.setSpecies(speciesRepository.getSpecieById(rs.getInt(13)));
+					b.setMutations(mutationsRepository.getMutationsById(rs.getInt(14)));
 //					b.setCage(rs.getInt(15));
 					b.setCage(cageRepository.getCage(rs.getInt(15)));
 					b.setBreeder(rs.getInt(16));

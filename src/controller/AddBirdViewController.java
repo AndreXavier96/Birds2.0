@@ -8,9 +8,12 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import repository.BirdsRepository;
 import repository.BreederRepository;
+import repository.MutationsRepository;
+import repository.SpeciesRepository;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -21,6 +24,8 @@ import java.util.ResourceBundle;
 import constants.MyValues;
 import domains.Bird;
 import domains.Breeder;
+import domains.Mutation;
+import domains.Specie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,7 +46,13 @@ public class AddBirdViewController implements Initializable {
 	private ComboBox<Breeder> CbCriador;
 	
 	@FXML
-	private ComboBox<String> CbEntryType, CbState, CbSex, CbFather, CbMother, CbSpecies, CbMutation, CbCage;
+	private ComboBox<Specie> CbSpecies;
+	
+	@FXML
+	private ComboBox<Mutation> CbMutation;
+	
+	@FXML
+	private ComboBox<String> CbEntryType, CbState, CbSex, CbFather, CbMother, CbCage;
 
 	@FXML
 	private TextField TfAno, TfNumero, TfBuyPrice, TfSellPrice;
@@ -58,6 +69,8 @@ public class AddBirdViewController implements Initializable {
 	
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	private BreederRepository breederRepository = new BreederRepository();
+	private SpeciesRepository speciesRepository = new SpeciesRepository();
+	private MutationsRepository mutationsRepository = new MutationsRepository();
 	
 	private ObservableList<String> entryTypeList = FXCollections.observableArrayList("Compra","Nascimento");
 	private ObservableList<String> stateList = FXCollections.observableArrayList("Vivo","Morto","Vendido");
@@ -65,7 +78,6 @@ public class AddBirdViewController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-//		CbCriador.setItems(null);
 		CbCriador.setItems(breederRepository.getAllBreeders());
 		CbCriador.setConverter(new StringConverter<Breeder>() {
 			 public String toString(Breeder b) {
@@ -89,6 +101,33 @@ public class AddBirdViewController implements Initializable {
 		    });
 		CbState.setItems(stateList);
 		CbSex.setItems(sexList);
+		CbSpecies.setItems(speciesRepository.getAllSpecies());
+		CbSpecies.setConverter(new StringConverter<Specie>() {
+			public String toString(Specie s) {
+				return s.getCommonName();
+			}
+			public Specie fromString(String s) {
+				return CbSpecies.getItems().stream().filter(b -> b.getCommonName().equals(s)).findFirst().orElse(null);
+			}
+		});
+		CbSpecies.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null) {
+		        try {
+					CbMutation.setItems(mutationsRepository.getMutationsBySpecie(newValue.getId()));
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		        CbMutation.setDisable(false);
+		        CbMutation.setConverter(new StringConverter<Mutation>() {
+		            public String toString(Mutation m) {
+		                return m.getName();
+		            }
+		            public Mutation fromString(String s) {
+		                return CbMutation.getItems().stream().filter(b -> b.getName().equals(s)).findFirst().orElse(null);
+		            }
+		        });
+		    }
+		});
 		
 	}
 	
@@ -111,8 +150,8 @@ public class AddBirdViewController implements Initializable {
 			bird.setSex(CbSex.getValue());
 	//		bird.setFather(birdsRepository.getBird(Integer.parseInt(TfFather.getText())));
 	//		bird.setMother(birdsRepository.getBird(Integer.parseInt(TfMother.getText())));
-	//		bird.setSpecies(Integer.parseInt(TfSpecie.getText()));
-	//		bird.setMutations(Integer.parseInt(TfMutation.getText()));
+			bird.setSpecies(CbSpecies.getValue());
+			bird.setMutations(CbMutation.getValue());
 	//		bird.setCage(cageRepository.getCage(Integer.parseInt(TfCage.getText())));
 	//		bird.setBreeder(Integer.parseInt(TfBreeder.getText()));
 	//		bird.setPosture(Integer.parseInt(TfPosture.getText()));
