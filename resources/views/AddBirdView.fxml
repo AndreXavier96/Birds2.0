@@ -26,7 +26,6 @@
       <Label fx:id="LabelError" layoutX="34.0" layoutY="42.0" prefHeight="17.0" prefWidth="471.0" textAlignment="CENTER" textFill="RED" />
       <Label layoutX="36.0" layoutY="140.0" text="Data Entrada" />
       <Label layoutX="356.0" layoutY="140.0" text="Tipo Entrada" />
-      <Label layoutX="33.0" layoutY="192.0" text="Preco Compra" />
       <Label layoutX="193.0" layoutY="192.0" text="Preco Venda" />
       <Label layoutX="359.0" layoutY="192.0" text="Estado" />
       <Label layoutX="38.0" layoutY="245.0" text="Sexo" />
@@ -39,22 +38,24 @@
       <Label layoutX="300.0" layoutY="337.0" text="Ninhada/Posturas" />
       <TextField fx:id="TfAno" layoutX="198.0" layoutY="102.0" />
       <TextField fx:id="TfNumero" layoutX="359.0" layoutY="102.0" />
-      <TextField fx:id="TfEntryType" layoutX="359.0" layoutY="157.0" />
-      <DatePicker fx:id="DfDataEntrada" layoutX="36.0" layoutY="157.0"  />
-      <TextField fx:id="TfBuyPrice" layoutX="35.0" layoutY="209.0" />
+      <DatePicker fx:id="DfDataEntrada" layoutX="36.0" layoutY="157.0" />
+      <ComboBox fx:id="CbEntryType" layoutX="359.0" layoutY="157.0" prefWidth="150.0" promptText="Select" />
+      <TextField fx:id="TfBuyPrice" layoutX="35.0" layoutY="209.0" visible="false" />
       <TextField fx:id="TfSellPrice" layoutX="198.0" layoutY="209.0" />
-      <TextField fx:id="TfState" layoutX="359.0" layoutY="209.0" />
-      <TextField fx:id="TfSex" layoutX="35.0" layoutY="259.0" />
-      <TextField fx:id="TfFather" layoutX="193.0" layoutY="259.0" />
-      <TextField fx:id="TfMother" layoutX="359.0" layoutY="259.0" />
-      <TextField fx:id="TfSpecie" layoutX="34.0" layoutY="309.0" />
-      <TextField fx:id="TfMutation" layoutX="198.0" layoutY="309.0" />
-      <TextField fx:id="TfCage" layoutX="359.0" layoutY="309.0" />
       <TextField fx:id="TfBreeder" layoutX="109.0" layoutY="365.0" />
       <TextField fx:id="TfPosture" layoutX="293.0" layoutY="353.0" />
       
       <Button layoutX="505.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Add" />
       <Button layoutX="11.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Back" />
       <ComboBox fx:id="CbCriador" layoutX="38.0" layoutY="102.0" prefWidth="150.0" promptText="Select" />
+      <Label fx:id="labelTfBuyPrice" layoutX="33.0" layoutY="192.0" text="Preco Compra" visible="false" />
+      <ComboBox fx:id="CbState" layoutX="359.0" layoutY="209.0" prefWidth="150.0" promptText="Select" />
+      <ComboBox fx:id="CbSex" layoutX="38.0" layoutY="259.0" prefWidth="150.0" promptText="Select" />
+      <ComboBox fx:id="CbFather" layoutX="198.0" layoutY="259.0" prefWidth="150.0" promptText="Select" />
+      <ComboBox fx:id="CbMother" layoutX="359.0" layoutY="259.0" prefWidth="150.0" promptText="Select" />
+      <ComboBox fx:id="CbSpecies" layoutX="35.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
+      <ComboBox fx:id="CbMutation" layoutX="195.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
+      <ComboBox fx:id="CbCage" layoutX="359.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
+      
    </children>
 </AnchorPane>

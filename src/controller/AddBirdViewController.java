@@ -13,12 +13,16 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
 import domains.Bird;
 import domains.Breeder;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -37,26 +41,31 @@ public class AddBirdViewController implements Initializable {
 	private ComboBox<Breeder> CbCriador;
 	
 	@FXML
-	private TextField TfAno, TfNumero, TfEntryType,TfBuyPrice;
-	
+	private ComboBox<String> CbEntryType, CbState, CbSex, CbFather, CbMother, CbSpecies, CbMutation, CbCage;
+
 	@FXML
-	private TextField TfSellPrice,TfState,TfSex,TfFather,TfMother,TfSpecie;
-	
-	@FXML
-	private TextField TfMutation,TfCage,TfBreeder,TfPosture;
+	private TextField TfAno, TfNumero, TfBuyPrice, TfSellPrice;
 	
 	@FXML
 	private DatePicker DfDataEntrada;
 	
 	@FXML
-	private Label LabelAnilha, LabelError;
+	private TextField TfBreeder,TfPosture;
+	
+	
+	@FXML
+	private Label LabelAnilha, LabelError, labelTfBuyPrice;
 	
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	private BreederRepository breederRepository = new BreederRepository();
 	
+	private ObservableList<String> entryTypeList = FXCollections.observableArrayList("Compra","Nascimento");
+	private ObservableList<String> stateList = FXCollections.observableArrayList("Vivo","Morto","Vendido");
+	private ObservableList<String> sexList = FXCollections.observableArrayList("Femea","Macho");
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		CbCriador.setItems(null);
+//		CbCriador.setItems(null);
 		CbCriador.setItems(breederRepository.getAllBreeders());
 		CbCriador.setConverter(new StringConverter<Breeder>() {
 			 public String toString(Breeder b) {
@@ -68,6 +77,19 @@ public class AddBirdViewController implements Initializable {
 			 }
 			 
 		});
+		CbEntryType.setItems(entryTypeList);
+		CbEntryType.valueProperty().addListener((observable, oldValue, newValue) -> {
+		      if (entryTypeList.get(0).equals(newValue)) {
+		    	  TfBuyPrice.setVisible(true);
+		    	  labelTfBuyPrice.setVisible(true);
+		      } else {
+		    	  TfBuyPrice.setVisible(false);
+		    	  labelTfBuyPrice.setVisible(false);
+		      }
+		    });
+		CbState.setItems(stateList);
+		CbSex.setItems(sexList);
+		
 	}
 	
 	
@@ -82,11 +104,11 @@ public class AddBirdViewController implements Initializable {
 			bird.setBand(anilha);
 			bird.setYear(Integer.parseInt(TfAno.getText()));
 			bird.setEntryDate(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-	//		bird.setEntryType(TfEntryType.getText());
-	//		bird.setBuyPrice(Double.parseDouble(TfBuyPrice.getText()));
-	//		bird.setSellPrice(Double.parseDouble(TfSellPrice.getText()));
-	//		bird.setStatel(TfState.getText());
-	//		bird.setSex(TfSex.getText());
+			bird.setEntryType(CbEntryType.getValue().toString());
+			bird.setBuyPrice(Double.parseDouble(TfBuyPrice.getText()));
+			bird.setSellPrice(Double.parseDouble(TfSellPrice.getText()));
+			bird.setState(CbState.getValue());
+			bird.setSex(CbSex.getValue());
 	//		bird.setFather(birdsRepository.getBird(Integer.parseInt(TfFather.getText())));
 	//		bird.setMother(birdsRepository.getBird(Integer.parseInt(TfMother.getText())));
 	//		bird.setSpecies(Integer.parseInt(TfSpecie.getText()));
@@ -147,6 +169,63 @@ public class AddBirdViewController implements Initializable {
 				validate=false;
 			}
 		}
+		
+		if (validate) {
+			if (CbEntryType.getValue()==null) {
+				CbEntryType.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Tipo de entrada tem de ser escolhido");
+				validate=false;
+			}else {
+				CbEntryType.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		}
+		
+		if (validate) 
+			if (CbEntryType.getValue().equals(entryTypeList.get(0))) 
+				if (!TfBuyPrice.getText().matches("^[+]?[0-9]*[.]?[0-9]+$")) {
+					TfBuyPrice.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Preco compra tem de ser escolhido");
+					validate=false;
+				}else {
+					TfBuyPrice.setStyle(null);
+					LabelError.setText("");
+					validate=true;
+				}
+		
+		if (validate)
+				if (!TfSellPrice.getText().matches("^[+]?[0-9]*[.]?[0-9]+$|^$")) {
+					TfSellPrice.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Preco venda tem formato incorreto");
+					validate=false;
+				}else {
+					TfSellPrice.setStyle(null);
+					LabelError.setText("");
+					validate=true;
+				}
+		
+		if (validate) 
+			if (CbState.getValue()==null) {
+				CbState.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Estado tem de ser escolhido");
+				validate=false;
+			}else {
+				CbState.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		
+		if (validate) 
+			if (CbSex.getValue()==null) {
+				CbSex.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Estado tem de ser escolhido");
+				validate=false;
+			}else {
+				CbSex.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
 		
 		return validate;
 	}
