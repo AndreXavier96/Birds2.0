@@ -21,5 +21,7 @@
       <Button layoutX="148.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnViewAllSpecies" prefHeight="25.0" prefWidth="124.0" text="View all Species" />
       <Button layoutX="26.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnAddMutation" prefHeight="25.0" prefWidth="109.0" text="Add Mutation" />
       <Button layoutX="148.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnViewAllMutations" prefHeight="25.0" prefWidth="124.0" text="View All Mutations" />
+      <Button layoutX="26.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnAddCage" prefHeight="25.0" prefWidth="109.0" text="Add Cages" />
+      <Button layoutX="148.0" layoutY="259.0" mnemonicParsing="false" onAction="#BtnViewCages" prefHeight="25.0" prefWidth="124.0" text="View All Cages" />
    </children>
 </AnchorPane>
