@@ -28,7 +28,10 @@ public class AddCageViewController implements Initializable {
 	@FXML
 	private Label LabelError;
 	@FXML
-	private TextField TfCages, TfExistingCages;
+	private TextField TfCages, TfCode, TfType;
+	
+	@FXML
+	private TextField TfExistingCages;
 
 	CageRepository cageRepository = new CageRepository();
 	
@@ -47,7 +50,7 @@ public class AddCageViewController implements Initializable {
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validate()) {
 			int i = Integer.parseInt(TfCages.getText());
-			cageRepository.InsertMultipleCages(i);
+			cageRepository.InsertMultipleCages(i,TfCode.getText(),TfType.getText());
 			try {
 				TfExistingCages.setText(Integer.toString(cageRepository.getCageNumber()));
 			} catch (SQLException e) {
@@ -86,6 +89,18 @@ public class AddCageViewController implements Initializable {
 			LabelError.setText("");
 			validate=true;
 		}
+		if (validate) {
+			if(TfType.getText().isBlank()) {
+				TfType.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Tipo tem de ser preenchido");
+				validate=false;
+			}else {
+				TfType.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		}
+		
 		return validate;
 	}
 	

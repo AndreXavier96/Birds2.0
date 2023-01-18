@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import repository.BirdsRepository;
 import repository.BreederRepository;
+import repository.CageRepository;
 import repository.MutationsRepository;
 import repository.SpeciesRepository;
 
@@ -22,6 +23,7 @@ import java.util.ResourceBundle;
 import constants.MyValues;
 import domains.Bird;
 import domains.Breeder;
+import domains.Cage;
 import domains.Mutation;
 import domains.Specie;
 import javafx.collections.FXCollections;
@@ -50,7 +52,10 @@ public class AddBirdViewController implements Initializable {
 	private ComboBox<Mutation> CbMutation;
 	
 	@FXML
-	private ComboBox<String> CbEntryType, CbState, CbSex, CbFather, CbMother, CbCage;
+	private ComboBox<Cage> CbCage;
+	
+	@FXML
+	private ComboBox<String> CbEntryType, CbState, CbSex, CbFather, CbMother;
 
 	@FXML
 	private TextField TfAno, TfNumero, TfBuyPrice, TfSellPrice;
@@ -69,6 +74,7 @@ public class AddBirdViewController implements Initializable {
 	private BreederRepository breederRepository = new BreederRepository();
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
 	private MutationsRepository mutationsRepository = new MutationsRepository();
+	private CageRepository cageRepository = new CageRepository();
 	
 	private ObservableList<String> entryTypeList = FXCollections.observableArrayList("Compra","Nascimento");
 	private ObservableList<String> stateList = FXCollections.observableArrayList("Vivo","Morto","Vendido");
@@ -126,7 +132,17 @@ public class AddBirdViewController implements Initializable {
 		        });
 		    }
 		});
-		
+		CbCage.setItems(cageRepository.getEmptyCages());
+		CbCage.setConverter(new StringConverter<Cage>() {
+			@Override
+			public String toString(Cage s) {
+				return s.getId().toString();
+			}
+			@Override
+			public Cage fromString(String s) {
+				return CbCage.getItems().stream().filter(b -> b.getId().toString().equals(s)).findFirst().orElse(null);
+			}
+		});
 	}
 	
 	
@@ -146,13 +162,11 @@ public class AddBirdViewController implements Initializable {
 			bird.setSellPrice(Double.parseDouble(TfSellPrice.getText()));
 			bird.setState(CbState.getValue());
 			bird.setSex(CbSex.getValue());
-	//		bird.setFather(birdsRepository.getBird(Integer.parseInt(TfFather.getText())));
-	//		bird.setMother(birdsRepository.getBird(Integer.parseInt(TfMother.getText())));
+//			bird.setFather(birdsRepository.getBird(Integer.parseInt(TfFather.getText())));
+//			bird.setMother(birdsRepository.getBird(Integer.parseInt(TfMother.getText())));
 			bird.setSpecies(CbSpecies.getValue());
 			bird.setMutations(CbMutation.getValue());
-	//		bird.setCage(cageRepository.getCage(Integer.parseInt(TfCage.getText())));
-	//		bird.setBreeder(Integer.parseInt(TfBreeder.getText()));
-	//		bird.setPosture(Integer.parseInt(TfPosture.getText()));
+			bird.setCage(CbCage.getValue());
 			birdsRepository.Insert(bird);
 		}
 	}

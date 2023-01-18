@@ -149,6 +149,19 @@ public class MainSceneController {
 	}
 	
 	@FXML
+	public void BtnViewCages(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/ViewAllCages.fxml").toUri().toURL());
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void btnAddMutation(ActionEvent event) {
 		try {
 			root = FXMLLoader.load(Paths.get("resources/views/AddMutationView.fxml").toUri().toURL());

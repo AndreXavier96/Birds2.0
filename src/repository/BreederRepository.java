@@ -73,7 +73,6 @@ public class BreederRepository {
 			b.setNif(rs.getInt(4));
 			b.setCellphone(rs.getInt(5));
 			b.setEmail(rs.getString(6));
-//			String address = rs.getString(7);
 			b.setAddress(rs.getString(7));
 			b.setPostalCode(rs.getString(8));
 			b.setLocale(rs.getString(9));

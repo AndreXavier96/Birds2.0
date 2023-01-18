@@ -6,9 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
+import java.util.List;
 
 import constants.MyValues;
+import domains.Breeder;
 import domains.Cage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class CageRepository {
 	
@@ -19,9 +23,10 @@ public class CageRepository {
 			Statement stmt = con.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS CAGE"
 					+" (id INTEGER auto_increment, "
+					+"Code VARCHAR(255) NOT NULL, "
+					+"Type VARCHAR(255) NOT NULL, "
 					+"PRIMARY KEY (id))";
 			stmt.executeUpdate(sql);
-//			System.out.println("Sql: " + sql);
 			System.out.println("Table CAGE Created.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -35,7 +40,6 @@ public class CageRepository {
 			Statement stmt = con.createStatement();
 			String sql = "DROP TABLE IF EXISTS CAGE CASCADE";	
 			stmt.executeUpdate(sql);
-//			System.out.println("Sql: "+sql);
 			System.out.println("Table CAGE Droped.");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -51,7 +55,9 @@ public class CageRepository {
 			ResultSet rs  = stmt.executeQuery(sql);
 			Cage c = new Cage();
 			while (rs.next()) {
-				c.setId(rs.getInt(0));
+				c.setId(rs.getInt(1));
+				c.setCode(rs.getString(2));
+				c.setType(rs.getString(3));
 			}
 			return c;
 		} catch (Exception e) {
@@ -67,7 +73,8 @@ public class CageRepository {
 		System.out.println("Insert Cage in Database...");
 		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
-		String sql = "INSERT INTO CAGE(id) VALUES('"+cage.getId()+"')";
+		String sql = "INSERT INTO CAGE(Code,Type) VALUES('"
+				+cage.getCode()+"','"+cage.getType()+"')";
 		int i = stmt.executeUpdate(sql);
 		System.out.println(i+" Record inserted");
 		}catch (Exception e) {
@@ -75,12 +82,15 @@ public class CageRepository {
 		}
 	}
 	
-	public void InsertMultipleCages(int i ) throws SQLException {
+	public void InsertMultipleCages(int i,String code,String type) throws SQLException {
 		System.out.println("Insert "+i+" Cages in Database...");
 		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
-		String sql = "INSERT INTO CAGE VALUES()";
+		if (type==null)
+			type="";
 		for (int k = 0;k<i ;k++) {
+			String sql = "INSERT INTO CAGE(Code,Type) VALUES('"
+					+code+k+"','"+type+"')";
 			stmt.executeUpdate(sql);
 		}
 		System.out.println(i+" Records inserted");
@@ -104,8 +114,52 @@ public class CageRepository {
 		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
 				MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
-//		String sql = "DELETE FROM CAGE ORDER BY id DESC LIMIT " + i;
 		String deleteQuery = "DELETE FROM CAGE WHERE id IN (SELECT id FROM CAGE ORDER BY id DESC LIMIT " + i + ")";
 		stmt.executeUpdate(deleteQuery);
 	}
+	
+	
+	public ObservableList<Cage> getEmptyCages() {
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM CAGE WHERE id NOT IN (SELECT CageId FROM BIRDS)";
+//			String sql = "SELECT * FROM CAGE";
+			ResultSet rs  = stmt.executeQuery(sql);
+			ObservableList<Cage> cages = FXCollections.observableArrayList();
+			while (rs.next()) {
+				Cage c = new Cage();
+				c.setId(rs.getInt(1));
+				cages.add(c);
+			}
+			return cages;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ObservableList<Cage> getAllCages() {
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+//			String sql = "SELECT * FROM CAGE WHERE id NOT IN (SELECT CageId FROM BIRDS)";
+			String sql = "SELECT * FROM CAGE";
+			ResultSet rs  = stmt.executeQuery(sql);
+			ObservableList<Cage> cages = FXCollections.observableArrayList();
+			while (rs.next()) {
+				Cage c = new Cage();
+				c.setId(rs.getInt(1));
+				c.setCode(rs.getString(2));
+				c.setType(rs.getString(3));
+				cages.add(c);
+			}
+			return cages;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 }
