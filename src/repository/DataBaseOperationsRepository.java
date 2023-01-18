@@ -46,6 +46,7 @@ public class DataBaseOperationsRepository {
 		try {
 			System.out.println("Creatin DataBase "+DbName+"...");
 			Class.forName("org.h2.Driver").getDeclaredConstructor().newInstance();
+			@SuppressWarnings("unused")
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+DbName,MyValues.USER,MyValues.PASSWORD);
 			System.out.println("Database "+DbName+" created!");
 			breederRepository.CreateTableBreeder();

@@ -8,7 +8,6 @@ import java.sql.Statement;
 
 import constants.MyValues;
 import domains.Mutation;
-import domains.Specie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

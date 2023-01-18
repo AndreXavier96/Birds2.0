@@ -10,13 +10,11 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import constants.MyValues;
-import domains.Mutation;
 import domains.Specie;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 public class AddSpeciesViewController {
