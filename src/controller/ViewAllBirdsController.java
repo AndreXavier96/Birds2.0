@@ -6,9 +6,11 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import domains.Bird;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
@@ -25,9 +27,11 @@ public class ViewAllBirdsController implements Initializable {
 	@FXML
 	private TableView<Bird> tableID;
 	@FXML
-	private TableColumn<Bird, Integer> colId;
+	private TableColumn<Bird, Integer> colId, colAno;
 	@FXML
-	private TableColumn<Bird, String> colNrCriador, colAno, colAnilha;
+	private TableColumn<Bird, String> colAnilha,colEntryDate,colEntryType,
+		colBuyPrice,colSellPrice,colState,colSex,colFather,colMother,colSpecie,colMutation,
+		colCage,colBreeder;
 	
 	private Parent root;
 	private Stage stage;
@@ -53,9 +57,25 @@ public class ViewAllBirdsController implements Initializable {
 		BirdsRepository birdsRepository = new BirdsRepository();
 		ObservableList<Bird> birds = birdsRepository.getAllBirds();
 		colId.setCellValueFactory(new PropertyValueFactory<Bird,Integer>("id"));
-		colNrCriador.setCellValueFactory(new PropertyValueFactory<>("NrCriador"));
-		colAno.setCellValueFactory(new PropertyValueFactory<>("Ano"));
-		colAnilha.setCellValueFactory(new PropertyValueFactory<>("Anilha"));
+		colAnilha.setCellValueFactory(new PropertyValueFactory<>("Band"));
+		colAno.setCellValueFactory(new PropertyValueFactory<>("Year"));
+		colEntryDate.setCellValueFactory(new PropertyValueFactory<>("EntryDate"));
+		colEntryType.setCellValueFactory(new PropertyValueFactory<>("EntryType"));
+		colBuyPrice.setCellValueFactory(new PropertyValueFactory<>("BuyPrice"));
+		colSellPrice.setCellValueFactory(new PropertyValueFactory<>("SellPrice"));
+		colState.setCellValueFactory(new PropertyValueFactory<>("State"));
+		colSex.setCellValueFactory(new PropertyValueFactory<>("Sex"));
+	    colFather.setCellValueFactory(cellData -> new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getFather())
+                .map(Bird::getBand)
+                .orElse("")));
+	    colMother.setCellValueFactory(cellData ->  new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getMother())
+	    		.map(Bird::getBand)
+	    		.orElse("")));
+		colSpecie.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getSpecies().getCommonName()));
+		colMutation.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getMutations().getName()));
+		colCage.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getCage().getCode()));
+		colBreeder.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getBreeder().getName()));
+		
 		tableID.setItems(birds);
 		
 	}

@@ -190,4 +190,39 @@ public class BreederRepository {
 		}
 	}
 	
+	public Breeder getBreederbyCC(int cc) {
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM BREEDER WHERE id="+cc+";";
+			ResultSet rs = stmt.executeQuery(sql);
+			Breeder b = new Breeder();
+			while(rs.next()) {
+				System.out.println("Get Breeder: "+rs.getInt(1));
+				b.setId(rs.getInt(1));
+				b.setCC(rs.getInt(2));
+				b.setName(rs.getString(3));
+				b.setNif(rs.getInt(4));
+				b.setCellphone(rs.getInt(5));
+				b.setEmail(rs.getString(6));
+				b.setAddress(rs.getString(7));
+				b.setPostalCode(rs.getString(8));
+				b.setLocale(rs.getString(9));
+				b.setDistrict(rs.getString(10));
+				try {
+					b.setNrCites(Integer.parseInt(rs.getString(11)));
+				}catch (Exception e) {
+					b.setNrCites(0);
+				}
+				b.setType(rs.getString(12));
+				b.setClub(rs.getString(13));
+				b.setStam(rs.getInt(14));
+			}
+			return b;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }

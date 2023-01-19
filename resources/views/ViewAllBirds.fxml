@@ -12,9 +12,20 @@
       <TableView fx:id="tableID" layoutX="14.0" layoutY="48.0" prefHeight="292.0" prefWidth="565.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="colNrCriador" prefWidth="108.0" text="Numero Criador" />
-            <TableColumn fx:id="colAno" prefWidth="172.0" text="Ano" />
-            <TableColumn fx:id="colAnilha" minWidth="0.0" prefWidth="178.0" text="Anilha" />
+          <TableColumn fx:id="colAnilha" minWidth="0.0" prefWidth="178.0" text="Anilha" />
+          <TableColumn fx:id="colAno" prefWidth="172.0" text="Ano" />
+          <TableColumn fx:id="colEntryDate" prefWidth="172.0" text="Data Entrada" />
+          <TableColumn fx:id="colEntryType" prefWidth="172.0" text="Tipo Entrada" />
+          <TableColumn fx:id="colBuyPrice" prefWidth="172.0" text="Preco Compra" />
+          <TableColumn fx:id="colSellPrice" prefWidth="172.0" text="Preco Venda" />
+          <TableColumn fx:id="colState" prefWidth="172.0" text="Estado" />
+          <TableColumn fx:id="colSex" prefWidth="172.0" text="Sexo" />
+          <TableColumn fx:id="colFather" prefWidth="172.0" text="Pai" />
+          <TableColumn fx:id="colMother" prefWidth="172.0" text="Mae" />
+          <TableColumn fx:id="colSpecie" prefWidth="172.0" text="Especie" />
+          <TableColumn fx:id="colMutation" prefWidth="172.0" text="Mutacao" />
+          <TableColumn fx:id="colCage" prefWidth="172.0" text="Gaiola" />
+          <TableColumn fx:id="colBreeder" prefWidth="108.0" text="Criador" />
         </columns>
       </TableView>
       <Label layoutX="264.0" layoutY="14.0" text="All Birds">

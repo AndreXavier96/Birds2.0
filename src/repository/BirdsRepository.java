@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
+
 import constants.MyValues;
 import domains.Bird;
 import javafx.collections.FXCollections;
@@ -24,7 +26,6 @@ public class BirdsRepository {
 			Statement stmt = con.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS BIRDS"
 					+" (id INTEGER auto_increment, "
-					+"Breeder VARCHAR(255) NOT NULL, "
 					+"Band VARCHAR(255) NOT NULL, "
 					+"BirthYear SMALLINT NOT NULL, "
 					+"EntryDate DATE, "
@@ -46,7 +47,7 @@ public class BirdsRepository {
 					+"FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id), "
 					+"FOREIGN KEY (MutationsId) REFERENCES MUTATIONS (id), "
 					+"FOREIGN KEY (CageId) REFERENCES CAGE (id), "
-					+"FOREIGN KEY (BreederId) REFERENCES BREEDER (CC), "
+					+"FOREIGN KEY (BreederId) REFERENCES BREEDER (id), "
 					+"FOREIGN KEY (PostureId) REFERENCES POSTURE (id))";
 		
 			stmt.executeUpdate(sql);
@@ -69,8 +70,6 @@ public class BirdsRepository {
 			}
 	}
 	
-	
-	//TODO
 	public ObservableList<Bird> getAllBirds() {
 			try {
 				System.out.println("Getting all Birds...");
@@ -84,25 +83,27 @@ public class BirdsRepository {
 					System.out.println("Get Bird: " + rs.getInt(1));
 					Bird b = new Bird();
 					b.setId(rs.getInt(1));
-					b.setNrBreeder(breederRepository.getBreederbyId(2));
-					b.setBand(rs.getString(3));
-					b.setYear(rs.getInt(4));
-					b.setEntryDate(rs.getDate(5));
-					b.setEntryType(rs.getString(6));
-					b.setBuyPrice(rs.getDouble(7));
-					b.setSellPrice(rs.getDouble(8));
-					b.setState(rs.getString(9));
-					b.setSex(rs.getString(10));
-//					b.setFather(rs.getInt(11));
-					b.setFather(getBird(rs.getInt(11)));
-//					b.setMother(rs.getInt(12));
-					b.setMother(getBird(rs.getInt(12)));
-					b.setSpecies(speciesRepository.getSpecieById(rs.getInt(13)));
-					b.setMutations(mutationsRepository.getMutationsById(rs.getInt(14)));
-//					b.setCage(rs.getInt(15));
-					b.setCage(cageRepository.getCage(rs.getInt(15)));
-					b.setBreeder(rs.getInt(16));
-					b.setPosture(rs.getInt(17));
+					b.setBand(rs.getString(2));
+					b.setYear(rs.getInt(3));
+					b.setEntryDate(rs.getDate(4));
+					b.setEntryType(rs.getString(5));
+					b.setBuyPrice(rs.getDouble(6));
+					b.setSellPrice(rs.getDouble(7));
+					b.setState(rs.getString(8));
+					b.setSex(rs.getString(9));
+					if (rs.getInt(10)!=0)
+						b.setFather(getBird(rs.getInt(10)));
+					else
+						b.setFather(null);
+					if (rs.getInt(11)!=0)
+						b.setMother(getBird(rs.getInt(11)));
+					else
+						b.setMother(null);
+					b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
+					b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
+					b.setCage(cageRepository.getCage(rs.getInt(14)));
+					b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
+					b.setPosture(rs.getInt(16));
 					birds.add(b);
 				}
 				return birds;
@@ -112,8 +113,95 @@ public class BirdsRepository {
 			}
 		}
 	
-		
-	//TODO
+	
+	public ObservableList<Bird> getAllMales() {
+		try {
+			System.out.println("Getting all Birds...");
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
+					MyValues.USER, MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM BIRDS WHERE Sex='"+MyValues.MACHO+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			ObservableList<Bird> birds = FXCollections.observableArrayList();
+			while (rs.next()) {
+				System.out.println("Get Bird: " + rs.getInt(1));
+				Bird b = new Bird();
+				b.setId(rs.getInt(1));
+				b.setBand(rs.getString(2));
+				b.setYear(rs.getInt(3));
+				b.setEntryDate(rs.getDate(4));
+				b.setEntryType(rs.getString(5));
+				b.setBuyPrice(rs.getDouble(6));
+				b.setSellPrice(rs.getDouble(7));
+				b.setState(rs.getString(8));
+				b.setSex(rs.getString(9));
+				if (rs.getInt(10)!=0)
+					b.setFather(getBird(rs.getInt(10)));
+				else
+					b.setFather(null);
+				if (rs.getInt(11)!=0)
+					b.setMother(getBird(rs.getInt(11)));
+				else
+					b.setMother(null);
+				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
+				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
+				b.setCage(cageRepository.getCage(rs.getInt(14)));
+				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
+				b.setPosture(rs.getInt(16));
+				birds.add(b);
+			}
+			return birds;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ObservableList<Bird> getAllFemales() {
+		try {
+			System.out.println("Getting all Birds...");
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
+					MyValues.USER, MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM BIRDS WHERE Sex='"+MyValues.FEMEA+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			ObservableList<Bird> birds = FXCollections.observableArrayList();
+			while (rs.next()) {
+				System.out.println("Get Bird: " + rs.getInt(1));
+				Bird b = new Bird();
+				b.setId(rs.getInt(1));
+				b.setBand(rs.getString(2));
+				b.setYear(rs.getInt(3));
+				b.setEntryDate(rs.getDate(4));
+				b.setEntryType(rs.getString(5));
+				b.setBuyPrice(rs.getDouble(6));
+				b.setSellPrice(rs.getDouble(7));
+				b.setState(rs.getString(8));
+				b.setSex(rs.getString(9));
+				if (rs.getInt(10)!=0)
+					b.setFather(getBird(rs.getInt(10)));
+				else
+					b.setFather(null);
+				if (rs.getInt(11)!=0)
+					b.setMother(getBird(rs.getInt(11)));
+				else
+					b.setMother(null);
+				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
+				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
+				b.setCage(cageRepository.getCage(rs.getInt(14)));
+				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
+				b.setPosture(rs.getInt(16));
+				birds.add(b);
+			}
+			return birds;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	
 	public void Insert(Bird bird) {
 		try {
 			System.out.println("Insert Bird in DataBase...");
@@ -122,37 +210,79 @@ public class BirdsRepository {
 			
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String dateString = dateFormat.format(bird.getEntryDate());
-
 			
-			String sql = "INSERT INTO "
-					+ "BIRDS(Breeder,Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,State,Sex,Father,Mother,SpeciesId,MutationsId,CageId,BreederId,PostureId) "
-					+ "values('" + bird.getNrBreeder().getId() + "','" + bird.getBand() + "','" + bird.getYear() + "','"
+			String insert = "INSERT INTO BIRDS";
+			String into = "(Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,State,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId)";
+			String values="values('" + bird.getBand() + "','" + bird.getYear() + "','"
 					+ dateString + "','" + bird.getEntryType() + "','" + bird.getBuyPrice() + "','"
-					+ bird.getSellPrice() + "','" + bird.getState() + "','" + bird.getSex() + "','" + bird.getFather()
-					+ "','" + bird.getMother() + "','" + bird.getSpecies() + "','" + bird.getMutations() + "','"
-					+ bird.getCage() + "','" + bird.getBreeder() + "','" + bird.getPosture() + "')";
-			int i = stmt.executeUpdate(sql);
+					+ bird.getSellPrice() + "','" + bird.getState() + "','" + bird.getSex() + "'";
+			String valuesFinal=",'"+ bird.getSpecies().getId() +"','"+ bird.getCage().getId() +"','"+bird.getBreeder().getId()+"')";
+			
+
+			if (bird.getFather()==null) {
+				into = into.replace(",Father", "");
+			}else {
+				values+=",'"+bird.getFather().getId()+ "'";
+			}
+			
+			if (bird.getMother()==null) {
+				into = into.replace(",Mother", "");
+			}else {
+				values+=",'"+bird.getMother().getId()+ "'";
+			}
+			
+			if (bird.getMutations()==null) {
+				into = into.replace(",MutationsId", "");
+			}else {
+				values+=",'"+bird.getMutations().getId()+ "'";
+			}
+			int i = stmt.executeUpdate(insert+into+values+valuesFinal);
 			System.out.println(i+" Bird Record inserted");
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
 	}
-	
+
+
 	public Bird getBird(Integer id) {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM BIRDS WHERE BIRDS.id='"+id+"'";
-			ResultSet rs  = stmt.executeQuery(sql);
-			Bird b = new Bird();
-			while (rs.next())
-				b.setId(rs.getInt(0));
-			return b;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        Statement stmt = con.createStatement();
+	        String sql = "SELECT * FROM BIRDS WHERE id=" + id + ";";
+	        ResultSet rs = stmt.executeQuery(sql);
+	        Bird b = new Bird();
+	        if (rs.next()) {
+	            b.setId(rs.getInt(1));
+	            b.setBand(rs.getString(2));
+	            b.setYear(rs.getInt(3));
+	            b.setEntryDate(rs.getDate(4));
+	            b.setEntryType(rs.getString(5));
+	            b.setBuyPrice(rs.getDouble(6));
+	            b.setSellPrice(rs.getDouble(7));
+	            b.setState(rs.getString(8));
+	            b.setSex(rs.getString(9));
+	            int fatherId = rs.getInt(10);
+	            int motherId = rs.getInt(11);
+	            if (fatherId != 0) {
+	                b.setFather(getBird(fatherId));
+	            }
+	            if (motherId != 0) {
+	                b.setMother(getBird(motherId));
+	            }
+	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
+	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
+	            b.setCage(cageRepository.getCage(rs.getInt(14)));
+	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
+	            b.setPosture(rs.getInt(16));
+	            return b;
+	        } else {
+	            return null;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
+
 
 }

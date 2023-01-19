@@ -55,16 +55,16 @@ public class AddBirdViewController implements Initializable {
 	private ComboBox<Cage> CbCage;
 	
 	@FXML
-	private ComboBox<String> CbEntryType, CbState, CbSex, CbFather, CbMother;
+	private ComboBox<String> CbEntryType, CbState, CbSex;
+	
+	@FXML
+	private ComboBox<Bird> CbFather,CbMother;
 
 	@FXML
-	private TextField TfAno, TfNumero, TfBuyPrice, TfSellPrice;
+	private TextField TfAno, TfNumero, TfBuyPrice;
 	
 	@FXML
 	private DatePicker DfDataEntrada;
-	
-	@FXML
-	private TextField TfBreeder,TfPosture;
 	
 	
 	@FXML
@@ -75,10 +75,6 @@ public class AddBirdViewController implements Initializable {
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
 	private MutationsRepository mutationsRepository = new MutationsRepository();
 	private CageRepository cageRepository = new CageRepository();
-	
-	private ObservableList<String> entryTypeList = FXCollections.observableArrayList("Compra","Nascimento");
-	private ObservableList<String> stateList = FXCollections.observableArrayList("Vivo","Morto","Vendido");
-	private ObservableList<String> sexList = FXCollections.observableArrayList("Femea","Macho");
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -93,9 +89,9 @@ public class AddBirdViewController implements Initializable {
 			 }
 			 
 		});
-		CbEntryType.setItems(entryTypeList);
+		CbEntryType.setItems(MyValues.ENTRYTYPELIST);
 		CbEntryType.valueProperty().addListener((observable, oldValue, newValue) -> {
-		      if (entryTypeList.get(0).equals(newValue)) {
+		      if (MyValues.ENTRYTYPELIST.get(0).equals(newValue)) {
 		    	  TfBuyPrice.setVisible(true);
 		    	  labelTfBuyPrice.setVisible(true);
 		      } else {
@@ -103,8 +99,8 @@ public class AddBirdViewController implements Initializable {
 		    	  labelTfBuyPrice.setVisible(false);
 		      }
 		    });
-		CbState.setItems(stateList);
-		CbSex.setItems(sexList);
+		CbState.setItems(MyValues.STATELIST);
+		CbSex.setItems(MyValues.SEXLIST);
 		CbSpecies.setItems(speciesRepository.getAllSpecies());
 		CbSpecies.setConverter(new StringConverter<Specie>() {
 			public String toString(Specie s) {
@@ -117,7 +113,10 @@ public class AddBirdViewController implements Initializable {
 		CbSpecies.valueProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 		        try {
-					CbMutation.setItems(mutationsRepository.getMutationsBySpecie(newValue.getId()));
+		        	ObservableList<Mutation> listMutations = mutationsRepository.getMutationsBySpecie(newValue.getId());
+		        	Mutation normal = new Mutation(null, "Sem Mutacao","","", "", newValue);
+		        	listMutations.add(0,normal);
+		        	CbMutation.setItems(listMutations);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -132,15 +131,43 @@ public class AddBirdViewController implements Initializable {
 		        });
 		    }
 		});
-		CbCage.setItems(cageRepository.getEmptyCages());
+		CbCage.setItems(cageRepository.getAllCages());
 		CbCage.setConverter(new StringConverter<Cage>() {
 			@Override
 			public String toString(Cage s) {
-				return s.getId().toString();
+				return s.getCode();
 			}
 			@Override
 			public Cage fromString(String s) {
-				return CbCage.getItems().stream().filter(b -> b.getId().toString().equals(s)).findFirst().orElse(null);
+				return CbCage.getItems().stream().filter(b -> b.getCode().equals(s)).findFirst().orElse(null);
+			}
+		});
+		ObservableList<Bird> listFathers = birdsRepository.getAllMales();
+		Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		listFathers.add(0,defaultFather);
+		CbFather.setItems(listFathers);
+		CbFather.setConverter(new StringConverter<Bird>() {
+			@Override
+			public String toString(Bird s) {
+				return s.getBand();
+			}
+			@Override
+			public Bird fromString(String s) {
+				return CbFather.getItems().stream().filter(b -> b.getBand().equals(s)).findFirst().orElse(null);
+			}
+		});
+		ObservableList<Bird> listMothers = birdsRepository.getAllFemales();
+		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		listMothers.add(0,defaultMother);
+		CbMother.setItems(listMothers);
+		CbMother.setConverter(new StringConverter<Bird>() {
+			@Override
+			public String toString(Bird s) {
+				return s.getBand();
+			}
+			@Override
+			public Bird fromString(String s) {
+				return CbMother.getItems().stream().filter(b -> b.getId().equals(s)).findFirst().orElse(null);
 			}
 		});
 	}
@@ -148,25 +175,34 @@ public class AddBirdViewController implements Initializable {
 	
 	
 	@FXML
-	public void btnAdd(ActionEvent event) {
+	public void btnAdd(ActionEvent event) throws SQLException {
 		boolean validate=validate();
 		if(validate) {
 			String anilha =CbCriador.getValue().getStam()+"-"+TfAno.getText()+"-"+TfNumero.getText() ;
 			Bird bird = new Bird();
-			bird.setNrBreeder(CbCriador.getValue());
+			bird.setBreeder(breederRepository.getBreederbyId(CbCriador.getValue().getId()));
 			bird.setBand(anilha);
 			bird.setYear(Integer.parseInt(TfAno.getText()));
 			bird.setEntryDate(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			bird.setEntryType(CbEntryType.getValue().toString());
-			bird.setBuyPrice(Double.parseDouble(TfBuyPrice.getText()));
-			bird.setSellPrice(Double.parseDouble(TfSellPrice.getText()));
+			if (bird.getEntryType().equals(MyValues.COMPRA)) {
+				bird.setBuyPrice(Double.parseDouble(TfBuyPrice.getText()));
+			}else if (bird.getEntryType().equals(MyValues.NASCIMENTO)) {
+				bird.setBuyPrice(0.0);
+			}
+			bird.setSellPrice(0.0);
 			bird.setState(CbState.getValue());
 			bird.setSex(CbSex.getValue());
-//			bird.setFather(birdsRepository.getBird(Integer.parseInt(TfFather.getText())));
-//			bird.setMother(birdsRepository.getBird(Integer.parseInt(TfMother.getText())));
-			bird.setSpecies(CbSpecies.getValue());
-			bird.setMutations(CbMutation.getValue());
-			bird.setCage(CbCage.getValue());
+			if (CbFather.getValue().getId()!=null)
+				bird.setFather(birdsRepository.getBird(CbFather.getValue().getId()));
+			if (CbMother.getValue().getId()!=null) 
+				bird.setMother(birdsRepository.getBird(CbMother.getValue().getId()));
+			bird.setSpecies(speciesRepository.getSpecieById(CbSpecies.getValue().getId()));
+			if (CbMutation.getValue().getId()!=null)
+				bird.setMutations(mutationsRepository.getMutationsById(CbMutation.getValue().getId()));
+			else
+				bird.setMutations(null);
+			bird.setCage(cageRepository.getCage(CbCage.getValue().getId()));
 			birdsRepository.Insert(bird);
 		}
 	}
@@ -234,24 +270,13 @@ public class AddBirdViewController implements Initializable {
 		}
 		
 		if (validate) 
-			if (CbEntryType.getValue().equals(entryTypeList.get(0))) 
+			if (CbEntryType.getValue().equals(MyValues.ENTRYTYPELIST.get(0))) 
 				if (!TfBuyPrice.getText().matches("^[+]?[0-9]*[.]?[0-9]+$")) {
 					TfBuyPrice.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelError.setText("Preco compra tem de ser escolhido");
 					validate=false;
 				}else {
 					TfBuyPrice.setStyle(null);
-					LabelError.setText("");
-					validate=true;
-				}
-		
-		if (validate)
-				if (!TfSellPrice.getText().matches("^[+]?[0-9]*[.]?[0-9]+$|^$")) {
-					TfSellPrice.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelError.setText("Preco venda tem formato incorreto");
-					validate=false;
-				}else {
-					TfSellPrice.setStyle(null);
 					LabelError.setText("");
 					validate=true;
 				}
@@ -270,13 +295,44 @@ public class AddBirdViewController implements Initializable {
 		if (validate) 
 			if (CbSex.getValue()==null) {
 				CbSex.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Estado tem de ser escolhido");
+				LabelError.setText("Sexo tem de ser escolhido");
 				validate=false;
 			}else {
 				CbSex.setStyle(null);
 				LabelError.setText("");
 				validate=true;
 			}
+		if (validate) 
+			if (CbSpecies.getValue()==null) {
+				CbSpecies.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Especie tem de ser escolhido");
+				validate=false;
+			}else {
+				CbSpecies.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		if (validate) 
+			if (CbSpecies.getValue()!=null && CbMutation.getValue()==null) {
+				CbMutation.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Mutacao tem de ser escolhido");
+				validate=false;
+			}else {
+				CbMutation.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		if (validate) 
+			if (CbCage.getValue()==null) {
+				CbCage.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Gaiola tem de ser escolhido");
+				validate=false;
+			}else {
+				CbCage.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		
 		
 		return validate;
 	}
