@@ -5,11 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
-import java.util.List;
-
 import constants.MyValues;
-import domains.Breeder;
 import domains.Cage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -118,32 +114,32 @@ public class CageRepository {
 		stmt.executeUpdate(deleteQuery);
 	}
 	
-	
-	public ObservableList<Cage> getEmptyCages() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM CAGE WHERE id NOT IN (SELECT CageId FROM BIRDS)";
-//			String sql = "SELECT * FROM CAGE";
-			ResultSet rs  = stmt.executeQuery(sql);
-			ObservableList<Cage> cages = FXCollections.observableArrayList();
-			while (rs.next()) {
-				Cage c = new Cage();
-				c.setId(rs.getInt(1));
-				cages.add(c);
-			}
-			return cages;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+//	
+//	public ObservableList<Cage> getEmptyCages() {
+//		try {
+//			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+//			Statement stmt = con.createStatement();
+//			String sql = "SELECT * FROM CAGE WHERE id NOT IN (SELECT CageId FROM BIRDS)";
+//			ResultSet rs  = stmt.executeQuery(sql);
+//			ObservableList<Cage> cages = FXCollections.observableArrayList();
+//			while (rs.next()) {
+//				Cage c = new Cage();
+//				c.setId(rs.getInt(1));
+//				c.setCode(rs.getString(2));
+//				c.setType(rs.getString(3));
+//				cages.add(c);
+//			}
+//			return cages;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 	
 	public ObservableList<Cage> getAllCages() {
 		try {
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
-//			String sql = "SELECT * FROM CAGE WHERE id NOT IN (SELECT CageId FROM BIRDS)";
 			String sql = "SELECT * FROM CAGE";
 			ResultSet rs  = stmt.executeQuery(sql);
 			ObservableList<Cage> cages = FXCollections.observableArrayList();

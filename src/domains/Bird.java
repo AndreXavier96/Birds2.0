@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Bird {
 	private Integer id;
-	private Breeder NrBreeder;
 	private String Band;
 	private Integer Year;
 	private Date EntryDate;
@@ -18,17 +17,17 @@ public class Bird {
 	private Specie Species;
 	private Mutation Mutations;
 	private Cage Cage;
-	private Integer Breeder;
+	private Breeder Breeder;
 	private Integer Posture;
 
 	
 
-	public Bird(Integer id, domains.Breeder nrBreeder, String band, Integer year, Date entryDate, String entryType,
+	public Bird(Integer id, Breeder nrBreeder, String band, Integer year, Date entryDate, String entryType,
 			Double buyPrice, Double sellPrice, String state, String sex, Bird father, Bird mother, Specie species,
-			Mutation mutations, domains.Cage cage, Integer breeder, Integer posture) {
+			Mutation mutations, Cage cage, Integer posture) {
 		super();
 		this.id = id;
-		NrBreeder = nrBreeder;
+		Breeder = nrBreeder;
 		Band = band;
 		Year = year;
 		EntryDate = entryDate;
@@ -42,7 +41,6 @@ public class Bird {
 		Species = species;
 		Mutations = mutations;
 		Cage = cage;
-		Breeder = breeder;
 		Posture = posture;
 	}
 
@@ -58,12 +56,12 @@ public class Bird {
 		this.id = id;
 	}
 
-	public Breeder getNrBreeder() {
-		return NrBreeder;
+	public Breeder getBreeder() {
+		return Breeder;
 	}
 
-	public void setNrBreeder(Breeder nrBreeder) {
-		NrBreeder = nrBreeder;
+	public void setBreeder(Breeder nrBreeder) {
+		Breeder = nrBreeder;
 	}
 
 	public String getBand() {
@@ -170,14 +168,6 @@ public class Bird {
 		Cage = cage;
 	}
 
-	public Integer getBreeder() {
-		return Breeder;
-	}
-
-	public void setBreeder(Integer breeder) {
-		Breeder = breeder;
-	}
-
 	public Integer getPosture() {
 		return Posture;
 	}
@@ -188,10 +178,10 @@ public class Bird {
 
 	@Override
 	public String toString() {
-		return "Bird [id=" + id + ", NrBreeder=" + NrBreeder + ", Band=" + Band + ", Year=" + Year + ", EntryDate="
+		return "Bird [id=" + id + ", NrBreeder=" + Breeder + ", Band=" + Band + ", Year=" + Year + ", EntryDate="
 				+ EntryDate + ", EntryType=" + EntryType + ", BuyPrice=" + BuyPrice + ", SellPrice=" + SellPrice
 				+ ", State=" + State + ", Sex=" + Sex + ", Father=" + Father + ", Mother=" + Mother + ", Species="
-				+ Species + ", Mutations=" + Mutations + ", Cage=" + Cage + ", Breeder=" + Breeder + ", Posture="
+				+ Species + ", Mutations=" + Mutations + ", Cage=" + Cage  + ", Posture="
 				+ Posture + "]";
 	}
 
