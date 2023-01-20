@@ -2,12 +2,15 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import repository.BreederRepository;
 
+import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import constants.MyValues;
 import domains.Breeder;
@@ -19,7 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 
-public class AddBreederViewController {
+public class AddBreederViewController implements Initializable {
 	private Parent root;
 	private Scene scene;
 	private Stage stage;
@@ -56,6 +59,11 @@ public class AddBreederViewController {
 	private ComboBox<String> CbType;
 
 	private BreederRepository breederRepository = new BreederRepository();
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		CbType.setItems(MyValues.BREEDERTYPELIST);
+	}
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws NumberFormatException, SQLException {
@@ -296,4 +304,6 @@ public class AddBreederViewController {
 		TfClub.setStyle(null);
 		TfStam.setStyle(null);
 	}
+
+	
 }

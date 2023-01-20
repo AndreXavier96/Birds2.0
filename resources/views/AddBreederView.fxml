@@ -105,13 +105,6 @@
 	</Button>
 	<ComboBox fx:id="CbType" layoutX="359.0" layoutY="303.0" prefWidth="150.0" promptText="Select">
 		<cursor><Cursor fx:constant="HAND" /></cursor>
-		<items>
-			<FXCollections fx:factory="observableArrayList">
-				<String fx:value="Apple" />
-				<String fx:value="Orange" />
-				<String fx:value="Pear" />
-			</FXCollections>
-		</items>
 	</ComboBox>
       <Label fx:id="labelAlert" layoutX="34.0" layoutY="48.0" prefHeight="17.0" prefWidth="479.0" textAlignment="CENTER" textFill="#25c900" />
    </children>

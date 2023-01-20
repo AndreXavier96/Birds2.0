@@ -28,4 +28,9 @@ public class MyValues {
 	
 	public static final String SEM_PAI ="Sem Pai";
 	public static final String SEM_MAE ="Sem Mae";
+	
+	public static final String CRIADOR_AMADOR ="Amador";
+	public static final String CRIADOR_PROFISSIONAL ="Profissional";
+	public static final String CRIADOR_LOJA ="Loja";
+	public static final ObservableList<String> BREEDERTYPELIST = FXCollections.observableArrayList(CRIADOR_AMADOR,CRIADOR_PROFISSIONAL,CRIADOR_LOJA);
 }
