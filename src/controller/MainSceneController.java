@@ -64,8 +64,6 @@ public class MainSceneController {
 		}
 	}
 	
-	
-	
 	@FXML
 	public void btnAddBird(ActionEvent event) {
 		try {
@@ -78,7 +76,6 @@ public class MainSceneController {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	@FXML
 	public void btnViewAllBirds(ActionEvent event) {

@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import repository.DataBaseOperationsRepository;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 
 public class Main extends Application {
@@ -32,6 +33,7 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("Bird Application");
+			primaryStage.getIcons().add(new Image("file:resources/images/icon.png"));
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
