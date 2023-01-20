@@ -69,10 +69,8 @@ public class AddBreederViewController implements Initializable {
 	public void btnAdd(ActionEvent event) throws NumberFormatException, SQLException {
 		labelAlert.setText(null);
 		labelAlert.setStyle(null);
-		boolean validated = validator();
-	
 		//ALL VALIDATED
-		if(validated) {
+		if(validator()) {
 			Breeder b = new Breeder();
 			b.setCC(Integer.parseInt(TfCC.getText()));
 			b.setName(TfName.getText());
@@ -88,7 +86,7 @@ public class AddBreederViewController implements Initializable {
 				b.setNrCites(null);
 			b.setType(CbType.getValue());
 			b.setClub(TfClub.getText());
-			b.setStam(Integer.parseInt(TfStam.getText()));
+			b.setStam(TfStam.getText());
 			breederRepository.Insert(b);
 			
 			labelAlert.setStyle(MyValues.SUCCESS_BOX_STYLE);
@@ -221,7 +219,7 @@ public class AddBreederViewController implements Initializable {
 				TfStam.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelError.setText("STAM tem de ser preenchido.");
 				validated = false;
-			} else if (breederRepository.checkIfSTAMExists(Integer.parseInt(TfStam.getText()))) {
+			} else if (breederRepository.checkIfSTAMExists(TfStam.getText())) {
 					TfStam.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelError.setText("STAM ja existe no sistema.");
 					validated = false;

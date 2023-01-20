@@ -21,8 +21,8 @@
          </font>
       </Label>
       <Label layoutX="34.0" layoutY="81.0" text="Nr Criador" />
-      <Label layoutX="201.0" layoutY="81.0" text="Ano" />
-      <Label layoutX="345.0" layoutY="81.0" text="Numero" />
+      <Label layoutX="201.0" layoutY="81.0" text="Ano da anilha" />
+      <Label layoutX="360.0" layoutY="81.0" text="Numero anilha" />
       <Label fx:id="LabelError" layoutX="34.0" layoutY="42.0" prefHeight="17.0" prefWidth="471.0" textAlignment="CENTER" textFill="RED" />
       <Label layoutX="36.0" layoutY="140.0" text="Data Entrada" />
       <Label layoutX="356.0" layoutY="140.0" text="Tipo Entrada" />

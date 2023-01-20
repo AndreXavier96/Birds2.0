@@ -80,7 +80,7 @@ public class AddBirdViewController implements Initializable {
 		CbCriador.setItems(breederRepository.getAllBreeders());
 		CbCriador.setConverter(new StringConverter<Breeder>() {
 			 public String toString(Breeder b) {
-				 return b.getName();
+				 return "Nome:"+b.getName()+" STAM:"+b.getStam();
 			 }
 			 
 			 public Breeder fromString(String s) {
@@ -171,13 +171,10 @@ public class AddBirdViewController implements Initializable {
 		});
 	}
 	
-	
-	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
-		boolean validate=validate();
-		if(validate) {
-			String anilha =CbCriador.getValue().getStam()+"-"+TfAno.getText()+"-"+TfNumero.getText() ;
+		if(validate()) {
+			String anilha =CbCriador.getValue().getStam()+" "+TfAno.getText()+" "+TfNumero.getText() ;
 			Bird bird = new Bird();
 			bird.setBreeder(breederRepository.getBreederbyId(CbCriador.getValue().getId()));
 			bird.setBand(anilha);

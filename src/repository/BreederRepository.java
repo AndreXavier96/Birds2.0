@@ -31,7 +31,7 @@ public class BreederRepository {
 					+"NrCites VARCHAR(255), "
 					+"BreederType VARCHAR(255) NOT NULL, "
 					+"Club VARCHAR(255), "
-					+"STAM INTEGER UNIQUE, "
+					+"STAM VARCHAR(255), "
 					+"PRIMARY KEY (id))";
 			
 			stmt.executeUpdate(sql);
@@ -85,7 +85,7 @@ public class BreederRepository {
 			
 			b.setType(rs.getString(12));
 			b.setClub(rs.getString(13));
-			b.setStam(rs.getInt(14));
+			b.setStam(rs.getString(14));
 			
 			breeders.add(b);
 		}
@@ -147,10 +147,10 @@ public class BreederRepository {
 			return rs.next();
 	}
 	
-	public boolean checkIfSTAMExists(int stam) throws SQLException {
+	public boolean checkIfSTAMExists(String stam) throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM BREEDER WHERE STAM="+stam+";";
+			String sql = "SELECT * FROM BREEDER WHERE STAM='"+stam+"';";
 			ResultSet rs = stmt.executeQuery(sql);
 			return rs.next();
 	}
@@ -181,7 +181,7 @@ public class BreederRepository {
 				}
 				b.setType(rs.getString(12));
 				b.setClub(rs.getString(13));
-				b.setStam(rs.getInt(14));
+				b.setStam(rs.getString(14));
 			}
 			return b;
 		} catch (Exception e) {
@@ -216,7 +216,7 @@ public class BreederRepository {
 				}
 				b.setType(rs.getString(12));
 				b.setClub(rs.getString(13));
-				b.setStam(rs.getInt(14));
+				b.setStam(rs.getString(14));
 			}
 			return b;
 		} catch (Exception e) {

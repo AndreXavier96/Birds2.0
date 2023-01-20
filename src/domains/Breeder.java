@@ -14,7 +14,7 @@ public class Breeder {
 	private Integer NrCites;
 	private String Type;
 	private String Club;
-	private Integer Stam;
+	private String Stam;
 	
 	
 	public Breeder() {
@@ -22,7 +22,7 @@ public class Breeder {
 	}
 	
 	public Breeder(String address,Integer id, Integer cC, String name, Integer nif, Integer cellphone, String email, String postalCode,
-			String locale, String district, Integer nrCites, String type, String club, Integer stam) {
+			String locale, String district, Integer nrCites, String type, String club, String stam) {
 		super();
 		Id = id;
 		CC = cC;
@@ -118,10 +118,10 @@ public class Breeder {
 	public void setClub(String club) {
 		Club = club;
 	}
-	public Integer getStam() {
+	public String getStam() {
 		return Stam;
 	}
-	public void setStam(Integer stam) {
+	public void setStam(String stam) {
 		Stam = stam;
 	}
 	@Override
