@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewSingleBirdController">
+   <children>
+      <Label fx:id="LbTitle" alignment="CENTER" layoutX="243.0" layoutY="14.0" prefHeight="46.0" prefWidth="395.0" text="Bird 0000-xxxxxx-0000" textAlignment="CENTER">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Button layoutX="759.0" layoutY="486.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="108.0" text="Back" />
+      <TabPane layoutX="14.0" layoutY="60.0" prefHeight="418.0" prefWidth="853.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Ficha">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="411.0" prefWidth="853.0">
+                     <children>
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="148.0">
+                           <children>
+                              <Label text="Anilha:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbBand" layoutX="40.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="37.0" prefHeight="17.0" prefWidth="149.0">
+                           <children>
+                              <Label text="Ano:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbYear" layoutX="27.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="77.0" prefHeight="17.0" prefWidth="175.0">
+                           <children>
+                              <Label text="Data de Entrada:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbEntryDate" layoutX="94.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="94.0" prefHeight="17.0" prefWidth="175.0">
+                           <children>
+                              <Label text="Tipo de Entrada:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbEntryType" layoutX="93.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="150.0" layoutY="37.0" prefHeight="17.0" prefWidth="148.0">
+                           <children>
+                              <Label text="Sexo:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbSex" layoutX="31.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="ApBuyPrice" layoutX="14.0" layoutY="111.0" prefHeight="17.0" prefWidth="148.0" visible="false">
+                           <children>
+                              <Label text="Preco Compra:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbBuyPrice" layoutX="83.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="150.0" layoutY="14.0" prefHeight="17.0" prefWidth="148.0">
+                           <children>
+                              <Label text="Especie:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbSpecie" layoutX="45.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="298.0" layoutY="14.0" prefHeight="17.0" prefWidth="196.0">
+                           <children>
+                              <Label text="Mutacao:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbMutation" layoutX="53.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="298.0" layoutY="37.0" prefHeight="17.0" prefWidth="196.0">
+                           <children>
+                              <Label text="Classificacao:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbClassification" layoutX="75.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="ApSellPrice" layoutX="163.0" layoutY="111.0" prefHeight="17.0" prefWidth="148.0" visible="false">
+                           <children>
+                              <Label text="Preco Venda:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbSellPrice" layoutX="74.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="162.0" layoutY="94.0" prefHeight="17.0" prefWidth="148.0">
+                           <children>
+                              <Label text="Estado:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbState" layoutX="41.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="148.0" prefHeight="17.0" prefWidth="183.0">
+                           <children>
+                              <Label text="Ultima Atualizacao: ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbLastModify" layoutX="113.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="165.0" prefHeight="81.0" prefWidth="435.0">
+                           <children>
+                              <Label text="Observacoes:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbOBs" alignment="TOP_LEFT" layoutX="1.0" layoutY="16.0" prefHeight="77.0" prefWidth="431.0" />
+                           </children>
+                        </AnchorPane>
+                        <ImageView fx:id="ImBird" fitHeight="374.0" fitWidth="395.0" layoutX="456.0" layoutY="2.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../images/default.png" />
+                           </image>
+                        </ImageView>
+                        <AnchorPane layoutX="189.0" layoutY="77.0" prefHeight="17.0" prefWidth="175.0">
+                           <children>
+                              <Label text="Gaiola:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbCage" layoutX="39.0" underline="true" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="258.0" prefHeight="17.0" prefWidth="428.0">
+                           <children>
+                              <Label text="Criador:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="LbBreeder" layoutX="52.0" underline="true" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Tratamentos">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+          <Tab text="Filiacao">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="602.0" layoutY="14.0" prefHeight="191.0" prefWidth="162.0">
+                           <children>
+                              <Label fx:id="LbBandFather" layoutX="81.0" layoutY="7.0" underline="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label text="Pai">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="44.0" layoutY="7.0" text="anilha:" />
+                              <ImageView fx:id="ImFather" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/default.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="602.0" layoutY="205.0" prefHeight="191.0" prefWidth="162.0">
+                           <children>
+                              <Label text="Mae">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="46.0" layoutY="7.0" text="anilha:" />
+                              <Label fx:id="LbBandMother" layoutX="81.0" layoutY="7.0" underline="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <ImageView fx:id="ImMother" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/default.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="26.0" layoutY="14.0" prefHeight="191.0" prefWidth="162.0">
+                           <children>
+                              <Label text="Avô">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="46.0" layoutY="7.0" text="anilha:" />
+                              <ImageView fx:id="ImGrandFatherFather" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/default.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="LbBandGrandFatherFather" layoutX="81.0" layoutY="7.0" prefHeight="17.0" prefWidth="9.0" underline="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="197.0" layoutY="14.0" prefHeight="191.0" prefWidth="162.0">
+                           <children>
+                              <Label text="Avó">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="46.0" layoutY="7.0" text="anilha:" />
+                              <ImageView fx:id="ImGrandMotherFather" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/default.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="LbBandGrandMotherFather" layoutX="81.0" layoutY="7.0" prefHeight="17.0" prefWidth="10.0" underline="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="26.0" layoutY="205.0" prefHeight="191.0" prefWidth="162.0">
+                           <children>
+                              <Label text="Avô">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="46.0" layoutY="7.0" text="anilha:" />
+                              <ImageView fx:id="ImGrandFatherMother" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/default.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="LbBandGrandFatherMother" layoutX="81.0" layoutY="7.0" prefHeight="17.0" prefWidth="7.0" underline="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="197.0" layoutY="205.0" prefHeight="191.0" prefWidth="162.0">
+                           <children>
+                              <Label text="Avó">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="ImGrandMotherMother" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/default.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="LbBandGrandMotherMother" layoutX="81.0" layoutY="7.0" prefHeight="17.0" prefWidth="9.0" underline="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label layoutX="46.0" layoutY="7.0" text="anilha:" />
+                           </children>
+                        </AnchorPane>
+                        <Line endX="100.0" layoutX="481.0" layoutY="110.0" startX="-100.0" />
+                        <Line endX="100.0" layoutX="481.0" layoutY="301.0" startX="-100.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Concursos">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <AnchorPane layoutX="14.0" layoutY="7.0" prefHeight="46.0" prefWidth="192.0">
+         <children>
+            <TextField fx:id="TfBandSearch" layoutX="40.0" layoutY="20.0" />
+            <Button layoutX="7.0" layoutY="20.0" mnemonicParsing="false" onAction="#btnSearchForBand">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/searchIco.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label fx:id="LabelError" layoutX="7.0" layoutY="6.0" prefHeight="17.0" prefWidth="185.0" textFill="RED" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

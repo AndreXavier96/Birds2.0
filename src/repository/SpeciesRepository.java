@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import constants.MyValues;
-import domains.Bird;
 import domains.Specie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

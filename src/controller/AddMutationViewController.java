@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
-import domains.Breeder;
 import domains.Mutation;
 import domains.Specie;
 import javafx.event.ActionEvent;
