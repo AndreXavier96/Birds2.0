@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
-
 import constants.MyValues;
 import domains.Bird;
 import javafx.collections.FXCollections;
@@ -284,5 +282,45 @@ public class BirdsRepository {
 	    }
 	}
 
+	
+	public Bird getBirdByBand(String band) {
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        Statement stmt = con.createStatement();
+	        String sql = "SELECT * FROM BIRDS WHERE Band='" + band + "';";
+	        ResultSet rs = stmt.executeQuery(sql);
+	        Bird b = new Bird();
+	        if (rs.next()) {
+	            b.setId(rs.getInt(1));
+	            b.setBand(rs.getString(2));
+	            b.setYear(rs.getInt(3));
+	            b.setEntryDate(rs.getDate(4));
+	            b.setEntryType(rs.getString(5));
+	            b.setBuyPrice(rs.getDouble(6));
+	            b.setSellPrice(rs.getDouble(7));
+	            b.setState(rs.getString(8));
+	            b.setSex(rs.getString(9));
+	            int fatherId = rs.getInt(10);
+	            int motherId = rs.getInt(11);
+	            if (fatherId != 0) {
+	                b.setFather(getBird(fatherId));
+	            }
+	            if (motherId != 0) {
+	                b.setMother(getBird(motherId));
+	            }
+	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
+	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
+	            b.setCage(cageRepository.getCage(rs.getInt(14)));
+	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
+	            b.setPosture(rs.getInt(16));
+	            return b;
+	        } else {
+	            return null;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
 
 }
