@@ -18,8 +18,8 @@
       <Label fx:id="LabelError" layoutX="34.0" layoutY="42.0" prefHeight="17.0" prefWidth="471.0" textAlignment="CENTER" textFill="RED" />
       <Label layoutX="361.0" layoutY="81.0" text="Dias Incubacao" />
       <Label layoutX="31.0" layoutY="142.0" text="Dias Anilhar" />
-      <Label layoutX="194.0" layoutY="142.0" text="Fora da gaiola Apos _ Dias" />
-      <Label layoutX="364.0" layoutY="142.0" text="Maturidade apos _ dias" />
+      <Label layoutX="194.0" layoutY="142.0" text="Retirar da gaiola apos Dias" />
+      <Label layoutX="364.0" layoutY="142.0" text="Maturidade apos dias" />
       <TextField fx:id="TfCommonName" layoutX="33.0" layoutY="102.0" />
       <TextField fx:id="TfScientificName" layoutX="198.0" layoutY="102.0" />
       <TextField fx:id="TfIncubationTime" layoutX="360.0" layoutY="102.0" />
