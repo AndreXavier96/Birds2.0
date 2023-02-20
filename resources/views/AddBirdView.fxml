@@ -5,10 +5,11 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddBirdViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddBirdViewController">
    <children>
       <Label layoutX="256.0" layoutY="12.0" text="Add Bird">
          <font>
@@ -50,6 +51,10 @@
       <ComboBox fx:id="CbSpecies" layoutX="35.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
       <ComboBox fx:id="CbMutation" disable="true" layoutX="195.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
       <ComboBox fx:id="CbCage" layoutX="359.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
+      <Button fx:id="btnUpload" layoutX="572.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnUploadImage" prefHeight="25.0" prefWidth="174.0" text="Upload image" />
+      <ImageView fx:id="ImImage" fitHeight="205.0" fitWidth="221.0" layoutX="572.0" layoutY="80.0" pickOnBounds="true" />
+      <Label fx:id="LbImagePath" layoutX="635.0" layoutY="290.0" />
+      <Label layoutX="572.0" layoutY="290.0" text="Image Path:" />
       
    </children>
 </AnchorPane>

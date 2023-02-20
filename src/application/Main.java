@@ -29,11 +29,10 @@ public class Main extends Application {
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		//show main scene
 		try {
-			System.out.println(System.getProperty("user.dir")+"/resources/images/icon.png");
 			Parent root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("Bird Application");
-			primaryStage.getIcons().add(new Image("file:resources/images/icon.png"));
+			primaryStage.getIcons().add(new Image("file:resources/images/img/icon.png"));
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

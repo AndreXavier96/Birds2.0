@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewSingleBirdController">
    <children>
-      <Label fx:id="LbTitle" alignment="CENTER" layoutX="243.0" layoutY="14.0" prefHeight="46.0" prefWidth="395.0" text="Bird 0000-xxxxxx-0000" textAlignment="CENTER">
+      <Label fx:id="LbTitle" alignment="CENTER" layoutX="243.0" layoutY="14.0" prefHeight="46.0" prefWidth="395.0" text="Bird STAM yyyy 0000" textAlignment="CENTER">
          <font>
             <Font size="30.0" />
          </font>
@@ -158,7 +158,7 @@
                         </AnchorPane>
                         <ImageView fx:id="ImBird" fitHeight="374.0" fitWidth="395.0" layoutX="456.0" layoutY="2.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../images/default.png" />
+                              <Image url="@../images/img/default.png" />
                            </image>
                         </ImageView>
                         <AnchorPane layoutX="189.0" layoutY="77.0" prefHeight="17.0" prefWidth="175.0">
@@ -209,7 +209,7 @@
                               <Label layoutX="44.0" layoutY="7.0" text="anilha:" />
                               <ImageView fx:id="ImFather" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/default.png" />
+                                    <Image url="@../images/img/default.png" />
                                  </image>
                               </ImageView>
                            </children>
@@ -229,7 +229,7 @@
                               </Label>
                               <ImageView fx:id="ImMother" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/default.png" />
+                                    <Image url="@../images/img/default.png" />
                                  </image>
                               </ImageView>
                            </children>
@@ -244,7 +244,7 @@
                               <Label layoutX="46.0" layoutY="7.0" text="anilha:" />
                               <ImageView fx:id="ImGrandFatherFather" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/default.png" />
+                                    <Image url="@../images/img/default.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="LbBandGrandFatherFather" layoutX="81.0" layoutY="7.0" prefHeight="17.0" prefWidth="9.0" underline="true">
@@ -264,7 +264,7 @@
                               <Label layoutX="46.0" layoutY="7.0" text="anilha:" />
                               <ImageView fx:id="ImGrandMotherFather" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/default.png" />
+                                    <Image url="@../images/img/default.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="LbBandGrandMotherFather" layoutX="81.0" layoutY="7.0" prefHeight="17.0" prefWidth="10.0" underline="true">
@@ -284,7 +284,7 @@
                               <Label layoutX="46.0" layoutY="7.0" text="anilha:" />
                               <ImageView fx:id="ImGrandFatherMother" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/default.png" />
+                                    <Image url="@../images/img/default.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="LbBandGrandFatherMother" layoutX="81.0" layoutY="7.0" prefHeight="17.0" prefWidth="7.0" underline="true">
@@ -303,7 +303,7 @@
                               </Label>
                               <ImageView fx:id="ImGrandMotherMother" fitHeight="160.0" fitWidth="192.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/default.png" />
+                                    <Image url="@../images/img/default.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="LbBandGrandMotherMother" layoutX="81.0" layoutY="7.0" prefHeight="17.0" prefWidth="9.0" underline="true">
@@ -333,7 +333,7 @@
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/searchIco.png" />
+                        <Image url="@../images/img/searchIco.png" />
                      </image>
                   </ImageView>
                </graphic>

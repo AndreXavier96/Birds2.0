@@ -4,6 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import repository.BirdsRepository;
@@ -12,8 +16,13 @@ import repository.CageRepository;
 import repository.MutationsRepository;
 import repository.SpeciesRepository;
 
+
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +40,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -65,15 +75,24 @@ public class AddBirdViewController implements Initializable {
 	@FXML
 	private DatePicker DfDataEntrada;
 	
-	
 	@FXML
 	private Label LabelAnilha, LabelError, labelTfBuyPrice;
+	
+	@FXML
+	private ImageView ImImage;
+	
+	@FXML
+	private Label LbImagePath;
+	@FXML
+	private Button btnUpload;
 	
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	private BreederRepository breederRepository = new BreederRepository();
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
 	private MutationsRepository mutationsRepository = new MutationsRepository();
 	private CageRepository cageRepository = new CageRepository();
+	
+	private boolean imageUploaded=false;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -142,7 +161,7 @@ public class AddBirdViewController implements Initializable {
 			}
 		});
 		ObservableList<Bird> listFathers = birdsRepository.getAllMales();
-		Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
 		listFathers.add(0,defaultFather);
 		CbFather.setItems(listFathers);
 		CbFather.setConverter(new StringConverter<Bird>() {
@@ -156,7 +175,7 @@ public class AddBirdViewController implements Initializable {
 			}
 		});
 		ObservableList<Bird> listMothers = birdsRepository.getAllFemales();
-		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
 		listMothers.add(0,defaultMother);
 		CbMother.setItems(listMothers);
 		CbMother.setConverter(new StringConverter<Bird>() {
@@ -199,6 +218,19 @@ public class AddBirdViewController implements Initializable {
 			else
 				bird.setMutations(null);
 			bird.setCage(cageRepository.getCage(CbCage.getValue().getId()));
+			
+			if (imageUploaded) {
+				File defaultFolder = new File("resources/birds/images");
+				File selectedFile = new File (LbImagePath.getText());
+				try {
+					String fileName = anilha+selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));
+					Files.copy(selectedFile.toPath(), defaultFolder.toPath().resolve(fileName),StandardCopyOption.REPLACE_EXISTING);
+					bird.setImage(LbImagePath.getText());
+				} catch (IOException e) {
+					System.out.println(e);
+				}
+			}
+			
 			birdsRepository.Insert(bird);
 		}
 	}
@@ -345,4 +377,18 @@ public class AddBirdViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	
+	@FXML
+	public void btnUploadImage(ActionEvent event) {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Select Image");
+			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files","*.png","*.jpg"));
+			File selectedFile = fileChooser.showOpenDialog(null);
+			if (selectedFile!=null) {
+				LbImagePath.setText(selectedFile.toPath().toString());
+				ImImage.setImage(new Image(selectedFile.toURI().toString()));
+				imageUploaded=true;
+			}
+	}
+	
 }

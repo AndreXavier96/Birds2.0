@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -59,6 +60,7 @@ public class ViewSingleBirdController  {
 	
 	@FXML
 	public void btnSearchForBand(ActionEvent event) {
+		clearAllFields();
 		if (validator()) {
 			Bird b = birdsRepository.getBirdByBand(TfBandSearch.getText());
 			personalInfo(b);
@@ -69,17 +71,40 @@ public class ViewSingleBirdController  {
 	public void affiliation(Bird b) {
 		if(b.getFather()!=null) {
 			LbBandFather.setText(b.getFather().getBand());
-			if(b.getFather().getFather()!=null)
+			if (!b.getFather().getImage().isEmpty())
+				ImFather.setImage(new Image(b.getFather().getImage()));
+			
+			if(b.getFather().getFather()!=null) {
 				LbBandGrandFatherFather.setText(b.getFather().getFather().getBand());
-			if(b.getFather().getMother()!=null)
+				if (!b.getFather().getFather().getImage().isEmpty())
+					ImGrandFatherFather.setImage(new Image(b.getFather().getFather().getImage()));
+			}
+				
+			if(b.getFather().getMother()!=null) {
 				LbBandGrandFatherMother.setText(b.getFather().getMother().getBand());
+				if (!b.getFather().getMother().getImage().isEmpty())
+					ImGrandFatherMother.setImage(new Image(b.getFather().getMother().getImage()));
+			}
+				
+			
 		}
 		if(b.getMother()!=null) {
 			LbBandMother.setText(b.getMother().getBand());
-			if(b.getMother().getFather()!=null)
+			if (!b.getMother().getImage().isEmpty())
+				ImMother.setImage(new Image(b.getMother().getImage()));
+			
+			if(b.getMother().getFather()!=null) {
 				LbBandGrandMotherFather.setText(b.getMother().getFather().getBand());
-			if(b.getMother().getMother()!=null)
+				if (!b.getMother().getFather().getImage().isEmpty())
+					ImGrandMotherFather.setImage(new Image(b.getMother().getFather().getImage()));
+			}
+				
+			if(b.getMother().getMother()!=null) {
 				LbBandGrandMotherMother.setText(b.getMother().getMother().getBand());
+				if (!b.getMother().getMother().getImage().isEmpty())
+					ImGrandMotherMother.setImage(new Image(b.getMother().getMother().getImage()));
+			}
+				
 		}	
 	}
 	
@@ -109,6 +134,9 @@ public class ViewSingleBirdController  {
 			LbLastModify.setText("TODO");
 			LbOBs.setText("TODO");
 			LbBreeder.setText(b.getBreeder().getName());
+			if (!b.getImage().isEmpty()) {
+				ImBird.setImage(new Image(b.getImage()));
+			}
 	}
 	
 	public boolean validator() {
@@ -127,6 +155,43 @@ public class ViewSingleBirdController  {
 			validate=true;
 		}
 		return validate;
+	}
+	
+	public void clearAllFields() {
+		LabelError.setText(null);
+		LbTitle.setText("Bird STAM yyyy 0000");
+		LbBand.setText(null);
+		LbYear.setText(null);
+		LbEntryDate.setText(null);
+		LbEntryType.setText(null);
+		LbSex.setText(null);
+		LbBuyPrice.setText(null);
+		ApBuyPrice.setVisible(false);
+		LbSellPrice.setText(null);
+		ApSellPrice.setVisible(false);
+		LbSpecie.setText(null);
+		LbMutation.setText(null);
+		LbClassification.setText(null);
+		LbState.setText(null);
+		LbLastModify.setText(null);
+		LbOBs.setText(null);
+		LbCage.setText(null);
+		LbBreeder.setText(null);
+		ImBird.setImage(new Image("file:resources/images/img/default.png"));
+
+		LbBandFather.setText(null);
+		LbBandMother.setText(null);
+		LbBandGrandFatherFather.setText(null);
+		LbBandGrandMotherFather.setText(null);
+		LbBandGrandFatherMother.setText(null);
+		LbBandGrandMotherMother.setText(null);
+		ImFather.setImage(new Image("file:resources/images/img/default.png"));
+		ImMother.setImage(new Image("file:resources/images/img/default.png"));
+		ImGrandFatherFather.setImage(new Image("file:resources/images/img/default.png"));
+		ImGrandMotherFather.setImage(new Image("file:resources/images/img/default.png"));
+		ImGrandFatherMother.setImage(new Image("file:resources/images/img/default.png"));
+		ImGrandMotherMother.setImage(new Image("file:resources/images/img/default.png"));
+
 	}
 	
 	@FXML

@@ -39,6 +39,7 @@ public class BirdsRepository {
 					+"CageId INTEGER NOT NULL,"
 					+"BreederId INTEGER,"
 					+"PostureId INTEGER,"
+					+"ImagePath VARCHAR(500),"
 					+"PRIMARY KEY (id), "
 					+"FOREIGN KEY (Father) REFERENCES BIRDS (id), "
 					+"FOREIGN KEY (Mother) REFERENCES BIRDS (id), "
@@ -102,6 +103,7 @@ public class BirdsRepository {
 					b.setCage(cageRepository.getCage(rs.getInt(14)));
 					b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
 					b.setPosture(rs.getInt(16));
+					b.setImage(rs.getString(17));
 					birds.add(b);
 				}
 				return birds;
@@ -146,6 +148,7 @@ public class BirdsRepository {
 				b.setCage(cageRepository.getCage(rs.getInt(14)));
 				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
 				b.setPosture(rs.getInt(16));
+				b.setImage(rs.getString(17));
 				birds.add(b);
 			}
 			return birds;
@@ -189,6 +192,7 @@ public class BirdsRepository {
 				b.setCage(cageRepository.getCage(rs.getInt(14)));
 				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
 				b.setPosture(rs.getInt(16));
+				b.setImage(rs.getString(17));
 				birds.add(b);
 			}
 			return birds;
@@ -210,11 +214,15 @@ public class BirdsRepository {
 			String dateString = dateFormat.format(bird.getEntryDate());
 			
 			String insert = "INSERT INTO BIRDS";
-			String into = "(Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,State,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId)";
+			String into = "(Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,State,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId,ImagePath)";
 			String values="values('" + bird.getBand() + "','" + bird.getYear() + "','"
 					+ dateString + "','" + bird.getEntryType() + "','" + bird.getBuyPrice() + "','"
 					+ bird.getSellPrice() + "','" + bird.getState() + "','" + bird.getSex() + "'";
-			String valuesFinal=",'"+ bird.getSpecies().getId() +"','"+ bird.getCage().getId() +"','"+bird.getBreeder().getId()+"')";
+			String imagePath = bird.getImage();
+			if (bird.getImage()==null) {
+				imagePath="";
+			}
+			String valuesFinal=",'"+ bird.getSpecies().getId() +"','"+ bird.getCage().getId() +"','"+bird.getBreeder().getId()+"','"+imagePath+"')";
 			
 
 			if (bird.getFather()==null) {
@@ -272,6 +280,7 @@ public class BirdsRepository {
 	            b.setCage(cageRepository.getCage(rs.getInt(14)));
 	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
 	            b.setPosture(rs.getInt(16));
+	            b.setImage(rs.getString(17));
 	            return b;
 	        } else {
 	            return null;
@@ -313,6 +322,7 @@ public class BirdsRepository {
 	            b.setCage(cageRepository.getCage(rs.getInt(14)));
 	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
 	            b.setPosture(rs.getInt(16));
+	            b.setImage(rs.getString(17));
 	            return b;
 	        } else {
 	            return null;

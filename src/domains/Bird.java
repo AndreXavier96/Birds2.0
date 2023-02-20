@@ -19,12 +19,13 @@ public class Bird {
 	private Cage Cage;
 	private Breeder Breeder;
 	private Integer Posture;
+	private String Image;
 
 	
 
 	public Bird(Integer id, Breeder nrBreeder, String band, Integer year, Date entryDate, String entryType,
 			Double buyPrice, Double sellPrice, String state, String sex, Bird father, Bird mother, Specie species,
-			Mutation mutations, Cage cage, Integer posture) {
+			Mutation mutations, Cage cage, Integer posture,String image) {
 		super();
 		this.id = id;
 		Breeder = nrBreeder;
@@ -42,6 +43,7 @@ public class Bird {
 		Mutations = mutations;
 		Cage = cage;
 		Posture = posture;
+		Image=image;
 	}
 
 	public Bird() {
@@ -174,6 +176,14 @@ public class Bird {
 
 	public void setPosture(Integer posture) {
 		Posture = posture;
+	}
+	
+	public String getImage() {
+		return Image;
+	}
+
+	public void setImage(String image) {
+		Image = image;
 	}
 
 	@Override
