@@ -128,7 +128,7 @@ public class AddMutationViewController implements Initializable {
 					TfObs.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelError.setText("Observacoes demasiado grande(Max 500 caracters)");
 					validate=false;
-				}else if(!TfObs.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]|[0-9]| )+$")){
+				}else if(!TfObs.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]|[0-9]| |[\\p{P}\\p{S}])+$")){
 					TfObs.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelError.setText("Observacoes nao esta no formato correto");
 					validate=false;
