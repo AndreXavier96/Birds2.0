@@ -15,12 +15,12 @@
             <TableColumn fx:id="colScientificName" prefWidth="172.0" text="Nome Cientifico" />
             <TableColumn fx:id="colIncubationDays" minWidth="0.0" prefWidth="178.0" text="Dias de Incubacao" />
              <TableColumn fx:id="colBandingDays" prefWidth="178.0" text="Dias para Anilhar" />
-             <TableColumn fx:id="colOutOfCageDays" prefWidth="178.0" text="Dias para sair Gaiola" />
+             <TableColumn fx:id="colOutOfCageDays" prefWidth="178.0" text="Dias para retirar Gaiola" />
              <TableColumn fx:id="colMaturityDays" prefWidth="178.0" text="Dias para Maturidade" />
              
         </columns>
       </TableView>
-      <Label layoutX="264.0" layoutY="14.0" text="All Birds">
+      <Label layoutX="264.0" layoutY="14.0" text="Especies">
          <font>
             <Font size="20.0" />
          </font>

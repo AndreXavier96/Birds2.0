@@ -11,46 +11,46 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddBirdViewController">
    <children>
-      <Label layoutX="256.0" layoutY="12.0" text="Add Bird">
+      <Label layoutX="287.0" layoutY="25.0" text="Adicionar Pássaro">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Label layoutX="34.0" layoutY="50.0" text="Identificacao">
+      <Label layoutX="34.0" layoutY="50.0" text="Identificação">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="34.0" layoutY="81.0" text="Nr Criador" />
+      <Label layoutX="34.0" layoutY="81.0" text="Criador" />
       <Label layoutX="201.0" layoutY="81.0" text="Ano da anilha" />
-      <Label layoutX="360.0" layoutY="81.0" text="Numero anilha" />
+      <Label layoutX="360.0" layoutY="81.0" text="Número da anilha" />
       <Label fx:id="LabelError" layoutX="34.0" layoutY="42.0" prefHeight="17.0" prefWidth="471.0" textAlignment="CENTER" textFill="RED" />
-      <Label layoutX="36.0" layoutY="140.0" text="Data Entrada" />
-      <Label layoutX="356.0" layoutY="140.0" text="Tipo Entrada" />
+      <Label layoutX="36.0" layoutY="140.0" text="Data de Entrada" />
+      <Label layoutX="356.0" layoutY="140.0" text="Tipo de Entrada" />
       <Label layoutX="359.0" layoutY="192.0" text="Estado" />
       <Label layoutX="38.0" layoutY="245.0" text="Sexo" />
       <Label layoutX="196.0" layoutY="245.0" text="Pai" />
-      <Label layoutX="365.0" layoutY="245.0" text="Mae" />
-      <Label layoutX="38.0" layoutY="288.0" text="Especie/Raca" />
-      <Label layoutX="196.0" layoutY="289.0" text="Mutacao" />
-      <Label layoutX="360.0" layoutY="297.0" text="Gaiola" />
+      <Label layoutX="365.0" layoutY="245.0" text="Mãe" />
+      <Label layoutX="38.0" layoutY="288.0" text="Espécie/Raca" />
+      <Label layoutX="196.0" layoutY="289.0" text="Mutação" />
+      <Label layoutX="360.0" layoutY="290.0" text="Gaiola" />
       <TextField fx:id="TfAno" layoutX="198.0" layoutY="102.0" />
       <TextField fx:id="TfNumero" layoutX="359.0" layoutY="102.0" />
       <DatePicker fx:id="DfDataEntrada" layoutX="36.0" layoutY="157.0" />
-      <ComboBox fx:id="CbEntryType" layoutX="359.0" layoutY="157.0" prefWidth="150.0" promptText="Select" />
+      <ComboBox fx:id="CbEntryType" layoutX="359.0" layoutY="157.0" prefWidth="150.0" promptText="Selecionar" />
       <TextField fx:id="TfBuyPrice" layoutX="35.0" layoutY="209.0" visible="false" />
       
-      <Button layoutX="505.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Add" />
-      <Button layoutX="11.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Back" />
-      <ComboBox fx:id="CbCriador" layoutX="38.0" layoutY="102.0" prefWidth="150.0" promptText="Select" />
-      <Label fx:id="labelTfBuyPrice" layoutX="33.0" layoutY="192.0" text="Preco Compra" visible="false" />
-      <ComboBox fx:id="CbState" layoutX="359.0" layoutY="209.0" prefWidth="150.0" promptText="Select" />
-      <ComboBox fx:id="CbSex" layoutX="38.0" layoutY="259.0" prefWidth="150.0" promptText="Select" />
-      <ComboBox fx:id="CbFather" layoutX="198.0" layoutY="259.0" prefWidth="150.0" promptText="Select" />
-      <ComboBox fx:id="CbMother" layoutX="359.0" layoutY="259.0" prefWidth="150.0" promptText="Select" />
-      <ComboBox fx:id="CbSpecies" layoutX="35.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
-      <ComboBox fx:id="CbMutation" disable="true" layoutX="195.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
-      <ComboBox fx:id="CbCage" layoutX="359.0" layoutY="309.0" prefWidth="150.0" promptText="Select" />
+      <Button layoutX="505.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
+      <Button layoutX="11.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" />
+      <ComboBox fx:id="CbCriador" layoutX="38.0" layoutY="102.0" prefWidth="150.0" promptText="Selecionar" />
+      <Label fx:id="labelTfBuyPrice" layoutX="33.0" layoutY="192.0" text="Preço Compra" visible="false" />
+      <ComboBox fx:id="CbState" layoutX="359.0" layoutY="209.0" prefWidth="150.0" promptText="Selecionar" />
+      <ComboBox fx:id="CbSex" layoutX="38.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
+      <ComboBox fx:id="CbFather" layoutX="198.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
+      <ComboBox fx:id="CbMother" layoutX="359.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
+      <ComboBox fx:id="CbSpecies" layoutX="35.0" layoutY="309.0" prefWidth="150.0" promptText="Selecionar" />
+      <ComboBox fx:id="CbMutation" disable="true" layoutX="195.0" layoutY="309.0" prefWidth="150.0" promptText="Selecionar" />
+      <ComboBox fx:id="CbCage" layoutX="359.0" layoutY="309.0" prefWidth="150.0" promptText="Selecionar" />
       <Button fx:id="btnUpload" layoutX="572.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnUploadImage" prefHeight="25.0" prefWidth="174.0" text="Upload image" />
       <ImageView fx:id="ImImage" fitHeight="205.0" fitWidth="221.0" layoutX="572.0" layoutY="80.0" pickOnBounds="true" />
       <Label fx:id="LbImagePath" layoutX="635.0" layoutY="290.0" />
