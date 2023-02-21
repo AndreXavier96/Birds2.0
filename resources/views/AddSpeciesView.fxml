@@ -14,20 +14,20 @@
          </font>
       </Label>
       <Label layoutX="34.0" layoutY="81.0" text="Nome Comum" />
-      <Label layoutX="198.0" layoutY="81.0" text="Nome Cientifico" />
+      <Label layoutX="198.0" layoutY="81.0" text="Nome Científico" />
       <Label fx:id="LabelError" layoutX="34.0" layoutY="42.0" prefHeight="17.0" prefWidth="471.0" textAlignment="CENTER" textFill="RED" />
-      <Label layoutX="361.0" layoutY="81.0" text="Dias Incubacao" />
+      <Label layoutX="361.0" layoutY="81.0" text="Dias Incubação" />
       <Label layoutX="31.0" layoutY="142.0" text="Dias Anilhar" />
-      <Label layoutX="194.0" layoutY="142.0" text="Retirar da gaiola apos Dias" />
-      <Label layoutX="364.0" layoutY="142.0" text="Maturidade apos dias" />
+      <Label layoutX="194.0" layoutY="142.0" text="Retirar da gaiola após Dias" />
+      <Label layoutX="364.0" layoutY="142.0" text="Maturidade após dias" />
       <TextField fx:id="TfCommonName" layoutX="33.0" layoutY="102.0" />
       <TextField fx:id="TfScientificName" layoutX="198.0" layoutY="102.0" />
       <TextField fx:id="TfIncubationTime" layoutX="360.0" layoutY="102.0" />
       <TextField fx:id="TfTimeToBand" layoutX="33.0" layoutY="159.0" />
       <TextField fx:id="TfTimeOutOfCage" layoutX="195.0" layoutY="159.0" />
       
-      <Button layoutX="505.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Add" />
-      <Button layoutX="11.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Back" />
+      <Button layoutX="505.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
+      <Button layoutX="11.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" />
       <TextField fx:id="TfMaturityAfterDays" layoutX="360.0" layoutY="159.0" />
       
    </children>

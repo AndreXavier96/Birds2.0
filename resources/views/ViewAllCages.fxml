@@ -13,14 +13,14 @@
         <columns>
             <TableColumn fx:id="colCode" prefWidth="172.0" text="Codigo" />
             <TableColumn fx:id="colType" prefWidth="172.0" text="Tipo" />
-             <TableColumn fx:id="colBird" prefWidth="172.0" text="Bird" />
+             <TableColumn fx:id="colBird" prefWidth="172.0" text="Passaro" />
         </columns>
       </TableView>
-      <Label layoutX="264.0" layoutY="14.0" text="All Birds">
+      <Label layoutX="265.0" layoutY="14.0" text="Gaiolas">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button layoutX="527.0" layoutY="354.0" mnemonicParsing="false" onAction="#btnBack" text="Back" />
+      <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnBack" text="Voltar" />
    </children>
 </AnchorPane>
