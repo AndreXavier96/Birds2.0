@@ -64,7 +64,7 @@ public class AddBirdViewController implements Initializable {
 	private ComboBox<Cage> CbCage;
 	
 	@FXML
-	private ComboBox<String> CbEntryType, CbState, CbSex;
+	private ComboBox<String> CbEntryType, CbSex;
 	
 	@FXML
 	private ComboBox<Bird> CbFather,CbMother;
@@ -118,7 +118,6 @@ public class AddBirdViewController implements Initializable {
 		    	  labelTfBuyPrice.setVisible(false);
 		      }
 		    });
-		CbState.setItems(MyValues.STATELIST);
 		CbSex.setItems(MyValues.SEXLIST);
 		CbSpecies.setItems(speciesRepository.getAllSpecies());
 		CbSpecies.setConverter(new StringConverter<Specie>() {
@@ -311,17 +310,6 @@ public class AddBirdViewController implements Initializable {
 					LabelError.setText("");
 					validate=true;
 				}
-		
-		if (validate) 
-			if (CbState.getValue()==null) {
-				CbState.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Estado tem de ser escolhido");
-				validate=false;
-			}else {
-				CbState.setStyle(null);
-				LabelError.setText("");
-				validate=true;
-			}
 		
 		if (validate) 
 			if (CbSex.getValue()==null) {
