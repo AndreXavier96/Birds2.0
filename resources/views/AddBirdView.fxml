@@ -27,7 +27,6 @@
       <Label fx:id="LabelError" layoutX="34.0" layoutY="42.0" prefHeight="17.0" prefWidth="471.0" textAlignment="CENTER" textFill="RED" />
       <Label layoutX="36.0" layoutY="140.0" text="Data de Entrada" />
       <Label layoutX="356.0" layoutY="140.0" text="Tipo de Entrada" />
-      <Label layoutX="359.0" layoutY="192.0" text="Estado" />
       <Label layoutX="38.0" layoutY="245.0" text="Sexo" />
       <Label layoutX="196.0" layoutY="245.0" text="Pai" />
       <Label layoutX="365.0" layoutY="245.0" text="Mãe" />
@@ -41,7 +40,6 @@
       <ComboBox fx:id="CbEntryType" layoutX="359.0" layoutY="157.0" prefWidth="150.0" promptText="Selecionar" />
       <Label fx:id="labelTfBuyPrice" layoutX="33.0" layoutY="192.0" text="Preço Compra" visible="false" />
       <TextField fx:id="TfBuyPrice" layoutX="35.0" layoutY="209.0" visible="false" />
-      <ComboBox fx:id="CbState" layoutX="359.0" layoutY="209.0" prefWidth="150.0" promptText="Selecionar" />
       <ComboBox fx:id="CbSex" layoutX="38.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
       <ComboBox fx:id="CbFather" layoutX="198.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
       <ComboBox fx:id="CbMother" layoutX="359.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
