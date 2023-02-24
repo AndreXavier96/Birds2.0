@@ -7,6 +7,8 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -201,11 +203,6 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Tratamentos">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
           <Tab text="Filiacao">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -335,6 +332,30 @@
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab text="Descendentes">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="838.0">
+                     <children>
+                        <TableView fx:id="TbDescendants" layoutY="-2.0" prefHeight="389.0" prefWidth="853.0">
+                          <columns>
+                            <TableColumn fx:id="TcBand" prefWidth="75.0" text="Anilha" />
+                            <TableColumn fx:id="TcFather" prefWidth="75.0" text="Pai" />
+                              <TableColumn fx:id="TcMother" prefWidth="75.0" text="Mae" />
+                              <TableColumn fx:id="TcState" prefWidth="75.0" text="Estado" />
+                              <TableColumn fx:id="TcCage" prefWidth="75.0" text="Gaiola" />
+                              <TableColumn fx:id="TcBrooding" prefWidth="75.0" text="Ninhada" />
+                              <TableColumn fx:id="TcMutation" prefWidth="75.0" text="Mutacao" />
+                              <TableColumn fx:id="TcBreeder" prefWidth="75.0" text="Criador" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Tratamentos">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
             <Tab text="Concursos">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

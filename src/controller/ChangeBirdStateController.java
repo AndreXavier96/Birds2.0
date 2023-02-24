@@ -18,8 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
@@ -98,7 +96,8 @@ public class ChangeBirdStateController implements Initializable{
 			else if (state.getType().equals(MyValues.VENDIDO))
 				state.setValor(Double.parseDouble(TfPriceSell.getText()));
 			state.setDate(Date.from(Dtpicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-			Bird bird = birdsRepository.getBirdByBand(LbBand.getText());
+//			Bird bird = birdsRepository.getBirdByBand(LbBand.getText());
+			Bird bird = birdsRepository.getBirdWhereString("Band",LbBand.getText());
 			state.setId(bird.getState().getId());
 			stateRepositor.updateState(state);
 			
@@ -107,7 +106,7 @@ public class ChangeBirdStateController implements Initializable{
 		    stage.close();
 		    
 			//Set Success msg in viewSingleBird
-			viewSingleBirdController.setSuccess(MyValues.CHANGE_STATE_SUCCESS, birdsRepository.getBirdByBand(LbBand.getText()));
+			viewSingleBirdController.setSuccess(MyValues.CHANGE_STATE_SUCCESS, birdsRepository.getBirdWhereString("Band",LbBand.getText()));
 		}
 	}
 	

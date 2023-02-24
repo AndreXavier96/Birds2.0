@@ -63,7 +63,7 @@ public class ViewAllBirdsController implements Initializable {
 		colEntryType.setCellValueFactory(new PropertyValueFactory<>("EntryType"));
 		colBuyPrice.setCellValueFactory(new PropertyValueFactory<>("BuyPrice"));
 		colSellPrice.setCellValueFactory(new PropertyValueFactory<>("SellPrice"));
-		colState.setCellValueFactory(new PropertyValueFactory<>("State"));
+		colState.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getState().getType()));
 		colSex.setCellValueFactory(new PropertyValueFactory<>("Sex"));
 	    colFather.setCellValueFactory(cellData -> new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getFather())
                 .map(Bird::getBand)
