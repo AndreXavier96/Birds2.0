@@ -15,7 +15,7 @@ import repository.BreederRepository;
 import repository.CageRepository;
 import repository.MutationsRepository;
 import repository.SpeciesRepository;
-
+import repository.StateRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,6 +91,7 @@ public class AddBirdViewController implements Initializable {
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
 	private MutationsRepository mutationsRepository = new MutationsRepository();
 	private CageRepository cageRepository = new CageRepository();
+	private StateRepository stateRepository=new StateRepository();
 	
 	private boolean imageUploaded=false;
 	
@@ -206,7 +207,9 @@ public class AddBirdViewController implements Initializable {
 				bird.setBuyPrice(0.0);
 			}
 			bird.setSellPrice(0.0);
-			bird.setState(CbState.getValue());
+			
+			bird.setState(stateRepository.insertVivo());
+			
 			bird.setSex(CbSex.getValue());
 			if (CbFather.getValue().getId()!=null)
 				bird.setFather(birdsRepository.getBird(CbFather.getValue().getId()));
@@ -220,7 +223,7 @@ public class AddBirdViewController implements Initializable {
 			bird.setCage(cageRepository.getCage(CbCage.getValue().getId()));
 			
 			if (imageUploaded) {
-				File defaultFolder = new File("resources/birds/images");
+				File defaultFolder = new File("resources/images/birds");
 				File selectedFile = new File (LbImagePath.getText());
 				try {
 					String fileName = anilha+selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));

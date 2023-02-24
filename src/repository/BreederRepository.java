@@ -184,6 +184,7 @@ public class BreederRepository {
 				b.setStam(rs.getString(14));
 			}
 			return b;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

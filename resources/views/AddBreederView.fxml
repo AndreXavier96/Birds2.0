@@ -55,22 +55,7 @@
 			<Cursor fx:constant="TEXT" />
 		</cursor>
 	</TextField>
-	<TextField fx:id="TfDistrict" layoutX="194.0" layoutY="255.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfPostalCode" layoutX="359.0" layoutY="255.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfLocale" layoutX="30.0" layoutY="255.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfAddress" layoutX="30.0" layoutY="303.0" prefHeight="25.0" prefWidth="317.0">
+	<TextField fx:id="TfStam" layoutX="30.0" layoutY="188.0">
 		<cursor>
 			<Cursor fx:constant="TEXT" />
 		</cursor>
@@ -85,11 +70,29 @@
 			<Cursor fx:constant="TEXT" />
 		</cursor>
 	</TextField>
-	<TextField fx:id="TfStam" layoutX="30.0" layoutY="188.0">
+	<TextField fx:id="TfLocale" layoutX="30.0" layoutY="255.0">
 		<cursor>
 			<Cursor fx:constant="TEXT" />
 		</cursor>
 	</TextField>
+	<TextField fx:id="TfDistrict" layoutX="194.0" layoutY="255.0">
+		<cursor>
+			<Cursor fx:constant="TEXT" />
+		</cursor>
+	</TextField>
+	<TextField fx:id="TfPostalCode" layoutX="359.0" layoutY="255.0">
+		<cursor>
+			<Cursor fx:constant="TEXT" />
+		</cursor>
+	</TextField>
+	<TextField fx:id="TfAddress" layoutX="30.0" layoutY="303.0" prefHeight="25.0" prefWidth="317.0">
+		<cursor>
+			<Cursor fx:constant="TEXT" />
+		</cursor>
+	</TextField>
+	<ComboBox fx:id="CbType" layoutX="359.0" layoutY="303.0" prefWidth="150.0" promptText="Selecionar">
+		<cursor><Cursor fx:constant="HAND" /></cursor>
+	</ComboBox>
 
 	<Button layoutX="434.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar">
 		<cursor>
@@ -101,9 +104,6 @@
 			<Cursor fx:constant="HAND" />
 		</cursor>
 	</Button>
-	<ComboBox fx:id="CbType" layoutX="359.0" layoutY="303.0" prefWidth="150.0" promptText="Selecionar">
-		<cursor><Cursor fx:constant="HAND" /></cursor>
-	</ComboBox>
       <Label fx:id="labelAlert" layoutX="34.0" layoutY="48.0" prefHeight="17.0" prefWidth="479.0" textAlignment="CENTER" textFill="#25c900" />
    </children>
 </AnchorPane>

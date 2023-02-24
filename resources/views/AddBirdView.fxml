@@ -34,16 +34,13 @@
       <Label layoutX="38.0" layoutY="288.0" text="Espécie/Raca" />
       <Label layoutX="196.0" layoutY="289.0" text="Mutação" />
       <Label layoutX="360.0" layoutY="290.0" text="Gaiola" />
+      <ComboBox fx:id="CbCriador" layoutX="38.0" layoutY="102.0" prefWidth="150.0" promptText="Selecionar" />
       <TextField fx:id="TfAno" layoutX="198.0" layoutY="102.0" />
       <TextField fx:id="TfNumero" layoutX="359.0" layoutY="102.0" />
       <DatePicker fx:id="DfDataEntrada" layoutX="36.0" layoutY="157.0" />
       <ComboBox fx:id="CbEntryType" layoutX="359.0" layoutY="157.0" prefWidth="150.0" promptText="Selecionar" />
-      <TextField fx:id="TfBuyPrice" layoutX="35.0" layoutY="209.0" visible="false" />
-      
-      <Button layoutX="505.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
-      <Button layoutX="11.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" />
-      <ComboBox fx:id="CbCriador" layoutX="38.0" layoutY="102.0" prefWidth="150.0" promptText="Selecionar" />
       <Label fx:id="labelTfBuyPrice" layoutX="33.0" layoutY="192.0" text="Preço Compra" visible="false" />
+      <TextField fx:id="TfBuyPrice" layoutX="35.0" layoutY="209.0" visible="false" />
       <ComboBox fx:id="CbState" layoutX="359.0" layoutY="209.0" prefWidth="150.0" promptText="Selecionar" />
       <ComboBox fx:id="CbSex" layoutX="38.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
       <ComboBox fx:id="CbFather" layoutX="198.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
@@ -52,6 +49,9 @@
       <ComboBox fx:id="CbMutation" disable="true" layoutX="195.0" layoutY="309.0" prefWidth="150.0" promptText="Selecionar" />
       <ComboBox fx:id="CbCage" layoutX="359.0" layoutY="309.0" prefWidth="150.0" promptText="Selecionar" />
       <Button fx:id="btnUpload" layoutX="572.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnUploadImage" prefHeight="25.0" prefWidth="174.0" text="Upload image" />
+      
+      <Button defaultButton="true" layoutX="505.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
+      <Button cancelButton="true" layoutX="11.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" />
       <ImageView fx:id="ImImage" fitHeight="205.0" fitWidth="221.0" layoutX="572.0" layoutY="80.0" pickOnBounds="true" />
       <Label fx:id="LbImagePath" layoutX="635.0" layoutY="290.0" />
       <Label layoutX="572.0" layoutY="290.0" text="Image Path:" />

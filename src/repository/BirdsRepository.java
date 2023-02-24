@@ -2,7 +2,9 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import constants.MyValues;
@@ -16,6 +18,7 @@ public class BirdsRepository {
 	private BreederRepository breederRepository = new BreederRepository();
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
 	private MutationsRepository mutationsRepository = new MutationsRepository();
+	private StateRepository stateRepository = new StateRepository();
 	
 	public void CreateTableBird() {
 		try {
@@ -30,7 +33,7 @@ public class BirdsRepository {
 					+"EntryType VARCHAR(255) NOT NULL, "
 					+"BuyPrice DOUBLE, "
 					+"SellPrice DOUBLE, "
-					+"State VARCHAR(255) NOT NULL, "
+					+"StateId INTEGER NOT NULL, "
 					+"Sex VARCHAR(255) NOT NULL, "
 					+"Father INTEGER, "
 					+"Mother INTEGER, "
@@ -47,7 +50,8 @@ public class BirdsRepository {
 					+"FOREIGN KEY (MutationsId) REFERENCES MUTATIONS (id), "
 					+"FOREIGN KEY (CageId) REFERENCES CAGE (id), "
 					+"FOREIGN KEY (BreederId) REFERENCES BREEDER (id), "
-					+"FOREIGN KEY (PostureId) REFERENCES POSTURE (id))";
+					+"FOREIGN KEY (PostureId) REFERENCES POSTURE (id), "
+		            +"FOREIGN KEY (StateId) REFERENCES STATE (id))";
 		
 			stmt.executeUpdate(sql);
 			System.out.println("Table BIRDS Created.");
@@ -88,7 +92,7 @@ public class BirdsRepository {
 					b.setEntryType(rs.getString(5));
 					b.setBuyPrice(rs.getDouble(6));
 					b.setSellPrice(rs.getDouble(7));
-					b.setState(rs.getString(8));
+					b.setState(stateRepository.getStateById(rs.getInt(8)));
 					b.setSex(rs.getString(9));
 					if (rs.getInt(10)!=0)
 						b.setFather(getBird(rs.getInt(10)));
@@ -133,7 +137,7 @@ public class BirdsRepository {
 				b.setEntryType(rs.getString(5));
 				b.setBuyPrice(rs.getDouble(6));
 				b.setSellPrice(rs.getDouble(7));
-				b.setState(rs.getString(8));
+				b.setState(stateRepository.getStateById(rs.getInt(8)));
 				b.setSex(rs.getString(9));
 				if (rs.getInt(10)!=0)
 					b.setFather(getBird(rs.getInt(10)));
@@ -177,7 +181,7 @@ public class BirdsRepository {
 				b.setEntryType(rs.getString(5));
 				b.setBuyPrice(rs.getDouble(6));
 				b.setSellPrice(rs.getDouble(7));
-				b.setState(rs.getString(8));
+				b.setState(stateRepository.getStateById(rs.getInt(8)));
 				b.setSex(rs.getString(9));
 				if (rs.getInt(10)!=0)
 					b.setFather(getBird(rs.getInt(10)));
@@ -214,10 +218,10 @@ public class BirdsRepository {
 			String dateString = dateFormat.format(bird.getEntryDate());
 			
 			String insert = "INSERT INTO BIRDS";
-			String into = "(Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,State,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId,ImagePath)";
+			String into = "(Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,StateId,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId,ImagePath)";
 			String values="values('" + bird.getBand() + "','" + bird.getYear() + "','"
 					+ dateString + "','" + bird.getEntryType() + "','" + bird.getBuyPrice() + "','"
-					+ bird.getSellPrice() + "','" + bird.getState() + "','" + bird.getSex() + "'";
+					+ bird.getSellPrice() + "','" + bird.getState().getId() + "','" + bird.getSex() + "'";
 			String imagePath = bird.getImage();
 			if (bird.getImage()==null) {
 				imagePath="";
@@ -265,7 +269,7 @@ public class BirdsRepository {
 	            b.setEntryType(rs.getString(5));
 	            b.setBuyPrice(rs.getDouble(6));
 	            b.setSellPrice(rs.getDouble(7));
-	            b.setState(rs.getString(8));
+	            b.setState(stateRepository.getStateById(rs.getInt(8)));
 	            b.setSex(rs.getString(9));
 	            int fatherId = rs.getInt(10);
 	            int motherId = rs.getInt(11);
@@ -307,7 +311,7 @@ public class BirdsRepository {
 	            b.setEntryType(rs.getString(5));
 	            b.setBuyPrice(rs.getDouble(6));
 	            b.setSellPrice(rs.getDouble(7));
-	            b.setState(rs.getString(8));
+	            b.setState(stateRepository.getStateById(rs.getInt(8)));
 	            b.setSex(rs.getString(9));
 	            int fatherId = rs.getInt(10);
 	            int motherId = rs.getInt(11);
@@ -332,5 +336,32 @@ public class BirdsRepository {
 	        return null;
 	    }
 	}
+	
+	public void partialUpdateStringsBird(Integer id, String col, String value) {
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        PreparedStatement stmt = con.prepareStatement("UPDATE BIRDS SET ? = ? WHERE id=?");
+	        stmt.setString(1, col);
+	        stmt.setString(2, value);
+	        stmt.setInt(3, id);
+	        stmt.executeUpdate();
+	        System.out.println("Bird with id " + id + " updated, coluna "+col+" para valor: "+value+" .");
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 
+	public void partialUpdateIntBird(Integer id, String col, int value) {
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        PreparedStatement stmt = con.prepareStatement("UPDATE BIRDS SET ? = ? WHERE id=?");
+	        stmt.setString(1, col);
+	        stmt.setInt(2, value);
+	        stmt.setInt(3, id);
+	        stmt.executeUpdate();
+	        System.out.println("Bird with id " + id + " updated, coluna "+col+" para valor: "+value+" .");
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 }

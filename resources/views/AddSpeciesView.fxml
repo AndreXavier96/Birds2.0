@@ -25,10 +25,10 @@
       <TextField fx:id="TfIncubationTime" layoutX="360.0" layoutY="102.0" />
       <TextField fx:id="TfTimeToBand" layoutX="33.0" layoutY="159.0" />
       <TextField fx:id="TfTimeOutOfCage" layoutX="195.0" layoutY="159.0" />
+      <TextField fx:id="TfMaturityAfterDays" layoutX="360.0" layoutY="159.0" />
       
       <Button layoutX="505.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
       <Button layoutX="11.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" />
-      <TextField fx:id="TfMaturityAfterDays" layoutX="360.0" layoutY="159.0" />
       
    </children>
 </AnchorPane>
