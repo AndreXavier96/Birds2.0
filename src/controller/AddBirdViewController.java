@@ -160,7 +160,7 @@ public class AddBirdViewController implements Initializable {
 				return CbCage.getItems().stream().filter(b -> b.getCode().equals(s)).findFirst().orElse(null);
 			}
 		});
-		ObservableList<Bird> listFathers = birdsRepository.getAllMales();
+		ObservableList<Bird> listFathers = birdsRepository.getAllWhere("Sex",MyValues.FEMEA);
 		Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
 		listFathers.add(0,defaultFather);
 		CbFather.setItems(listFathers);
@@ -174,7 +174,7 @@ public class AddBirdViewController implements Initializable {
 				return CbFather.getItems().stream().filter(b -> b.getBand().equals(s)).findFirst().orElse(null);
 			}
 		});
-		ObservableList<Bird> listMothers = birdsRepository.getAllFemales();
+		ObservableList<Bird> listMothers = birdsRepository.getAllWhere("Sex",MyValues.MACHO);
 		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
 		listMothers.add(0,defaultMother);
 		CbMother.setItems(listMothers);
@@ -211,9 +211,9 @@ public class AddBirdViewController implements Initializable {
 			
 			bird.setSex(CbSex.getValue());
 			if (CbFather.getValue().getId()!=null)
-				bird.setFather(birdsRepository.getBird(CbFather.getValue().getId()));
+				bird.setFather(birdsRepository.getBirdWhereInt("id",CbFather.getValue().getId()));
 			if (CbMother.getValue().getId()!=null) 
-				bird.setMother(birdsRepository.getBird(CbMother.getValue().getId()));
+				bird.setMother(birdsRepository.getBirdWhereInt("id",CbMother.getValue().getId()));
 			bird.setSpecies(speciesRepository.getSpecieById(CbSpecies.getValue().getId()));
 			if (CbMutation.getValue().getId()!=null)
 				bird.setMutations(mutationsRepository.getMutationsById(CbMutation.getValue().getId()));

@@ -7,11 +7,13 @@ import javafx.fxml.Initializable;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.Observable;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
 import domains.Bird;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -20,7 +22,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -33,10 +38,16 @@ public class ViewSingleBirdController implements Initializable{
 	private Parent root;
 	private Stage stage;
 	private Scene scene;
+	
+	@FXML
+	private MenuBar menuBar;
+	@FXML
+	private Menu menuFile;
+	
 	@FXML
 	private Label LabelError;
 	@FXML
-	private Label LbTitle,LbBand, LbYear,LbEntryDate,LbEntryType;
+	private Label LbTitle,LbBand,LbYear,LbEntryDate,LbEntryType;
 	@FXML
 	private Label LbSex,LbBuyPrice,LbSpecie,LbMutation,LbClassification;
 	@FXML
@@ -50,12 +61,10 @@ public class ViewSingleBirdController implements Initializable{
 	private Label LbBandFather,LbBandMother;
 	@FXML
 	private ImageView ImFather,ImMother;
-	
 	@FXML
 	private Label LbBandGrandFatherFather,LbBandGrandMotherFather;
 	@FXML
 	private ImageView ImGrandFatherFather,ImGrandMotherFather;
-	
 	@FXML
 	private Label LbBandGrandFatherMother,LbBandGrandMotherMother;
 	@FXML
@@ -65,12 +74,14 @@ public class ViewSingleBirdController implements Initializable{
 	private AnchorPane ApBuyPrice, ApSellPrice;
 	
 	@FXML
-	private MenuBar menuBar;
-	@FXML
-	private Menu menuFile;
+	private Button btnEdit;
 	
 	@FXML
-	private Button btnEdit;
+	private TableView<Bird> TbDescendants;
+	
+	@FXML
+	private TableColumn<Bird, String> TcBand,TcFather,TcMother,TcState,
+		TcCage,TcBrooding,TcMutation,TcBreeder;
 	
 	BirdsRepository birdsRepository=new BirdsRepository();
 	
@@ -89,17 +100,15 @@ public class ViewSingleBirdController implements Initializable{
 	    stage.initModality(Modality.APPLICATION_MODAL);
 	    stage.showAndWait();
 	}
-
 	
 	@FXML
 	public void btnSearchForBand(ActionEvent event) {
 		clearAllFields();
 		if (validator()) {
-			Bird b = birdsRepository.getBirdByBand(TfBandSearch.getText());
+			Bird b = birdsRepository.getBirdWhereString("Band",TfBandSearch.getText());
 			updateAllInfo(b);
 		}
 	}
-	
 	
 	public void setSuccess(String msg, Bird bird) {
 		LabelError.setStyle(MyValues.SUCCESS_BOX_STYLE);
@@ -110,6 +119,7 @@ public class ViewSingleBirdController implements Initializable{
 	public void updateAllInfo(Bird b) {
 		personalInfo(b);
 		affiliation(b);
+		descendants(b);
 	}
 	
 	public void affiliation(Bird b) {
@@ -151,8 +161,7 @@ public class ViewSingleBirdController implements Initializable{
 				
 		}	
 	}
-	
-	
+
 	public void personalInfo(Bird b) {
 			LbTitle.setText("Bird "+b.getBand());
 			LbBand.setText(b.getBand());
@@ -184,13 +193,31 @@ public class ViewSingleBirdController implements Initializable{
 			
 	}
 	
+	public void descendants(Bird b) {
+		BirdsRepository birdsRepository = new BirdsRepository();
+		ObservableList<Bird> birds = birdsRepository.getAllWhereIntOrWhereInt("Father",b.getId(),"Mother",b.getId());
+		TcBand.setCellValueFactory(new PropertyValueFactory<>("Band"));
+		TcFather.setCellValueFactory(cellData -> new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getFather())
+                .map(Bird::getBand)
+                .orElse("")));
+		TcMother.setCellValueFactory(cellData ->  new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getMother())
+	    		.map(Bird::getBand)
+	    		.orElse("")));
+		TcState.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getState().getType()));
+		TcCage.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getCage().getCode()));
+//		TcBrooding
+		TcMutation.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getMutations().getName()));
+		TcBreeder.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getBreeder().getName()));
+		TbDescendants.setItems(birds);
+	}
+	
 	public boolean validator() {
 		boolean validate = false;
 		if (TfBandSearch.getText().length()==0) {
 			TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelError.setText("Anilha tem de ser preenchido");
 			validate=false;
-		}else if (birdsRepository.getBirdByBand(TfBandSearch.getText())==null) {
+		}else if (birdsRepository.getBirdWhereString("Band",TfBandSearch.getText())==null) {
 			TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelError.setText("Anilha nao existe");
 			validate=false;
@@ -254,8 +281,6 @@ public class ViewSingleBirdController implements Initializable{
 		}
 	}
 
-
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		LbState.textProperty().addListener((Observable, oldValue, newValue) -> {
@@ -266,6 +291,4 @@ public class ViewSingleBirdController implements Initializable{
 					btnEdit.setVisible(false);
 		});
 	}
-
-	
 }

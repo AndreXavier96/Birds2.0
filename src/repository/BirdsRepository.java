@@ -95,11 +95,11 @@ public class BirdsRepository {
 					b.setState(stateRepository.getStateById(rs.getInt(8)));
 					b.setSex(rs.getString(9));
 					if (rs.getInt(10)!=0)
-						b.setFather(getBird(rs.getInt(10)));
+						b.setFather(getBirdWhereInt("id",rs.getInt(10)));
 					else
 						b.setFather(null);
 					if (rs.getInt(11)!=0)
-						b.setMother(getBird(rs.getInt(11)));
+						b.setMother(getBirdWhereInt("id",rs.getInt(11)));
 					else
 						b.setMother(null);
 					b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
@@ -117,14 +117,13 @@ public class BirdsRepository {
 			}
 		}
 	
-	
-	public ObservableList<Bird> getAllMales() {
+	public ObservableList<Bird> getAllWhere(String col,String value) {
 		try {
 			System.out.println("Getting all Birds...");
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
 					MyValues.USER, MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM BIRDS WHERE Sex='"+MyValues.MACHO+"'";
+			String sql = "SELECT * FROM BIRDS WHERE "+col+"='"+value+"'";
 			ResultSet rs = stmt.executeQuery(sql);
 			ObservableList<Bird> birds = FXCollections.observableArrayList();
 			while (rs.next()) {
@@ -140,11 +139,11 @@ public class BirdsRepository {
 				b.setState(stateRepository.getStateById(rs.getInt(8)));
 				b.setSex(rs.getString(9));
 				if (rs.getInt(10)!=0)
-					b.setFather(getBird(rs.getInt(10)));
+					b.setFather(getBirdWhereInt("id",rs.getInt(10)));
 				else
 					b.setFather(null);
 				if (rs.getInt(11)!=0)
-					b.setMother(getBird(rs.getInt(11)));
+					b.setMother(getBirdWhereInt("id",rs.getInt(11)));
 				else
 					b.setMother(null);
 				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
@@ -162,51 +161,87 @@ public class BirdsRepository {
 		}
 	}
 	
-	public ObservableList<Bird> getAllFemales() {
-		try {
-			System.out.println("Getting all Birds...");
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
-					MyValues.USER, MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM BIRDS WHERE Sex='"+MyValues.FEMEA+"'";
-			ResultSet rs = stmt.executeQuery(sql);
-			ObservableList<Bird> birds = FXCollections.observableArrayList();
-			while (rs.next()) {
-				System.out.println("Get Bird: " + rs.getInt(1));
-				Bird b = new Bird();
-				b.setId(rs.getInt(1));
-				b.setBand(rs.getString(2));
-				b.setYear(rs.getInt(3));
-				b.setEntryDate(rs.getDate(4));
-				b.setEntryType(rs.getString(5));
-				b.setBuyPrice(rs.getDouble(6));
-				b.setSellPrice(rs.getDouble(7));
-				b.setState(stateRepository.getStateById(rs.getInt(8)));
-				b.setSex(rs.getString(9));
-				if (rs.getInt(10)!=0)
-					b.setFather(getBird(rs.getInt(10)));
-				else
-					b.setFather(null);
-				if (rs.getInt(11)!=0)
-					b.setMother(getBird(rs.getInt(11)));
-				else
-					b.setMother(null);
-				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
-				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
-				b.setCage(cageRepository.getCage(rs.getInt(14)));
-				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
-				b.setPosture(rs.getInt(16));
-				b.setImage(rs.getString(17));
-				birds.add(b);
-			}
-			return birds;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+	public Bird getBirdWhereInt(String col,Integer value) {
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        Statement stmt = con.createStatement();
+	        String sql = "SELECT * FROM BIRDS WHERE "+col+"=" + value + ";";
+	        ResultSet rs = stmt.executeQuery(sql);
+	        Bird b = new Bird();
+	        if (rs.next()) {
+	            b.setId(rs.getInt(1));
+	            b.setBand(rs.getString(2));
+	            b.setYear(rs.getInt(3));
+	            b.setEntryDate(rs.getDate(4));
+	            b.setEntryType(rs.getString(5));
+	            b.setBuyPrice(rs.getDouble(6));
+	            b.setSellPrice(rs.getDouble(7));
+	            b.setState(stateRepository.getStateById(rs.getInt(8)));
+	            b.setSex(rs.getString(9));
+	            int fatherId = rs.getInt(10);
+	            int motherId = rs.getInt(11);
+	            if (fatherId != 0) {
+	                b.setFather(getBirdWhereInt("id",fatherId));
+	            }
+	            if (motherId != 0) {
+	                b.setMother(getBirdWhereInt("id",motherId));
+	            }
+	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
+	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
+	            b.setCage(cageRepository.getCage(rs.getInt(14)));
+	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
+	            b.setPosture(rs.getInt(16));
+	            b.setImage(rs.getString(17));
+	            return b;
+	        } else {
+	            return null;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 	
-	
+	public Bird getBirdWhereString(String col, String value) {
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        Statement stmt = con.createStatement();
+	        String sql = "SELECT * FROM BIRDS WHERE "+col+"='" + value + "';";
+	        ResultSet rs = stmt.executeQuery(sql);
+	        Bird b = new Bird();
+	        if (rs.next()) {
+	            b.setId(rs.getInt(1));
+	            b.setBand(rs.getString(2));
+	            b.setYear(rs.getInt(3));
+	            b.setEntryDate(rs.getDate(4));
+	            b.setEntryType(rs.getString(5));
+	            b.setBuyPrice(rs.getDouble(6));
+	            b.setSellPrice(rs.getDouble(7));
+	            b.setState(stateRepository.getStateById(rs.getInt(8)));
+	            b.setSex(rs.getString(9));
+	            int fatherId = rs.getInt(10);
+	            int motherId = rs.getInt(11);
+	            if (fatherId != 0) {
+	                b.setFather(getBirdWhereInt("id",fatherId));
+	            }
+	            if (motherId != 0) {
+	                b.setMother(getBirdWhereInt("id",motherId));
+	            }
+	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
+	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
+	            b.setCage(cageRepository.getCage(rs.getInt(14)));
+	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
+	            b.setPosture(rs.getInt(16));
+	            b.setImage(rs.getString(17));
+	            return b;
+	        } else {
+	            return null;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
 	
 	public void Insert(Bird bird) {
 		try {
@@ -252,90 +287,6 @@ public class BirdsRepository {
 				e.printStackTrace();
 			}
 	}
-
-
-	public Bird getBird(Integer id) {
-	    try {
-	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
-	        Statement stmt = con.createStatement();
-	        String sql = "SELECT * FROM BIRDS WHERE id=" + id + ";";
-	        ResultSet rs = stmt.executeQuery(sql);
-	        Bird b = new Bird();
-	        if (rs.next()) {
-	            b.setId(rs.getInt(1));
-	            b.setBand(rs.getString(2));
-	            b.setYear(rs.getInt(3));
-	            b.setEntryDate(rs.getDate(4));
-	            b.setEntryType(rs.getString(5));
-	            b.setBuyPrice(rs.getDouble(6));
-	            b.setSellPrice(rs.getDouble(7));
-	            b.setState(stateRepository.getStateById(rs.getInt(8)));
-	            b.setSex(rs.getString(9));
-	            int fatherId = rs.getInt(10);
-	            int motherId = rs.getInt(11);
-	            if (fatherId != 0) {
-	                b.setFather(getBird(fatherId));
-	            }
-	            if (motherId != 0) {
-	                b.setMother(getBird(motherId));
-	            }
-	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
-	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
-	            b.setCage(cageRepository.getCage(rs.getInt(14)));
-	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
-	            b.setPosture(rs.getInt(16));
-	            b.setImage(rs.getString(17));
-	            return b;
-	        } else {
-	            return null;
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return null;
-	    }
-	}
-
-	
-	public Bird getBirdByBand(String band) {
-	    try {
-	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
-	        Statement stmt = con.createStatement();
-	        String sql = "SELECT * FROM BIRDS WHERE Band='" + band + "';";
-	        ResultSet rs = stmt.executeQuery(sql);
-	        Bird b = new Bird();
-	        if (rs.next()) {
-	            b.setId(rs.getInt(1));
-	            b.setBand(rs.getString(2));
-	            b.setYear(rs.getInt(3));
-	            b.setEntryDate(rs.getDate(4));
-	            b.setEntryType(rs.getString(5));
-	            b.setBuyPrice(rs.getDouble(6));
-	            b.setSellPrice(rs.getDouble(7));
-	            b.setState(stateRepository.getStateById(rs.getInt(8)));
-	            b.setSex(rs.getString(9));
-	            int fatherId = rs.getInt(10);
-	            int motherId = rs.getInt(11);
-	            if (fatherId != 0) {
-	                b.setFather(getBird(fatherId));
-	            }
-	            if (motherId != 0) {
-	                b.setMother(getBird(motherId));
-	            }
-	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
-	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
-	            b.setCage(cageRepository.getCage(rs.getInt(14)));
-	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
-	            b.setPosture(rs.getInt(16));
-	            b.setImage(rs.getString(17));
-	            return b;
-	        } else {
-	            return null;
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return null;
-	    }
-	}
 	
 	public void partialUpdateStringsBird(Integer id, String col, String value) {
 	    try {
@@ -363,5 +314,48 @@ public class BirdsRepository {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+	}
+
+	public ObservableList<Bird> getAllWhereIntOrWhereInt(String col1,Integer value1,String col2,Integer value2) {
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
+					MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM BIRDS WHERE "+col1+"='" + value1 + "' OR "+col2+"='" + value2 + "';";
+			ResultSet rs = stmt.executeQuery(sql);
+			ObservableList<Bird> birds = FXCollections.observableArrayList();
+			while (rs.next()) {
+				System.out.println("Get Bird: " + rs.getInt(1));
+				Bird b = new Bird();
+				b.setId(rs.getInt(1));
+				b.setBand(rs.getString(2));
+				b.setYear(rs.getInt(3));
+				b.setEntryDate(rs.getDate(4));
+				b.setEntryType(rs.getString(5));
+				b.setBuyPrice(rs.getDouble(6));
+				b.setSellPrice(rs.getDouble(7));
+				b.setState(stateRepository.getStateById(rs.getInt(8)));
+				b.setSex(rs.getString(9));
+				if (rs.getInt(10) != 0)
+					b.setFather(getBirdWhereInt("id",rs.getInt(10)));
+				else
+					b.setFather(null);
+				if (rs.getInt(11) != 0)
+					b.setMother(getBirdWhereInt("id",rs.getInt(11)));
+				else
+					b.setMother(null);
+				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
+				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
+				b.setCage(cageRepository.getCage(rs.getInt(14)));
+				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
+				b.setPosture(rs.getInt(16));
+				b.setImage(rs.getString(17));
+				birds.add(b);
+			}
+			return birds;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
