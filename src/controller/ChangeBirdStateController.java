@@ -96,7 +96,6 @@ public class ChangeBirdStateController implements Initializable{
 			else if (state.getType().equals(MyValues.VENDIDO))
 				state.setValor(Double.parseDouble(TfPriceSell.getText()));
 			state.setDate(Date.from(Dtpicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-//			Bird bird = birdsRepository.getBirdByBand(LbBand.getText());
 			Bird bird = birdsRepository.getBirdWhereString("Band",LbBand.getText());
 			state.setId(bird.getState().getId());
 			stateRepositor.updateState(state);
