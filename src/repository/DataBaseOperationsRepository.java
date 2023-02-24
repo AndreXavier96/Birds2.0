@@ -17,6 +17,7 @@ public class DataBaseOperationsRepository {
 	private BreederRepository breederRepository = new BreederRepository();
 	private CouplesRepository couplesRepository = new CouplesRepository();
 	private PostureRepository broodingRepository = new PostureRepository();
+	private StateRepository stateRepository = new StateRepository();
 	
 	public Connection GetConnection(String DbName,String user, String pass) {
 		try {
@@ -53,6 +54,7 @@ public class DataBaseOperationsRepository {
 			cageRepository.CreateTableCage();
 			speciesRepository.CreateTableSpecies();
 			mutationsRepository.CreateTableMutations();
+			stateRepository.CreateTableState();
 			broodingRepository.CreateTableBrooding();
 			birdsRepository.CreateTableBird();
 			couplesRepository.CreateTableCouples();
@@ -72,6 +74,7 @@ public class DataBaseOperationsRepository {
 		breederRepository.CreateTableBreeder();
 		couplesRepository.CreateTableCouples();
 		broodingRepository.CreateTableBrooding();
+		stateRepository.CreateTableState();
 		System.out.println("All tables created!");
 	}
 	
@@ -84,6 +87,7 @@ public class DataBaseOperationsRepository {
 		breederRepository.DropTableBreeder();
 		couplesRepository.DropTableCouples();
 		broodingRepository.DropTableBrooding();
+		stateRepository.dropTableState();
 		System.out.println("All tables dropped!");
 	}
 

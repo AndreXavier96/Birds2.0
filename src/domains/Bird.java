@@ -10,7 +10,7 @@ public class Bird {
 	private String EntryType;
 	private Double BuyPrice;
 	private Double SellPrice;
-	private String State;
+	private State State;
 	private String Sex;
 	private Bird Father;
 	private Bird Mother;
@@ -24,7 +24,7 @@ public class Bird {
 	
 
 	public Bird(Integer id, Breeder nrBreeder, String band, Integer year, Date entryDate, String entryType,
-			Double buyPrice, Double sellPrice, String state, String sex, Bird father, Bird mother, Specie species,
+			Double buyPrice, Double sellPrice, State state, String sex, Bird father, Bird mother, Specie species,
 			Mutation mutations, Cage cage, Integer posture,String image) {
 		super();
 		this.id = id;
@@ -114,11 +114,11 @@ public class Bird {
 		SellPrice = sellPrice;
 	}
 
-	public String getState() {
+	public State getState() {
 		return State;
 	}
 
-	public void setState(String state) {
+	public void setState(State state) {
 		State = state;
 	}
 

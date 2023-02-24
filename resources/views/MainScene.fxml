@@ -11,19 +11,18 @@
          <font>
             <Font size="36.0" />
          </font></Label>
-      <Button layoutX="26.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnAddBird" prefHeight="25.0" prefWidth="109.0" text="Adicionar Pássaro" textAlignment="CENTER" />
-      <Button layoutX="148.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnViewAllBirds" prefHeight="25.0" prefWidth="124.0" text="Ver Todos Pássaros" />
-      <Button layoutX="148.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnDropDB" prefHeight="25.0" prefWidth="124.0" text="Drop DB" />
-      <Button layoutX="26.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnCreateDB" prefHeight="25.0" prefWidth="109.0" text="Create DB" />
       <Button layoutX="26.0" layoutY="121.0" mnemonicParsing="false" onAction="#btnAddBreeder" text="Adicionar Criador" />
+      <Button layoutX="26.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnAddSpecies" prefHeight="25.0" prefWidth="109.0" text="Adicionar Espécie" />
+      <Button layoutX="26.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnAddMutation" prefHeight="25.0" prefWidth="109.0" text="Adicionar Mutação" />
+      <Button layoutX="26.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnAddCage" prefHeight="25.0" prefWidth="109.0" text="Adicionar Gaiola" />
+      <Button layoutX="26.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnAddBird" prefHeight="25.0" prefWidth="109.0" text="Adicionar Pássaro" textAlignment="CENTER" />
       <Button layoutX="148.0" layoutY="121.0" mnemonicParsing="false" onAction="#btnViewAllBreeders" text="Ver Todos Criadores" />
-      <Button layoutX="26.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnAddSpecies" prefHeight="25.0" prefWidth="109.0" text="Adicionar Espécie" />
-      <Button layoutX="148.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnViewAllSpecies" prefHeight="25.0" prefWidth="124.0" text="Ver Todas Espécies" />
-      <Button layoutX="26.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnAddMutation" prefHeight="25.0" prefWidth="109.0" text="Adicionar Mutação" />
-      <Button layoutX="148.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnViewAllMutations" prefHeight="25.0" prefWidth="124.0" text="Ver Todas Mutações" />
-      <Button layoutX="26.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnAddCage" prefHeight="25.0" prefWidth="109.0" text="Adicionar Gaiola" />
-      <Button layoutX="148.0" layoutY="259.0" mnemonicParsing="false" onAction="#BtnViewCages" prefHeight="25.0" prefWidth="124.0" text="Ver Todas Gaiolas" />
-      <Button layoutX="280.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnSearchBird" text="Procurar Pássaro" />
-      
+      <Button layoutX="148.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnViewAllSpecies" prefHeight="25.0" prefWidth="124.0" text="Ver Todas Espécies" />
+      <Button layoutX="148.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnViewAllMutations" prefHeight="25.0" prefWidth="124.0" text="Ver Todas Mutações" />
+      <Button layoutX="148.0" layoutY="225.0" mnemonicParsing="false" onAction="#BtnViewCages" prefHeight="25.0" prefWidth="124.0" text="Ver Todas Gaiolas" />
+      <Button layoutX="148.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnViewAllBirds" prefHeight="25.0" prefWidth="124.0" text="Ver Todos Pássaros" />
+      <Button layoutX="283.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnSearchBird" text="Procurar Pássaro" />
+      <Button layoutX="26.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnCreateDB" prefHeight="25.0" prefWidth="109.0" text="Create DB" />
+      <Button layoutX="148.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnDropDB" prefHeight="25.0" prefWidth="124.0" text="Drop DB" />  
    </children>
 </AnchorPane>

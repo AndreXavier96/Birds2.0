@@ -2,8 +2,13 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 
+import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Observable;
+import java.util.ResourceBundle;
 
 import constants.MyValues;
 import domains.Bird;
@@ -11,15 +16,19 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import repository.BirdsRepository;
 
-public class ViewSingleBirdController  {
+public class ViewSingleBirdController implements Initializable{
 	
 	private Parent root;
 	private Stage stage;
@@ -52,20 +61,55 @@ public class ViewSingleBirdController  {
 	@FXML
 	private ImageView ImGrandFatherMother,ImGrandMotherMother;
 	
-	
 	@FXML
 	private AnchorPane ApBuyPrice, ApSellPrice;
 	
+	@FXML
+	private MenuBar menuBar;
+	@FXML
+	private Menu menuFile;
+	
+	@FXML
+	private Button btnEdit;
+	
 	BirdsRepository birdsRepository=new BirdsRepository();
+	
+	@FXML
+	private void btnChangeBirdState(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeBirdState.fxml"));
+		Parent root = loader.load();
+	    ChangeBirdStateController birdStateController = loader.getController();
+	    birdStateController.startValues(LbBand.getText(),LbState.getText(),ImBird.getImage().getUrl(),LbState.getText());
+	    birdStateController.setViewSingleBirdController(this);
+	    Scene scene = new Scene(root);
+	    Stage stage = new Stage();
+	    stage.setTitle("Alterar Estado");
+	    stage.getIcons().add(new Image("file:resources/images/img/icon.png"));
+	    stage.setScene(scene);
+	    stage.initModality(Modality.APPLICATION_MODAL);
+	    stage.showAndWait();
+	}
+
 	
 	@FXML
 	public void btnSearchForBand(ActionEvent event) {
 		clearAllFields();
 		if (validator()) {
 			Bird b = birdsRepository.getBirdByBand(TfBandSearch.getText());
-			personalInfo(b);
-			affiliation(b);
+			updateAllInfo(b);
 		}
+	}
+	
+	
+	public void setSuccess(String msg, Bird bird) {
+		LabelError.setStyle(MyValues.SUCCESS_BOX_STYLE);
+		LabelError.setText(msg);
+		updateAllInfo(bird);
+	}
+	
+	public void updateAllInfo(Bird b) {
+		personalInfo(b);
+		affiliation(b);
 	}
 	
 	public void affiliation(Bird b) {
@@ -120,7 +164,7 @@ public class ViewSingleBirdController  {
 			LbEntryDate.setText(b.getEntryDate().toString());
 			LbCage.setText(b.getCage().getCode());
 			LbEntryType.setText(b.getEntryType());
-			LbState.setText(b.getState());
+			LbState.setText(b.getState().getType());
 			if (LbEntryType.getText().equals(MyValues.COMPRA)) {
 				LbBuyPrice.setText(b.getBuyPrice().toString()+"\u20AC");
 				ApBuyPrice.setVisible(true);
@@ -137,6 +181,7 @@ public class ViewSingleBirdController  {
 			if (!b.getImage().isEmpty()) {
 				ImBird.setImage(new Image(b.getImage()));
 			}
+			
 	}
 	
 	public boolean validator() {
@@ -191,6 +236,8 @@ public class ViewSingleBirdController  {
 		ImGrandMotherFather.setImage(new Image("file:resources/images/img/default.png"));
 		ImGrandFatherMother.setImage(new Image("file:resources/images/img/default.png"));
 		ImGrandMotherMother.setImage(new Image("file:resources/images/img/default.png"));
+		
+		btnEdit.setVisible(false);
 
 	}
 	
@@ -205,6 +252,19 @@ public class ViewSingleBirdController  {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		LbState.textProperty().addListener((Observable, oldValue, newValue) -> {
+			if (newValue!=null)
+				if (!newValue.isEmpty())
+					btnEdit.setVisible(true);
+				else
+					btnEdit.setVisible(false);
+		});
 	}
 
 	

@@ -33,4 +33,7 @@ public class MyValues {
 	public static final String CRIADOR_PROFISSIONAL ="Profissional";
 	public static final String CRIADOR_LOJA ="Loja";
 	public static final ObservableList<String> BREEDERTYPELIST = FXCollections.observableArrayList(CRIADOR_AMADOR,CRIADOR_PROFISSIONAL,CRIADOR_LOJA);
+	
+	public static final String CHANGE_STATE_SUCCESS ="Estado alterado com sucesso!";
+	
 }
