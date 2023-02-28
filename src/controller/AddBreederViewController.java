@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import repository.BreederRepository;
+import repository.ClubRepository;
 
 import java.net.URL;
 import java.nio.file.Paths;
@@ -14,12 +15,18 @@ import java.util.ResourceBundle;
 
 import constants.MyValues;
 import domains.Breeder;
+import domains.Club;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 public class AddBreederViewController implements Initializable {
@@ -28,41 +35,63 @@ public class AddBreederViewController implements Initializable {
 	private Stage stage;
 	
 	@FXML
-	private Label LabelError;
+	private Label LabelError, labelAlert;
 	@FXML
-	private Label labelAlert;
+	private TextField TfCC, TfName, TfPhone, TfNif, TfEmail;
 	@FXML
-	private TextField TfCC;
+	private TextField TfDistrict, TfPostalCode, TfLocale, TfAddress;
 	@FXML
-	private TextField TfName;
-	@FXML
-	private TextField TfPhone;
-	@FXML
-	private TextField TfNif;
-	@FXML
-	private TextField TfEmail;
-	@FXML
-	private TextField TfDistrict;
-	@FXML
-	private TextField TfPostalCode;
-	@FXML
-	private TextField TfLocale;
-	@FXML
-	private TextField TfAddress;
-	@FXML
-	private TextField TfCites;
-	@FXML
-	private TextField TfClub;
-	@FXML
-	private TextField TfStam;
+	private TextField TfCites, TfStam;
 	@FXML
 	private ComboBox<String> CbType;
+	@FXML
+	private ListView<Club> clubListViewAvailable,clubListViewAssigned ;
+	@FXML
+	private Button btnAssign, btnDeAssign;
 
 	private BreederRepository breederRepository = new BreederRepository();
+	private ClubRepository clubRepository = new ClubRepository();
+	
+	private ObservableList<Club> availableClubs;
+	private ObservableList<Club> assignedClubs;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		CbType.setItems(MyValues.BREEDERTYPELIST);
+		availableClubs = FXCollections.observableArrayList(clubRepository.getAllClubs());
+		assignedClubs = FXCollections.observableArrayList();
+		clubListViewAvailable.setItems(availableClubs);
+		clubListViewAssigned.setItems(assignedClubs);
+	}
+	
+	@FXML
+	public void btnAssign(ActionEvent event) {
+		Club selectedClub = clubListViewAvailable.getSelectionModel().getSelectedItem();
+		btnDeAssign.setStyle(null);
+		if (selectedClub!= null) {
+			assignedClubs.add(selectedClub);
+			availableClubs.remove(selectedClub);
+			btnAssign.setStyle(null);
+			LabelError.setText("");
+		}else {
+			btnAssign.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelError.setText("Um clube disponivel tem de ser selecionado.");
+		}
+	}
+	
+	@FXML
+	public void btnDeAssign(ActionEvent event) {
+		Club selectedClub = clubListViewAssigned.getSelectionModel().getSelectedItem();
+		btnAssign.setStyle(null);
+		if (selectedClub!= null) {
+			assignedClubs.remove(selectedClub);
+			availableClubs.add(selectedClub);
+			btnDeAssign.setStyle(null);
+			LabelError.setText("");
+		}else {
+			btnDeAssign.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelError.setText("Um clube escolhido tem de ser selecionado.");
+		}
 	}
 	
 	@FXML
@@ -72,6 +101,7 @@ public class AddBreederViewController implements Initializable {
 		//ALL VALIDATED
 		if(validator()) {
 			Breeder b = new Breeder();
+			
 			b.setCC(Integer.parseInt(TfCC.getText()));
 			b.setName(TfName.getText());
 			b.setNif(Integer.parseInt(TfNif.getText()));
@@ -83,9 +113,9 @@ public class AddBreederViewController implements Initializable {
 			if (!TfCites.getText().isEmpty())
 				b.setNrCites(Integer.valueOf(TfCites.getText()));
 			else
-				b.setNrCites(null);
+				b.setNrCites(0);
 			b.setType(CbType.getValue());
-			b.setClub(TfClub.getText());
+			b.setClub(assignedClubs);
 			b.setStam(TfStam.getText());
 			breederRepository.Insert(b);
 			
@@ -270,6 +300,18 @@ public class AddBreederViewController implements Initializable {
 			}
 		}
 		
+		if (validated) {
+			if (CbType.getValue()==MyValues.CRIADOR_PROFISSIONAL && assignedClubs.isEmpty()) {
+				clubListViewAssigned.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Criador Profissional tem de escolher pelo menos um clube");
+				validated = false;
+			}else {
+				clubListViewAssigned.setStyle(null);
+				LabelError.setText("");
+				validated=true;
+			}
+		}
+		
 		return validated;
 	}
 	
@@ -285,8 +327,8 @@ public class AddBreederViewController implements Initializable {
 		TfDistrict.setText(null);
 		TfCites.setText(null);
 		CbType.setValue(null);
-		TfClub.setText(null);
 		TfStam.setText(null);
+		assignedClubs = FXCollections.observableArrayList();
 		
 		LabelError.setText("");
 		TfCC.setStyle(null);
@@ -299,8 +341,11 @@ public class AddBreederViewController implements Initializable {
 		TfDistrict.setStyle(null);
 		TfCites.setStyle(null);
 		CbType.setStyle(null);
-		TfClub.setStyle(null);
 		TfStam.setStyle(null);
+		clubListViewAssigned.setStyle(null);
+		btnAssign.setStyle(null);
+		btnDeAssign.setStyle(null);
+	
 	}
 
 	

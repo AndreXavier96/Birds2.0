@@ -18,6 +18,9 @@ public class DataBaseOperationsRepository {
 	private CouplesRepository couplesRepository = new CouplesRepository();
 	private PostureRepository broodingRepository = new PostureRepository();
 	private StateRepository stateRepository = new StateRepository();
+	private FederationRepository federationRepository = new FederationRepository();
+	private ClubRepository clubRepository = new ClubRepository();
+	private BreederClubRepository breederClubRepository = new BreederClubRepository();
 	
 	public Connection GetConnection(String DbName,String user, String pass) {
 		try {
@@ -50,16 +53,7 @@ public class DataBaseOperationsRepository {
 			@SuppressWarnings("unused")
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+DbName,MyValues.USER,MyValues.PASSWORD);
 			System.out.println("Database "+DbName+" created!");
-			breederRepository.CreateTableBreeder();
-			cageRepository.CreateTableCage();
-			speciesRepository.CreateTableSpecies();
-			mutationsRepository.CreateTableMutations();
-			stateRepository.CreateTableState();
-			broodingRepository.CreateTableBrooding();
-			birdsRepository.CreateTableBird();
-			couplesRepository.CreateTableCouples();
-			broodingRepository.AddFK();
-			System.out.println("All tables created!");
+			CreateAllTables();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,19 +61,24 @@ public class DataBaseOperationsRepository {
 	
 	public void CreateAllTables() {
 		System.out.println("Trying to create all tables...");
-		birdsRepository.CreateTableBird();
+		federationRepository.createTableFederation();
+		clubRepository.createTableClub();
+		breederRepository.CreateTableBreeder();
+		cageRepository.CreateTableCage();
 		speciesRepository.CreateTableSpecies();
 		mutationsRepository.CreateTableMutations();
-		cageRepository.CreateTableCage();
-		breederRepository.CreateTableBreeder();
-		couplesRepository.CreateTableCouples();
-		broodingRepository.CreateTableBrooding();
 		stateRepository.CreateTableState();
+		broodingRepository.CreateTableBrooding();
+		birdsRepository.CreateTableBird();
+		couplesRepository.CreateTableCouples();
+		broodingRepository.AddFK();
+		breederClubRepository.createTableBreederClub();
 		System.out.println("All tables created!");
 	}
 	
 	public void DropAllTables() {
 		System.out.println("Trying to drop all tables...");
+		breederClubRepository.dropTableBreederClub();
 		birdsRepository.DropTableBird();
 		speciesRepository.DropTableSpecies();
 		mutationsRepository.DropTableMutations();
@@ -88,6 +87,8 @@ public class DataBaseOperationsRepository {
 		couplesRepository.DropTableCouples();
 		broodingRepository.DropTableBrooding();
 		stateRepository.dropTableState();
+		clubRepository.dropTableClub();
+		federationRepository.dropTableFederation();
 		System.out.println("All tables dropped!");
 	}
 

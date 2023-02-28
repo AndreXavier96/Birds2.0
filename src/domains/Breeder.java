@@ -1,5 +1,7 @@
 package domains;
 
+import java.util.List;
+
 public class Breeder {
 	private Integer Id;
 	private Integer CC;
@@ -13,7 +15,7 @@ public class Breeder {
 	private String Address;
 	private Integer NrCites;
 	private String Type;
-	private String Club;
+	private List<Club> Club;
 	private String Stam;
 	
 	
@@ -22,7 +24,7 @@ public class Breeder {
 	}
 	
 	public Breeder(String address,Integer id, Integer cC, String name, Integer nif, Integer cellphone, String email, String postalCode,
-			String locale, String district, Integer nrCites, String type, String club, String stam) {
+			String locale, String district, Integer nrCites, String type, List<Club> club, String stam) {
 		super();
 		Id = id;
 		CC = cC;
@@ -112,10 +114,10 @@ public class Breeder {
 	public void setType(String type) {
 		Type = type;
 	}
-	public String getClub() {
+	public List<Club> getClub() {
 		return Club;
 	}
-	public void setClub(String club) {
+	public void setClub(List<Club> club) {
 		Club = club;
 	}
 	public String getStam() {

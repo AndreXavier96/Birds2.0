@@ -2,15 +2,20 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import constants.MyValues;
 import domains.Breeder;
+import domains.Club;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class BreederRepository {
+	
+	private BreederClubRepository breederClubRepository = new BreederClubRepository();
+	private ClubRepository clubRepository = new ClubRepository();
 
 	public void CreateTableBreeder() {
 		try {
@@ -30,7 +35,6 @@ public class BreederRepository {
 					+"District VARCHAR(255), "
 					+"NrCites VARCHAR(255), "
 					+"BreederType VARCHAR(255) NOT NULL, "
-					+"Club VARCHAR(255), "
 					+"STAM VARCHAR(255), "
 					+"PRIMARY KEY (id))";
 			
@@ -84,8 +88,8 @@ public class BreederRepository {
 			}
 			
 			b.setType(rs.getString(12));
-			b.setClub(rs.getString(13));
-			b.setStam(rs.getString(14));
+			b.setStam(rs.getString(13));
+			b.setClub(clubRepository.getAllClubsByClubIds(breederClubRepository.getClubsFromBreederId(b.getId())));
 			
 			breeders.add(b);
 		}
@@ -97,25 +101,41 @@ public class BreederRepository {
 	}
 	
 	public void Insert(Breeder b) {
+		int breederId = -1;
 		try {
 			System.out.println("Insert Breeder in DataBase...");
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
 			String sql = "INSERT INTO "
-					+"BREEDER(CC,Name,Nif,Cellphone,Email,Address,PostalCode,Locale,District,NrCites,BreederType,Club,STAM) "
-					+"values('"+b.getCC()+"','"+b.getName()+"','"+b.getNif()+"','"+b.getCellphone()
-					+"','"+b.getEmail()+"','"+b.getAddress()+"','"+b.getPostalCode()+"','"+b.getLocale()
-					+"','"+b.getDistrict()+"','"+b.getNrCites()+"','"+b.getType()+"','"+b.getClub()
-					+"','"+b.getStam()+"')";
-			int i = stmt.executeUpdate(sql);
-			System.out.println(i+"Record inserted!");
+	                +"BREEDER(CC,Name,Nif,Cellphone,Email,Address,PostalCode,Locale,District,NrCites,BreederType,STAM) "
+	                +"values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, b.getCC());
+	        stmt.setString(2, b.getName());
+	        stmt.setInt(3, b.getNif());
+	        stmt.setInt(4, b.getCellphone());
+	        stmt.setString(5, b.getEmail());
+	        stmt.setString(6, b.getAddress());
+	        stmt.setString(7, b.getPostalCode());
+	        stmt.setString(8, b.getLocale());
+	        stmt.setString(9, b.getDistrict());
+	        stmt.setInt(10, b.getNrCites());
+	        stmt.setString(11, b.getType());
+	        stmt.setString(12, b.getStam());
+	        stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+	        if (rs.next()) {
+	            breederId = rs.getInt(1);
+	        }
+			System.out.println("["+breederId+"] inserted: "+sql);
+			for (Club c : b.getClub()) {
+				breederClubRepository.Insert(breederId, c.getId());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public boolean checkIfCCExists(int cc) throws SQLException {
-//		try {
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT CC FROM BREEDER WHERE CC="+cc+";";
@@ -180,8 +200,8 @@ public class BreederRepository {
 					b.setNrCites(0);
 				}
 				b.setType(rs.getString(12));
-				b.setClub(rs.getString(13));
-				b.setStam(rs.getString(14));
+//				b.setClub(rs.getString(13));
+				b.setStam(rs.getString(13));
 			}
 			return b;
 			
@@ -216,8 +236,8 @@ public class BreederRepository {
 					b.setNrCites(0);
 				}
 				b.setType(rs.getString(12));
-				b.setClub(rs.getString(13));
-				b.setStam(rs.getString(14));
+//				b.setClub(rs.getString(13));
+				b.setStam(rs.getString(13));
 			}
 			return b;
 		} catch (Exception e) {
