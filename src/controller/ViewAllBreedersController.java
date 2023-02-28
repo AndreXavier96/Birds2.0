@@ -9,12 +9,16 @@ import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import domains.Breeder;
+import domains.Club;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import repository.BreederRepository;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -47,7 +51,6 @@ public class ViewAllBreedersController implements Initializable {
 		}
 	}
 	
-	//dont forget to implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		BreederRepository breederRepository = new BreederRepository();
@@ -63,7 +66,20 @@ public class ViewAllBreedersController implements Initializable {
 		colAddress.setCellValueFactory(new PropertyValueFactory<Breeder,String>("Address"));
 		colCites.setCellValueFactory(new PropertyValueFactory<Breeder,Integer>("NrCites"));
 		colType.setCellValueFactory(new PropertyValueFactory<Breeder,String>("Type"));
-		colClube.setCellValueFactory(new PropertyValueFactory<Breeder,String>("Club"));
+		colClube.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Breeder, String>, ObservableValue<String>>() {
+		        @Override
+		        public ObservableValue<String> call(TableColumn.CellDataFeatures<Breeder, String> param) {
+		            StringBuilder sb = new StringBuilder();
+		            for (Club c : param.getValue().getClub()) {
+		                sb.append(c.getName());
+		                sb.append(", ");
+		            }
+		            if (sb.length() > 2) {
+		                sb.delete(sb.length() - 2, sb.length());
+		            }
+		            return new SimpleStringProperty(sb.toString());
+		        }
+		    });
 		colStam.setCellValueFactory(new PropertyValueFactory<Breeder,Integer>("Stam"));
 		
 		tableID.setItems(breeders);

@@ -11,6 +11,8 @@
          <font>
             <Font size="36.0" />
          </font></Label>
+      <Button layoutX="26.0" layoutY="61.0" mnemonicParsing="false" onAction="#btnAddFederation" prefHeight="25.0" prefWidth="109.0" text="Adiconar Federacao" />
+      <Button layoutX="26.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnAddClub" prefHeight="25.0" prefWidth="109.0" text="Adicionar Clube" />
       <Button layoutX="26.0" layoutY="121.0" mnemonicParsing="false" onAction="#btnAddBreeder" text="Adicionar Criador" />
       <Button layoutX="26.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnAddSpecies" prefHeight="25.0" prefWidth="109.0" text="Adicionar Espécie" />
       <Button layoutX="26.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnAddMutation" prefHeight="25.0" prefWidth="109.0" text="Adicionar Mutação" />
