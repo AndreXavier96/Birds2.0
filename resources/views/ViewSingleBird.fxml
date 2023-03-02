@@ -361,6 +361,21 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
+            <Tab text="Historico">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="853.0">
+                     <children>
+                        <TableView fx:id="TableHistoric" layoutX="3.0" prefHeight="385.0" prefWidth="853.0">
+                          <columns>
+                            <TableColumn fx:id="colTitle" prefWidth="133.0" text="Titulo" />
+                            <TableColumn fx:id="colDate" prefWidth="149.0" text="Data (dia-mes-ano hora:minutos)" />
+                              <TableColumn fx:id="colObs" prefWidth="574.0" text="Descricao" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
       <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="880.0">

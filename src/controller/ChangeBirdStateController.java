@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 
 import constants.MyValues;
 import domains.Bird;
+import domains.Historic;
 import domains.State;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +25,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import repository.BirdsRepository;
+import repository.HistoricRepository;
 import repository.StateRepository;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -52,6 +55,7 @@ public class ChangeBirdStateController implements Initializable{
 	
 	private StateRepository stateRepositor = new StateRepository();
 	private BirdsRepository birdsRepository = new BirdsRepository();
+	private HistoricRepository historicRepository = new HistoricRepository();
 	
 	public void startValues(String band,String actualState,String img,String state) {
 		LbBand.setText(band);
@@ -99,6 +103,9 @@ public class ChangeBirdStateController implements Initializable{
 			Bird bird = birdsRepository.getBirdWhereString("Band",LbBand.getText());
 			state.setId(bird.getState().getId());
 			stateRepositor.updateState(state);
+			String obs = "Estado do passaro alterado de "+LbState.getText()+" para "+state.getType();
+			String formatedDate =new SimpleDateFormat(MyValues.DATE_FORMATE).format(state.getDate());
+			historicRepository.insertHistoric(new Historic(bird.getBreeder().getId(),MyValues.CHANGE_STATE,formatedDate,obs, bird));
 			
 			// close the window
 		    Stage stage = (Stage) CbState.getScene().getWindow();

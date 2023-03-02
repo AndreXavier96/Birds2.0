@@ -21,8 +21,6 @@ public class Bird {
 	private Integer Posture;
 	private String Image;
 
-	
-
 	public Bird(Integer id, Breeder nrBreeder, String band, Integer year, Date entryDate, String entryType,
 			Double buyPrice, Double sellPrice, State state, String sex, Bird father, Bird mother, Specie species,
 			Mutation mutations, Cage cage, Integer posture,String image) {
@@ -185,7 +183,7 @@ public class Bird {
 	public void setImage(String image) {
 		Image = image;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Bird [id=" + id + ", NrBreeder=" + Breeder + ", Band=" + Band + ", Year=" + Year + ", EntryDate="
@@ -194,9 +192,4 @@ public class Bird {
 				+ Species + ", Mutations=" + Mutations + ", Cage=" + Cage  + ", Posture="
 				+ Posture + "]";
 	}
-
-	
-
-	
-
 }

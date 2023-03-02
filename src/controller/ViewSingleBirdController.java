@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import constants.MyValues;
 import domains.Bird;
+import domains.Historic;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,6 +33,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import repository.BirdsRepository;
+import repository.HistoricRepository;
 
 public class ViewSingleBirdController implements Initializable{
 	
@@ -83,7 +85,13 @@ public class ViewSingleBirdController implements Initializable{
 	private TableColumn<Bird, String> TcBand,TcFather,TcMother,TcState,
 		TcCage,TcBrooding,TcMutation,TcBreeder;
 	
+	@FXML
+	private TableView<Historic> TableHistoric;
+	@FXML
+	private TableColumn<Historic, String> colTitle,colDate,colObs;
+	
 	BirdsRepository birdsRepository=new BirdsRepository();
+	HistoricRepository historicRepository = new HistoricRepository();
 	
 	@FXML
 	private void btnChangeBirdState(ActionEvent event) throws IOException {
@@ -120,6 +128,15 @@ public class ViewSingleBirdController implements Initializable{
 		personalInfo(b);
 		affiliation(b);
 		descendants(b);
+		historic(b);
+	}
+	
+	public void historic(Bird b) {
+		colTitle.setCellValueFactory(new PropertyValueFactory<Historic, String>("title"));
+	    colDate.setCellValueFactory(new PropertyValueFactory<Historic, String>("date"));
+	    colObs.setCellValueFactory(new PropertyValueFactory<Historic, String>("obs"));
+	    ObservableList<Historic> historics = historicRepository.getAllByBirdId(b.getId());
+	    TableHistoric.setItems(historics);
 	}
 	
 	public void affiliation(Bird b) {
@@ -127,38 +144,31 @@ public class ViewSingleBirdController implements Initializable{
 			LbBandFather.setText(b.getFather().getBand());
 			if (!b.getFather().getImage().isEmpty())
 				ImFather.setImage(new Image(b.getFather().getImage()));
-			
 			if(b.getFather().getFather()!=null) {
 				LbBandGrandFatherFather.setText(b.getFather().getFather().getBand());
 				if (!b.getFather().getFather().getImage().isEmpty())
 					ImGrandFatherFather.setImage(new Image(b.getFather().getFather().getImage()));
-			}
-				
+			}	
 			if(b.getFather().getMother()!=null) {
 				LbBandGrandFatherMother.setText(b.getFather().getMother().getBand());
 				if (!b.getFather().getMother().getImage().isEmpty())
 					ImGrandFatherMother.setImage(new Image(b.getFather().getMother().getImage()));
 			}
-				
-			
 		}
 		if(b.getMother()!=null) {
 			LbBandMother.setText(b.getMother().getBand());
 			if (!b.getMother().getImage().isEmpty())
 				ImMother.setImage(new Image(b.getMother().getImage()));
-			
 			if(b.getMother().getFather()!=null) {
 				LbBandGrandMotherFather.setText(b.getMother().getFather().getBand());
 				if (!b.getMother().getFather().getImage().isEmpty())
 					ImGrandMotherFather.setImage(new Image(b.getMother().getFather().getImage()));
 			}
-				
 			if(b.getMother().getMother()!=null) {
 				LbBandGrandMotherMother.setText(b.getMother().getMother().getBand());
 				if (!b.getMother().getMother().getImage().isEmpty())
 					ImGrandMotherMother.setImage(new Image(b.getMother().getMother().getImage()));
-			}
-				
+			}	
 		}	
 	}
 
@@ -187,7 +197,7 @@ public class ViewSingleBirdController implements Initializable{
 			LbLastModify.setText("TODO");
 			LbOBs.setText("TODO");
 			LbBreeder.setText(b.getBreeder().getName());
-			if (!b.getImage().isEmpty()) {
+			if (b.getImage().isEmpty()) {
 				ImBird.setImage(new Image(b.getImage()));
 			}
 			

@@ -17,7 +17,7 @@ import repository.BreederFederationRepository;
 import repository.BreederRepository;
 import repository.CageRepository;
 import repository.ClubRepository;
-import repository.FederationRepository;
+import repository.HistoricRepository;
 import repository.MutationsRepository;
 import repository.SpeciesRepository;
 import repository.StateRepository;
@@ -29,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -40,6 +41,7 @@ import domains.Breeder;
 import domains.Cage;
 import domains.Club;
 import domains.Federation;
+import domains.Historic;
 import domains.Mutation;
 import domains.Specie;
 import javafx.collections.FXCollections;
@@ -54,48 +56,34 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
 public class AddBirdViewController implements Initializable {
-	
 	private Parent root;
 	private Scene scene;
 	private Stage stage;
 	
 	@FXML
 	private ComboBox<Breeder> CbCriador;
-	
 	@FXML
 	private ComboBox<Specie> CbSpecies;
-	
 	@FXML
 	private ComboBox<Mutation> CbMutation;
-	
 	@FXML
 	private ComboBox<Cage> CbCage;
-	
 	@FXML
 	private ComboBox<String> CbEntryType, CbSex;
-	
 	@FXML
 	private ComboBox<Bird> CbFather,CbMother;
-
 	@FXML
 	private TextField TfAno, TfNumero, TfBuyPrice;
-	
 	@FXML
 	private DatePicker DfDataEntrada;
-	
 	@FXML
-	private Label LabelAnilha, LabelError, labelTfBuyPrice;
-	
+	private Label LabelAnilha, LabelError, labelTfBuyPrice,LbImagePath;
 	@FXML
 	private AnchorPane ApStam;
 	@FXML
 	private ComboBox<Club> CbClub;
-	
 	@FXML
 	private ImageView ImImage;
-	
-	@FXML
-	private Label LbImagePath;
 	@FXML
 	private Button btnUpload;
 	
@@ -106,9 +94,9 @@ public class AddBirdViewController implements Initializable {
 	private CageRepository cageRepository = new CageRepository();
 	private StateRepository stateRepository=new StateRepository();
 	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
-	private FederationRepository federationRepository = new FederationRepository();
 	private ClubRepository clubRepository = new ClubRepository();
 	private BreederClubRepository breederClubRepository = new BreederClubRepository();
+	private HistoricRepository historicRepository = new HistoricRepository();
 	
 	private boolean imageUploaded=false;
 	
@@ -275,7 +263,16 @@ public class AddBirdViewController implements Initializable {
 					System.out.println(e);
 				}
 			}
-			birdsRepository.Insert(bird);
+			Integer BirdId = birdsRepository.Insert(bird);
+			bird.setId(BirdId);
+			String obs="";
+			if (bird.getEntryType().equals(MyValues.COMPRA)) {
+				obs="Passaro comprado por "+bird.getBuyPrice()+"\\u20ac a "+bird.getEntryDate().toString();
+			}else if(CbEntryType.getValue().equals(MyValues.NASCIMENTO)){
+				obs="Passaro nascido a "+bird.getEntryDate().toString();
+			}
+			String formatedDate =new SimpleDateFormat(MyValues.DATE_FORMATE).format(bird.getEntryDate());
+			historicRepository.insertHistoric(new Historic(breederID,MyValues.BIRD_INSERTED,formatedDate,obs, bird));
 		}
 	}
 	
