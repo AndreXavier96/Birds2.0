@@ -286,13 +286,12 @@ public class BirdsRepository {
 	    }
 	}
 
-	public void partialUpdateIntBird(Integer id, String col, int value) {
+	public void partialUpdateIntBird(Integer id, String col, Integer value) {
 	    try {
 	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
-	        PreparedStatement stmt = con.prepareStatement("UPDATE BIRDS SET ? = ? WHERE id=?");
-	        stmt.setString(1, col);
-	        stmt.setInt(2, value);
-	        stmt.setInt(3, id);
+	        PreparedStatement stmt = con.prepareStatement("UPDATE BIRDS SET "+col+" = ? WHERE id=?");
+	        stmt.setInt(1, value);
+	        stmt.setInt(2, id);
 	        stmt.executeUpdate();
 	        System.out.println("Bird with id " + id + " updated, coluna "+col+" para valor: "+value+" .");
 	    } catch (SQLException e) {
