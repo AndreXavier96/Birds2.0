@@ -44,6 +44,7 @@ import domains.Federation;
 import domains.Historic;
 import domains.Mutation;
 import domains.Specie;
+import domains.State;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -69,7 +70,7 @@ public class AddBirdViewController implements Initializable {
 	@FXML
 	private ComboBox<Cage> CbCage;
 	@FXML
-	private ComboBox<String> CbEntryType, CbSex;
+	private ComboBox<String> CbEntryType, CbSex, CbState;
 	@FXML
 	private ComboBox<Bird> CbFather,CbMother;
 	@FXML
@@ -135,6 +136,8 @@ public class AddBirdViewController implements Initializable {
 		        }
 		    }
 		});
+		
+		CbState.setItems(MyValues.STARTING_STATE_LIST);
 		
 		CbEntryType.setItems(MyValues.ENTRYTYPELIST);
 		CbEntryType.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -232,7 +235,8 @@ public class AddBirdViewController implements Initializable {
 				bird.setBuyPrice(0.0);
 			}
 			bird.setSellPrice(0.0);
-			bird.setState(stateRepository.insertVivo());
+			String date = new SimpleDateFormat(MyValues.DATE_FORMATE).format(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+			bird.setState(stateRepository.insertState(new State(null, CbState.getValue(),date , null, null)));
 			bird.setSex(CbSex.getValue());
 			if (CbFather.getValue().getId()!=null)
 				bird.setFather(birdsRepository.getBirdWhereInt("id",CbFather.getValue().getId()));
@@ -320,6 +324,18 @@ public class AddBirdViewController implements Initializable {
 				validate=false;
 			}else {
 				CbClub.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		}
+		
+		if (validate) {
+			if (CbState.getValue()==null) {
+				CbState.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Estado tem de ser escolhido");
+				validate=false;
+			}else {
+				CbState.setStyle(null);
 				LabelError.setText("");
 				validate=true;
 			}
