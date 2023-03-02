@@ -78,19 +78,29 @@ public class CageRepository {
 		}
 	}
 	
-	public void InsertMultipleCages(int i,String code,String type) throws SQLException {
-		System.out.println("Insert "+i+" Cages in Database...");
+
+	public boolean checkIfCodeExist(String code)  throws SQLException {
 		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
-		if (type==null)
-			type="";
-		for (int k = 0;k<i ;k++) {
-			String sql = "INSERT INTO CAGE(Code,Type) VALUES('"
-					+code+k+"','"+type+"')";
-			stmt.executeUpdate(sql);
-		}
-		System.out.println(i+" Records inserted");
+		String sql = "SELECT Code FROM CAGE WHERE Code='"+code+"';";
+		ResultSet rs = stmt.executeQuery(sql);
+		return rs.next();
 	}
+	
+	
+//	public void InsertMultipleCages(int i,String code,String type) throws SQLException {
+//		System.out.println("Insert "+i+" Cages in Database...");
+//		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+//		Statement stmt = con.createStatement();
+//		if (type==null)
+//			type="";
+//		for (int k = 0;k<i ;k++) {
+//			String sql = "INSERT INTO CAGE(Code,Type) VALUES('"
+//					+code+k+"','"+type+"')";
+//			stmt.executeUpdate(sql);
+//		}
+//		System.out.println(i+" Records inserted");
+//	}
 	
 	
 	public int getCageNumber() throws SQLException {
@@ -105,14 +115,13 @@ public class CageRepository {
 			return i;	
 	}
 	
-	
-	public void deleteXCages(int i) throws SQLException {
-		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
-				MyValues.PASSWORD);
-		Statement stmt = con.createStatement();
-		String deleteQuery = "DELETE FROM CAGE WHERE id IN (SELECT id FROM CAGE ORDER BY id DESC LIMIT " + i + ")";
-		stmt.executeUpdate(deleteQuery);
-	}
+//	public void deleteXCages(int i) throws SQLException {
+//		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
+//				MyValues.PASSWORD);
+//		Statement stmt = con.createStatement();
+//		String deleteQuery = "DELETE FROM CAGE WHERE id IN (SELECT id FROM CAGE ORDER BY id DESC LIMIT " + i + ")";
+//		stmt.executeUpdate(deleteQuery);
+//	}
 	
 //	
 //	public ObservableList<Cage> getEmptyCages() {
