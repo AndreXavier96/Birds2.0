@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 
 import constants.MyValues;
 import domains.State;
@@ -19,7 +18,7 @@ public class StateRepository {
 	        String sql = "CREATE TABLE IF NOT EXISTS STATE"
 	                +" (id INTEGER auto_increment, "
 	                +"Type VARCHAR(255) NOT NULL, "
-	                +"Date DATE, "
+	                +"Date VARCHAR(255), "
 	                +"Valor DOUBLE, "
 	                +"Motivo VARCHAR(255), "
 	                +"PRIMARY KEY (id))";
@@ -52,7 +51,7 @@ public class StateRepository {
 	        PreparedStatement ps = null;
             String sql = "INSERT INTO STATE (Type) VALUES (?)";
             ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, MyValues.VIVO);
+            ps.setString(1, MyValues.OTHER);
 	        int i = ps.executeUpdate();
 	        if (i == 1) {
 	            ResultSet rs = ps.getGeneratedKeys();
@@ -77,10 +76,8 @@ public class StateRepository {
 	        PreparedStatement ps = null;
             String sql = "INSERT INTO STATE (Type,Date,Valor,Motivo) VALUES (?, ?, ?,?)";
             ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, MyValues.VIVO);
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-	        String formattedDate = formatter.format(state.getDate());
-	        ps.setString(2, formattedDate);
+            ps.setString(1, state.getType());
+	        ps.setString(2, state.getDate());
             Double valor= (double) 0;
             if (state.getValor()!=null)
 				valor = state.getValor();
@@ -117,7 +114,7 @@ public class StateRepository {
 	        if (rs.next()) {
 	        	state.setId(rs.getInt(1));
 	        	state.setType(rs.getString(2));
-	        	state.setDate(rs.getDate(3));
+	        	state.setDate(rs.getString(3));
 	        	state.setValor(rs.getDouble(4));
 	        	state.setMotivo(rs.getString(5));
 	        }
@@ -149,9 +146,7 @@ public class StateRepository {
 	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 	         PreparedStatement stmt = con.prepareStatement("UPDATE STATE SET Type=?, Date=?, Valor=?, Motivo=? WHERE id=?")) {
 	        stmt.setString(1, state.getType());
-	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	        String formattedDate = formatter.format(state.getDate());
-	        stmt.setString(2, formattedDate);
+	        stmt.setString(2, state.getDate());
 	        if (state.getValor()==null)
 				state.setValor((double) 0);
 	        stmt.setDouble(3, state.getValor());

@@ -73,10 +73,10 @@ public class ChangeBirdStateController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		CbState.valueProperty().addListener((observable, oldValue, newValue) -> {
-		      if (MyValues.STATELIST.get(1).equals(newValue)) {
+		      if (MyValues.MORTO.equals(newValue)) {
 		    	  ApMotivo.setVisible(true);
 		    	  ApValor.setVisible(false);
-		      } else if(MyValues.STATELIST.get(2).equals(newValue)) {
+		      } else if(MyValues.VENDIDO.equals(newValue)) {
 		    	  ApMotivo.setVisible(false);
 		    	  ApValor.setVisible(true);
 		      }else {
@@ -99,13 +99,13 @@ public class ChangeBirdStateController implements Initializable{
 				state.setMotivo(TfMotivo.getText());
 			else if (state.getType().equals(MyValues.VENDIDO))
 				state.setValor(Double.parseDouble(TfPriceSell.getText()));
-			state.setDate(Date.from(Dtpicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+			String date = new SimpleDateFormat(MyValues.DATE_FORMATE).format(Date.from(Dtpicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+			state.setDate(date);
 			Bird bird = birdsRepository.getBirdWhereString("Band",LbBand.getText());
 			state.setId(bird.getState().getId());
 			stateRepositor.updateState(state);
-			String obs = "Estado do passaro alterado de "+LbState.getText()+" para "+state.getType();
-			String formatedDate =new SimpleDateFormat(MyValues.DATE_FORMATE).format(state.getDate());
-			historicRepository.insertHistoric(new Historic(bird.getBreeder().getId(),MyValues.CHANGE_STATE,formatedDate,obs, bird));
+			String obs = "Estado do passaro alterado de '"+LbState.getText()+"' para '"+state.getType()+"'.";
+			historicRepository.insertHistoric(new Historic(bird.getBreeder().getId(),MyValues.CHANGE_STATE,date,obs, bird));
 			
 			// close the window
 		    Stage stage = (Stage) CbState.getScene().getWindow();

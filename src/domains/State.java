@@ -1,11 +1,9 @@
 package domains;
 
-import java.util.Date;
-
 public class State {
 	private Integer id;
     private String type;
-    private Date date;
+    private String date;
     private Double valor;
     private String motivo;
     
@@ -15,7 +13,7 @@ public class State {
 		super();
 	}
 
-	public State(Integer id, String type, Date date, Double valor, String motivo) {
+	public State(Integer id, String type, String date, Double valor, String motivo) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -56,11 +54,11 @@ public class State {
 		this.valor = valor;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
     
