@@ -40,4 +40,9 @@ public class MyValues {
 	public static final String TITLE_BIRD_APP = "Bird Application";
 	public static final String TITLE_SELECT_IMAGE = "Selecionar Imagem Passaro";
 	public static final String TITLE_CHANGE_STATE = "Alterar Estado";
+	
+	public static final String BIRD_INSERTED = "PASSARO INSERIDO";
+	public static final String CHANGE_STATE = "ESTADO ALTERADO";
+	
+	public static final String DATE_FORMATE = "dd-MM-yyyy HH:mm";
 }

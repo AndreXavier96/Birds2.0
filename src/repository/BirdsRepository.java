@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import constants.MyValues;
 import domains.Bird;
 import javafx.collections.FXCollections;
@@ -243,50 +242,35 @@ public class BirdsRepository {
 	    }
 	}
 	
-	public void Insert(Bird bird) {
+	public int Insert(Bird bird) {
+		int id = -1;
 		try {
 			System.out.println("Insert Bird in DataBase...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			String dateString = dateFormat.format(bird.getEntryDate());
-			
-			String insert = "INSERT INTO BIRDS";
-			String into = "(Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,StateId,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId,ImagePath)";
-			String values="values('" + bird.getBand() + "','" + bird.getYear() + "','"
-					+ dateString + "','" + bird.getEntryType() + "','" + bird.getBuyPrice() + "','"
-					+ bird.getSellPrice() + "','" + bird.getState().getId() + "','" + bird.getSex() + "'";
-			String imagePath = bird.getImage();
-			if (bird.getImage()==null) {
-				imagePath="";
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+			Statement stmt = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+			stmt.executeUpdate(
+					"INSERT INTO BIRDS (Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,StateId,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId,ImagePath) "
+							+ "VALUES ('" + bird.getBand() + "','" + bird.getYear() + "','"
+							+ new java.sql.Date(bird.getEntryDate().getTime()) + "','" + bird.getEntryType() + "','"
+							+ bird.getBuyPrice() + "','" + bird.getSellPrice() + "','" + bird.getState().getId() + "','"
+							+ bird.getSex() + "',"
+							+ (bird.getFather() == null ? "NULL" : "'" + bird.getFather().getId() + "'") + ","
+							+ (bird.getMother() == null ? "NULL" : "'" + bird.getMother().getId() + "'") + ","
+							+ (bird.getMutations() == null ? "NULL" : "'" + bird.getMutations().getId() + "'") + ",'"
+							+ bird.getSpecies().getId() + "','" + bird.getCage().getId() + "','"
+							+ bird.getBreeder().getId() + "','" + bird.getImage() + "')",
+					Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				id = rs.getInt(1);
 			}
-			String valuesFinal=",'"+ bird.getSpecies().getId() +"','"+ bird.getCage().getId() +"','"+bird.getBreeder().getId()+"','"+imagePath+"')";
-			
-
-			if (bird.getFather()==null) {
-				into = into.replace(",Father", "");
-			}else {
-				values+=",'"+bird.getFather().getId()+ "'";
-			}
-			
-			if (bird.getMother()==null) {
-				into = into.replace(",Mother", "");
-			}else {
-				values+=",'"+bird.getMother().getId()+ "'";
-			}
-			
-			if (bird.getMutations()==null) {
-				into = into.replace(",MutationsId", "");
-			}else {
-				values+=",'"+bird.getMutations().getId()+ "'";
-			}
-			int i = stmt.executeUpdate(insert+into+values+valuesFinal);
-			System.out.println(i+" Bird Record inserted");
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+			System.out.println("Bird Record inserted with id: " + id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
+
 	
 	public void partialUpdateStringsBird(Integer id, String col, String value) {
 	    try {
