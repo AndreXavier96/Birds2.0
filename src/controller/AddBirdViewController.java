@@ -262,7 +262,7 @@ public class AddBirdViewController implements Initializable {
 				try {
 					String fileName = anilha+selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));
 					Files.copy(selectedFile.toPath(), defaultFolder.toPath().resolve(fileName),StandardCopyOption.REPLACE_EXISTING);
-					bird.setImage(LbImagePath.getText());
+					bird.setImage("file:"+defaultFolder+"\\"+fileName);
 				} catch (IOException e) {
 					System.out.println(e);
 				}

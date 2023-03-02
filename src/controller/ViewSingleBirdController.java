@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -156,36 +157,67 @@ public class ViewSingleBirdController implements Initializable{
 	}
 	
 	public void affiliation(Bird b) {
-		if(b.getFather()!=null) {
+		if (b.getFather() != null) {
 			LbBandFather.setText(b.getFather().getBand());
-			if (!b.getFather().getImage().isEmpty())
-				ImFather.setImage(new Image(b.getFather().getImage()));
-			if(b.getFather().getFather()!=null) {
+			if (!b.getFather().getImage().isEmpty()) {
+				String s = b.getFather().getImage();
+				if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+					ImFather.setImage(new Image(b.getFather().getImage()));
+				else
+					ImFather.setImage(MyValues.DEFAULT_IMAGE);
+			}
+			if (b.getFather().getFather() != null) {
 				LbBandGrandFatherFather.setText(b.getFather().getFather().getBand());
-				if (!b.getFather().getFather().getImage().isEmpty())
-					ImGrandFatherFather.setImage(new Image(b.getFather().getFather().getImage()));
-			}	
-			if(b.getFather().getMother()!=null) {
+				if (!b.getFather().getFather().getImage().isEmpty()) {
+					String s = b.getFather().getFather().getImage();
+					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+						ImGrandFatherFather.setImage(new Image(b.getFather().getFather().getImage()));
+					else
+						ImGrandFatherFather.setImage(MyValues.DEFAULT_IMAGE);
+				}
+			}
+			if (b.getFather().getMother() != null) {
 				LbBandGrandFatherMother.setText(b.getFather().getMother().getBand());
-				if (!b.getFather().getMother().getImage().isEmpty())
-					ImGrandFatherMother.setImage(new Image(b.getFather().getMother().getImage()));
+				if (!b.getFather().getMother().getImage().isEmpty()) {
+					String s = b.getFather().getMother().getImage();
+					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+						ImGrandFatherMother.setImage(new Image(b.getFather().getMother().getImage()));
+					else
+						ImGrandFatherMother.setImage(MyValues.DEFAULT_IMAGE);
+				}
 			}
 		}
-		if(b.getMother()!=null) {
+		
+		if (b.getMother() != null) {
 			LbBandMother.setText(b.getMother().getBand());
-			if (!b.getMother().getImage().isEmpty())
-				ImMother.setImage(new Image(b.getMother().getImage()));
-			if(b.getMother().getFather()!=null) {
-				LbBandGrandMotherFather.setText(b.getMother().getFather().getBand());
-				if (!b.getMother().getFather().getImage().isEmpty())
-					ImGrandMotherFather.setImage(new Image(b.getMother().getFather().getImage()));
+			if (!b.getMother().getImage().isEmpty()) {
+				String s = b.getMother().getImage();
+				if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+					ImMother.setImage(new Image(b.getMother().getImage()));
+				else
+					ImMother.setImage(MyValues.DEFAULT_IMAGE);
 			}
-			if(b.getMother().getMother()!=null) {
+			if (b.getMother().getFather() != null) {
+				LbBandGrandMotherFather.setText(b.getMother().getFather().getBand());
+				if (!b.getMother().getFather().getImage().isEmpty()) {
+					String s = b.getMother().getFather().getImage();
+					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+						ImGrandMotherFather.setImage(new Image(b.getMother().getFather().getImage()));
+					else
+						ImGrandMotherFather.setImage(MyValues.DEFAULT_IMAGE);
+				}
+			}
+			if (b.getMother().getMother() != null) {
 				LbBandGrandMotherMother.setText(b.getMother().getMother().getBand());
-				if (!b.getMother().getMother().getImage().isEmpty())
-					ImGrandMotherMother.setImage(new Image(b.getMother().getMother().getImage()));
-			}	
-		}	
+				if (!b.getMother().getMother().getImage().isEmpty()) {
+					String s = b.getMother().getMother().getImage();
+					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+						ImGrandMotherMother.setImage(new Image(b.getMother().getMother().getImage()));
+					else
+						ImGrandMotherMother.setImage(MyValues.DEFAULT_IMAGE);
+				}
+			}
+		}
 	}
 
 	public void personalInfo(Bird b) {
@@ -213,8 +245,12 @@ public class ViewSingleBirdController implements Initializable{
 			LbLastModify.setText("TODO");
 			LbOBs.setText("TODO");
 			LbBreeder.setText(b.getBreeder().getName());
-			if (b.getImage().isEmpty()) {
-				ImBird.setImage(new Image(b.getImage()));
+			if (!b.getImage().isEmpty()) {
+				String s = b.getImage();
+				if (Files.exists(Paths.get(s.substring(s.indexOf(':')+1))))
+					ImBird.setImage(new Image(b.getImage()));
+				else
+					ImBird.setImage(MyValues.DEFAULT_IMAGE);
 			}
 			
 	}
@@ -275,7 +311,7 @@ public class ViewSingleBirdController implements Initializable{
 		LbOBs.setText(null);
 		LbCage.setText(null);
 		LbBreeder.setText(null);
-		ImBird.setImage(new Image("file:resources/images/img/default.png"));
+		ImBird.setImage(MyValues.DEFAULT_IMAGE);
 
 		LbBandFather.setText(null);
 		LbBandMother.setText(null);
@@ -283,17 +319,17 @@ public class ViewSingleBirdController implements Initializable{
 		LbBandGrandMotherFather.setText(null);
 		LbBandGrandFatherMother.setText(null);
 		LbBandGrandMotherMother.setText(null);
-		ImFather.setImage(new Image("file:resources/images/img/default.png"));
-		ImMother.setImage(new Image("file:resources/images/img/default.png"));
-		ImGrandFatherFather.setImage(new Image("file:resources/images/img/default.png"));
-		ImGrandMotherFather.setImage(new Image("file:resources/images/img/default.png"));
-		ImGrandFatherMother.setImage(new Image("file:resources/images/img/default.png"));
-		ImGrandMotherMother.setImage(new Image("file:resources/images/img/default.png"));
-		
+		ImFather.setImage(MyValues.DEFAULT_IMAGE);
+		ImMother.setImage(MyValues.DEFAULT_IMAGE);
+		ImGrandFatherFather.setImage(MyValues.DEFAULT_IMAGE);
+		ImGrandMotherFather.setImage(MyValues.DEFAULT_IMAGE);
+		ImGrandFatherMother.setImage(MyValues.DEFAULT_IMAGE);
+		ImGrandMotherMother.setImage(MyValues.DEFAULT_IMAGE);
+
 		btnEdit.setVisible(false);
 
 	}
-	
+
 	@FXML
 	public void btnBack(ActionEvent event) {
 		try {
@@ -310,14 +346,14 @@ public class ViewSingleBirdController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		LbState.textProperty().addListener((Observable, oldValue, newValue) -> {
-			if (newValue!=null)
+			if (newValue != null)
 				if (!newValue.isEmpty())
 					btnEdit.setVisible(true);
 				else
 					btnEdit.setVisible(false);
 		});
 		LbCage.textProperty().addListener((Observable, oldValue, newValue) -> {
-			if (newValue!=null)
+			if (newValue != null)
 				if (!newValue.isEmpty())
 					btnEditCage.setVisible(true);
 				else

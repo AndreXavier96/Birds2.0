@@ -2,6 +2,7 @@ package constants;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 public class MyValues {
 	public static final String USER = "admin";
@@ -59,4 +60,6 @@ public class MyValues {
 	public static final String CHANGE_CAGE = "GAIOLA ALTERADA";
 
 	public static final String DATE_FORMATE = "dd-MM-yyyy HH:mm";
+	
+	public static final Image DEFAULT_IMAGE = new Image("file:resources/images/img/default.png");
 }
