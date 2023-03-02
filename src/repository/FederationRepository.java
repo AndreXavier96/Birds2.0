@@ -76,8 +76,8 @@ public class FederationRepository {
 				f.setId(rs.getInt(1));
 				f.setName(rs.getString(2));
 				f.setAcronym(rs.getString(3));
-				f.setCountry(rs.getString(4));
-				f.setEmail(rs.getString(5));;
+				f.setEmail(rs.getString(4));;
+				f.setCountry(rs.getString(5));
 				federations.add(f);
 				System.out.println(f);
 			}
@@ -99,8 +99,8 @@ public class FederationRepository {
 				f.setId(rs.getInt(1));
 				f.setName(rs.getString(2));
 				f.setAcronym(rs.getString(3));
-				f.setCountry(rs.getString(4));
-				f.setEmail(rs.getString(5));
+				f.setEmail(rs.getString(4));;
+				f.setCountry(rs.getString(5));
 				return f;
 			}else
 				return null;
@@ -121,8 +121,8 @@ public class FederationRepository {
 				f.setId(rs.getInt(1));
 				f.setName(rs.getString(2));
 				f.setAcronym(rs.getString(3));
-				f.setCountry(rs.getString(4));
-				f.setEmail(rs.getString(5));
+				f.setEmail(rs.getString(4));;
+				f.setCountry(rs.getString(5));
 				return f;
 			}else
 				return null;

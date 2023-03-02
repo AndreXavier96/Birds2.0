@@ -6,13 +6,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import repository.BirdsRepository;
+import repository.BreederClubRepository;
+import repository.BreederFederationRepository;
 import repository.BreederRepository;
 import repository.CageRepository;
+import repository.ClubRepository;
+import repository.FederationRepository;
 import repository.MutationsRepository;
 import repository.SpeciesRepository;
 import repository.StateRepository;
@@ -33,8 +38,11 @@ import constants.MyValues;
 import domains.Bird;
 import domains.Breeder;
 import domains.Cage;
+import domains.Club;
+import domains.Federation;
 import domains.Mutation;
 import domains.Specie;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -79,6 +87,11 @@ public class AddBirdViewController implements Initializable {
 	private Label LabelAnilha, LabelError, labelTfBuyPrice;
 	
 	@FXML
+	private AnchorPane ApStam;
+	@FXML
+	private ComboBox<Club> CbClub;
+	
+	@FXML
 	private ImageView ImImage;
 	
 	@FXML
@@ -92,6 +105,10 @@ public class AddBirdViewController implements Initializable {
 	private MutationsRepository mutationsRepository = new MutationsRepository();
 	private CageRepository cageRepository = new CageRepository();
 	private StateRepository stateRepository=new StateRepository();
+	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
+	private FederationRepository federationRepository = new FederationRepository();
+	private ClubRepository clubRepository = new ClubRepository();
+	private BreederClubRepository breederClubRepository = new BreederClubRepository();
 	
 	private boolean imageUploaded=false;
 	
@@ -100,7 +117,7 @@ public class AddBirdViewController implements Initializable {
 		CbCriador.setItems(breederRepository.getAllBreeders());
 		CbCriador.setConverter(new StringConverter<Breeder>() {
 			 public String toString(Breeder b) {
-				 return "Nome:"+b.getName()+" STAM:"+b.getStam();
+				 return b.getName();
 			 }
 			 
 			 public Breeder fromString(String s) {
@@ -108,6 +125,29 @@ public class AddBirdViewController implements Initializable {
 			 }
 			 
 		});
+		CbCriador.valueProperty().addListener((observable, oldValue, newValue) -> {
+		    if (newValue != null) {
+		        try {
+		        	ObservableList<Club> clubList = FXCollections.observableArrayList();
+		        	for (Integer i : breederClubRepository.getClubsFromBreederId(newValue.getId())) {
+						clubList.add(clubRepository.getClubByID(i));
+					}
+		            CbClub.setItems(clubList);
+		            ApStam.setVisible(true);
+		            CbClub.setConverter(new StringConverter<Club>() {
+		                public String toString(Club c) {
+		                    return c.getAcronym();
+		                }
+		                public Club fromString(String s) {
+		                    return CbClub.getItems().stream().filter(c -> c.getAcronym().equals(s)).findFirst().orElse(null);
+		                }
+		            });
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		});
+		
 		CbEntryType.setItems(MyValues.ENTRYTYPELIST);
 		CbEntryType.valueProperty().addListener((observable, oldValue, newValue) -> {
 		      if (MyValues.ENTRYTYPELIST.get(0).equals(newValue)) {
@@ -193,10 +233,8 @@ public class AddBirdViewController implements Initializable {
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if(validate()) {
-			String anilha =CbCriador.getValue().getStam()+" "+TfAno.getText()+" "+TfNumero.getText() ;
 			Bird bird = new Bird();
 			bird.setBreeder(breederRepository.getBreederbyId(CbCriador.getValue().getId()));
-			bird.setBand(anilha);
 			bird.setYear(Integer.parseInt(TfAno.getText()));
 			bird.setEntryDate(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			bird.setEntryType(CbEntryType.getValue().toString());
@@ -206,9 +244,7 @@ public class AddBirdViewController implements Initializable {
 				bird.setBuyPrice(0.0);
 			}
 			bird.setSellPrice(0.0);
-			
 			bird.setState(stateRepository.insertVivo());
-			
 			bird.setSex(CbSex.getValue());
 			if (CbFather.getValue().getId()!=null)
 				bird.setFather(birdsRepository.getBirdWhereInt("id",CbFather.getValue().getId()));
@@ -221,6 +257,13 @@ public class AddBirdViewController implements Initializable {
 				bird.setMutations(null);
 			bird.setCage(cageRepository.getCage(CbCage.getValue().getId()));
 			
+			Integer breederID =bird.getBreeder().getId();
+			Club club = CbClub.getValue();
+			Federation federation = club.getFederation();
+			String stam = breederFederationRepository.getStamByBreederAndFederationId(breederID,federation.getId());
+			String anilha = club.getAcronym()+" "+stam+" "+TfNumero.getText()+" "+federation.getCountry()+" "+federation.getAcronym()+TfAno.getText();
+			bird.setBand(anilha);
+			
 			if (imageUploaded) {
 				File defaultFolder = new File("resources/images/birds");
 				File selectedFile = new File (LbImagePath.getText());
@@ -232,7 +275,6 @@ public class AddBirdViewController implements Initializable {
 					System.out.println(e);
 				}
 			}
-			
 			birdsRepository.Insert(bird);
 		}
 	}
@@ -250,9 +292,9 @@ public class AddBirdViewController implements Initializable {
 		}
 		
 		if (validate) {
-			if (!TfAno.getText().matches("^\\d{4}$")) {
+			if (!TfAno.getText().matches("^\\d{4}|\\d{2}$")) {
 				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Ano nao esta no formato correto ou tem de ser preenchido");
+				LabelError.setText("Ano nao esta no formato correto ou tem de ser preenchido. ex:2022 ou 22");
 				validate=false;
 			}else {
 				TfAno.setStyle(null);
@@ -275,15 +317,14 @@ public class AddBirdViewController implements Initializable {
 		}
 		
 		if (validate) {
-			try {
-				DfDataEntrada.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-				DfDataEntrada.setStyle(null);
-				LabelError.setStyle("");
-				validate=true;
-			} catch (Exception e) {
-				DfDataEntrada.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Ano nao esta no formato correto ou tem de ser preenchido");
+			if (CbClub.getValue()==null) {
+				CbClub.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Clube tem de ser escolhido");
 				validate=false;
+			}else {
+				CbClub.setStyle(null);
+				LabelError.setText("");
+				validate=true;
 			}
 		}
 		
@@ -296,6 +337,19 @@ public class AddBirdViewController implements Initializable {
 				CbEntryType.setStyle(null);
 				LabelError.setText("");
 				validate=true;
+			}
+		}
+		
+		if (validate) {
+			try {
+				DfDataEntrada.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				DfDataEntrada.setStyle(null);
+				LabelError.setStyle("");
+				validate=true;
+			} catch (Exception e) {
+				DfDataEntrada.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Data entrada nao esta no formato correto ou tem de ser preenchido");
+				validate=false;
 			}
 		}
 		
@@ -372,7 +426,7 @@ public class AddBirdViewController implements Initializable {
 	@FXML
 	public void btnUploadImage(ActionEvent event) {
 			FileChooser fileChooser = new FileChooser();
-			fileChooser.setTitle("Select Image");
+			fileChooser.setTitle(MyValues.TITLE_SELECT_IMAGE);
 			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files","*.png","*.jpg"));
 			File selectedFile = fileChooser.showOpenDialog(null);
 			if (selectedFile!=null) {

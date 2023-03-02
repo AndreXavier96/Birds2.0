@@ -97,11 +97,36 @@ public class ClubRepository {
 		}
 	}
 	
-	public Club getClubsWhereString(String col, String value) {
+	public Club getClubWhereString(String col, String value) {
 		try {
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM CLUB WHERE "+col+"='"+value+"';";
+			ResultSet rs = stmt.executeQuery(sql);
+			Club c = new Club();
+			if (rs.next()) {
+				c.setId(rs.getInt(1));
+				c.setName(rs.getString(2));
+				c.setAcronym(rs.getString(3));
+				c.setLocale(rs.getString(4));
+				c.setAddress(rs.getString(5));;
+				c.setPhone(rs.getString(6));
+				c.setEmail(rs.getString(7));
+				c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
+				return c;
+			}else
+				return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Club getClubByID(Integer id) {
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM CLUB WHERE id="+id+";";
 			ResultSet rs = stmt.executeQuery(sql);
 			Club c = new Club();
 			if (rs.next()) {
@@ -162,7 +187,7 @@ public class ClubRepository {
 	public ObservableList<Club> getAllClubsByClubIds(ObservableList<Integer> clubIds){
 		 ObservableList<Club> allClubs = FXCollections.observableArrayList();
 		 for (Integer clubId : clubIds) {
-		        Club club = getClubsWhereString("id",Integer.toString(clubId));
+		        Club club = getClubWhereString("id",Integer.toString(clubId));
 		        allClubs.add(club);
 		    }
 		return allClubs;

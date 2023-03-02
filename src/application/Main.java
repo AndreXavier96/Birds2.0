@@ -31,8 +31,8 @@ public class Main extends Application {
 		try {
 			Parent root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
 			Scene scene = new Scene(root);
-			primaryStage.setTitle("Bird Application");
-			primaryStage.getIcons().add(new Image("file:resources/images/img/icon.png"));
+			primaryStage.setTitle(MyValues.TITLE_BIRD_APP);
+			primaryStage.getIcons().add(new Image(MyValues.ICON_PATH));
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
