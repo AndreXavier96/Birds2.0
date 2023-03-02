@@ -76,7 +76,7 @@ public class ViewSingleBirdController implements Initializable{
 	private AnchorPane ApBuyPrice, ApSellPrice;
 	
 	@FXML
-	private Button btnEdit;
+	private Button btnEdit,btnEditCage;
 	
 	@FXML
 	private TableView<Bird> TbDescendants;
@@ -107,6 +107,22 @@ public class ViewSingleBirdController implements Initializable{
 	    stage.setScene(scene);
 	    stage.initModality(Modality.APPLICATION_MODAL);
 	    stage.showAndWait();
+	}
+	
+	@FXML
+	private void btnChangeBirdCage(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeBirdCage.fxml"));
+		Parent root = loader.load();
+		ChangeBirdCageController birdCageController = loader.getController();
+		birdCageController.startValues(LbBand.getText(), ImBird.getImage().getUrl(), LbCage.getText());
+		birdCageController.setViewSingleBirdController(this);
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setTitle(MyValues.TITLE_CHANGE_CAGE);
+		stage.getIcons().add(new Image(MyValues.ICON_PATH));
+		stage.setScene(scene);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.showAndWait();
 	}
 	
 	@FXML
@@ -299,6 +315,13 @@ public class ViewSingleBirdController implements Initializable{
 					btnEdit.setVisible(true);
 				else
 					btnEdit.setVisible(false);
+		});
+		LbCage.textProperty().addListener((Observable, oldValue, newValue) -> {
+			if (newValue!=null)
+				if (!newValue.isEmpty())
+					btnEditCage.setVisible(true);
+				else
+					btnEditCage.setVisible(false);
 		});
 	}
 }

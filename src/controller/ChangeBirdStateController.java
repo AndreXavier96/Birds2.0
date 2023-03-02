@@ -105,7 +105,7 @@ public class ChangeBirdStateController implements Initializable{
 			state.setId(bird.getState().getId());
 			stateRepositor.updateState(state);
 			String obs = "Estado do passaro alterado de '"+LbState.getText()+"' para '"+state.getType()+"'.";
-			historicRepository.insertHistoric(new Historic(bird.getBreeder().getId(),MyValues.CHANGE_STATE,date,obs, bird));
+			historicRepository.insertHistoric(new Historic(null,MyValues.CHANGE_STATE,date,obs, bird));
 			
 			// close the window
 		    Stage stage = (Stage) CbState.getScene().getWindow();

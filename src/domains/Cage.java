@@ -39,6 +39,11 @@ public class Cage {
 	public void setType(String type) {
 		Type = type;
 	}
+
+	@Override
+	public String toString() {
+		return "Codigo " + Code;
+	}
 	
 	
 }

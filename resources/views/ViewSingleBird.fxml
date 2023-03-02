@@ -187,6 +187,18 @@
                                  </font>
                               </Label>
                               <Label fx:id="LbCage" layoutX="39.0" underline="true" />
+                              <Button fx:id="btnEditCage" layoutX="142.0" mnemonicParsing="false" onAction="#btnChangeBirdCage" prefHeight="25.0" prefWidth="33.0" textAlignment="CENTER" visible="false">
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/img/editIco.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="14.0" layoutY="258.0" prefHeight="17.0" prefWidth="428.0">

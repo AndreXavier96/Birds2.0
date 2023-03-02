@@ -276,7 +276,7 @@ public class AddBirdViewController implements Initializable {
 				obs="Passaro nascido a "+bird.getEntryDate().toString();
 			}
 			String formatedDate =new SimpleDateFormat(MyValues.DATE_FORMATE).format(bird.getEntryDate());
-			historicRepository.insertHistoric(new Historic(breederID,MyValues.BIRD_INSERTED,formatedDate,obs, bird));
+			historicRepository.insertHistoric(new Historic(null,MyValues.BIRD_INSERTED,formatedDate,obs, bird));
 		}
 	}
 	
