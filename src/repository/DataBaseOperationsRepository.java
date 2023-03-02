@@ -21,6 +21,7 @@ public class DataBaseOperationsRepository {
 	private FederationRepository federationRepository = new FederationRepository();
 	private ClubRepository clubRepository = new ClubRepository();
 	private BreederClubRepository breederClubRepository = new BreederClubRepository();
+	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
 	
 	public Connection GetConnection(String DbName,String user, String pass) {
 		try {
@@ -73,11 +74,14 @@ public class DataBaseOperationsRepository {
 		couplesRepository.CreateTableCouples();
 		broodingRepository.AddFK();
 		breederClubRepository.createTableBreederClub();
+		breederFederationRepository.createTableBreederFederation();
+		
 		System.out.println("All tables created!");
 	}
 	
 	public void DropAllTables() {
 		System.out.println("Trying to drop all tables...");
+		breederFederationRepository.dropTableBreederFederation();
 		breederClubRepository.dropTableBreederClub();
 		birdsRepository.DropTableBird();
 		speciesRepository.DropTableSpecies();

@@ -1,5 +1,6 @@
 package domains;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Breeder {
@@ -13,10 +14,9 @@ public class Breeder {
 	private String Locale;
 	private String District;
 	private String Address;
-	private Integer NrCites;
 	private String Type;
 	private List<Club> Club;
-	private String Stam;
+	private HashMap<Integer, String> Stam; //<FederationId,Stam>
 	
 	
 	public Breeder() {
@@ -24,7 +24,7 @@ public class Breeder {
 	}
 	
 	public Breeder(String address,Integer id, Integer cC, String name, Integer nif, Integer cellphone, String email, String postalCode,
-			String locale, String district, Integer nrCites, String type, List<Club> club, String stam) {
+			String locale, String district, String type, List<Club> club, HashMap<Integer, String> stam) {
 		super();
 		Id = id;
 		CC = cC;
@@ -35,7 +35,6 @@ public class Breeder {
 		PostalCode = postalCode;
 		Locale = locale;
 		District = district;
-		NrCites = nrCites;
 		Type = type;
 		Club = club;
 		Stam = stam;
@@ -102,12 +101,6 @@ public class Breeder {
 	public void setDistrict(String district) {
 		District = district;
 	}
-	public Integer getNrCites() {
-		return NrCites;
-	}
-	public void setNrCites(Integer nrCites) {
-		NrCites = nrCites;
-	}
 	public String getType() {
 		return Type;
 	}
@@ -120,17 +113,17 @@ public class Breeder {
 	public void setClub(List<Club> club) {
 		Club = club;
 	}
-	public String getStam() {
+	public HashMap<Integer, String> getStam() {
 		return Stam;
 	}
-	public void setStam(String stam) {
+	public void setStam(HashMap<Integer, String> stam) {
 		Stam = stam;
 	}
 	@Override
 	public String toString() {
 		return "Breeder [Id=" + Id + ", CC=" + CC + ", Name=" + Name + ", Nif=" + Nif + ", Cellphone=" + Cellphone
 				+ ", Email=" + Email + ", PostalCode=" + PostalCode + ", Locale=" + Locale+", Address="+Address + ", District=" + District
-				+ ", NrCites=" + NrCites + ", Type=" + Type + ", Club=" + Club + ", Stam=" + Stam + "]";
+				+ ", Type=" + Type + ", Club=" + Club + ", Stam=" + Stam + "]";
 	}
 	
 	

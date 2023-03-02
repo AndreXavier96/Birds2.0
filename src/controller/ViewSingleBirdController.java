@@ -94,8 +94,8 @@ public class ViewSingleBirdController implements Initializable{
 	    birdStateController.setViewSingleBirdController(this);
 	    Scene scene = new Scene(root);
 	    Stage stage = new Stage();
-	    stage.setTitle("Alterar Estado");
-	    stage.getIcons().add(new Image("file:resources/images/img/icon.png"));
+	    stage.setTitle(MyValues.TITLE_CHANGE_STATE);
+	    stage.getIcons().add(new Image(MyValues.ICON_PATH));
 	    stage.setScene(scene);
 	    stage.initModality(Modality.APPLICATION_MODAL);
 	    stage.showAndWait();

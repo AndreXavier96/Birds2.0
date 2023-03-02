@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import domains.Breeder;
@@ -20,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import repository.BreederRepository;
+import repository.FederationRepository;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,10 +36,12 @@ public class ViewAllBreedersController implements Initializable {
 	@FXML
 	private TableView<Breeder> tableID;
 	@FXML
-	private TableColumn<Breeder,String> colName, colEmail, colPostalCode, colLocale, colDistrict, colAddress, colType, colClube;
+	private TableColumn<Breeder,String> colName, colEmail, colPostalCode, colLocale, colDistrict, colAddress, colType, colClube,colStam;
 	@FXML 
-	private TableColumn<Breeder, Integer> colCC,colNIF,colCellphone,colCites,colStam;
+	private TableColumn<Breeder, Integer> colCC,colNIF,colCellphone,colCites;
 
+	private FederationRepository federationRepository = new FederationRepository();	
+	
 	@FXML
 	public void btnBack(ActionEvent event) {
 		try {
@@ -64,14 +68,16 @@ public class ViewAllBreedersController implements Initializable {
 		colLocale.setCellValueFactory(new PropertyValueFactory<Breeder,String>("Locale"));
 		colDistrict.setCellValueFactory(new PropertyValueFactory<Breeder,String>("District"));
 		colAddress.setCellValueFactory(new PropertyValueFactory<Breeder,String>("Address"));
-		colCites.setCellValueFactory(new PropertyValueFactory<Breeder,Integer>("NrCites"));
 		colType.setCellValueFactory(new PropertyValueFactory<Breeder,String>("Type"));
 		colClube.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Breeder, String>, ObservableValue<String>>() {
 		        @Override
 		        public ObservableValue<String> call(TableColumn.CellDataFeatures<Breeder, String> param) {
 		            StringBuilder sb = new StringBuilder();
 		            for (Club c : param.getValue().getClub()) {
-		                sb.append(c.getName());
+		            	sb.append("[");
+		            	sb.append(c.getFederation().getAcronym());
+		            	sb.append("]");
+		                sb.append(c.getAcronym());
 		                sb.append(", ");
 		            }
 		            if (sb.length() > 2) {
@@ -80,8 +86,25 @@ public class ViewAllBreedersController implements Initializable {
 		            return new SimpleStringProperty(sb.toString());
 		        }
 		    });
-		colStam.setCellValueFactory(new PropertyValueFactory<Breeder,Integer>("Stam"));
-		
+		colStam.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Breeder, String>, ObservableValue<String>>() {
+		    @Override
+		    public ObservableValue<String> call(TableColumn.CellDataFeatures<Breeder, String> param) {
+		        Breeder breeder = param.getValue();
+		        Map<Integer, String> stam = breeder.getStam();
+		        StringBuilder sb = new StringBuilder();
+		        for (Map.Entry<Integer, String> entry : stam.entrySet()) {
+		            Integer federationId = entry.getKey();
+		            String federationStam = entry.getValue();
+		            String federationName = federationRepository.getFederationWhereInt("id", federationId).getAcronym();
+		            sb.append("[").append(federationName).append("]").append(federationStam).append(", ");
+		        }
+		        if (sb.length() > 2) {
+		            sb.delete(sb.length() - 2, sb.length());
+		        }
+		        return new SimpleStringProperty(sb.toString());
+		    }
+		});
+
 		tableID.setItems(breeders);
 	}
 	

@@ -36,4 +36,8 @@ public class MyValues {
 	
 	public static final String CHANGE_STATE_SUCCESS ="Estado alterado com sucesso!";
 	
+	public static final String ICON_PATH="file:resources/images/img/icon.png";
+	public static final String TITLE_BIRD_APP = "Bird Application";
+	public static final String TITLE_SELECT_IMAGE = "Selecionar Imagem Passaro";
+	public static final String TITLE_CHANGE_STATE = "Alterar Estado";
 }
