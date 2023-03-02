@@ -27,9 +27,8 @@ public class MyValues {
 	public static final String REPOUSO = "Em periodo de repouso";
 	public static final String VENDA = "Para venda";
 	public static final String OTHER = "Outro mas disponivel";
-	public static final ObservableList<String> STARTING_STATE_LIST = FXCollections.observableArrayList(MyValues.REPRODUCAO,MyValues.REPOUSO,MyValues.VENDA,MyValues.OTHER);
-	public static final ObservableList<String> STATELIST = FXCollections.observableArrayList(MyValues.MORTO,
-			MyValues.VENDIDO, MyValues.REPRODUCAO, MyValues.REPOUSO, MyValues.VENDA, MyValues.OTHER);
+	public static final ObservableList<String> STARTING_STATE_LIST = FXCollections.observableArrayList(REPRODUCAO,REPOUSO,VENDA,OTHER);
+	public static final ObservableList<String> STATELIST = FXCollections.observableArrayList(MORTO,VENDIDO,REPRODUCAO,REPOUSO,VENDA,OTHER);
 
 	public static final String MUTACAO_DEFAULT = "Sem Mutacao";
 	public static final String MUTACAO_TYPE = "";
@@ -40,9 +39,13 @@ public class MyValues {
 	public static final String CRIADOR_AMADOR = "Amador";
 	public static final String CRIADOR_PROFISSIONAL = "Profissional";
 	public static final String CRIADOR_LOJA = "Loja";
-	public static final ObservableList<String> BREEDERTYPELIST = FXCollections.observableArrayList(CRIADOR_AMADOR,
-			CRIADOR_PROFISSIONAL, CRIADOR_LOJA);
+	public static final ObservableList<String> BREEDERTYPELIST = FXCollections.observableArrayList(CRIADOR_AMADOR,CRIADOR_PROFISSIONAL,CRIADOR_LOJA);
 
+	public static final String VOADEIRA = "Voadeira";
+	public static final String EXPOSICAO = "Exposicao";
+	public static final String CRIADEIRA = "Criadeira";
+	public static final ObservableList<String> CAGE_TIPE = FXCollections.observableArrayList(VOADEIRA,EXPOSICAO,CRIADEIRA);
+	
 	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
 
 	public static final String ICON_PATH = "file:resources/images/img/icon.png";

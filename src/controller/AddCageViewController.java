@@ -13,10 +13,12 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
+import domains.Cage;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 public class AddCageViewController implements Initializable {
@@ -28,79 +30,55 @@ public class AddCageViewController implements Initializable {
 	@FXML
 	private Label LabelError;
 	@FXML
-	private TextField TfCages, TfCode, TfType;
-	
+	private TextField TfCode;
 	@FXML
-	private TextField TfExistingCages;
+	private ComboBox<String> CbType;
 
 	CageRepository cageRepository = new CageRepository();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		try {
-			TfExistingCages.setText(Integer.toString(cageRepository.getCageNumber()));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		CbType.setItems(MyValues.CAGE_TIPE);
 	}
 	
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validate()) {
-			int i = Integer.parseInt(TfCages.getText());
-			cageRepository.InsertMultipleCages(i,TfCode.getText(),TfType.getText());
-			try {
-				TfExistingCages.setText(Integer.toString(cageRepository.getCageNumber()));
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			Cage cage = new Cage();
+			cage.setCode(TfCode.getText());
+			cage.setType(CbType.getValue());
+			cageRepository.Insert(cage);
 		}
 		
-	}
+	}	
 	
-	@FXML
-	public void btnDelete(ActionEvent event) throws SQLException {
-		if (validate()) {
-			int i = Integer.parseInt(TfCages.getText());
-			if (cageRepository.getCageNumber()-i<0) {
-				TfCages.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Numero de gaiolas que pertende apagar grande de mais");
-			}else
-				cageRepository.deleteXCages(i);
-			try {
-				TfExistingCages.setText(Integer.toString(cageRepository.getCageNumber()));
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	
-	public boolean validate() {
+	public boolean validate() throws SQLException {
 		boolean validate= false;
-		if (!TfCages.getText().matches("^[0-9]\\d*$")) {
-			TfCages.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Numero de gaiolas invalido");
+		if (TfCode.getText().isEmpty()) {
+			TfCode.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelError.setText("Codigo de gaiolas tem de ser preenchido");
+			validate=false;
+		}else if (cageRepository.checkIfCodeExist(TfCode.getText())) {
+			TfCode.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelError.setText("Codigo de gaiola ja existe");
 			validate=false;
 		}else {
-			TfCages.setStyle(null);
+			TfCode.setStyle(null);
 			LabelError.setText("");
 			validate=true;
 		}
 		if (validate) {
-			if(TfType.getText().isBlank()) {
-				TfType.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Tipo tem de ser preenchido");
+			if(CbType.getValue().isEmpty()) {
+				CbType.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Tipo tem de ser escolhido");
 				validate=false;
 			}else {
-				TfType.setStyle(null);
+				CbType.setStyle(null);
 				LabelError.setText("");
 				validate=true;
 			}
 		}
-		
 		return validate;
 	}
 	
