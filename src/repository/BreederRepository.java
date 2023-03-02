@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
+
 import constants.MyValues;
 import domains.Breeder;
 import domains.Club;
@@ -16,6 +18,7 @@ public class BreederRepository {
 	
 	private BreederClubRepository breederClubRepository = new BreederClubRepository();
 	private ClubRepository clubRepository = new ClubRepository();
+	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
 
 	public void CreateTableBreeder() {
 		try {
@@ -33,11 +36,8 @@ public class BreederRepository {
 					+"PostalCode VARCHAR(255), "
 					+"Locale VARCHAR(255), "
 					+"District VARCHAR(255), "
-					+"NrCites VARCHAR(255), "
 					+"BreederType VARCHAR(255) NOT NULL, "
-					+"STAM VARCHAR(255), "
 					+"PRIMARY KEY (id))";
-			
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER Created.");
 		} catch (Exception e) {
@@ -52,7 +52,6 @@ public class BreederRepository {
 			Statement stmt = con.createStatement();
 			String sql = "DROP TABLE IF EXISTS BREEDER CASCADE";	
 			stmt.executeUpdate(sql);
-//			System.out.println("Sql: "+sql);
 			System.out.println("Table BREEDER Droped.");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -81,15 +80,9 @@ public class BreederRepository {
 			b.setPostalCode(rs.getString(8));
 			b.setLocale(rs.getString(9));
 			b.setDistrict(rs.getString(10));
-			try {
-				b.setNrCites(Integer.parseInt(rs.getString(11)));
-			}catch (Exception e) {
-				b.setNrCites(0);
-			}
-			
-			b.setType(rs.getString(12));
-			b.setStam(rs.getString(13));
+			b.setType(rs.getString(11));
 			b.setClub(clubRepository.getAllClubsByClubIds(breederClubRepository.getClubsFromBreederId(b.getId())));
+			b.setStam(breederFederationRepository.getAllByBreederId(b.getId()));
 			
 			breeders.add(b);
 		}
@@ -106,8 +99,8 @@ public class BreederRepository {
 			System.out.println("Insert Breeder in DataBase...");
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			String sql = "INSERT INTO "
-	                +"BREEDER(CC,Name,Nif,Cellphone,Email,Address,PostalCode,Locale,District,NrCites,BreederType,STAM) "
-	                +"values(?,?,?,?,?,?,?,?,?,?,?,?)";
+	                +"BREEDER(CC,Name,Nif,Cellphone,Email,Address,PostalCode,Locale,District,BreederType) "
+	                +"values(?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, b.getCC());
 	        stmt.setString(2, b.getName());
@@ -118,18 +111,17 @@ public class BreederRepository {
 	        stmt.setString(7, b.getPostalCode());
 	        stmt.setString(8, b.getLocale());
 	        stmt.setString(9, b.getDistrict());
-	        stmt.setInt(10, b.getNrCites());
-	        stmt.setString(11, b.getType());
-	        stmt.setString(12, b.getStam());
+	        stmt.setString(10, b.getType());
 	        stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 	        if (rs.next()) {
 	            breederId = rs.getInt(1);
 	        }
 			System.out.println("["+breederId+"] inserted: "+sql);
-			for (Club c : b.getClub()) {
+			for (Club c : b.getClub())
 				breederClubRepository.Insert(breederId, c.getId());
-			}
+			for (Map.Entry<Integer, String> entry : b.getStam().entrySet())
+				breederFederationRepository.insert(breederId, entry.getKey(), entry.getValue());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -194,17 +186,9 @@ public class BreederRepository {
 				b.setPostalCode(rs.getString(8));
 				b.setLocale(rs.getString(9));
 				b.setDistrict(rs.getString(10));
-				try {
-					b.setNrCites(Integer.parseInt(rs.getString(11)));
-				}catch (Exception e) {
-					b.setNrCites(0);
-				}
-				b.setType(rs.getString(12));
-//				b.setClub(rs.getString(13));
-				b.setStam(rs.getString(13));
+				b.setType(rs.getString(11));
 			}
 			return b;
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -230,14 +214,7 @@ public class BreederRepository {
 				b.setPostalCode(rs.getString(8));
 				b.setLocale(rs.getString(9));
 				b.setDistrict(rs.getString(10));
-				try {
-					b.setNrCites(Integer.parseInt(rs.getString(11)));
-				}catch (Exception e) {
-					b.setNrCites(0);
-				}
-				b.setType(rs.getString(12));
-//				b.setClub(rs.getString(13));
-				b.setStam(rs.getString(13));
+				b.setType(rs.getString(11));
 			}
 			return b;
 		} catch (Exception e) {
