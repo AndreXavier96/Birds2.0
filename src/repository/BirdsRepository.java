@@ -31,7 +31,6 @@ public class BirdsRepository {
 					+"EntryDate DATE, "
 					+"EntryType VARCHAR(255) NOT NULL, "
 					+"BuyPrice DOUBLE, "
-					+"SellPrice DOUBLE, "
 					+"StateId INTEGER NOT NULL, "
 					+"Sex VARCHAR(255) NOT NULL, "
 					+"Father INTEGER, "
@@ -51,7 +50,6 @@ public class BirdsRepository {
 					+"FOREIGN KEY (BreederId) REFERENCES BREEDER (id), "
 					+"FOREIGN KEY (PostureId) REFERENCES POSTURE (id), "
 		            +"FOREIGN KEY (StateId) REFERENCES STATE (id))";
-		
 			stmt.executeUpdate(sql);
 			System.out.println("Table BIRDS Created.");
 		} catch (Exception e) {
@@ -90,23 +88,22 @@ public class BirdsRepository {
 					b.setEntryDate(rs.getDate(4));
 					b.setEntryType(rs.getString(5));
 					b.setBuyPrice(rs.getDouble(6));
-					b.setSellPrice(rs.getDouble(7));
-					b.setState(stateRepository.getStateById(rs.getInt(8)));
-					b.setSex(rs.getString(9));
-					if (rs.getInt(10)!=0)
-						b.setFather(getBirdWhereInt("id",rs.getInt(10)));
+					b.setState(stateRepository.getStateById(rs.getInt(7)));
+					b.setSex(rs.getString(8));
+					if (rs.getInt(9)!=0)
+						b.setFather(getBirdWhereInt("id",rs.getInt(9)));
 					else
 						b.setFather(null);
-					if (rs.getInt(11)!=0)
-						b.setMother(getBirdWhereInt("id",rs.getInt(11)));
+					if (rs.getInt(10)!=0)
+						b.setMother(getBirdWhereInt("id",rs.getInt(10)));
 					else
 						b.setMother(null);
-					b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
-					b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
-					b.setCage(cageRepository.getCage(rs.getInt(14)));
-					b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
-					b.setPosture(rs.getInt(16));
-					b.setImage(rs.getString(17));
+					b.setSpecies(speciesRepository.getSpecieById(rs.getInt(11)));
+					b.setMutations(mutationsRepository.getMutationsById(rs.getInt(12)));
+					b.setCage(cageRepository.getCage(rs.getInt(13)));
+					b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
+					b.setPosture(rs.getInt(15));
+					b.setImage(rs.getString(16));
 					birds.add(b);
 				}
 				return birds;
@@ -134,23 +131,22 @@ public class BirdsRepository {
 				b.setEntryDate(rs.getDate(4));
 				b.setEntryType(rs.getString(5));
 				b.setBuyPrice(rs.getDouble(6));
-				b.setSellPrice(rs.getDouble(7));
-				b.setState(stateRepository.getStateById(rs.getInt(8)));
-				b.setSex(rs.getString(9));
-				if (rs.getInt(10)!=0)
-					b.setFather(getBirdWhereInt("id",rs.getInt(10)));
+				b.setState(stateRepository.getStateById(rs.getInt(7)));
+				b.setSex(rs.getString(8));
+				if (rs.getInt(9)!=0)
+					b.setFather(getBirdWhereInt("id",rs.getInt(9)));
 				else
 					b.setFather(null);
-				if (rs.getInt(11)!=0)
-					b.setMother(getBirdWhereInt("id",rs.getInt(11)));
+				if (rs.getInt(10)!=0)
+					b.setMother(getBirdWhereInt("id",rs.getInt(10)));
 				else
 					b.setMother(null);
-				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
-				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
-				b.setCage(cageRepository.getCage(rs.getInt(14)));
-				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
-				b.setPosture(rs.getInt(16));
-				b.setImage(rs.getString(17));
+				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(11)));
+				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(12)));
+				b.setCage(cageRepository.getCage(rs.getInt(13)));
+				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
+				b.setPosture(rs.getInt(15));
+				b.setImage(rs.getString(16));
 				birds.add(b);
 			}
 			return birds;
@@ -174,23 +170,22 @@ public class BirdsRepository {
 	            b.setEntryDate(rs.getDate(4));
 	            b.setEntryType(rs.getString(5));
 	            b.setBuyPrice(rs.getDouble(6));
-	            b.setSellPrice(rs.getDouble(7));
-	            b.setState(stateRepository.getStateById(rs.getInt(8)));
-	            b.setSex(rs.getString(9));
-	            int fatherId = rs.getInt(10);
-	            int motherId = rs.getInt(11);
+	            b.setState(stateRepository.getStateById(rs.getInt(7)));
+	            b.setSex(rs.getString(8));
+	            int fatherId = rs.getInt(9);
+	            int motherId = rs.getInt(10);
 	            if (fatherId != 0) {
 	                b.setFather(getBirdWhereInt("id",fatherId));
 	            }
 	            if (motherId != 0) {
 	                b.setMother(getBirdWhereInt("id",motherId));
 	            }
-	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
-	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
-	            b.setCage(cageRepository.getCage(rs.getInt(14)));
-	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
-	            b.setPosture(rs.getInt(16));
-	            b.setImage(rs.getString(17));
+	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(11)));
+	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(12)));
+	            b.setCage(cageRepository.getCage(rs.getInt(13)));
+	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
+	            b.setPosture(rs.getInt(15));
+	            b.setImage(rs.getString(16));
 	            return b;
 	        } else {
 	            return null;
@@ -215,23 +210,22 @@ public class BirdsRepository {
 	            b.setEntryDate(rs.getDate(4));
 	            b.setEntryType(rs.getString(5));
 	            b.setBuyPrice(rs.getDouble(6));
-	            b.setSellPrice(rs.getDouble(7));
-	            b.setState(stateRepository.getStateById(rs.getInt(8)));
-	            b.setSex(rs.getString(9));
-	            int fatherId = rs.getInt(10);
-	            int motherId = rs.getInt(11);
+	            b.setState(stateRepository.getStateById(rs.getInt(7)));
+	            b.setSex(rs.getString(8));
+	            int fatherId = rs.getInt(9);
+	            int motherId = rs.getInt(10);
 	            if (fatherId != 0) {
 	                b.setFather(getBirdWhereInt("id",fatherId));
 	            }
 	            if (motherId != 0) {
 	                b.setMother(getBirdWhereInt("id",motherId));
 	            }
-	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
-	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
-	            b.setCage(cageRepository.getCage(rs.getInt(14)));
-	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
-	            b.setPosture(rs.getInt(16));
-	            b.setImage(rs.getString(17));
+	            b.setSpecies(speciesRepository.getSpecieById(rs.getInt(11)));
+	            b.setMutations(mutationsRepository.getMutationsById(rs.getInt(12)));
+	            b.setCage(cageRepository.getCage(rs.getInt(13)));
+	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
+	            b.setPosture(rs.getInt(15));
+	            b.setImage(rs.getString(16));
 	            return b;
 	        } else {
 	            return null;
@@ -249,10 +243,10 @@ public class BirdsRepository {
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
 			stmt.executeUpdate(
-					"INSERT INTO BIRDS (Band,BirthYear,EntryDate,EntryType,BuyPrice,SellPrice,StateId,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId,ImagePath) "
+					"INSERT INTO BIRDS (Band,BirthYear,EntryDate,EntryType,BuyPrice,StateId,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId,ImagePath) "
 							+ "VALUES ('" + bird.getBand() + "','" + bird.getYear() + "','"
 							+ new java.sql.Date(bird.getEntryDate().getTime()) + "','" + bird.getEntryType() + "','"
-							+ bird.getBuyPrice() + "','" + bird.getSellPrice() + "','" + bird.getState().getId() + "','"
+							+ bird.getBuyPrice() + "','" + bird.getState().getId() + "','"
 							+ bird.getSex() + "',"
 							+ (bird.getFather() == null ? "NULL" : "'" + bird.getFather().getId() + "'") + ","
 							+ (bird.getMother() == null ? "NULL" : "'" + bird.getMother().getId() + "'") + ","
@@ -298,6 +292,35 @@ public class BirdsRepository {
 	    }
 	}
 
+	public Bird fullUpdateBird(Bird bird) {
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        PreparedStatement stmt = con.prepareStatement("UPDATE BIRDS SET Band=?, BirthYear=?, EntryDate=?, EntryType=?, BuyPrice=?, SellPrice=?, StateId=?, Sex=?, Father=?, Mother=?, SpeciesId=?, MutationsId=?, CageId=?, BreederId=?, PostureId=?, ImagePath=? WHERE id=?");
+	        stmt.setString(1, bird.getBand());
+	        stmt.setInt(2, bird.getYear());
+	        stmt.setDate(3, new java.sql.Date(bird.getEntryDate().getTime()));
+	        stmt.setString(4, bird.getEntryType());
+	        stmt.setDouble(5, bird.getBuyPrice());
+	        stmt.setInt(6, bird.getState().getId());
+	        stmt.setString(7, bird.getSex());
+	        stmt.setInt(8, bird.getFather().getId());
+	        stmt.setInt(9, bird.getMother().getId());
+	        stmt.setInt(10, bird.getSpecies().getId());
+	        stmt.setInt(11, bird.getMutations().getId());
+	        stmt.setInt(12, bird.getCage().getId());
+	        stmt.setInt(13, bird.getBreeder().getId());
+	        stmt.setInt(14, bird.getPosture());
+	        stmt.setString(15, bird.getImage());
+	        stmt.setInt(16, bird.getId());
+	        stmt.executeUpdate();
+	        System.out.println("Bird with id " + bird.getId() + " updated.");
+	        return bird;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+
 	public ObservableList<Bird> getAllWhereIntOrWhereInt(String col1,Integer value1,String col2,Integer value2) {
 		try {
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
@@ -314,24 +337,23 @@ public class BirdsRepository {
 				b.setYear(rs.getInt(3));
 				b.setEntryDate(rs.getDate(4));
 				b.setEntryType(rs.getString(5));
-				b.setBuyPrice(rs.getDouble(6));
-				b.setSellPrice(rs.getDouble(7));
-				b.setState(stateRepository.getStateById(rs.getInt(8)));
-				b.setSex(rs.getString(9));
-				if (rs.getInt(10) != 0)
-					b.setFather(getBirdWhereInt("id",rs.getInt(10)));
+				b.setBuyPrice(rs.getDouble(6));;
+				b.setState(stateRepository.getStateById(rs.getInt(7)));
+				b.setSex(rs.getString(8));
+				if (rs.getInt(9) != 0)
+					b.setFather(getBirdWhereInt("id",rs.getInt(9)));
 				else
 					b.setFather(null);
-				if (rs.getInt(11) != 0)
-					b.setMother(getBirdWhereInt("id",rs.getInt(11)));
+				if (rs.getInt(10) != 0)
+					b.setMother(getBirdWhereInt("id",rs.getInt(10)));
 				else
 					b.setMother(null);
-				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
-				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
-				b.setCage(cageRepository.getCage(rs.getInt(14)));
-				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
-				b.setPosture(rs.getInt(16));
-				b.setImage(rs.getString(17));
+				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(11)));
+				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(12)));
+				b.setCage(cageRepository.getCage(rs.getInt(13)));
+				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
+				b.setPosture(rs.getInt(15));
+				b.setImage(rs.getString(16));
 				birds.add(b);
 			}
 			return birds;
@@ -359,23 +381,22 @@ public class BirdsRepository {
 				b.setEntryDate(rs.getDate(4));
 				b.setEntryType(rs.getString(5));
 				b.setBuyPrice(rs.getDouble(6));
-				b.setSellPrice(rs.getDouble(7));
-				b.setState(stateRepository.getStateById(rs.getInt(8)));
-				b.setSex(rs.getString(9));
-				if (rs.getInt(10)!=0)
-					b.setFather(getBirdWhereInt("id",rs.getInt(10)));
+				b.setState(stateRepository.getStateById(rs.getInt(7)));
+				b.setSex(rs.getString(8));
+				if (rs.getInt(9)!=0)
+					b.setFather(getBirdWhereInt("id",rs.getInt(9)));
 				else
 					b.setFather(null);
-				if (rs.getInt(11)!=0)
-					b.setMother(getBirdWhereInt("id",rs.getInt(11)));
+				if (rs.getInt(10)!=0)
+					b.setMother(getBirdWhereInt("id",rs.getInt(10)));
 				else
 					b.setMother(null);
-				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
-				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
-				b.setCage(cageRepository.getCage(rs.getInt(14)));
-				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
-				b.setPosture(rs.getInt(16));
-				b.setImage(rs.getString(17));
+				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(11)));
+				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(12)));
+				b.setCage(cageRepository.getCage(rs.getInt(13)));
+				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
+				b.setPosture(rs.getInt(15));
+				b.setImage(rs.getString(16));
 				birds.add(b);
 			}
 			return birds;

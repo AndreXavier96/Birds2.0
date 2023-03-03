@@ -141,6 +141,7 @@ public class MainSceneController {
 			System.out.println("Trying to delete DB...");
 			File f =new File("./Database");
 			deleteDirectory(f);
+//			dataBaseOperationsRepository.alterTableDropColumn("BIRDS", "SellPrice");
 			System.out.println("DB deleted!");
 		} catch (Exception e) {
 			e.printStackTrace();
