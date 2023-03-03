@@ -5,17 +5,15 @@ public class Mutation {
 	private String Name;
 	private String Type;
 	private String Symbol;
-	private String Observation;
 	private Specie specie;
 
 
-	public Mutation(Integer id, String name, String type, String symbol, String observation, Specie specie) {
+	public Mutation(Integer id, String name, String type, String symbol, Specie specie) {
 		super();
 		Id = id;
 		Name = name;
 		Type = type;
 		Symbol = symbol;
-		Observation = observation;
 		this.specie = specie;
 	}
 	
@@ -53,14 +51,6 @@ public class Mutation {
 
 	public void setSymbol(String symbol) {
 		Symbol = symbol;
-	}
-
-	public String getObservation() {
-		return Observation;
-	}
-
-	public void setObservation(String observation) {
-		Observation = observation;
 	}
 
 	public Specie getSpecie() {

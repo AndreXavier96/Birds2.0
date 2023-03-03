@@ -42,7 +42,6 @@ public class ViewAllMutationsController implements Initializable {
 		colName.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Name"));
 		colType.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Type"));
 		colSymbol.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Symbol"));
-		colObservation.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Observation"));
 		colSpecie.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getSpecie().getCommonName()));
 
 		tableID.setItems(mutations);

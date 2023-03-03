@@ -25,14 +25,10 @@ public class MutationsRepository {
 					+"Name VARCHAR(255) NOT NULL, "
 					+"Type VARCHAR(255), "
 					+"Symbol VARCHAR(10), "
-					+"Observations VARCHAR(500), "
 					+"SpeciesId INTEGER NOT NULL, "
 					+"PRIMARY KEY (id), "
 					+"FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id))";
-			
-		
 			stmt.executeUpdate(sql);
-//			System.out.println("Sql: " + sql);
 			System.out.println("Table MUTATIONS Created.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,8 +58,7 @@ public class MutationsRepository {
 			String sql = "INSERT INTO "
 					+"MUTATIONS(Name,Type,Symbol,Observations,SpeciesId) "
 					+"values('"+mutation.getName()+"','"+mutation.getType()+"','"
-					+mutation.getSymbol()+"','"+mutation.getObservation()
-					+"','"+mutation.getSpecie().getId()+"')";
+					+mutation.getSymbol()+"','"+mutation.getSpecie().getId()+"')";
 			int i = stmt.executeUpdate(sql);
 			System.out.println(i+" Mutation Record inserted");
 		} catch (Exception e) {
@@ -88,8 +83,7 @@ public class MutationsRepository {
 				m.setName(rs.getString(2));
 				m.setType(rs.getString(3));
 				m.setSymbol(rs.getString(4));
-				m.setObservation(rs.getString(5));
-				m.setSpecie(speciesRepository.getSpecieById(rs.getInt(6)));
+				m.setSpecie(speciesRepository.getSpecieById(rs.getInt(5)));
 				mutations.add(m);
 			}
 			return mutations;
@@ -113,8 +107,7 @@ public class MutationsRepository {
 			m.setName(rs.getString(2));
 			m.setType(rs.getString(3));
 			m.setSymbol(rs.getString(4));
-			m.setObservation(rs.getString(5));
-			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(6)));
+			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(5)));
 			mutations.add(m);
 		}
 		return mutations;
@@ -132,8 +125,7 @@ public class MutationsRepository {
 			m.setName(rs.getString(2));
 			m.setType(rs.getString(3));
 			m.setSymbol(rs.getString(4));
-			m.setObservation(rs.getString(5));
-			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(6)));
+			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(5)));
 		}
 		return m;
 	}

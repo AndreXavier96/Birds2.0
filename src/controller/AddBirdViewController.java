@@ -55,6 +55,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
 public class AddBirdViewController implements Initializable {
 	private Parent root;
@@ -76,13 +77,15 @@ public class AddBirdViewController implements Initializable {
 	@FXML
 	private TextField TfAno, TfNumero, TfBuyPrice;
 	@FXML
+	private TextArea TfObs;
+	@FXML
 	private DatePicker DfDataEntrada;
 	@FXML
-	private Label LabelAnilha, LabelError, labelTfBuyPrice,LbImagePath;
-	@FXML
-	private AnchorPane ApStam;
+	private Label LabelAnilha, LabelError,LbImagePath;
 	@FXML
 	private ComboBox<Club> CbClub;
+	@FXML
+	private AnchorPane ApBuyPrice;
 	@FXML
 	private ImageView ImImage;
 	@FXML
@@ -122,7 +125,7 @@ public class AddBirdViewController implements Initializable {
 						clubList.add(clubRepository.getClubByID(i));
 					}
 		            CbClub.setItems(clubList);
-		            ApStam.setVisible(true);
+		            CbClub.setDisable(false);
 		            CbClub.setConverter(new StringConverter<Club>() {
 		                public String toString(Club c) {
 		                    return c.getAcronym();
@@ -143,10 +146,10 @@ public class AddBirdViewController implements Initializable {
 		CbEntryType.valueProperty().addListener((observable, oldValue, newValue) -> {
 		      if (MyValues.ENTRYTYPELIST.get(0).equals(newValue)) {
 		    	  TfBuyPrice.setVisible(true);
-		    	  labelTfBuyPrice.setVisible(true);
+		    	  ApBuyPrice.setVisible(true);
 		      } else {
 		    	  TfBuyPrice.setVisible(false);
-		    	  labelTfBuyPrice.setVisible(false);
+		    	  ApBuyPrice.setVisible(false);
 		      }
 		    });
 		CbSex.setItems(MyValues.SEXLIST);
@@ -163,15 +166,15 @@ public class AddBirdViewController implements Initializable {
 			if (newValue != null) {
 		        try {
 		        	ObservableList<Mutation> listMutations = mutationsRepository.getMutationsBySpecie(newValue.getId());
-		        	Mutation normal = new Mutation(null, "Sem Mutacao","","", "", newValue);
+		        	Mutation normal = new Mutation(null, "Sem Mutacao","", "", newValue);
 		        	listMutations.add(0,normal);
 		        	CbMutation.setItems(listMutations);
 		        	ObservableList<Bird> listFathers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.MACHO,"SpeciesId",CbSpecies.getValue().getId());
-		        	Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null,null);
+		        	Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null,null, null, null, null, null, null, null,null);
 		    		listFathers.add(0,defaultFather);
 		    		CbFather.setItems(listFathers);
 		    		ObservableList<Bird> listMothers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.FEMEA,"SpeciesId",CbSpecies.getValue().getId());
-		    		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null,null);
+		    		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null,null, null, null, null, null, null, null, null,null);
 		    		listMothers.add(0,defaultMother);
 		    		CbMother.setItems(listMothers);
 				} catch (SQLException e) {
@@ -268,6 +271,7 @@ public class AddBirdViewController implements Initializable {
 					System.out.println(e);
 				}
 			}
+			bird.setObs(TfObs.getText());
 			Integer BirdId = birdsRepository.Insert(bird);
 			bird.setId(BirdId);
 			String obs="";
@@ -419,6 +423,17 @@ public class AddBirdViewController implements Initializable {
 				LabelError.setText("");
 				validate=true;
 			}
+		if (validate) {
+			if (TfObs.getText().length()>500) {
+				TfObs.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Observacoes so pode ter no maximo 500 caracteres.");
+				validate=false;
+			}else {
+				TfObs.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		}
 		
 		
 		return validate;

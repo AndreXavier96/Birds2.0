@@ -41,6 +41,7 @@ public class BirdsRepository {
 					+"BreederId INTEGER,"
 					+"PostureId INTEGER,"
 					+"ImagePath VARCHAR(500),"
+					+"Obs VARCHAR(500),"
 					+"PRIMARY KEY (id), "
 					+"FOREIGN KEY (Father) REFERENCES BIRDS (id), "
 					+"FOREIGN KEY (Mother) REFERENCES BIRDS (id), "
@@ -104,6 +105,7 @@ public class BirdsRepository {
 					b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
 					b.setPosture(rs.getInt(15));
 					b.setImage(rs.getString(16));
+					b.setObs(rs.getString(17));
 					birds.add(b);
 				}
 				return birds;
@@ -147,6 +149,7 @@ public class BirdsRepository {
 				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
 				b.setPosture(rs.getInt(15));
 				b.setImage(rs.getString(16));
+				b.setObs(rs.getString(17));
 				birds.add(b);
 			}
 			return birds;
@@ -186,6 +189,7 @@ public class BirdsRepository {
 	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
 	            b.setPosture(rs.getInt(15));
 	            b.setImage(rs.getString(16));
+	            b.setObs(rs.getString(17));
 	            return b;
 	        } else {
 	            return null;
@@ -226,6 +230,7 @@ public class BirdsRepository {
 	            b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
 	            b.setPosture(rs.getInt(15));
 	            b.setImage(rs.getString(16));
+	            b.setObs(rs.getString(17));
 	            return b;
 	        } else {
 	            return null;
@@ -243,7 +248,7 @@ public class BirdsRepository {
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
 			stmt.executeUpdate(
-					"INSERT INTO BIRDS (Band,BirthYear,EntryDate,EntryType,BuyPrice,StateId,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId,ImagePath) "
+					"INSERT INTO BIRDS (Band,BirthYear,EntryDate,EntryType,BuyPrice,StateId,Sex,Father,Mother,MutationsId,SpeciesId,CageId,BreederId,ImagePath,Obs) "
 							+ "VALUES ('" + bird.getBand() + "','" + bird.getYear() + "','"
 							+ new java.sql.Date(bird.getEntryDate().getTime()) + "','" + bird.getEntryType() + "','"
 							+ bird.getBuyPrice() + "','" + bird.getState().getId() + "','"
@@ -252,7 +257,7 @@ public class BirdsRepository {
 							+ (bird.getMother() == null ? "NULL" : "'" + bird.getMother().getId() + "'") + ","
 							+ (bird.getMutations() == null ? "NULL" : "'" + bird.getMutations().getId() + "'") + ",'"
 							+ bird.getSpecies().getId() + "','" + bird.getCage().getId() + "','"
-							+ bird.getBreeder().getId() + "','" + bird.getImage() + "')",
+							+ bird.getBreeder().getId() + "','" + bird.getImage() +"','"+bird.getObs()+ "')",
 					Statement.RETURN_GENERATED_KEYS);
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -295,7 +300,7 @@ public class BirdsRepository {
 	public Bird fullUpdateBird(Bird bird) {
 	    try {
 	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
-	        PreparedStatement stmt = con.prepareStatement("UPDATE BIRDS SET Band=?, BirthYear=?, EntryDate=?, EntryType=?, BuyPrice=?, SellPrice=?, StateId=?, Sex=?, Father=?, Mother=?, SpeciesId=?, MutationsId=?, CageId=?, BreederId=?, PostureId=?, ImagePath=? WHERE id=?");
+	        PreparedStatement stmt = con.prepareStatement("UPDATE BIRDS SET Band=?, BirthYear=?, EntryDate=?, EntryType=?, BuyPrice=?, SellPrice=?, StateId=?, Sex=?, Father=?, Mother=?, SpeciesId=?, MutationsId=?, CageId=?, BreederId=?, PostureId=?, ImagePath=?,Obs=? WHERE id=?");
 	        stmt.setString(1, bird.getBand());
 	        stmt.setInt(2, bird.getYear());
 	        stmt.setDate(3, new java.sql.Date(bird.getEntryDate().getTime()));
@@ -311,7 +316,9 @@ public class BirdsRepository {
 	        stmt.setInt(13, bird.getBreeder().getId());
 	        stmt.setInt(14, bird.getPosture());
 	        stmt.setString(15, bird.getImage());
-	        stmt.setInt(16, bird.getId());
+	        stmt.setString(16, bird.getObs());
+	        stmt.setInt(17, bird.getId());
+	        
 	        stmt.executeUpdate();
 	        System.out.println("Bird with id " + bird.getId() + " updated.");
 	        return bird;
@@ -354,6 +361,7 @@ public class BirdsRepository {
 				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
 				b.setPosture(rs.getInt(15));
 				b.setImage(rs.getString(16));
+				b.setObs(rs.getString(17));
 				birds.add(b);
 			}
 			return birds;
@@ -397,6 +405,7 @@ public class BirdsRepository {
 				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
 				b.setPosture(rs.getInt(15));
 				b.setImage(rs.getString(16));
+				b.setObs(rs.getString(17));
 				birds.add(b);
 			}
 			return birds;

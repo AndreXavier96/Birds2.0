@@ -28,7 +28,7 @@ public class ViewAllBirdsController implements Initializable {
 	@FXML
 	private TableView<Bird> tableID;
 	@FXML
-	private TableColumn<Bird, Integer> colId, colAno;
+	private TableColumn<Bird, Integer> colAno;
 	@FXML
 	private TableColumn<Bird, String> colAnilha,colEntryDate,colEntryType,
 		colBuyPrice,colSellPrice,colState,colSex,colFather,colMother,colSpecie,colMutation,
@@ -57,7 +57,6 @@ public class ViewAllBirdsController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		BirdsRepository birdsRepository = new BirdsRepository();
 		ObservableList<Bird> birds = birdsRepository.getAllBirds();
-		colId.setCellValueFactory(new PropertyValueFactory<Bird,Integer>("id"));
 		colAnilha.setCellValueFactory(new PropertyValueFactory<>("Band"));
 		colAno.setCellValueFactory(new PropertyValueFactory<>("Year"));
 		colEntryDate.setCellValueFactory(new PropertyValueFactory<>("EntryDate"));
@@ -79,7 +78,6 @@ public class ViewAllBirdsController implements Initializable {
 		colMutation.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getMutations().getName()));
 		colCage.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getCage().getCode()));
 		colBreeder.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getBreeder().getName()));
-		
 		tableID.setItems(birds);
 		
 	}

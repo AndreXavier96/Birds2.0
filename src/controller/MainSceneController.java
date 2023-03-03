@@ -132,6 +132,7 @@ public class MainSceneController {
 	@FXML
 	private void btnCreateDB(ActionEvent event) {
 		dataBaseOperationsRepository.CreateDataBase(MyValues.DBNAME);
+//		dataBaseOperationsRepository.alterTableAddColumn("BIRDS", "Obs VARCHAR(500)");
 	}
 	
 	@FXML
@@ -141,7 +142,7 @@ public class MainSceneController {
 			System.out.println("Trying to delete DB...");
 			File f =new File("./Database");
 			deleteDirectory(f);
-//			dataBaseOperationsRepository.alterTableDropColumn("BIRDS", "SellPrice");
+//			dataBaseOperationsRepository.alterTableDropColumn("MUTATIONS", "Observations");
 			System.out.println("DB deleted!");
 		} catch (Exception e) {
 			e.printStackTrace();
