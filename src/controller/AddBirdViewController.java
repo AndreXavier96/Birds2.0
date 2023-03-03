@@ -298,49 +298,12 @@ public class AddBirdViewController implements Initializable {
 		}
 		
 		if (validate) {
-			if (!TfAno.getText().matches("^\\d{4}|\\d{2}$")) {
-				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Ano nao esta no formato correto ou tem de ser preenchido. ex:2022 ou 22");
-				validate=false;
-			}else {
-				TfAno.setStyle(null);
-				LabelError.setStyle("");
-				validate=true;
-			}
-		}
-		
-		
-		if (validate) {
-			if (!TfNumero.getText().matches("^\\d+$")) {
-				TfNumero.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Numero nao esta no formato correto ou tem de ser preenchido");
-				validate=false;
-			}else {
-				TfNumero.setStyle(null);
-				LabelError.setStyle("");
-				validate=true;
-			}
-		}
-		
-		if (validate) {
 			if (CbClub.getValue()==null) {
 				CbClub.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelError.setText("Clube tem de ser escolhido");
 				validate=false;
 			}else {
 				CbClub.setStyle(null);
-				LabelError.setText("");
-				validate=true;
-			}
-		}
-		
-		if (validate) {
-			if (CbState.getValue()==null) {
-				CbState.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Estado tem de ser escolhido");
-				validate=false;
-			}else {
-				CbState.setStyle(null);
 				LabelError.setText("");
 				validate=true;
 			}
@@ -372,6 +335,94 @@ public class AddBirdViewController implements Initializable {
 		}
 		
 		if (validate) 
+			if (CbSex.getValue()==null) {
+				CbSex.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Sexo tem de ser escolhido");
+				validate=false;
+			}else {
+				CbSex.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		
+		if (validate) 
+			if (CbSpecies.getValue()==null) {
+				CbSpecies.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Especie tem de ser escolhido");
+				validate=false;
+			}else {
+				CbSpecies.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		
+		if (validate) 
+			if (CbSpecies.getValue()!=null && CbMutation.getValue()==null) {
+				CbMutation.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Mutacao tem de ser escolhido");
+				validate=false;
+			}else {
+				CbMutation.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		
+		if (validate) 
+			if (CbCage.getValue()==null) {
+				CbCage.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Gaiola tem de ser escolhido");
+				validate=false;
+			}else {
+				CbCage.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		
+		if (validate)
+			if (CbFather.getValue()==null) {
+				CbFather.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Pai tem de ser escolhido.(Caso nao tenha Pai escolher 'Sem Pai')");
+				validate=false;
+			}else {
+				CbFather.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		
+		if (validate)
+			if (CbMother.getValue()==null) {
+				CbMother.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Mae tem de ser escolhida.(Caso nao tenha Mae escolher 'Sem Mae')");
+				validate=false;
+			}else {
+				CbMother.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
+		
+		if (validate)
+			if (!TfAno.getText().matches("^\\d{4}|\\d{2}$")) {
+				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Ano nao esta no formato correto ou tem de ser preenchido. ex:2022 ou 22");
+				validate=false;
+			}else {
+				TfAno.setStyle(null);
+				LabelError.setStyle("");
+				validate=true;
+			}
+		
+		if (validate)
+			if (!TfNumero.getText().matches("^\\d+$")) {
+				TfNumero.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Numero nao esta no formato correto ou tem de ser preenchido");
+				validate=false;
+			}else {
+				TfNumero.setStyle(null);
+				LabelError.setStyle("");
+				validate=true;
+			}
+		
+		if (validate) 
 			if (CbEntryType.getValue().equals(MyValues.ENTRYTYPELIST.get(0))) 
 				if (!TfBuyPrice.getText().matches("^[+]?[0-9]*[.]?[0-9]+$")) {
 					TfBuyPrice.setStyle(MyValues.ERROR_BOX_STYLE);
@@ -383,47 +434,18 @@ public class AddBirdViewController implements Initializable {
 					validate=true;
 				}
 		
-		if (validate) 
-			if (CbSex.getValue()==null) {
-				CbSex.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Sexo tem de ser escolhido");
+		if (validate)
+			if (CbState.getValue()==null) {
+				CbState.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Estado tem de ser escolhido");
 				validate=false;
 			}else {
-				CbSex.setStyle(null);
+				CbState.setStyle(null);
 				LabelError.setText("");
 				validate=true;
 			}
-		if (validate) 
-			if (CbSpecies.getValue()==null) {
-				CbSpecies.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Especie tem de ser escolhido");
-				validate=false;
-			}else {
-				CbSpecies.setStyle(null);
-				LabelError.setText("");
-				validate=true;
-			}
-		if (validate) 
-			if (CbSpecies.getValue()!=null && CbMutation.getValue()==null) {
-				CbMutation.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Mutacao tem de ser escolhido");
-				validate=false;
-			}else {
-				CbMutation.setStyle(null);
-				LabelError.setText("");
-				validate=true;
-			}
-		if (validate) 
-			if (CbCage.getValue()==null) {
-				CbCage.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Gaiola tem de ser escolhido");
-				validate=false;
-			}else {
-				CbCage.setStyle(null);
-				LabelError.setText("");
-				validate=true;
-			}
-		if (validate) {
+		
+		if (validate)
 			if (TfObs.getText().length()>500) {
 				TfObs.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelError.setText("Observacoes so pode ter no maximo 500 caracteres.");
@@ -433,9 +455,18 @@ public class AddBirdViewController implements Initializable {
 				LabelError.setText("");
 				validate=true;
 			}
+		if(validate && !LbImagePath.getText().isBlank()) {
+			String sufix = LbImagePath.getText().substring(LbImagePath.getText().lastIndexOf("."));
+			if (sufix!="png" || sufix!="jpg") {
+				btnUpload.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelError.setText("Imagem tem de ser .jpg ou .png");
+				validate=false;
+			}else {
+				btnUpload.setStyle(null);
+				LabelError.setText("");
+				validate=true;
+			}
 		}
-		
-		
 		return validate;
 	}
 	
