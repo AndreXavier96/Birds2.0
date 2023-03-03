@@ -33,6 +33,6 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button layoutX="14.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnBack" text="Voltar" />
+      <Button cancelButton="true" layoutX="14.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnBack" text="Voltar" />
    </children>
 </AnchorPane>

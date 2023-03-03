@@ -25,7 +25,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Button layoutX="12.0" layoutY="587.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="108.0" text="Voltar" />
+      <Button cancelButton="true" layoutX="12.0" layoutY="587.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="108.0" text="Voltar" />
       <TabPane layoutX="14.0" layoutY="155.0" prefHeight="418.0" prefWidth="853.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Ficha">
@@ -398,7 +398,7 @@
       <AnchorPane layoutX="14.0" layoutY="102.0" prefHeight="53.0" prefWidth="192.0">
          <children>
             <TextField fx:id="TfBandSearch" layoutX="40.0" layoutY="20.0" />
-            <Button layoutX="7.0" layoutY="20.0" mnemonicParsing="false" onAction="#btnSearchForBand">
+            <Button defaultButton="true" layoutX="7.0" layoutY="20.0" mnemonicParsing="false" onAction="#btnSearchForBand">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
