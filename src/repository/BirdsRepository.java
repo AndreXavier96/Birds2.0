@@ -271,7 +271,6 @@ public class BirdsRepository {
 		return id;
 	}
 
-	
 	public void partialUpdateStringsBird(Integer id, String col, String value) {
 	    try {
 	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
@@ -324,6 +323,50 @@ public class BirdsRepository {
 				else
 					b.setFather(null);
 				if (rs.getInt(11) != 0)
+					b.setMother(getBirdWhereInt("id",rs.getInt(11)));
+				else
+					b.setMother(null);
+				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(12)));
+				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(13)));
+				b.setCage(cageRepository.getCage(rs.getInt(14)));
+				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(15)));
+				b.setPosture(rs.getInt(16));
+				b.setImage(rs.getString(17));
+				birds.add(b);
+			}
+			return birds;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ObservableList<Bird> getAllWhereStringAndInteger(String col,String value,String col2,Integer value2) {
+		try {
+			System.out.println("Getting all Birds...");
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
+					MyValues.USER, MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM BIRDS WHERE "+col+"='"+value+"' AND "+col2+"="+value2+";";
+			ResultSet rs = stmt.executeQuery(sql);
+			ObservableList<Bird> birds = FXCollections.observableArrayList();
+			while (rs.next()) {
+				System.out.println("Get Bird: " + rs.getInt(1));
+				Bird b = new Bird();
+				b.setId(rs.getInt(1));
+				b.setBand(rs.getString(2));
+				b.setYear(rs.getInt(3));
+				b.setEntryDate(rs.getDate(4));
+				b.setEntryType(rs.getString(5));
+				b.setBuyPrice(rs.getDouble(6));
+				b.setSellPrice(rs.getDouble(7));
+				b.setState(stateRepository.getStateById(rs.getInt(8)));
+				b.setSex(rs.getString(9));
+				if (rs.getInt(10)!=0)
+					b.setFather(getBirdWhereInt("id",rs.getInt(10)));
+				else
+					b.setFather(null);
+				if (rs.getInt(11)!=0)
 					b.setMother(getBirdWhereInt("id",rs.getInt(11)));
 				else
 					b.setMother(null);

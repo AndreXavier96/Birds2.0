@@ -183,13 +183,22 @@ public class Bird {
 	public void setImage(String image) {
 		Image = image;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Bird [id=" + id + ", NrBreeder=" + Breeder + ", Band=" + Band + ", Year=" + Year + ", EntryDate="
-				+ EntryDate + ", EntryType=" + EntryType + ", BuyPrice=" + BuyPrice + ", SellPrice=" + SellPrice
-				+ ", State=" + State + ", Sex=" + Sex + ", Father=" + Father + ", Mother=" + Mother + ", Species="
-				+ Species + ", Mutations=" + Mutations + ", Cage=" + Cage  + ", Posture="
-				+ Posture + "]";
+		return "Bird [id=" + id + ", Band=" + Band + ", Year=" + Year + ", EntryDate=" + EntryDate + ", EntryType="
+				+ EntryType + ", BuyPrice=" + BuyPrice + ", SellPrice=" + SellPrice + ", State=" + State + ", Sex="
+				+ Sex + ", Father=" + Father + ", Mother=" + Mother + ", Species=" + Species + ", Mutations="
+				+ Mutations + ", Cage=" + Cage + ", Breeder=" + Breeder + ", Posture=" + Posture + ", Image=" + Image
+				+ ", getId()=" + getId() + ", getBreeder()=" + getBreeder() + ", getBand()=" + getBand()
+				+ ", getYear()=" + getYear() + ", getEntryDate()=" + getEntryDate() + ", getEntryType()="
+				+ getEntryType() + ", getBuyPrice()=" + getBuyPrice() + ", getSellPrice()=" + getSellPrice()
+				+ ", getState()=" + getState() + ", getSex()=" + getSex() + ", getFather()=" + getFather()
+				+ ", getMother()=" + getMother() + ", getSpecies()=" + getSpecies() + ", getMutations()="
+				+ getMutations() + ", getCage()=" + getCage() + ", getPosture()=" + getPosture() + ", getImage()="
+				+ getImage() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
+	
+
 }
