@@ -26,6 +26,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -54,7 +55,9 @@ public class ViewSingleBirdController implements Initializable{
 	@FXML
 	private Label LbSex,LbBuyPrice,LbSpecie,LbMutation,LbClassification;
 	@FXML
-	private Label LbSellPrice,LbState,LbLastModify,LbOBs,LbCage, LbBreeder;
+	private Label LbSellPrice,LbState,LbLastModify,LbCage, LbBreeder;
+	@FXML
+	private TextArea LbObs;
 	@FXML
 	private ImageView ImBird;
 	@FXML
@@ -243,7 +246,7 @@ public class ViewSingleBirdController implements Initializable{
 			}else
 				ApSellPrice.setVisible(false);
 			LbLastModify.setText("TODO");
-			LbOBs.setText("TODO");
+			LbObs.setText(b.getObs());
 			LbBreeder.setText(b.getBreeder().getName());
 			if (!b.getImage().isEmpty()) {
 				String s = b.getImage();
@@ -308,7 +311,7 @@ public class ViewSingleBirdController implements Initializable{
 		LbClassification.setText(null);
 		LbState.setText(null);
 		LbLastModify.setText(null);
-		LbOBs.setText(null);
+		LbObs.setText(null);
 		LbCage.setText(null);
 		LbBreeder.setText(null);
 		ImBird.setImage(MyValues.DEFAULT_IMAGE);

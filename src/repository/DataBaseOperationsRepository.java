@@ -110,4 +110,17 @@ public class DataBaseOperationsRepository {
 			e.printStackTrace();
 		}
 	}
+	
+	public void alterTableAddColumn(String tableName,String column) {
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+			System.out.println("Creating Table Birds ...");
+			Statement stmt = con.createStatement();
+			String sql = "ALTER TABLE "+tableName+" ADD COLUMN "+column;
+			stmt.executeUpdate(sql);
+			System.out.println(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

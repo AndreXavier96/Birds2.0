@@ -19,10 +19,11 @@ public class Bird {
 	private Breeder Breeder;
 	private Integer Posture;
 	private String Image;
+	private String Obs;
 
 	public Bird(Integer id, Breeder nrBreeder, String band, Integer year, Date entryDate, String entryType,
 			Double buyPrice, State state, String sex, Bird father, Bird mother, Specie species,
-			Mutation mutations, Cage cage, Integer posture,String image) {
+			Mutation mutations, Cage cage, Integer posture,String image,String obs) {
 		super();
 		this.id = id;
 		Breeder = nrBreeder;
@@ -40,6 +41,7 @@ public class Bird {
 		Cage = cage;
 		Posture = posture;
 		Image=image;
+		Obs=obs;
 	}
 
 	public Bird() {
@@ -173,7 +175,14 @@ public class Bird {
 	public void setImage(String image) {
 		Image = image;
 	}
+	
+	public String getObs() {
+		return Obs;
+	}
 
+	public void setObs(String obs) {
+		Obs = obs;
+	}
 	@Override
 	public String toString() {
 		return "Bird [id=" + id + ", Band=" + Band + ", Year=" + Year + ", EntryDate=" + EntryDate + ", EntryType="

@@ -11,7 +11,6 @@
    <children>
       <TableView fx:id="tableID" layoutX="14.0" layoutY="48.0" prefHeight="292.0" prefWidth="1802.0">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="colAnilha" minWidth="0.0" prefWidth="178.0" text="Anilha" />
           <TableColumn fx:id="colAno" prefWidth="172.0" text="Ano" />
           <TableColumn fx:id="colEntryDate" prefWidth="172.0" text="Data Entrada" />

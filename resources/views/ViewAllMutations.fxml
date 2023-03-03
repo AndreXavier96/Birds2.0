@@ -15,7 +15,6 @@
             <TableColumn fx:id="colSpecie" prefWidth="172.0" text="Especie" />
             <TableColumn fx:id="colType" minWidth="0.0" prefWidth="178.0" text="Tipo" />
              <TableColumn fx:id="colSymbol" prefWidth="178.0" text="Simbolo" />
-             <TableColumn fx:id="colObservation" prefWidth="178.0" text="Observacoes" />
              
         </columns>
       </TableView>

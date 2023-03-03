@@ -33,13 +33,7 @@ public class AddMutationViewController implements Initializable {
 	@FXML
 	private Label LabelError;
 	@FXML
-	private TextField TfName;
-	@FXML
-	private TextField TfType;
-	@FXML
-	private TextField TfSymbol;
-	@FXML
-	private TextField TfObs;
+	private TextField TfName, TfType, TfSymbol;
 	@FXML
 	private ComboBox<Specie> CbSpecie;
 
@@ -71,7 +65,6 @@ public class AddMutationViewController implements Initializable {
 			mutation.setName(TfName.getText());
 			mutation.setType(TfType.getText());
 			mutation.setSymbol(TfSymbol.getText());
-			mutation.setObservation(TfObs.getText());
 			mutation.setSpecie(CbSpecie.getValue());
 			mutationsRepository.Insert(mutation);
 		}
@@ -117,23 +110,6 @@ public class AddMutationViewController implements Initializable {
 					validate=false;
 				}else {
 					TfSymbol.setStyle(null);
-					LabelError.setText("");
-					validate=true;
-				}
-		}
-		
-		if (validate) {
-			if (TfObs.getText().length()!=0)
-				if (TfObs.getText().length()>500) {
-					TfObs.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelError.setText("Observacoes demasiado grande(Max 500 caracters)");
-					validate=false;
-				}else if(!TfObs.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]|[0-9]| |[\\p{P}\\p{S}])+$")){
-					TfObs.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelError.setText("Observacoes nao esta no formato correto");
-					validate=false;
-				}else {
-					TfObs.setStyle(null);
 					LabelError.setText("");
 					validate=true;
 				}
