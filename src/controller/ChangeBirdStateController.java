@@ -104,15 +104,20 @@ public class ChangeBirdStateController implements Initializable{
 			Bird bird = birdsRepository.getBirdWhereString("Band",LbBand.getText());
 			state.setId(bird.getState().getId());
 			stateRepositor.updateState(state);
-			String obs = "Estado do passaro alterado de '"+LbState.getText()+"' para '"+state.getType()+"'.";
+			String obs = "Estado do passaro alterado de '"+LbState.getText()+"' para '"+state.getType()+"'";	
+			if (state.getType().equals(MyValues.MORTO))
+				obs.concat(", motivo '"+state.getMotivo()+"'.");
+			else if (state.getType().equals(MyValues.VENDIDO)) {
+				obs.concat(", preco '"+state.getValor()+"'.");
+//				bird = birdsRepository.fullUpdateBird(bird);
+			}else
+				obs.concat(".");
 			historicRepository.insertHistoric(new Historic(null,MyValues.CHANGE_STATE,date,obs, bird));
-			
 			// close the window
 		    Stage stage = (Stage) CbState.getScene().getWindow();
 		    stage.close();
-		    
 			//Set Success msg in viewSingleBird
-			viewSingleBirdController.setSuccess(MyValues.CHANGE_STATE_SUCCESS, birdsRepository.getBirdWhereString("Band",LbBand.getText()));
+			viewSingleBirdController.setSuccess(MyValues.CHANGE_STATE_SUCCESS, birdsRepository.getBirdWhereString("Band",LbBand.getText()));			
 		}
 	}
 	

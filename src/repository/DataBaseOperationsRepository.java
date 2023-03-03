@@ -98,5 +98,16 @@ public class DataBaseOperationsRepository {
 		System.out.println("All tables dropped!");
 	}
 
-	
+	public void alterTableDropColumn(String tableName,String columnName) {
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+			System.out.println("Creating Table Birds ...");
+			Statement stmt = con.createStatement();
+			String sql = "ALTER TABLE "+tableName+" DROP COLUMN "+columnName;
+			stmt.executeUpdate(sql);
+			System.out.println(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

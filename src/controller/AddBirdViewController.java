@@ -167,11 +167,11 @@ public class AddBirdViewController implements Initializable {
 		        	listMutations.add(0,normal);
 		        	CbMutation.setItems(listMutations);
 		        	ObservableList<Bird> listFathers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.MACHO,"SpeciesId",CbSpecies.getValue().getId());
-		        	Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
+		        	Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null,null);
 		    		listFathers.add(0,defaultFather);
 		    		CbFather.setItems(listFathers);
 		    		ObservableList<Bird> listMothers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.FEMEA,"SpeciesId",CbSpecies.getValue().getId());
-		    		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
+		    		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null,null);
 		    		listMothers.add(0,defaultMother);
 		    		CbMother.setItems(listMothers);
 				} catch (SQLException e) {
@@ -222,35 +222,6 @@ public class AddBirdViewController implements Initializable {
 			}
 		});
 	}
-//		ObservableList<Bird> listFathers = birdsRepository.getAllWhere("Sex",MyValues.FEMEA);
-//		Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
-//		listFathers.add(0,defaultFather);
-//		CbFather.setItems(listFathers);
-//		CbFather.setConverter(new StringConverter<Bird>() {
-//			@Override
-//			public String toString(Bird s) {
-//				return s.getBand();
-//			}
-//			@Override
-//			public Bird fromString(String s) {
-//				return CbFather.getItems().stream().filter(b -> b.getBand().equals(s)).findFirst().orElse(null);
-//			}
-//		});
-//		ObservableList<Bird> listMothers = birdsRepository.getAllWhere("Sex",MyValues.MACHO);
-//		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
-//		listMothers.add(0,defaultMother);
-//		CbMother.setItems(listMothers);
-//		CbMother.setConverter(new StringConverter<Bird>() {
-//			@Override
-//			public String toString(Bird s) {
-//				return s.getBand();
-//			}
-//			@Override
-//			public Bird fromString(String s) {
-//				return CbMother.getItems().stream().filter(b -> b.getId().equals(s)).findFirst().orElse(null);
-//			}
-//		});
-//	}
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
@@ -265,7 +236,6 @@ public class AddBirdViewController implements Initializable {
 			}else if (bird.getEntryType().equals(MyValues.NASCIMENTO)) {
 				bird.setBuyPrice(0.0);
 			}
-			bird.setSellPrice(0.0);
 			String date = new SimpleDateFormat(MyValues.DATE_FORMATE).format(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			bird.setState(stateRepository.insertState(new State(null, CbState.getValue(),date , null, null)));
 			bird.setSex(CbSex.getValue());

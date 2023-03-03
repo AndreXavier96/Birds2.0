@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import domains.Bird;
+import domains.State;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -62,7 +63,10 @@ public class ViewAllBirdsController implements Initializable {
 		colEntryDate.setCellValueFactory(new PropertyValueFactory<>("EntryDate"));
 		colEntryType.setCellValueFactory(new PropertyValueFactory<>("EntryType"));
 		colBuyPrice.setCellValueFactory(new PropertyValueFactory<>("BuyPrice"));
-		colSellPrice.setCellValueFactory(new PropertyValueFactory<>("SellPrice"));
+		colSellPrice.setCellValueFactory(cellData ->  new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getState())
+	    		.map(State::getValor)
+	    		.map(String::valueOf)
+	    		.orElse("0")));
 		colState.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getState().getType()));
 		colSex.setCellValueFactory(new PropertyValueFactory<>("Sex"));
 	    colFather.setCellValueFactory(cellData -> new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getFather())

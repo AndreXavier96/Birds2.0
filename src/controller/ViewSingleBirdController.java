@@ -238,7 +238,7 @@ public class ViewSingleBirdController implements Initializable{
 			}else 
 				ApBuyPrice.setVisible(false);
 			if (LbState.getText().equals(MyValues.VENDIDO)) {
-				LbSellPrice.setText(b.getSellPrice().toString()+"\u20AC");
+				LbSellPrice.setText(b.getState().getValor().toString()+"\u20AC");
 				ApSellPrice.setVisible(true);
 			}else
 				ApSellPrice.setVisible(false);

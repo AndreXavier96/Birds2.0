@@ -9,7 +9,6 @@ public class Bird {
 	private Date EntryDate;
 	private String EntryType;
 	private Double BuyPrice;
-	private Double SellPrice;
 	private State State;
 	private String Sex;
 	private Bird Father;
@@ -22,7 +21,7 @@ public class Bird {
 	private String Image;
 
 	public Bird(Integer id, Breeder nrBreeder, String band, Integer year, Date entryDate, String entryType,
-			Double buyPrice, Double sellPrice, State state, String sex, Bird father, Bird mother, Specie species,
+			Double buyPrice, State state, String sex, Bird father, Bird mother, Specie species,
 			Mutation mutations, Cage cage, Integer posture,String image) {
 		super();
 		this.id = id;
@@ -32,7 +31,6 @@ public class Bird {
 		EntryDate = entryDate;
 		EntryType = entryType;
 		BuyPrice = buyPrice;
-		SellPrice = sellPrice;
 		State = state;
 		Sex = sex;
 		Father = father;
@@ -102,14 +100,6 @@ public class Bird {
 
 	public void setBuyPrice(Double buyPrice) {
 		BuyPrice = buyPrice;
-	}
-
-	public Double getSellPrice() {
-		return SellPrice;
-	}
-
-	public void setSellPrice(Double sellPrice) {
-		SellPrice = sellPrice;
 	}
 
 	public State getState() {
@@ -187,17 +177,9 @@ public class Bird {
 	@Override
 	public String toString() {
 		return "Bird [id=" + id + ", Band=" + Band + ", Year=" + Year + ", EntryDate=" + EntryDate + ", EntryType="
-				+ EntryType + ", BuyPrice=" + BuyPrice + ", SellPrice=" + SellPrice + ", State=" + State + ", Sex="
+				+ EntryType + ", BuyPrice=" + BuyPrice + ", State=" + State + ", Sex="
 				+ Sex + ", Father=" + Father + ", Mother=" + Mother + ", Species=" + Species + ", Mutations="
-				+ Mutations + ", Cage=" + Cage + ", Breeder=" + Breeder + ", Posture=" + Posture + ", Image=" + Image
-				+ ", getId()=" + getId() + ", getBreeder()=" + getBreeder() + ", getBand()=" + getBand()
-				+ ", getYear()=" + getYear() + ", getEntryDate()=" + getEntryDate() + ", getEntryType()="
-				+ getEntryType() + ", getBuyPrice()=" + getBuyPrice() + ", getSellPrice()=" + getSellPrice()
-				+ ", getState()=" + getState() + ", getSex()=" + getSex() + ", getFather()=" + getFather()
-				+ ", getMother()=" + getMother() + ", getSpecies()=" + getSpecies() + ", getMutations()="
-				+ getMutations() + ", getCage()=" + getCage() + ", getPosture()=" + getPosture() + ", getImage()="
-				+ getImage() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ Mutations + ", Cage=" + Cage + ", Breeder=" + Breeder + ", Posture=" + Posture + ", Image=" + Image+ "]";
 	}
 	
 
