@@ -48,8 +48,8 @@
       <Label fx:id="labelTfBuyPrice" layoutX="220.0" layoutY="201.0" text="Preço Compra" visible="false" />
       <TextField fx:id="TfBuyPrice" layoutX="222.0" layoutY="222.0" visible="false" />
       <ComboBox fx:id="CbSex" layoutX="38.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
-      <ComboBox fx:id="CbFather" layoutX="198.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
-      <ComboBox fx:id="CbMother" layoutX="359.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
+      <ComboBox fx:id="CbFather" disable="true" layoutX="198.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
+      <ComboBox fx:id="CbMother" disable="true" layoutX="359.0" layoutY="259.0" prefWidth="150.0" promptText="Selecionar" />
       <ComboBox fx:id="CbSpecies" layoutX="35.0" layoutY="309.0" prefWidth="150.0" promptText="Selecionar" />
       <ComboBox fx:id="CbMutation" disable="true" layoutX="195.0" layoutY="309.0" prefWidth="150.0" promptText="Selecionar" />
       <ComboBox fx:id="CbCage" layoutX="359.0" layoutY="309.0" prefWidth="150.0" promptText="Selecionar" />

@@ -166,6 +166,14 @@ public class AddBirdViewController implements Initializable {
 		        	Mutation normal = new Mutation(null, "Sem Mutacao","","", "", newValue);
 		        	listMutations.add(0,normal);
 		        	CbMutation.setItems(listMutations);
+		        	ObservableList<Bird> listFathers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.MACHO,"SpeciesId",CbSpecies.getValue().getId());
+		        	Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
+		    		listFathers.add(0,defaultFather);
+		    		CbFather.setItems(listFathers);
+		    		ObservableList<Bird> listMothers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.FEMEA,"SpeciesId",CbSpecies.getValue().getId());
+		    		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
+		    		listMothers.add(0,defaultMother);
+		    		CbMother.setItems(listMothers);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -178,6 +186,28 @@ public class AddBirdViewController implements Initializable {
 		                return CbMutation.getItems().stream().filter(b -> b.getName().equals(s)).findFirst().orElse(null);
 		            }
 		        });
+		        CbFather.setDisable(false);
+		    	CbFather.setConverter(new StringConverter<Bird>() {
+					@Override
+					public String toString(Bird s) {
+						return s.getBand();
+					}
+					@Override
+					public Bird fromString(String s) {
+						return CbFather.getItems().stream().filter(b -> b.getBand().equals(s)).findFirst().orElse(null);
+					}
+				});
+		    	CbMother.setDisable(false);
+		    	CbMother.setConverter(new StringConverter<Bird>() {
+					@Override
+					public String toString(Bird s) {
+						return s.getBand();
+					}
+					@Override
+					public Bird fromString(String s) {
+						return CbMother.getItems().stream().filter(b -> b.getId().equals(s)).findFirst().orElse(null);
+					}
+				});
 		    }
 		});
 		CbCage.setItems(cageRepository.getAllCages());
@@ -191,35 +221,36 @@ public class AddBirdViewController implements Initializable {
 				return CbCage.getItems().stream().filter(b -> b.getCode().equals(s)).findFirst().orElse(null);
 			}
 		});
-		ObservableList<Bird> listFathers = birdsRepository.getAllWhere("Sex",MyValues.FEMEA);
-		Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
-		listFathers.add(0,defaultFather);
-		CbFather.setItems(listFathers);
-		CbFather.setConverter(new StringConverter<Bird>() {
-			@Override
-			public String toString(Bird s) {
-				return s.getBand();
-			}
-			@Override
-			public Bird fromString(String s) {
-				return CbFather.getItems().stream().filter(b -> b.getBand().equals(s)).findFirst().orElse(null);
-			}
-		});
-		ObservableList<Bird> listMothers = birdsRepository.getAllWhere("Sex",MyValues.MACHO);
-		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
-		listMothers.add(0,defaultMother);
-		CbMother.setItems(listMothers);
-		CbMother.setConverter(new StringConverter<Bird>() {
-			@Override
-			public String toString(Bird s) {
-				return s.getBand();
-			}
-			@Override
-			public Bird fromString(String s) {
-				return CbMother.getItems().stream().filter(b -> b.getId().equals(s)).findFirst().orElse(null);
-			}
-		});
 	}
+//		ObservableList<Bird> listFathers = birdsRepository.getAllWhere("Sex",MyValues.FEMEA);
+//		Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
+//		listFathers.add(0,defaultFather);
+//		CbFather.setItems(listFathers);
+//		CbFather.setConverter(new StringConverter<Bird>() {
+//			@Override
+//			public String toString(Bird s) {
+//				return s.getBand();
+//			}
+//			@Override
+//			public Bird fromString(String s) {
+//				return CbFather.getItems().stream().filter(b -> b.getBand().equals(s)).findFirst().orElse(null);
+//			}
+//		});
+//		ObservableList<Bird> listMothers = birdsRepository.getAllWhere("Sex",MyValues.MACHO);
+//		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
+//		listMothers.add(0,defaultMother);
+//		CbMother.setItems(listMothers);
+//		CbMother.setConverter(new StringConverter<Bird>() {
+//			@Override
+//			public String toString(Bird s) {
+//				return s.getBand();
+//			}
+//			@Override
+//			public Bird fromString(String s) {
+//				return CbMother.getItems().stream().filter(b -> b.getId().equals(s)).findFirst().orElse(null);
+//			}
+//		});
+//	}
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
