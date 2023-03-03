@@ -39,7 +39,7 @@ public class ViewAllCagesController implements Initializable {
 		colCode.setCellValueFactory(new PropertyValueFactory<Cage,String>("Code"));
 		colType.setCellValueFactory(new PropertyValueFactory<Cage,String>("Type"));
 //		colBird.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getSpecie().getCommonName()));
-		colBird.setCellValueFactory(new PropertyValueFactory<Cage,String>("Type"));
+//		colBird.setCellValueFactory(new PropertyValueFactory<Cage,String>("Type"));
 		
 		tableID.setItems(cages);
 	}
