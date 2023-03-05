@@ -101,10 +101,8 @@ public class AddBreederViewController implements Initializable {
 	public void btnAdd(ActionEvent event) throws NumberFormatException, SQLException {
 		labelAlert.setText(null);
 		labelAlert.setStyle(null);
-		//ALL VALIDATED
 		if(validator()) {
 			Breeder b = new Breeder();
-			
 			b.setCC(Integer.parseInt(TfCC.getText()));
 			b.setName(TfName.getText());
 			b.setNif(Integer.parseInt(TfNif.getText()));
@@ -124,7 +122,6 @@ public class AddBreederViewController implements Initializable {
 			}
 			b.setStam(stamMap);;
 			breederRepository.Insert(b);
-			
 			labelAlert.setStyle(MyValues.SUCCESS_BOX_STYLE);
 			labelAlert.setText("Criador"+b.getName()+" inserido com sucesso!");
 			clearAllFields();
@@ -171,28 +168,58 @@ public class AddBreederViewController implements Initializable {
 	
 	public boolean validator() throws NumberFormatException, SQLException {
 		boolean validated = false;
-		//VALIDATE CC
-		if (TfCC.getText().length() == 0) {
-			TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Cartao Cidadao tem de ser preenchido.");
+		clearAllErrors();
+		// VALIDATE Tipo Criador
+		if (CbType.getValue() == null) {
+			CbType.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelError.setText("Tipo criador tem de ser escolhido.");
 			validated = false;
-		} else if (!TfCC.getText().matches("^[\\d]{8}$")) {
-			TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Cartao Cidadao nao esta no formato correto.");
-			validated = false;
-		} else if (breederRepository.checkIfCCExists(Integer.parseInt(TfCC.getText()))) {
-			TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Cartao Cidadao ja existe no sistema.");
-			validated = false;
-			
 		} else {
-			TfCC.setStyle(null);
+			CbType.setStyle(null);
 			LabelError.setText("");
 			validated = true;
 		}
-		
-		//VALIDATE NOME
+		//VALIDATE CC
 		if (validated) {
+			if (CbType.getValue() == MyValues.CRIADOR_PROFISSIONAL)
+				if (TfCC.getText().length() == 0) {
+					TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Cartao Cidadao tem de ser preenchido.");
+					validated = false;
+				} else if (!TfCC.getText().matches("^[\\d]{8}$")) {
+					TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Cartao Cidadao nao esta no formato correto.");
+					validated = false;
+				} else if (breederRepository.checkIfCCExists(Integer.parseInt(TfCC.getText()))) {
+					TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Cartao Cidadao ja existe no sistema.");
+					validated = false;
+
+				} else {
+					TfCC.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
+			else if(TfCC.getText().length()>0) {
+				if (!TfCC.getText().matches("^[\\d]{8}$")) {
+					TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Cartao Cidadao nao esta no formato correto.");
+					validated = false;
+				}else if (breederRepository.checkIfCCExists(Integer.parseInt(TfCC.getText()))) {
+					TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Cartao Cidadao ja existe no sistema.");
+					validated = false;
+
+				} else {
+					TfCC.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
+			}
+		}
+		
+		// VALIDATE NOME
+		if (validated)
 			if (TfName.getText().length() == 0) {
 				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelError.setText("Nome tem de ser preenchido.");
@@ -206,10 +233,9 @@ public class AddBreederViewController implements Initializable {
 				LabelError.setText("");
 				validated = true;
 			}
-		}
 		
 		//VALIDATE TELEFONE
-		if (validated) {
+		if (validated)
 			if (TfPhone.getText().length() == 0) {
 				TfPhone.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelError.setText("Telefone tem de ser preenchido");
@@ -227,77 +253,141 @@ public class AddBreederViewController implements Initializable {
 				LabelError.setText("");
 				validated = true;
 			}
-		}
 		
-		//VALIDATE NIF
+		// VALIDATE NIF
 		if (validated) {
-			if (TfNif.getText().length() == 0) {
-				TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("NIF tem de ser preenchido.");
-				validated = false;
-			} else if (!TfNif.getText().matches("^[\\d]{9}$")) {
-				TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Nif nao esta no formato correto.");
-				validated = false;
-			} else if (breederRepository.checkIfNIFExists(Integer.parseInt(TfNif.getText()))) {
+			if (CbType.getValue() == MyValues.CRIADOR_PROFISSIONAL) {
+				if (TfNif.getText().length() == 0) {
+					TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("NIF tem de ser preenchido.");
+					validated = false;
+				} else if (!TfNif.getText().matches("^[\\d]{9}$")) {
+					TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Nif nao esta no formato correto.");
+					validated = false;
+				} else if (breederRepository.checkIfNIFExists(Integer.parseInt(TfNif.getText()))) {
 					TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelError.setText("NIF ja existe no sistema.");
 					validated = false;
-			} else {
-				TfNif.setStyle(null);
-				LabelError.setText("");
-				validated = true;
-			}
-		}
-		
-		
-		//VALIDATE Email
-		if (validated) {
-			if (TfEmail.getText().length() == 0) {
-				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Email tem de ser preenchido.");
-				validated = false;
-			} else if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Email nao esta no formato correto.");
-				validated = false;
-			} else if (breederRepository.checkIfEmailExists(TfEmail.getText())) {
-					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelError.setText("Email ja existe no sistema.");
+				} else {
+					TfNif.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
+			} else if (TfNif.getText().length() > 0) {
+				if (!TfNif.getText().matches("^[\\d]{9}$")) {
+					TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Nif nao esta no formato correto.");
 					validated = false;
-			} else {
-				TfEmail.setStyle(null);
-				LabelError.setText("");
-				validated = true;
+				} else if (breederRepository.checkIfNIFExists(Integer.parseInt(TfNif.getText()))) {
+					TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("NIF ja existe no sistema.");
+					validated = false;
+				} else {
+					TfNif.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
 			}
 		}
 
-		//VALIDATE PostalCode
+		// VALIDATE Email
 		if (validated) {
-			if (!TfPostalCode.getText().matches("^\\d{4}(-\\d{3})?$")) {
-				TfPostalCode.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Codigo Postal nao esta no formato correto.");
-				validated = false;
-			} else {
-				TfPostalCode.setStyle(null);
-				LabelError.setText("");
-				validated = true;
+			if (CbType.getValue() == MyValues.CRIADOR_PROFISSIONAL) {
+				if (TfEmail.getText().length() == 0) {
+					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Email tem de ser preenchido.");
+					validated = false;
+				} else if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Email nao esta no formato correto.");
+					validated = false;
+				} else if (breederRepository.checkIfEmailExists(TfEmail.getText())) {
+					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Email ja existe no sistema.");
+					validated = false;
+				} else {
+					TfEmail.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
+			} else if(TfEmail.getText().length()>0){
+				if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Email nao esta no formato correto.");
+					validated = false;
+				} else if (breederRepository.checkIfEmailExists(TfEmail.getText())) {
+					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Email ja existe no sistema.");
+					validated = false;
+				} else {
+					TfEmail.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
 			}
 		}
-		
-		//VALIDATE Tipo Criador
+
+		// VALIDATE Localidade
 		if (validated) {
-			if (CbType.getValue()==null) {
-				CbType.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Tipo criador tem de ser escolhido.");
-				validated = false;
-			} else {
-				CbType.setStyle(null);
-				LabelError.setText("");
-				validated = true;
+			if (TfLocale.getText().length() > 0) {
+				if (!TfLocale.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+					TfLocale.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Distrito nao esta no formato correto.");
+					validated = false;
+				} else {
+					TfLocale.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
 			}
 		}
-		
+
+		// VALIDATE Distrito
+		if (validated) {
+			if (TfDistrict.getText().length() > 0) {
+				if (!TfDistrict.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+					TfDistrict.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Distrito nao esta no formato correto.");
+					validated = false;
+				} else {
+					TfDistrict.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
+			}
+		}
+
+		// VALIDATE PostalCode
+		if (validated) {
+			if (TfPostalCode.getText().length() > 0) {
+				if (!TfPostalCode.getText().matches("^\\d{4}(-\\d{3})?$")) {
+					TfPostalCode.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Codigo Postal nao esta no formato correto.");
+					validated = false;
+				} else {
+					TfPostalCode.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
+			}
+		}
+
+		// VALIDATE Morada
+		if (validated) {
+			if (TfAddress.getText().length() > 0) {
+				if (!TfAddress.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+					TfAddress.setStyle(MyValues.ERROR_BOX_STYLE);
+					LabelError.setText("Distrito nao esta no formato correto.");
+					validated = false;
+				} else {
+					TfAddress.setStyle(null);
+					LabelError.setText("");
+					validated = true;
+				}
+			}
+		}
+		//VALIDATE CLUBS2
 		if (validated) {
 			if (CbType.getValue()==MyValues.CRIADOR_PROFISSIONAL && assignedClubs.isEmpty()) {
 				clubListViewAssigned.setStyle(MyValues.ERROR_BOX_STYLE);
@@ -313,18 +403,7 @@ public class AddBreederViewController implements Initializable {
 		return validated;
 	}
 		
-	public void clearAllFields() {
-		TfCC.setText(null);
-		TfName.setText(null);
-		TfNif.setText(null);
-		TfPhone.setText(null);
-		TfEmail.setText(null);
-		TfPostalCode.setText(null);
-		TfLocale.setText(null);
-		TfDistrict.setText(null);
-		CbType.setValue(null);
-		assignedClubs = FXCollections.observableArrayList();
-		
+	public void clearAllErrors() {
 		LabelError.setText("");
 		TfCC.setStyle(null);
 		TfName.setStyle(null);
@@ -338,7 +417,21 @@ public class AddBreederViewController implements Initializable {
 		clubListViewAssigned.setStyle(null);
 		btnAssign.setStyle(null);
 		btnDeAssign.setStyle(null);
+	}
 	
+	public void clearAllFields() {
+		TfCC.setText(null);
+		TfName.setText(null);
+		TfNif.setText(null);
+		TfPhone.setText(null);
+		TfEmail.setText(null);
+		TfPostalCode.setText(null);
+		TfLocale.setText(null);
+		TfDistrict.setText(null);
+		CbType.setValue(null);
+		assignedClubs = FXCollections.observableArrayList();
+		
+		clearAllErrors();
 	}
 
 	

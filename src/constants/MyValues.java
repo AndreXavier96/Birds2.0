@@ -39,8 +39,7 @@ public class MyValues {
 
 	public static final String CRIADOR_AMADOR = "Amador";
 	public static final String CRIADOR_PROFISSIONAL = "Profissional";
-	public static final String CRIADOR_LOJA = "Loja";
-	public static final ObservableList<String> BREEDERTYPELIST = FXCollections.observableArrayList(CRIADOR_AMADOR,CRIADOR_PROFISSIONAL,CRIADOR_LOJA);
+	public static final ObservableList<String> BREEDERTYPELIST = FXCollections.observableArrayList(CRIADOR_AMADOR,CRIADOR_PROFISSIONAL);
 
 	public static final String VOADEIRA = "Voadeira";
 	public static final String EXPOSICAO = "Exposicao";
