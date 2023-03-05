@@ -201,7 +201,7 @@ public class AddClubViewController implements Initializable {
 				TfContact.setStyle(MyValues.ERROR_BOX_STYLE);
 				TfContact.setText("Telefone tem de ser preenchido.");
 				validated = false;
-			}else if (!TfContact.getText().matches("^\\d+$")) {
+			}else if (!TfContact.getText().matches("^[\\d]{9}$")) {
 				TfContact.setStyle(MyValues.ERROR_BOX_STYLE);
 				TfContact.setText("Telefone nao esta no formato correto.");
 				validated = false;
