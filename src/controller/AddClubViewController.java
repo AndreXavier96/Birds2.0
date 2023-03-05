@@ -31,9 +31,7 @@ public class AddClubViewController implements Initializable {
 	private Stage stage;
 	
 	@FXML
-	private Label LabelError;
-	@FXML
-	private Label labelAlert;
+	private Label LabelAlert;
 	@FXML
 	private TextField TfAcronym, TfName,TfLocale, TfEmail,TfAddress,TfContact;
 	@FXML
@@ -59,8 +57,6 @@ public class AddClubViewController implements Initializable {
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws NumberFormatException, SQLException {
-		labelAlert.setText(null);
-		labelAlert.setStyle(null);
 		if(validator()) {
 			Club c = new Club();
 			c.setName(TfName.getText());
@@ -72,8 +68,8 @@ public class AddClubViewController implements Initializable {
 			c.setPhone(TfContact.getText());
 			clubRepository.Insert(c);
 			
-			labelAlert.setStyle(MyValues.SUCCESS_BOX_STYLE);
-			labelAlert.setText("Federacao "+c.getName()+" inserida com sucesso!");
+			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+			LabelAlert.setText("Federacao "+c.getName()+" inserida com sucesso!");
 			clearAllFields();
 		}	
 	}
@@ -93,33 +89,34 @@ public class AddClubViewController implements Initializable {
 	
 	public boolean validator() throws NumberFormatException, SQLException {
 		boolean validated = false;
-		
+		LabelAlert.setStyle(MyValues.ALERT_ERROR);
+		LabelAlert.setText("");
 		if (TfName.getText().length() == 0) {
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Nome tem de ser preenchido.");
+			LabelAlert.setText("Nome tem de ser preenchido.");
 			validated = false;
 		} else if (!TfName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Nome nao esta no formato correto.");
+			LabelAlert.setText("Nome nao esta no formato correto.");
 			validated = false;
 		}else if (clubRepository.checkIfExistsString("Name", TfName.getText())) {
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Nome ja existe.");
+			LabelAlert.setText("Nome ja existe.");
 			validated = false;
 		} else {
 			TfName.setStyle(null);
-			LabelError.setText("");
+			LabelAlert.setText("");
 			validated = true;
 		}
 		
 		if (validated) {
 			if (CbFederation.getValue()==null) {
 				CbFederation.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Federacao tem de ser escolhida");
+				LabelAlert.setText("Federacao tem de ser escolhida");
 				validated=false;
 			}else {
 				CbFederation.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validated=true;
 			}
 		}
@@ -127,19 +124,19 @@ public class AddClubViewController implements Initializable {
 		if (validated) {
 			if (TfAcronym.getText().length() == 0) {
 				TfAcronym.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Sigla tem de ser preenchido");
+				LabelAlert.setText("Sigla tem de ser preenchido");
 				validated = false;
 			} else if (!TfAcronym.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
 				TfAcronym.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Sigla nao esta no formato correto.");
+				LabelAlert.setText("Sigla nao esta no formato correto.");
 				validated = false;
 			}else if (clubRepository.checkIfExistsString("Acronym", TfAcronym.getText())) {
 				TfAcronym.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Sigla ja existe.");
+				LabelAlert.setText("Sigla ja existe.");
 				validated = false;
 			}else {
 				TfAcronym.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validated = true;
 			}
 		}
@@ -147,15 +144,15 @@ public class AddClubViewController implements Initializable {
 		if (validated) {
 			if (TfLocale.getText().length() == 0) {
 				TfLocale.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Localidade tem de ser preenchida");
+				LabelAlert.setText("Localidade tem de ser preenchida");
 				validated = false;
 			} else if (!TfLocale.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
 				TfLocale.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Localidade nao esta no formato correto.");
+				LabelAlert.setText("Localidade nao esta no formato correto.");
 				validated = false;
 			} else {
 				TfLocale.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validated = true;
 			}
 		}
@@ -163,15 +160,15 @@ public class AddClubViewController implements Initializable {
 		if (validated) {
 			if (TfAddress.getText().length()==0) {
 				TfAddress.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Morada tem de ser preenchida");
+				LabelAlert.setText("Morada tem de ser preenchida");
 				validated = false;
 			}else if (!TfAddress.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]|[0-9]| )+$")) {
 				TfAddress.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Morada nao esta no formato correto.");
+				LabelAlert.setText("Morada nao esta no formato correto.");
 				validated = false;
 			} else {
 				TfAddress.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validated = true;
 			}
 		}
@@ -179,19 +176,19 @@ public class AddClubViewController implements Initializable {
 		if (validated) {
 			if (TfEmail.getText().length() == 0) {
 				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Email tem de ser preenchido.");
+				LabelAlert.setText("Email tem de ser preenchido.");
 				validated = false;
 			} else if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
 				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Email nao esta no formato correto.");
+				LabelAlert.setText("Email nao esta no formato correto.");
 				validated = false;
 			}else if (clubRepository.checkIfExistsString("Email", TfEmail.getText())) {
 				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Email ja existe.");
+				LabelAlert.setText("Email ja existe.");
 				validated = false;
 			}else {
 				TfEmail.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validated = true;
 			}
 		}
@@ -199,19 +196,29 @@ public class AddClubViewController implements Initializable {
 		if (validated) {
 			if (TfContact.getText().length()==0) {
 				TfContact.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Telefone tem de ser preenchido.");
+				LabelAlert.setText("Telefone tem de ser preenchido.");
 				validated = false;
 			}else if (!TfContact.getText().matches("^[\\d]{9}$")) {
 				TfContact.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Telefone nao esta no formato correto.");
+				LabelAlert.setText("Telefone nao esta no formato correto.");
 				validated = false;
 			}else {
 				TfContact.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validated = true;
 			}
 		}
 		return validated;
+	}
+	
+	public void clearAllErrors() {
+		TfName.setStyle(null);
+		TfAcronym.setStyle(null);
+		CbFederation.setStyle(null);
+		TfLocale.setStyle(null);
+		TfAddress.setStyle(null);
+		TfContact.setStyle(null);
+		TfEmail.setStyle(null);
 	}
 	
 	public void clearAllFields() {
@@ -222,15 +229,7 @@ public class AddClubViewController implements Initializable {
 		TfAddress.setText(null);
 		TfContact.setText(null);
 		TfEmail.setText(null);
-		
-		LabelError.setText("");
-		TfName.setStyle(null);
-		TfAcronym.setStyle(null);
-		CbFederation.setStyle(null);
-		TfLocale.setStyle(null);
-		TfAddress.setStyle(null);
-		TfContact.setStyle(null);
-		TfEmail.setStyle(null);
+		clearAllErrors();
 	}
 	
 }

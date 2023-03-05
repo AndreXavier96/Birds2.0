@@ -102,15 +102,36 @@ public class BreederRepository {
 	                +"BREEDER(CC,Name,Nif,Cellphone,Email,Address,PostalCode,Locale,District,BreederType) "
 	                +"values(?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, b.getCC());
+			if (b.getCC()==null)
+				stmt.setString(1, null);
+			else
+				stmt.setInt(1, b.getCC());
 	        stmt.setString(2, b.getName());
-	        stmt.setInt(3, b.getNif());
+	        if (b.getNif()==null)
+				stmt.setString(3, null);
+			else
+				stmt.setInt(3, b.getNif());
 	        stmt.setInt(4, b.getCellphone());
-	        stmt.setString(5, b.getEmail());
-	        stmt.setString(6, b.getAddress());
-	        stmt.setString(7, b.getPostalCode());
-	        stmt.setString(8, b.getLocale());
-	        stmt.setString(9, b.getDistrict());
+	        if (b.getEmail()==null)
+				stmt.setString(5, null);
+			else
+				stmt.setString(5, b.getEmail());
+	        if (b.getAddress()==null)
+				stmt.setString(6, null);
+			else
+				stmt.setString(6, b.getAddress());
+	        if (b.getPostalCode()==null)
+				stmt.setString(7, null);
+			else
+				stmt.setString(7, b.getPostalCode());
+	        if (b.getLocale()==null)
+				stmt.setString(8, null);
+			else
+				stmt.setString(8, b.getLocale());
+	        if (b.getDistrict()==null)
+				stmt.setString(9, null);
+			else
+				stmt.setString(9, b.getDistrict());
 	        stmt.setString(10, b.getType());
 	        stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();

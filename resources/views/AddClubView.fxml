@@ -17,7 +17,7 @@
       </Label>
       <Label layoutX="28.0" layoutY="65.0" text="Nome" />
       <Label layoutX="309.0" layoutY="122.0" text="Sigla" />
-      <Label fx:id="LabelError" layoutX="30.0" layoutY="338.0" prefHeight="17.0" prefWidth="479.0" textFill="RED" />
+      <Label fx:id="LabelAlert" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="48.0" prefHeight="17.0" prefWidth="479.0" textFill="WHITE" />
       <Label layoutX="29.0" layoutY="122.0" text="Federacao" />
       <Label layoutX="400.0" layoutY="122.0" text="Localidade" />
       <Label layoutX="32.0" layoutY="235.0" text="Telefone" />
@@ -65,6 +65,5 @@
 			<Cursor fx:constant="HAND" />
 		</cursor>
 	</Button>
-      <Label fx:id="labelAlert" layoutX="34.0" layoutY="48.0" prefHeight="17.0" prefWidth="479.0" textAlignment="CENTER" textFill="#25c900" />
    </children>
 </AnchorPane>
