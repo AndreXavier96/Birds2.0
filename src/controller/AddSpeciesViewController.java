@@ -24,7 +24,7 @@ public class AddSpeciesViewController {
 	private Stage stage;
 	
 	@FXML
-	private Label LabelError;
+	private Label LabelAlert;
 	@FXML
 	private TextField TfCommonName;
 	@FXML
@@ -44,8 +44,7 @@ public class AddSpeciesViewController {
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
-		boolean validate=validate();
-		if (validate) {
+		if (validator()) {
 			Specie specie = new Specie();
 			specie.setCommonName(TfCommonName.getText());
 			specie.setScientificName(TfScientificName.getText());
@@ -54,43 +53,48 @@ public class AddSpeciesViewController {
 			specie.setOutofCageAfterDays(Integer.parseInt(TfTimeOutOfCage.getText()));
 			specie.setMaturityAfterDays(Integer.parseInt(TfMaturityAfterDays.getText()));
 			speciesRepository.Insert(specie);
+			
+			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+			LabelAlert.setText("Especie "+specie.getCommonName()+" inserida com sucesso!");
+			clearAllFields();
 		}
 	}
 	
-	
-	public boolean validate() throws SQLException {
+	public boolean validator() throws SQLException {
 		boolean validate = false;
+		clearAllErrors();
+		LabelAlert.setStyle(MyValues.ALERT_ERROR);
+		LabelAlert.setText("");
 		if (TfCommonName.getText().length()==0) {
 			TfCommonName.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Nome comum tem de ser preenchido");
+			LabelAlert.setText("Nome comum tem de ser preenchido");
 			validate=false;
 		}else if(!TfCommonName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")){
 			TfCommonName.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Nome comum nao esta no formato correto");
+			LabelAlert.setText("Nome comum nao esta no formato correto");
 			validate=false;
 		}else {
 			TfCommonName.setStyle(null);
-			LabelError.setText("");
+			LabelAlert.setText("");
 			validate=true;
 		}
 		
 		if (validate) {
-			
 			if (TfScientificName.getText().length()==0 || TfScientificName.getText().isBlank()) {
 				TfScientificName.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Nome cientifico tem de ser preenchido");
+				LabelAlert.setText("Nome cientifico tem de ser preenchido");
 				validate=false;
 			}else if(!TfScientificName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")){
 					TfScientificName.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelError.setText("Nome cientifico nao esta no formato correto");
+					LabelAlert.setText("Nome cientifico nao esta no formato correto");
 					validate=false;
 			}else if (speciesRepository.checkSpecieByScientificName(TfScientificName.getText())) {
 				TfScientificName.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Nome cientifico ja existe");
+				LabelAlert.setText("Nome cientifico ja existe");
 				validate=false;
 			}else {
 				TfScientificName.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validate=true;
 			}
 		}
@@ -98,11 +102,11 @@ public class AddSpeciesViewController {
 		if (validate) {
 			if (!TfIncubationTime.getText().matches("^\\d+$")) {
 				TfIncubationTime.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Dias de incubacao nao esta no formato correto");
+				LabelAlert.setText("Dias de incubacao nao esta no formato correto");
 				validate=false;
 			}else {
 				TfIncubationTime.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validate=true;
 			}
 		}
@@ -110,11 +114,11 @@ public class AddSpeciesViewController {
 		if (validate) {
 			if (!TfTimeToBand.getText().matches("^\\d+$")) {
 				TfTimeToBand.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Dias para anilhar nao esta no formato correto");
+				LabelAlert.setText("Dias para anilhar nao esta no formato correto");
 				validate=false;
 			}else {
 				TfTimeToBand.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validate=true;
 			}
 		}
@@ -122,22 +126,22 @@ public class AddSpeciesViewController {
 		if (validate) {
 			if (!TfTimeOutOfCage.getText().matches("^\\d+$")) {
 				TfTimeOutOfCage.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Dias para sair da gaiola nao esta no formato correto");
+				LabelAlert.setText("Dias para sair da gaiola nao esta no formato correto");
 				validate=false;
 			}else {
 				TfTimeOutOfCage.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validate=true;
 			}
 		}
 		if (validate) {
 			if (!TfMaturityAfterDays.getText().matches("^\\d+$")) {
 				TfMaturityAfterDays.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Dias para maturidade nao esta no formato correto");
+				LabelAlert.setText("Dias para maturidade nao esta no formato correto");
 				validate=false;
 			}else {
 				TfMaturityAfterDays.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validate=true;
 			}
 		}
@@ -145,6 +149,24 @@ public class AddSpeciesViewController {
 		return validate;
 	}
 	
+	public void clearAllErrors() {
+		TfCommonName.setStyle(null);
+		TfScientificName.setStyle(null);
+		TfIncubationTime.setStyle(null);
+		TfTimeToBand.setStyle(null);
+		TfTimeOutOfCage.setStyle(null);
+		TfMaturityAfterDays.setStyle(null);
+	}
+	
+	public void clearAllFields() {
+		TfCommonName.setText("");
+		TfScientificName.setText("");
+		TfIncubationTime.setText("");
+		TfTimeToBand.setText("");
+		TfTimeOutOfCage.setText("");
+		TfMaturityAfterDays.setText("");
+		clearAllErrors();
+	}
 	
 	@FXML
 	public void btnBack(ActionEvent event) {

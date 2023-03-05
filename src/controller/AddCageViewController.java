@@ -28,7 +28,7 @@ public class AddCageViewController implements Initializable {
 	private Stage stage;
 	
 	@FXML
-	private Label LabelError;
+	private Label LabelAlert;
 	@FXML
 	private TextField TfCode;
 	@FXML
@@ -44,38 +44,43 @@ public class AddCageViewController implements Initializable {
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
-		if (validate()) {
+		if (validator()) {
 			Cage cage = new Cage();
 			cage.setCode(TfCode.getText());
 			cage.setType(CbType.getValue());
 			cageRepository.Insert(cage);
+			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+			LabelAlert.setText("Gaiola "+cage.getCode()+" inserida com sucesso!");
+			clearAllFields();
 		}
-		
 	}	
 	
-	public boolean validate() throws SQLException {
+	public boolean validator() throws SQLException {
 		boolean validate= false;
+		clearAllErros();
+		LabelAlert.setStyle(MyValues.ALERT_ERROR);
+		LabelAlert.setText("");
 		if (TfCode.getText().isEmpty()) {
 			TfCode.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Codigo de gaiolas tem de ser preenchido");
+			LabelAlert.setText("Codigo de gaiolas tem de ser preenchido");
 			validate=false;
 		}else if (cageRepository.checkIfCodeExist(TfCode.getText())) {
 			TfCode.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Codigo de gaiola ja existe");
+			LabelAlert.setText("Codigo de gaiola ja existe");
 			validate=false;
 		}else {
 			TfCode.setStyle(null);
-			LabelError.setText("");
+			LabelAlert.setText("");
 			validate=true;
 		}
 		if (validate) {
 			if(CbType.getValue().isEmpty()) {
 				CbType.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Tipo tem de ser escolhido");
+				LabelAlert.setText("Tipo tem de ser escolhido");
 				validate=false;
 			}else {
 				CbType.setStyle(null);
-				LabelError.setText("");
+				LabelAlert.setText("");
 				validate=true;
 			}
 		}
@@ -96,7 +101,14 @@ public class AddCageViewController implements Initializable {
 	}
 
 
-
+	public void clearAllErros() {
+		TfCode.setStyle(null);
+		CbType.setStyle(null);
+	}
 	
-	
+	public void clearAllFields() {
+		TfCode.setText("");
+		CbType.setValue(null);
+		clearAllErros();
+	}
 }

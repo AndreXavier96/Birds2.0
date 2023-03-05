@@ -139,7 +139,7 @@ public class ViewSingleBirdController implements Initializable{
 	}
 	
 	public void setSuccess(String msg, Bird bird) {
-		LabelError.setStyle(MyValues.SUCCESS_BOX_STYLE);
+		LabelError.setStyle(MyValues.ALERT_SUCESS);
 		LabelError.setText(msg);
 		updateAllInfo(bird);
 	}

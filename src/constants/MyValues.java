@@ -9,7 +9,8 @@ public class MyValues {
 	public static final String PASSWORD = "admin";
 	public static final String DBNAME = "BirdDataBase";
 	public static final String ERROR_BOX_STYLE = "-fx-border-color: red; -fx-border-width:2px;";
-	public static final String SUCCESS_BOX_STYLE = "-fx-border-color: green; -fx-border-width:2px;";
+	public static final String ALERT_ERROR = "-fx-background-color: red; -fx-border-width: 0; -fx-background-radius: 5;";
+	public static final String ALERT_SUCESS = "-fx-background-color: green; -fx-border-width: 0; -fx-background-radius: 5;";
 
 	public static final String COMPRA = "Compra";
 	public static final String NASCIMENTO = "Nascimento";
@@ -21,7 +22,6 @@ public class MyValues {
 	public static final ObservableList<String> SEXLIST = FXCollections.observableArrayList(MyValues.FEMEA,
 			MyValues.MACHO);
 
-//	public static final String VIVO ="Vivo";
 	public static final String MORTO = "Morto";
 	public static final String VENDIDO = "Vendido";
 	public static final String REPRODUCAO = "Em periodo de reproducao";

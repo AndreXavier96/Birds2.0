@@ -23,7 +23,7 @@
                   <Insets left="10.0" right="10.0" top="10.0" />
                </padding>
             </Label>
-            <Label fx:id="LabelError" prefHeight="17.0" prefWidth="1278.0" textAlignment="CENTER" textFill="RED" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="45.0">
+            <Label fx:id="LabelAlert" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="1278.0" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="45.0">
                <padding>
                   <Insets left="10.0" right="10.0" top="10.0" />
                </padding>

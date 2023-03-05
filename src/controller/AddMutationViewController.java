@@ -31,7 +31,7 @@ public class AddMutationViewController implements Initializable {
 	private Stage stage;
 	
 	@FXML
-	private Label LabelError;
+	private Label labelAlert;
 	@FXML
 	private TextField TfName, TfType, TfSymbol;
 	@FXML
@@ -59,33 +59,35 @@ public class AddMutationViewController implements Initializable {
 
 	@FXML
 	public void btnAdd(ActionEvent event) {
-		boolean validated = validator();
-		if (validated) {
+		if (validator()) {
 			Mutation mutation = new Mutation();
 			mutation.setName(TfName.getText());
 			mutation.setType(TfType.getText());
 			mutation.setSymbol(TfSymbol.getText());
 			mutation.setSpecie(CbSpecie.getValue());
 			mutationsRepository.Insert(mutation);
+			labelAlert.setStyle(MyValues.ALERT_SUCESS);
+			labelAlert.setText("Mutacao "+mutation.getName()+" inserida com sucesso!");
+			clearAllFields();
 		}
 	}
 	
-	
-	
-	
 	public boolean validator() {
 		boolean validate = false;
+		clearAllErrors();
+		labelAlert.setStyle(MyValues.ALERT_ERROR);
+		labelAlert.setText("");
 		if (TfName.getText().length()==0) {
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Nome tem de ser preenchido");
+			labelAlert.setText("Nome tem de ser preenchido");
 			validate=false;
 		}else if(!TfName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")){
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Nome nao esta no formato correto");
+			labelAlert.setText("Nome nao esta no formato correto");
 			validate=false;
 		}else {
 			TfName.setStyle(null);
-			LabelError.setText("");
+			labelAlert.setText("");
 			validate=true;
 		}
 		
@@ -93,11 +95,11 @@ public class AddMutationViewController implements Initializable {
 			if (TfType.getText().length()!=0)
 				if(!TfType.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")){
 					TfType.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelError.setText("Tipo nao esta no formato correto");
+					labelAlert.setText("Tipo nao esta no formato correto");
 					validate=false;
 				}else {
 					TfType.setStyle(null);
-					LabelError.setText("");
+					labelAlert.setText("");
 					validate=true;
 				}
 		}
@@ -106,11 +108,11 @@ public class AddMutationViewController implements Initializable {
 			if (TfSymbol.getText().length()!=0)
 				if(!TfSymbol.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]|[0-9]| )+$")){
 					TfSymbol.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelError.setText("Simbolo nao esta no formato correto");
+					labelAlert.setText("Simbolo nao esta no formato correto");
 					validate=false;
 				}else {
 					TfSymbol.setStyle(null);
-					LabelError.setText("");
+					labelAlert.setText("");
 					validate=true;
 				}
 		}
@@ -118,11 +120,11 @@ public class AddMutationViewController implements Initializable {
 		if (validate) {
 			 if(CbSpecie.getValue()==null){
 				 CbSpecie.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelError.setText("Especie tem de ser escolhida");
+				labelAlert.setText("Especie tem de ser escolhida");
 				validate=false;
 			}else {
 				CbSpecie.setStyle(null);
-				LabelError.setText("");
+				labelAlert.setText("");
 				validate=true;
 			}
 		}
@@ -142,7 +144,20 @@ public class AddMutationViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
+	public void clearAllErrors() {
+		TfName.setStyle(null);
+		TfType.setStyle(null);
+		TfSymbol.setStyle(null);
+		CbSpecie.setStyle(null);
+	}
+	
+	public void clearAllFields() {
+		TfName.setText("");
+		TfType.setText("");
+		TfSymbol.setText("");
+		CbSpecie.setValue(null);
+		clearAllErrors();
+	}
 
 
 
