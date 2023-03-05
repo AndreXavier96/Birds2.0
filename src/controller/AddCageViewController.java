@@ -74,7 +74,7 @@ public class AddCageViewController implements Initializable {
 			validate=true;
 		}
 		if (validate) {
-			if(CbType.getValue().isEmpty()) {
+			if(CbType.getValue()==null) {
 				CbType.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Tipo tem de ser escolhido");
 				validate=false;

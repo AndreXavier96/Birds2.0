@@ -15,14 +15,14 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <Label layoutX="28.0" layoutY="65.0" text="Nome" />
-      <Label layoutX="309.0" layoutY="122.0" text="Sigla" />
-      <Label fx:id="LabelAlert" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="48.0" prefHeight="17.0" prefWidth="479.0" textFill="WHITE" />
-      <Label layoutX="29.0" layoutY="122.0" text="Federacao" />
-      <Label layoutX="400.0" layoutY="122.0" text="Localidade" />
-      <Label layoutX="32.0" layoutY="235.0" text="Telefone" />
-      <Label layoutX="313.0" layoutY="173.0" text="Email" />
-      <Label layoutX="28.0" layoutY="173.0" text="Morada" />
+      <Label layoutX="28.0" layoutY="65.0" text="Nome*" />
+      <Label layoutX="309.0" layoutY="122.0" text="Sigla*" />
+      <Label fx:id="LabelAlert" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="48.0" prefHeight="17.0" prefWidth="548.0" textFill="WHITE" />
+      <Label layoutX="29.0" layoutY="122.0" text="Federacao*" />
+      <Label layoutX="400.0" layoutY="122.0" text="Localidade*" />
+      <Label layoutX="32.0" layoutY="235.0" text="Telefone*" />
+      <Label layoutX="313.0" layoutY="173.0" text="Email*" />
+      <Label layoutX="28.0" layoutY="173.0" text="Morada*" />
 	<TextField fx:id="TfName" layoutX="30.0" layoutY="82.0" prefHeight="25.0" prefWidth="548.0">
 		<cursor>
 			<Cursor fx:constant="TEXT" />
@@ -65,5 +65,6 @@
 			<Cursor fx:constant="HAND" />
 		</cursor>
 	</Button>
+      <Label layoutX="189.0" layoutY="369.0" text="Campos obrigatorios assinalados com *" />
    </children>
 </AnchorPane>

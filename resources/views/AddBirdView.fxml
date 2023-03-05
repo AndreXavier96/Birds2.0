@@ -42,7 +42,7 @@
          <children>
             <AnchorPane layoutX="14.0" layoutY="24.0" prefHeight="36.0" prefWidth="174.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="24.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Criador" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Criador*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -52,7 +52,7 @@
             </AnchorPane>
             <AnchorPane layoutX="188.0" layoutY="24.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Clube" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Clube*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -62,7 +62,7 @@
             </AnchorPane>
             <AnchorPane layoutX="362.0" layoutY="24.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Tipo de Entrada" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Tipo de Entrada*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -72,7 +72,7 @@
             </AnchorPane>
             <AnchorPane layoutX="536.0" layoutY="24.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Data de Entrada" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Data de Entrada*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -82,7 +82,7 @@
             </AnchorPane>
             <AnchorPane layoutX="22.0" layoutY="70.0" prefHeight="36.0" prefWidth="174.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="80.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Sexo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Sexo*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -92,7 +92,7 @@
             </AnchorPane>
             <AnchorPane layoutX="188.0" layoutY="80.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Espécie/Raca" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Espécie/Raca*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -102,7 +102,7 @@
             </AnchorPane>
             <AnchorPane layoutX="362.0" layoutY="80.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Mutação" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Mutação*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -112,7 +112,7 @@
             </AnchorPane>
             <AnchorPane layoutX="536.0" layoutY="80.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Gaiola" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Gaiola*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -122,7 +122,7 @@
             </AnchorPane>
             <AnchorPane layoutX="14.0" layoutY="126.0" prefHeight="36.0" prefWidth="174.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="136.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Pai" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Pai*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -132,7 +132,7 @@
             </AnchorPane>
             <AnchorPane layoutX="188.0" layoutY="136.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Mãe" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Mãe*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -142,7 +142,7 @@
             </AnchorPane>
             <AnchorPane layoutX="362.0" layoutY="136.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Ano da anilha" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Ano da anilha*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -152,7 +152,7 @@
             </AnchorPane>
             <AnchorPane layoutX="536.0" layoutY="136.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Número Serie da anilha" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Número Serie da anilha*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -160,7 +160,7 @@
                   <TextField fx:id="TfNumero" layoutX="10.0" layoutY="20.0" prefHeight="25.0" prefWidth="164.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="ApBuyPrice" layoutX="14.0" layoutY="182.0" prefHeight="36.0" prefWidth="174.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="192.0">
+            <AnchorPane fx:id="ApBuyPrice" layoutX="14.0" layoutY="182.0" prefHeight="36.0" prefWidth="174.0" visible="false" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="192.0">
                <children>
                   <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Preço Compra" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
@@ -172,7 +172,7 @@
             </AnchorPane>
             <AnchorPane layoutX="188.0" layoutY="192.0" prefHeight="36.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Estado" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Estado*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -193,7 +193,7 @@
             <AnchorPane layoutX="710.0" prefHeight="355.0" prefWidth="568.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="710.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label fx:id="LbImagePath" opacity="0.0" />
-                  <ImageView fx:id="ImImage" fitHeight="500.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <ImageView fx:id="ImImage" fitHeight="500.0" fitWidth="550.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="0.0" />
                   <Button fx:id="btnUpload" layoutX="299.0" layoutY="477.0" mnemonicParsing="false" onAction="#btnUploadImage" prefHeight="25.0" prefWidth="174.0" text="Upload image" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>
@@ -202,6 +202,7 @@
       <AnchorPane layoutX="14.0" layoutY="653.0" prefHeight="25.0" prefWidth="1280.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Button cancelButton="true" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="626.0" layoutY="4.0" text="Campos Obrigadorios assinalados com *" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             
                         <Button defaultButton="true" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
          </children>
