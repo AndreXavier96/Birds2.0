@@ -3,18 +3,15 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import domains.Bird;
 import domains.State;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -33,17 +30,13 @@ public class ViewAllBirdsController implements Initializable {
 	private TableColumn<Bird, String> colAnilha,colEntryDate,colEntryType,
 		colBuyPrice,colSellPrice,colState,colSex,colFather,colMother,colSpecie,colMutation,
 		colCage,colBreeder;
-	
-	private Parent root;
-	private Stage stage;
-	private Scene scene;
 
 	@FXML
 	public void btnBack(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
+			Parent root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
@@ -79,6 +72,24 @@ public class ViewAllBirdsController implements Initializable {
 		colCage.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getCage().getCode()));
 		colBreeder.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getBreeder().getName()));
 		tableID.setItems(birds);
-		
+		tableID.setOnMouseClicked(event -> {
+			if(event.getClickCount()==2) {
+				Bird selectedBird = tableID.getSelectionModel().getSelectedItem();
+				if (selectedBird!=null) {
+					try {
+						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/ViewSingleBird.fxml"));
+						Parent root = loader.load();
+						ViewSingleBirdController viewSingleBirdController = loader.getController();
+						viewSingleBirdController.search(selectedBird.getBand());
+						Scene currentScene = tableID.getScene();
+						Stage currentStage =(Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 }

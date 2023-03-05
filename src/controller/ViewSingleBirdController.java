@@ -138,6 +138,13 @@ public class ViewSingleBirdController implements Initializable{
 		}
 	}
 	
+	public void search(String band) {
+		clearAllFields();
+		TfBandSearch.setText(band);
+		Bird b = birdsRepository.getBirdWhereString("Band",band);
+		updateAllInfo(b);
+	}
+	
 	public void setSuccess(String msg, Bird bird) {
 		LabelError.setStyle(MyValues.ALERT_SUCESS);
 		LabelError.setText(msg);
