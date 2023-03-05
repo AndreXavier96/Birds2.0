@@ -25,6 +25,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import repository.BirdsRepository;
+import repository.CageRepository;
 import repository.HistoricRepository;
 import repository.StateRepository;
 import javafx.scene.image.Image;
@@ -105,11 +106,11 @@ public class ChangeBirdStateController implements Initializable{
 			state.setId(bird.getState().getId());
 			stateRepositor.updateState(state);
 			String obs = "Estado do passaro alterado de '"+LbState.getText()+"' para '"+state.getType()+"'";	
-			if (state.getType().equals(MyValues.MORTO))
+			if (state.getType().equals(MyValues.MORTO)) {
 				obs.concat(", motivo '"+state.getMotivo()+"'.");
-			else if (state.getType().equals(MyValues.VENDIDO)) {
+				birdsRepository.partialUpdateIntBird(bird.getId(), "CageId", null);
+			}else if (state.getType().equals(MyValues.VENDIDO)) {
 				obs.concat(", preco '"+state.getValor()+"'.");
-//				bird = birdsRepository.fullUpdateBird(bird);
 			}else
 				obs.concat(".");
 			historicRepository.insertHistoric(new Historic(null,MyValues.CHANGE_STATE,date,obs, bird));
@@ -120,7 +121,6 @@ public class ChangeBirdStateController implements Initializable{
 			viewSingleBirdController.setSuccess(MyValues.CHANGE_STATE_SUCCESS, birdsRepository.getBirdWhereString("Band",LbBand.getText()));			
 		}
 	}
-	
 	
 	@FXML
 	public void BtnCancel(ActionEvent event) {

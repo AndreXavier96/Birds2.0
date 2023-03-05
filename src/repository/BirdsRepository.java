@@ -37,7 +37,7 @@ public class BirdsRepository {
 					+"Mother INTEGER, "
 					+"SpeciesId INTEGER NOT NULL, "
 					+"MutationsId INTEGER, "
-					+"CageId INTEGER NOT NULL,"
+					+"CageId INTEGER,"
 					+"BreederId INTEGER,"
 					+"PostureId INTEGER,"
 					+"ImagePath VARCHAR(500),"
@@ -288,7 +288,10 @@ public class BirdsRepository {
 	    try {
 	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
 	        PreparedStatement stmt = con.prepareStatement("UPDATE BIRDS SET "+col+" = ? WHERE id=?");
-	        stmt.setInt(1, value);
+	        if (value==null)
+	        	stmt.setString(1, null);
+	        else
+	        	stmt.setInt(1, value);
 	        stmt.setInt(2, id);
 	        stmt.executeUpdate();
 	        System.out.println("Bird with id " + id + " updated, coluna "+col+" para valor: "+value+" .");
