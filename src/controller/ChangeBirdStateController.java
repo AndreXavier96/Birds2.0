@@ -25,7 +25,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import repository.BirdsRepository;
-import repository.CageRepository;
 import repository.HistoricRepository;
 import repository.StateRepository;
 import javafx.scene.image.Image;
