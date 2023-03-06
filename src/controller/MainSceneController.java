@@ -52,9 +52,35 @@ public class MainSceneController {
 	}
 	
 	@FXML
+	public void btnViewAllFederations(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/ViewAllFederations.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void btnAddClub(ActionEvent event) {
 		try {
 			root = FXMLLoader.load(Paths.get("resources/views/AddClubView.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void btnViewAllClubs(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/ViewAllClubs.fxml").toUri().toURL());
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);

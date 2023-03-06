@@ -16,7 +16,7 @@
       </Label>
       <Label layoutX="30.0" layoutY="64.0" text="Nome*" />
       <Label layoutX="32.0" layoutY="122.0" text="Sigla*" />
-      <Label layoutX="286.0" layoutY="122.0" text="Email*" />
+      <Label layoutX="286.0" layoutY="122.0" text="Email" />
       <Label fx:id="labelAlert" layoutX="30.0" layoutY="338.0" prefHeight="17.0" prefWidth="479.0" textFill="RED" />
       <Label layoutX="91.0" layoutY="122.0" text="Pais (como esta na anilha)*" />
       <TextField fx:id="TfName" layoutX="30.0" layoutY="86.0" prefHeight="25.0" prefWidth="550.0">
