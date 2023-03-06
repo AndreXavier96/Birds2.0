@@ -57,13 +57,13 @@ public class ChangeBirdStateController implements Initializable{
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	private HistoricRepository historicRepository = new HistoricRepository();
 	
-	public void startValues(String band,String actualState,String img,String state) {
+	public void startValues(String band,String actualState,String img) {
 		LbBand.setText(band);
 		LbState.setText(actualState);
 		IvImage.setImage(new Image(img));
 		ObservableList<String> states = FXCollections.observableArrayList(MyValues.STATELIST);
 		for(int i=0;i<MyValues.STATELIST.size();i++) {
-			if (MyValues.STATELIST.get(i).equals(state)) {
+			if (MyValues.STATELIST.get(i).equals(actualState)) {
 				states.remove(i);
 			}
 		}
