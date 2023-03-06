@@ -3,14 +3,12 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import constants.MyValues;
 import domains.Bird;
 import domains.Historic;
@@ -20,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -49,13 +46,13 @@ public class ViewSingleBirdController implements Initializable{
 	private Menu menuFile;
 	
 	@FXML
-	private Label LabelError;
+	private Label LabelAlert;
 	@FXML
 	private Label LbTitle,LbBand,LbYear,LbEntryDate,LbEntryType;
 	@FXML
 	private Label LbSex,LbBuyPrice,LbSpecie,LbMutation,LbClassification;
 	@FXML
-	private Label LbSellPrice,LbState,LbLastModify,LbCage, LbBreeder;
+	private Label LbSellPrice,LbState,LbCage, LbBreeder;
 	@FXML
 	private TextArea LbObs;
 	@FXML
@@ -80,7 +77,7 @@ public class ViewSingleBirdController implements Initializable{
 	private AnchorPane ApBuyPrice, ApSellPrice;
 	
 	@FXML
-	private Button btnEdit,btnEditCage;
+	private ImageView btnEditCage,btnEditState,btnEditSex;
 	
 	@FXML
 	private TableView<Bird> TbDescendants;
@@ -98,11 +95,11 @@ public class ViewSingleBirdController implements Initializable{
 	HistoricRepository historicRepository = new HistoricRepository();
 	
 	@FXML
-	private void btnChangeBirdState(ActionEvent event) throws IOException {
+	private void btnChangeBirdState() throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeBirdState.fxml"));
 		Parent root = loader.load();
 	    ChangeBirdStateController birdStateController = loader.getController();
-	    birdStateController.startValues(LbBand.getText(),LbState.getText(),ImBird.getImage().getUrl(),LbState.getText());
+	    birdStateController.startValues(LbBand.getText(),LbState.getText(),ImBird.getImage().getUrl());
 	    birdStateController.setViewSingleBirdController(this);
 	    Scene scene = new Scene(root);
 	    Stage stage = new Stage();
@@ -114,7 +111,7 @@ public class ViewSingleBirdController implements Initializable{
 	}
 	
 	@FXML
-	private void btnChangeBirdCage(ActionEvent event) throws IOException {
+	private void btnChangeBirdCage() throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeBirdCage.fxml"));
 		Parent root = loader.load();
 		ChangeBirdCageController birdCageController = loader.getController();
@@ -130,9 +127,26 @@ public class ViewSingleBirdController implements Initializable{
 	}
 	
 	@FXML
+	private void btnChangeBirdSex() throws IOException{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeBirdSex.fxml"));
+		Parent root = loader.load();
+		ChangeBirdSexController birdSexController = loader.getController();
+		birdSexController.startValues(LbBand.getText(), ImBird.getImage().getUrl(), LbSex.getText());
+		birdSexController.setViewSingleBirdController(this);
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setTitle(MyValues.TITLE_CHANGE_CAGE);
+		stage.getIcons().add(new Image(MyValues.ICON_PATH));
+		stage.setScene(scene);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.showAndWait();
+	}
+	
+	@FXML
 	public void btnSearchForBand(ActionEvent event) {
 		clearAllFields();
 		if (validator()) {
+			LabelAlert.setStyle(null);
 			Bird b = birdsRepository.getBirdWhereString("Band",TfBandSearch.getText());
 			updateAllInfo(b);
 		}
@@ -146,8 +160,8 @@ public class ViewSingleBirdController implements Initializable{
 	}
 	
 	public void setSuccess(String msg, Bird bird) {
-		LabelError.setStyle(MyValues.ALERT_SUCESS);
-		LabelError.setText(msg);
+		LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+		LabelAlert.setText(msg);
 		updateAllInfo(bird);
 	}
 	
@@ -252,7 +266,6 @@ public class ViewSingleBirdController implements Initializable{
 				ApSellPrice.setVisible(true);
 			}else
 				ApSellPrice.setVisible(false);
-			LbLastModify.setText("TODO");
 			LbObs.setText(b.getObs());
 			LbBreeder.setText(b.getBreeder().getName());
 			if (!b.getImage().isEmpty()) {
@@ -284,25 +297,26 @@ public class ViewSingleBirdController implements Initializable{
 	}
 	
 	public boolean validator() {
+		LabelAlert.setStyle(MyValues.ALERT_ERROR);
 		boolean validate = false;
 		if (TfBandSearch.getText().length()==0) {
 			TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Anilha tem de ser preenchido");
+			LabelAlert.setText("Anilha tem de ser preenchido");
 			validate=false;
 		}else if (birdsRepository.getBirdWhereString("Band",TfBandSearch.getText())==null) {
 			TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelError.setText("Anilha nao existe");
+			LabelAlert.setText("Anilha nao existe");
 			validate=false;
 		}else {
 			TfBandSearch.setStyle(null);
-			LabelError.setText("");
+			LabelAlert.setText("");
 			validate=true;
 		}
 		return validate;
 	}
 	
 	public void clearAllFields() {
-		LabelError.setText(null);
+		LabelAlert.setText(null);
 		LbTitle.setText("Bird STAM yyyy 0000");
 		LbBand.setText(null);
 		LbYear.setText(null);
@@ -317,7 +331,6 @@ public class ViewSingleBirdController implements Initializable{
 		LbMutation.setText(null);
 		LbClassification.setText(null);
 		LbState.setText(null);
-		LbLastModify.setText(null);
 		LbObs.setText(null);
 		LbCage.setText(null);
 		LbBreeder.setText(null);
@@ -336,7 +349,9 @@ public class ViewSingleBirdController implements Initializable{
 		ImGrandFatherMother.setImage(MyValues.DEFAULT_IMAGE);
 		ImGrandMotherMother.setImage(MyValues.DEFAULT_IMAGE);
 
-		btnEdit.setVisible(false);
+		btnEditState.setVisible(false);
+		btnEditCage.setVisible(false);
+		btnEditSex.setVisible(false);
 
 	}
 
@@ -358,9 +373,9 @@ public class ViewSingleBirdController implements Initializable{
 		LbState.textProperty().addListener((Observable, oldValue, newValue) -> {
 			if (newValue != null)
 				if (!newValue.isEmpty())
-					btnEdit.setVisible(true);
+					btnEditState.setVisible(true);
 				else
-					btnEdit.setVisible(false);
+					btnEditState.setVisible(false);
 		});
 		LbCage.textProperty().addListener((Observable, oldValue, newValue) -> {
 			if (newValue != null)
@@ -368,6 +383,13 @@ public class ViewSingleBirdController implements Initializable{
 					btnEditCage.setVisible(true);
 				else
 					btnEditCage.setVisible(false);
+		});
+		LbSex.textProperty().addListener((Observable, oldValue, newValue) -> {
+			if (newValue != null)
+				if (!newValue.isEmpty())
+					btnEditSex.setVisible(true);
+				else
+					btnEditSex.setVisible(false);
 		});
 	}
 }

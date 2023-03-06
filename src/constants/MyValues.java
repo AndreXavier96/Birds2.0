@@ -14,13 +14,12 @@ public class MyValues {
 
 	public static final String COMPRA = "Compra";
 	public static final String NASCIMENTO = "Nascimento";
-	public static final ObservableList<String> ENTRYTYPELIST = FXCollections.observableArrayList(MyValues.COMPRA,
-			MyValues.NASCIMENTO);
+	public static final ObservableList<String> ENTRYTYPELIST = FXCollections.observableArrayList(COMPRA,NASCIMENTO);
 
 	public static final String FEMEA = "Femea";
 	public static final String MACHO = "Macho";
-	public static final ObservableList<String> SEXLIST = FXCollections.observableArrayList(MyValues.FEMEA,
-			MyValues.MACHO);
+	public static final String DESCONHECIDO = "Desconhecido";
+	public static final ObservableList<String> SEXLIST = FXCollections.observableArrayList(FEMEA,MACHO,DESCONHECIDO);
 
 	public static final String MORTO = "Morto";
 	public static final String VENDIDO = "Vendido";
@@ -44,9 +43,7 @@ public class MyValues {
 	public static final String VOADEIRA = "Voadeira";
 	public static final String EXPOSICAO = "Exposicao";
 	public static final String CRIADEIRA = "Criadeira";
-	public static final ObservableList<String> CAGE_TIPE = FXCollections.observableArrayList(VOADEIRA,EXPOSICAO,CRIADEIRA);
-	
-	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
+	public static final ObservableList<String> CAGE_TIPE = FXCollections.observableArrayList(VOADEIRA,EXPOSICAO,CRIADEIRA);	
 
 	public static final String ICON_PATH = "file:resources/images/img/icon.png";
 	public static final String TITLE_BIRD_APP = "Bird Application";
@@ -57,7 +54,11 @@ public class MyValues {
 	public static final String BIRD_INSERTED = "PASSARO INSERIDO";
 	public static final String CHANGE_STATE = "ESTADO ALTERADO";
 	public static final String CHANGE_CAGE = "GAIOLA ALTERADA";
-
+	public static final String CHANGE_SEX = "SEXAGEM ALTERADA";
+	
+	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
+	public static final String CHANGE_SEX_SUCCESS = "Genero alterado com sucesso!";
+	
 	public static final String DATE_FORMATE = "dd-MM-yyyy HH:mm";
 	
 	public static final Image DEFAULT_IMAGE = new Image("file:resources/images/img/default.png");
