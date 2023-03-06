@@ -118,18 +118,20 @@ public class AddFederationViewController {
 		}
 		
 		if (validated) {
-			if (TfEmail.getText().length() == 0) {
-				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
-				labelAlert.setText("Email tem de ser preenchido.");
-				validated = false;
-			} else if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
-				labelAlert.setText("Email nao esta no formato correto.");
-				validated = false;
-			}else if (federationRepository.checkIfExistsString("Email", TfEmail.getText())) {
-				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
-				labelAlert.setText("Email ja existe.");
-				validated = false;
+			if (TfEmail.getText().length() > 0) {
+				if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+					labelAlert.setText("Email nao esta no formato correto.");
+					validated = false;
+				} else if (federationRepository.checkIfExistsString("Email", TfEmail.getText())) {
+					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+					labelAlert.setText("Email ja existe.");
+					validated = false;
+				} else {
+					TfEmail.setStyle(null);
+					labelAlert.setText("");
+					validated = true;
+				}
 			}else {
 				TfEmail.setStyle(null);
 				labelAlert.setText("");
@@ -140,7 +142,6 @@ public class AddFederationViewController {
 	}
 	
 	public void clearAllErrors() {
-		labelAlert.setText("");
 		TfName.setStyle(null);
 		TfAcronym.setStyle(null);
 		TfCountry.setStyle(null);
