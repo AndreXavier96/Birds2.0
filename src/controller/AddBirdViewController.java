@@ -331,7 +331,6 @@ public class AddBirdViewController implements Initializable {
 			try {
 				DfDataEntrada.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				DfDataEntrada.setStyle(null);
-				LabelAlert.setStyle("");
 				validate=true;
 			} catch (Exception e) {
 				DfDataEntrada.setStyle(MyValues.ERROR_BOX_STYLE);
