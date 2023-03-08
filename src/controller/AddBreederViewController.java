@@ -14,6 +14,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
@@ -100,6 +101,7 @@ public class AddBreederViewController implements Initializable {
 	@FXML
 	public void btnAdd(ActionEvent event) throws NumberFormatException, SQLException {
 		if (validator()) {
+			LabelAlert.setStyle(null);
 			Breeder b = new Breeder();
 			if (TfCC.getText().isBlank())
 				b.setCC(null);
@@ -151,6 +153,7 @@ public class AddBreederViewController implements Initializable {
 		String promptResult = null;
 		do {
 			try {
+				LabelAlert.setStyle(null);
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/stamPromptDialog.fxml"));
 				Parent root = loader.load();
 				StamPromptDialogController stamPromptDialogController = loader.getController();
@@ -448,9 +451,10 @@ public class AddBreederViewController implements Initializable {
 		TfLocale.setText(null);
 		TfDistrict.setText(null);
 		CbType.setValue(null);
-		for (Club club : assignedClubs) {
-			assignedClubs.remove(club);
-			availableClubs.add(club);
+		Integer assignedClubsSize = assignedClubs.size();
+		for (int i =0;i<assignedClubsSize;i++) {
+			availableClubs.add(assignedClubs.get(0));
+			assignedClubs.remove(0);
 		}
 		TfAddress.setText(null);
 		clearAllErrors();
