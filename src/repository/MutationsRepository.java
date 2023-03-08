@@ -56,7 +56,7 @@ public class MutationsRepository {
 			Statement stmt = con.createStatement();
 			
 			String sql = "INSERT INTO "
-					+"MUTATIONS(Name,Type,Symbol,Observations,SpeciesId) "
+					+"MUTATIONS(Name,Type,Symbol,SpeciesId) "
 					+"values('"+mutation.getName()+"','"+mutation.getType()+"','"
 					+mutation.getSymbol()+"','"+mutation.getSpecie().getId()+"')";
 			int i = stmt.executeUpdate(sql);
