@@ -69,7 +69,7 @@ public class CageRepository {
 		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
 		String sql = "INSERT INTO CAGE(Code,Type) VALUES('"
-				+cage.getCode()+"','"+cage.getType()+"')";
+				+cage.getCode().replace("'","''")+"','"+cage.getType()+"')";
 		int i = stmt.executeUpdate(sql);
 		System.out.println(i+" Record inserted");
 		}catch (Exception e) {
@@ -80,7 +80,7 @@ public class CageRepository {
 	public boolean checkIfCodeExist(String code)  throws SQLException {
 		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
-		String sql = "SELECT Code FROM CAGE WHERE Code='"+code+"';";
+		String sql = "SELECT Code FROM CAGE WHERE Code='"+code.replace("'", "''")+"';";
 		ResultSet rs = stmt.executeQuery(sql);
 		return rs.next();
 	}
@@ -105,6 +105,5 @@ public class CageRepository {
 			return null;
 		}
 	}
-	
 	
 }
