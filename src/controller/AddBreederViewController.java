@@ -14,7 +14,6 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
@@ -102,6 +101,7 @@ public class AddBreederViewController implements Initializable {
 	public void btnAdd(ActionEvent event) throws NumberFormatException, SQLException {
 		if (validator()) {
 			LabelAlert.setStyle(null);
+			stamMap.clear();;
 			Breeder b = new Breeder();
 			if (TfCC.getText().isBlank())
 				b.setCC(null);
@@ -157,7 +157,7 @@ public class AddBreederViewController implements Initializable {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/stamPromptDialog.fxml"));
 				Parent root = loader.load();
 				StamPromptDialogController stamPromptDialogController = loader.getController();
-				stamPromptDialogController.startValues(federationName);
+				stamPromptDialogController.startValues(federationName,stamMap);
 				Scene scene = new Scene(root);
 				Stage stage = new Stage();
 				stage.setTitle(MyValues.TITLE_BIRD_APP);

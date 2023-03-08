@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.HashMap;
+
 import constants.MyValues;
 import constants.Regex;
 import javafx.event.ActionEvent;
@@ -7,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import repository.BreederFederationRepository;
 
 public class StamPromptDialogController {
 
@@ -16,10 +19,13 @@ public class StamPromptDialogController {
 	private TextField stamTextField;
 	
 	private String promptResult;
+	private HashMap<Integer, String> stamMap;
 	
+	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
 	
-	public void startValues(String federationName) {
+	public void startValues(String federationName,HashMap<Integer, String> map) {
 		federationLabel.setText(federationName);
+		stamMap=map;
 	}
 	
 	@FXML
@@ -44,6 +50,10 @@ public class StamPromptDialogController {
 		} else if (!stamTextField.getText().matches(Regex.STAM)) {
 			stamTextField.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelError.setText("Stam nao esta no formato correto!");
+			validate = false;
+		}else if (breederFederationRepository.checkIfStamExists(stamTextField.getText()) || stamMap.containsValue(stamTextField.getText())) {
+			stamTextField.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelError.setText("Stam ja existe!");
 			validate = false;
 		} else {
 			stamTextField.setStyle(null);
