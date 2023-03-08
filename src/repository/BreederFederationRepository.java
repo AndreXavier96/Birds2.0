@@ -19,7 +19,7 @@ public class BreederFederationRepository {
 			Statement stmt = con.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS BREEDER_FEDERATION"
 					+" (id INTEGER auto_increment, "
-					+"Stam VARCHAR(255) NOT NULL, "
+					+"Stam VARCHAR(255) NOT NULL UNIQUE, "
 					+"BreederId INTEGER NOT NULL, "
 					+"FederationId INTEGER NOT NULL, "
 					+"PRIMARY KEY (id), "
@@ -96,5 +96,19 @@ public class BreederFederationRepository {
 	    return stam;
 	}
 
+	public boolean checkIfStamExists(String stam) {
+	    boolean exists = false;
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+	        PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(*) FROM BREEDER_FEDERATION WHERE Stam = ?");
+	        pstmt.setString(1, stam);
+	        ResultSet rs = pstmt.executeQuery();
+	        rs.next();
+	        exists = rs.getInt(1) > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return exists;
+	}
 
 }
