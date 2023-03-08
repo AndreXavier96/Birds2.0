@@ -11,7 +11,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="946.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddBreederViewController">
    <children>
-      <Label layoutX="384.0" layoutY="23.0" text="Adicionar Criador">
+      <Label layoutX="384.0" layoutY="6.0" text="Adicionar Criador">
          <font>
             <Font size="23.0" />
          </font>
@@ -97,7 +97,6 @@
 			<Cursor fx:constant="HAND" />
 		</cursor>
 	</Button>
-      <Label fx:id="labelAlert" alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" layoutY="48.0" prefHeight="17.0" prefWidth="879.0" textAlignment="CENTER" textFill="WHITE" />
       <Label layoutX="367.0" layoutY="366.0" text="Campos Obrigatorios assinalados com*" />
      
    </children>
