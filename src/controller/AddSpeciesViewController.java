@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import constants.MyValues;
+import constants.Regex;
 import domains.Specie;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -69,7 +70,7 @@ public class AddSpeciesViewController {
 			TfCommonName.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome comum tem de ser preenchido");
 			validate=false;
-		}else if(!TfCommonName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")){
+		}else if(!TfCommonName.getText().matches(Regex.NAME)){
 			TfCommonName.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome comum nao esta no formato correto");
 			validate=false;
@@ -84,7 +85,7 @@ public class AddSpeciesViewController {
 				TfScientificName.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Nome cientifico tem de ser preenchido");
 				validate=false;
-			}else if(!TfScientificName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")){
+			}else if(!TfScientificName.getText().matches(Regex.NAME)){
 					TfScientificName.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Nome cientifico nao esta no formato correto");
 					validate=false;
@@ -100,7 +101,7 @@ public class AddSpeciesViewController {
 		}
 		
 		if (validate) {
-			if (!TfIncubationTime.getText().matches("^\\d+$")) {
+			if (!TfIncubationTime.getText().matches(Regex.INT)) {
 				TfIncubationTime.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Dias de incubacao nao esta no formato correto");
 				validate=false;
@@ -112,7 +113,7 @@ public class AddSpeciesViewController {
 		}
 		
 		if (validate) {
-			if (!TfTimeToBand.getText().matches("^\\d+$")) {
+			if (!TfTimeToBand.getText().matches(Regex.INT)) {
 				TfTimeToBand.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Dias para anilhar nao esta no formato correto");
 				validate=false;
@@ -124,7 +125,7 @@ public class AddSpeciesViewController {
 		}
 		
 		if (validate) {
-			if (!TfTimeOutOfCage.getText().matches("^\\d+$")) {
+			if (!TfTimeOutOfCage.getText().matches(Regex.INT)) {
 				TfTimeOutOfCage.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Dias para sair da gaiola nao esta no formato correto");
 				validate=false;
@@ -135,7 +136,7 @@ public class AddSpeciesViewController {
 			}
 		}
 		if (validate) {
-			if (!TfMaturityAfterDays.getText().matches("^\\d+$")) {
+			if (!TfMaturityAfterDays.getText().matches(Regex.INT)) {
 				TfMaturityAfterDays.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Dias para maturidade nao esta no formato correto");
 				validate=false;

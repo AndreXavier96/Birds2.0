@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
+import constants.Regex;
 import domains.Club;
 import domains.Federation;
 import javafx.event.ActionEvent;
@@ -95,7 +96,7 @@ public class AddClubViewController implements Initializable {
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome tem de ser preenchido.");
 			validated = false;
-		} else if (!TfName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+		} else if (!TfName.getText().matches(Regex.NAME)) {
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome nao esta no formato correto.");
 			validated = false;
@@ -126,7 +127,7 @@ public class AddClubViewController implements Initializable {
 				TfAcronym.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Sigla tem de ser preenchido");
 				validated = false;
-			} else if (!TfAcronym.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+			} else if (!TfAcronym.getText().matches(Regex.ACRONYM)) {
 				TfAcronym.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Sigla nao esta no formato correto.");
 				validated = false;
@@ -146,7 +147,7 @@ public class AddClubViewController implements Initializable {
 				TfLocale.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Localidade tem de ser preenchida");
 				validated = false;
-			} else if (!TfLocale.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+			} else if (!TfLocale.getText().matches(Regex.NAME)) {
 				TfLocale.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Localidade nao esta no formato correto.");
 				validated = false;
@@ -162,7 +163,7 @@ public class AddClubViewController implements Initializable {
 				TfAddress.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Morada tem de ser preenchida");
 				validated = false;
-			}else if (!TfAddress.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]|[0-9]| )+$")) {
+			}else if (!TfAddress.getText().matches(Regex.ALL_TEXT)) {
 				TfAddress.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Morada nao esta no formato correto.");
 				validated = false;
@@ -178,7 +179,7 @@ public class AddClubViewController implements Initializable {
 				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Email tem de ser preenchido.");
 				validated = false;
-			} else if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+			} else if (!TfEmail.getText().matches(Regex.EMAIL)) {
 				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Email nao esta no formato correto.");
 				validated = false;
@@ -198,7 +199,7 @@ public class AddClubViewController implements Initializable {
 				TfContact.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Telefone tem de ser preenchido.");
 				validated = false;
-			}else if (!TfContact.getText().matches("^[\\d]{9}$")) {
+			}else if (!TfContact.getText().matches(Regex.PHONE)) {
 				TfContact.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Telefone nao esta no formato correto.");
 				validated = false;

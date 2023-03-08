@@ -2,12 +2,12 @@ package constants;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 
 public class MyValues {
 	public static final String USER = "admin";
 	public static final String PASSWORD = "admin";
 	public static final String DBNAME = "BirdDataBase";
+	
 	public static final String ERROR_BOX_STYLE = "-fx-border-color: red; -fx-border-width:2px;";
 	public static final String ALERT_ERROR = "-fx-background-color: red; -fx-border-width: 0; -fx-background-radius: 5;";
 	public static final String ALERT_SUCESS = "-fx-background-color: green; -fx-border-width: 0; -fx-background-radius: 5;";
@@ -45,7 +45,6 @@ public class MyValues {
 	public static final String CRIADEIRA = "Criadeira";
 	public static final ObservableList<String> CAGE_TIPE = FXCollections.observableArrayList(VOADEIRA,EXPOSICAO,CRIADEIRA);	
 
-	public static final String ICON_PATH = "file:resources/images/img/icon.png";
 	public static final String TITLE_BIRD_APP = "Bird Application";
 	public static final String TITLE_SELECT_IMAGE = "Selecionar Imagem Passaro";
 	public static final String TITLE_CHANGE_STATE = "Alterar Estado";
@@ -61,5 +60,6 @@ public class MyValues {
 	
 	public static final String DATE_FORMATE = "dd-MM-yyyy";
 	
-	public static final Image DEFAULT_IMAGE = new Image("file:resources/images/img/default.png");
+	public static final String aSUPERSCRIPT = "\u00AA";
+	public static final String oSUPERSCRIPT = "\u00BA";
 }

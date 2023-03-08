@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
+import constants.PathsConstants;
+import constants.Regex;
 import domains.Breeder;
 import domains.Club;
 import domains.Federation;
@@ -158,7 +160,7 @@ public class AddBreederViewController implements Initializable {
 				Scene scene = new Scene(root);
 				Stage stage = new Stage();
 				stage.setTitle(MyValues.TITLE_BIRD_APP);
-				stage.getIcons().add(new Image(MyValues.ICON_PATH));
+				stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
 				stage.setScene(scene);
 				stage.initModality(Modality.APPLICATION_MODAL);
 				stage.showAndWait();
@@ -206,7 +208,7 @@ public class AddBreederViewController implements Initializable {
 					TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Cartao Cidadao tem de ser preenchido.");
 					validated = false;
-				} else if (!TfCC.getText().matches("^[\\d]{8}$")) {
+				} else if (!TfCC.getText().matches(Regex.CC)) {
 					TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Cartao Cidadao nao esta no formato correto.");
 					validated = false;
@@ -221,7 +223,7 @@ public class AddBreederViewController implements Initializable {
 					validated = true;
 				}
 			else if(TfCC.getText().length()>0) {
-				if (!TfCC.getText().matches("^[\\d]{8}$")) {
+				if (!TfCC.getText().matches(Regex.CC)) {
 					TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Cartao Cidadao nao esta no formato correto.");
 					validated = false;
@@ -244,7 +246,7 @@ public class AddBreederViewController implements Initializable {
 				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Nome tem de ser preenchido.");
 				validated = false;
-			} else if (!TfName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+			} else if (!TfName.getText().matches(Regex.NAME)) {
 				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Nome nao esta no formato correto.");
 				validated = false;
@@ -260,7 +262,7 @@ public class AddBreederViewController implements Initializable {
 				TfPhone.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Telefone tem de ser preenchido");
 				validated = false;
-			} else if (!TfPhone.getText().matches("^[\\d]{9}$")) {
+			} else if (!TfPhone.getText().matches(Regex.PHONE)) {
 				TfPhone.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Telefone nao esta no formato correto.");
 				validated = false;
@@ -281,7 +283,7 @@ public class AddBreederViewController implements Initializable {
 					TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("NIF tem de ser preenchido.");
 					validated = false;
-				} else if (!TfNif.getText().matches("^[\\d]{9}$")) {
+				} else if (!TfNif.getText().matches(Regex.PHONE)) {
 					TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Nif nao esta no formato correto.");
 					validated = false;
@@ -295,7 +297,7 @@ public class AddBreederViewController implements Initializable {
 					validated = true;
 				}
 			} else if (TfNif.getText().length() > 0) {
-				if (!TfNif.getText().matches("^[\\d]{9}$")) {
+				if (!TfNif.getText().matches(Regex.PHONE)) {
 					TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Nif nao esta no formato correto.");
 					validated = false;
@@ -318,7 +320,7 @@ public class AddBreederViewController implements Initializable {
 					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Email tem de ser preenchido.");
 					validated = false;
-				} else if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+				} else if (!TfEmail.getText().matches(Regex.EMAIL)) {
 					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Email nao esta no formato correto.");
 					validated = false;
@@ -332,7 +334,7 @@ public class AddBreederViewController implements Initializable {
 					validated = true;
 				}
 			} else if(TfEmail.getText().length()>0){
-				if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+				if (!TfEmail.getText().matches(Regex.EMAIL)) {
 					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Email nao esta no formato correto.");
 					validated = false;
@@ -351,7 +353,7 @@ public class AddBreederViewController implements Initializable {
 		// VALIDATE Localidade
 		if (validated) {
 			if (TfLocale.getText().length() > 0) {
-				if (!TfLocale.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+				if (!TfLocale.getText().matches(Regex.NAME)) {
 					TfLocale.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Distrito nao esta no formato correto.");
 					validated = false;
@@ -366,7 +368,7 @@ public class AddBreederViewController implements Initializable {
 		// VALIDATE Distrito
 		if (validated) {
 			if (TfDistrict.getText().length() > 0) {
-				if (!TfDistrict.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+				if (!TfDistrict.getText().matches(Regex.NAME)) {
 					TfDistrict.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Distrito nao esta no formato correto.");
 					validated = false;
@@ -381,7 +383,7 @@ public class AddBreederViewController implements Initializable {
 		// VALIDATE PostalCode
 		if (validated) {
 			if (TfPostalCode.getText().length() > 0) {
-				if (!TfPostalCode.getText().matches("^\\d{4}(-\\d{3})?$")) {
+				if (!TfPostalCode.getText().matches(Regex.POSTALCODE)) {
 					TfPostalCode.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Codigo Postal nao esta no formato correto.");
 					validated = false;
@@ -396,7 +398,7 @@ public class AddBreederViewController implements Initializable {
 		// VALIDATE Morada
 		if (validated) {
 			if (TfAddress.getText().length() > 0) {
-				if (!TfAddress.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+				if (!TfAddress.getText().matches(Regex.ALL_TEXT)) {
 					TfAddress.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Distrito nao esta no formato correto.");
 					validated = false;
