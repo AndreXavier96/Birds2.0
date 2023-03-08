@@ -353,16 +353,17 @@ public class AddBreederViewController implements Initializable {
 
 		// VALIDATE Localidade
 		if (validated) {
-			if (TfLocale.getText().length() > 0) {
-				if (!TfLocale.getText().matches(Regex.NAME)) {
-					TfLocale.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelAlert.setText("Distrito nao esta no formato correto.");
-					validated = false;
-				} else {
-					TfLocale.setStyle(null);
-					LabelAlert.setText("");
-					validated = true;
-				}
+			if (TfLocale.getText()!=null) {
+				if (TfLocale.getText().length()>0)
+					if (!TfLocale.getText().matches(Regex.NAME)) {
+						TfLocale.setStyle(MyValues.ERROR_BOX_STYLE);
+						LabelAlert.setText("Distrito nao esta no formato correto.");
+						validated = false;
+					} else {
+						TfLocale.setStyle(null);
+						LabelAlert.setText("");
+						validated = true;
+					}
 			}
 		}
 
@@ -422,7 +423,7 @@ public class AddBreederViewController implements Initializable {
 				validated=true;
 			}
 		}
-		
+
 		return validated;
 	}
 		
@@ -435,6 +436,7 @@ public class AddBreederViewController implements Initializable {
 		TfPostalCode.setStyle(null);
 		TfLocale.setStyle(null);
 		TfDistrict.setStyle(null);
+		TfAddress.setStyle(null);
 		CbType.setStyle(null);
 		clubListViewAssigned.setStyle(null);
 		btnAssign.setStyle(null);
@@ -442,21 +444,21 @@ public class AddBreederViewController implements Initializable {
 	}
 	
 	public void clearAllFields() {
-		TfCC.setText(null);
-		TfName.setText(null);
-		TfNif.setText(null);
-		TfPhone.setText(null);
-		TfEmail.setText(null);
-		TfPostalCode.setText(null);
-		TfLocale.setText(null);
-		TfDistrict.setText(null);
+		TfCC.setText("");
+		TfName.setText("");
+		TfNif.setText("");
+		TfPhone.setText("");
+		TfEmail.setText("");
+		TfPostalCode.setText("");
+		TfLocale.setText("");
+		TfDistrict.setText("");
+		TfAddress.setText("");
 		CbType.setValue(null);
 		Integer assignedClubsSize = assignedClubs.size();
 		for (int i =0;i<assignedClubsSize;i++) {
 			availableClubs.add(assignedClubs.get(0));
 			assignedClubs.remove(0);
 		}
-		TfAddress.setText(null);
 		clearAllErrors();
 	}
 
