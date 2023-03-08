@@ -39,7 +39,7 @@ public class AddBreederViewController implements Initializable {
 	private Stage stage;
 	
 	@FXML
-	private Label LabelAlert, labelAlert;
+	private Label LabelAlert;
 	@FXML
 	private TextField TfCC, TfName, TfPhone, TfNif, TfEmail;
 	@FXML
@@ -140,8 +140,8 @@ public class AddBreederViewController implements Initializable {
 			}
 			b.setStam(stamMap);;
 			breederRepository.Insert(b);
-			labelAlert.setStyle(MyValues.ALERT_SUCESS);
-			labelAlert.setText("Criador"+b.getName()+" inserido com sucesso!");
+			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+			LabelAlert.setText("Criador"+b.getName()+" inserido com sucesso!");
 			clearAllFields();
 		}	
 	}
@@ -448,7 +448,11 @@ public class AddBreederViewController implements Initializable {
 		TfLocale.setText(null);
 		TfDistrict.setText(null);
 		CbType.setValue(null);
-		assignedClubs = FXCollections.observableArrayList();
+		for (Club club : assignedClubs) {
+			assignedClubs.remove(club);
+			availableClubs.add(club);
+		}
+		TfAddress.setText(null);
 		clearAllErrors();
 	}
 
