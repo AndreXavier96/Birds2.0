@@ -59,7 +59,7 @@ public class MyValues {
 	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
 	public static final String CHANGE_SEX_SUCCESS = "Genero alterado com sucesso!";
 	
-	public static final String DATE_FORMATE = "dd-MM-yyyy HH:mm";
+	public static final String DATE_FORMATE = "dd-MM-yyyy";
 	
 	public static final Image DEFAULT_IMAGE = new Image("file:resources/images/img/default.png");
 }

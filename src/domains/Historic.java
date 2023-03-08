@@ -20,6 +20,13 @@ public class Historic {
 		this.bird=bird;
 	}
 	
+	public Historic( String title, String date, String obs,Bird bird) {
+		this.title = title;
+		this.date = date;
+		this.obs = obs;
+		this.bird=bird;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

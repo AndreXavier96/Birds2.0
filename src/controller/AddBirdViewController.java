@@ -275,13 +275,13 @@ public class AddBirdViewController implements Initializable {
 			Integer BirdId = birdsRepository.Insert(bird);
 			bird.setId(BirdId);
 			String obs="";
-			if (bird.getEntryType().equals(MyValues.COMPRA)) {
-				obs="Passaro comprado por "+bird.getBuyPrice()+"\\u20ac a "+bird.getEntryDate().toString();
-			}else if(CbEntryType.getValue().equals(MyValues.NASCIMENTO)){
-				obs="Passaro nascido a "+bird.getEntryDate().toString();
-			}
 			String formatedDate =new SimpleDateFormat(MyValues.DATE_FORMATE).format(bird.getEntryDate());
-			historicRepository.insertHistoric(new Historic(null,MyValues.BIRD_INSERTED,formatedDate,obs, bird));
+			if (bird.getEntryType().equals(MyValues.COMPRA))
+				obs="Passaro comprado por "+bird.getBuyPrice()+" \\u20ac .";
+			else if(CbEntryType.getValue().equals(MyValues.NASCIMENTO))
+				obs="Passaro nascido a "+formatedDate;
+			System.out.println(formatedDate);
+			historicRepository.insertHistoric(new Historic(MyValues.BIRD_INSERTED,formatedDate,obs, bird));
 			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
 			LabelAlert.setText("Passaro "+ bird.getBand()+" inserido com sucesso!");
 			clearAllFields();
