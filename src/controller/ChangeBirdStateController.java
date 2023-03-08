@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
+import constants.Regex;
 import domains.Bird;
 import domains.Historic;
 import domains.State;
@@ -157,7 +158,7 @@ public class ChangeBirdStateController implements Initializable{
 				TfPriceSell.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelError.setText("Valor tem de ser preenchido");
 				validate=false;
-			}else if (CbState.getValue()==MyValues.VENDIDO && !TfPriceSell.getText().matches("^[+]?[0-9]*[.]?[0-9]+$")) {
+			}else if (CbState.getValue()==MyValues.VENDIDO && !TfPriceSell.getText().matches(Regex.DOUBLES)) {
 				TfPriceSell.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelError.setText("Valor no formato incorreto");
 				validate=false;

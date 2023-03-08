@@ -1,6 +1,7 @@
 package controller;
 
 import constants.MyValues;
+import constants.Regex;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -40,7 +41,7 @@ public class StamPromptDialogController {
 			stamTextField.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelError.setText("Stam tem de ser preenchido!");
 			validate = false;
-		} else if (!stamTextField.getText().matches("^([A-Z]|[0-9])+$")) {
+		} else if (!stamTextField.getText().matches(Regex.STAM)) {
 			stamTextField.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelError.setText("Stam nao esta no formato correto!");
 			validate = false;

@@ -36,6 +36,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
+import constants.Regex;
 import domains.Bird;
 import domains.Breeder;
 import domains.Cage;
@@ -406,7 +407,7 @@ public class AddBirdViewController implements Initializable {
 			}
 		
 		if (validate)
-			if (!TfAno.getText().matches("^\\d{4}|\\d{2}$")) {
+			if (!TfAno.getText().matches(Regex.EMAIL)) {
 				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Ano nao esta no formato correto ou tem de ser preenchido. ex:2022 ou 22");
 				validate=false;
@@ -417,7 +418,7 @@ public class AddBirdViewController implements Initializable {
 			}
 		
 		if (validate)
-			if (!TfNumero.getText().matches("^\\d+$")) {
+			if (!TfNumero.getText().matches(Regex.INT)) {
 				TfNumero.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Numero nao esta no formato correto ou tem de ser preenchido");
 				validate=false;
@@ -429,7 +430,7 @@ public class AddBirdViewController implements Initializable {
 		
 		if (validate) 
 			if (CbEntryType.getValue().equals(MyValues.ENTRYTYPELIST.get(0))) 
-				if (!TfBuyPrice.getText().matches("^[+]?[0-9]*[.]?[0-9]+$")) {
+				if (!TfBuyPrice.getText().matches(Regex.DOUBLES)) {
 					TfBuyPrice.setStyle(MyValues.ERROR_BOX_STYLE);
 					LabelAlert.setText("Preco compra tem de ser escolhido");
 					validate=false;

@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
+import constants.Regex;
 import domains.Mutation;
 import domains.Specie;
 import javafx.event.ActionEvent;
@@ -81,7 +82,7 @@ public class AddMutationViewController implements Initializable {
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
 			labelAlert.setText("Nome tem de ser preenchido");
 			validate=false;
-		}else if(!TfName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")){
+		}else if(!TfName.getText().matches(Regex.NAME)){
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
 			labelAlert.setText("Nome nao esta no formato correto");
 			validate=false;
@@ -93,7 +94,7 @@ public class AddMutationViewController implements Initializable {
 		
 		if (validate) {
 			if (TfType.getText().length()!=0)
-				if(!TfType.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")){
+				if(!TfType.getText().matches(Regex.NAME)){
 					TfType.setStyle(MyValues.ERROR_BOX_STYLE);
 					labelAlert.setText("Tipo nao esta no formato correto");
 					validate=false;
@@ -106,7 +107,7 @@ public class AddMutationViewController implements Initializable {
 		
 		if (validate) {
 			if (TfSymbol.getText().length()!=0)
-				if(!TfSymbol.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]|[0-9]| )+$")){
+				if(!TfSymbol.getText().matches(Regex.NAME)){
 					TfSymbol.setStyle(MyValues.ERROR_BOX_STYLE);
 					labelAlert.setText("Simbolo nao esta no formato correto");
 					validate=false;

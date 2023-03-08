@@ -3,6 +3,7 @@ package application;
 import java.io.File;
 import java.nio.file.Paths;
 import constants.MyValues;
+import constants.PathsConstants;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -32,7 +33,7 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
 			Scene scene = new Scene(root);
 			primaryStage.setTitle(MyValues.TITLE_BIRD_APP);
-			primaryStage.getIcons().add(new Image(MyValues.ICON_PATH));
+			primaryStage.getIcons().add(new Image(PathsConstants.ICON_PATH));
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

@@ -9,6 +9,7 @@ import repository.FederationRepository;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import constants.MyValues;
+import constants.Regex;
 import domains.Federation;
 import javafx.event.ActionEvent;
 
@@ -67,7 +68,7 @@ public class AddFederationViewController {
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
 			labelAlert.setText("Nome tem de ser preenchido.");
 			validated = false;
-		} else if (!TfName.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+		} else if (!TfName.getText().matches(Regex.NAME)) {
 			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
 			labelAlert.setText("Nome nao esta no formato correto.");
 			validated = false;
@@ -86,7 +87,7 @@ public class AddFederationViewController {
 				TfAcronym.setStyle(MyValues.ERROR_BOX_STYLE);
 				labelAlert.setText("Sigla tem de ser preenchido");
 				validated = false;
-			} else if (!TfAcronym.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+			} else if (!TfAcronym.getText().matches(Regex.ACRONYM)) {
 				TfAcronym.setStyle(MyValues.ERROR_BOX_STYLE);
 				labelAlert.setText("Sigla nao esta no formato correto.");
 				validated = false;
@@ -106,7 +107,7 @@ public class AddFederationViewController {
 				TfCountry.setStyle(MyValues.ERROR_BOX_STYLE);
 				labelAlert.setText("Pais tem de ser preenchido");
 				validated = false;
-			} else if (!TfCountry.getText().matches("^([a-zA-Z]|[à-ü]|[À-Ü]| )+$")) {
+			} else if (!TfCountry.getText().matches(Regex.NAME)) {
 				TfCountry.setStyle(MyValues.ERROR_BOX_STYLE);
 				labelAlert.setText("Pais nao esta no formato correto.");
 				validated = false;
@@ -119,7 +120,7 @@ public class AddFederationViewController {
 		
 		if (validated) {
 			if (TfEmail.getText().length() > 0) {
-				if (!TfEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+				if (!TfEmail.getText().matches(Regex.EMAIL)) {
 					TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
 					labelAlert.setText("Email nao esta no formato correto.");
 					validated = false;
