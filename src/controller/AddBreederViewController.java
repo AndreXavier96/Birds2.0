@@ -77,7 +77,6 @@ public class AddBreederViewController implements Initializable {
 			assignedClubs.add(selectedClub);
 			availableClubs.remove(selectedClub);
 			btnAssign.setStyle(null);
-			LabelAlert.setText("");
 		}else {
 			btnAssign.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Um clube disponivel tem de ser selecionado.");
@@ -92,7 +91,6 @@ public class AddBreederViewController implements Initializable {
 			assignedClubs.remove(selectedClub);
 			availableClubs.add(selectedClub);
 			btnDeAssign.setStyle(null);
-			LabelAlert.setText("");
 		}else {
 			btnDeAssign.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Um clube escolhido tem de ser selecionado.");
@@ -400,7 +398,7 @@ public class AddBreederViewController implements Initializable {
 			if (TfAddress.getText().length() > 0) {
 				if (!TfAddress.getText().matches(Regex.ALL_TEXT)) {
 					TfAddress.setStyle(MyValues.ERROR_BOX_STYLE);
-					LabelAlert.setText("Distrito nao esta no formato correto.");
+					LabelAlert.setText("Morada nao esta no formato correto.");
 					validated = false;
 				} else {
 					TfAddress.setStyle(null);
