@@ -106,12 +106,12 @@ public class ChangeBirdStateController implements Initializable{
 			stateRepositor.updateState(state);
 			String obs = "Estado do passaro alterado de '"+LbState.getText()+"' para '"+state.getType()+"'";	
 			if (state.getType().equals(MyValues.MORTO)) {
-				obs.concat(", motivo '"+state.getMotivo()+"'.");
+				obs+=", motivo '"+state.getMotivo()+"'.";
 				birdsRepository.partialUpdateIntBird(bird.getId(), "CageId", null);
 			}else if (state.getType().equals(MyValues.VENDIDO)) {
-				obs.concat(", preco '"+state.getValor()+"'.");
+				obs += ", preco '"+state.getValor()+"'.";
 			}else
-				obs.concat(".");
+				obs+=".";
 			historicRepository.insertHistoric(new Historic(null,MyValues.CHANGE_STATE,date,obs, bird));
 			// close the window
 		    Stage stage = (Stage) CbState.getScene().getWindow();
