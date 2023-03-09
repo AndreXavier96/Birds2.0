@@ -63,6 +63,8 @@ public class AddBirdViewController implements Initializable {
 	private Scene scene;
 	private Stage stage;
 	
+	
+	
 	@FXML
 	private ComboBox<Breeder> CbCriador;
 	@FXML
@@ -76,7 +78,7 @@ public class AddBirdViewController implements Initializable {
 	@FXML
 	private ComboBox<Bird> CbFather,CbMother;
 	@FXML
-	private TextField TfAno, TfNumero, TfBuyPrice;
+	private TextField TfAno, TfNumero, TfBuyPrice,TfBand;
 	@FXML
 	private TextArea TfObs;
 	@FXML
@@ -86,7 +88,7 @@ public class AddBirdViewController implements Initializable {
 	@FXML
 	private ComboBox<Club> CbClub;
 	@FXML
-	private AnchorPane ApBuyPrice;
+	private AnchorPane ApBuyPrice, ApBand,ApNumero,ApClub;
 	@FXML
 	private ImageView ImImage;
 	@FXML
@@ -107,6 +109,10 @@ public class AddBirdViewController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		ApClub.setVisible(false);
+    	ApNumero.setVisible(false);
+    	ApBand.setVisible(false);
+    	
 		CbCriador.setItems(breederRepository.getAllBreeders());
 		CbCriador.setConverter(new StringConverter<Breeder>() {
 			 public String toString(Breeder b) {
@@ -119,7 +125,11 @@ public class AddBirdViewController implements Initializable {
 			 
 		});
 		CbCriador.valueProperty().addListener((observable, oldValue, newValue) -> {
-		    if (newValue != null) {
+		    if (newValue != null && newValue.getType().equals(MyValues.CRIADOR_PROFISSIONAL)) {
+		    	ApClub.setVisible(true);
+		    	ApNumero.setVisible(true);
+		    	ApBand.setVisible(false);
+		    	TfBand.setText("");
 		        try {
 		        	ObservableList<Club> clubList = FXCollections.observableArrayList();
 		        	for (Integer i : breederClubRepository.getClubsFromBreederId(newValue.getId())) {
@@ -138,7 +148,13 @@ public class AddBirdViewController implements Initializable {
 		        } catch (Exception e) {
 		            e.printStackTrace();
 		        }
-		    }
+		    }else if (newValue !=null && !newValue.getType().equals(MyValues.CRIADOR_PROFISSIONAL)) {
+		    	ApClub.setVisible(false);
+		    	ApNumero.setVisible(false);
+		    	ApBand.setVisible(true);
+		    	CbClub.setValue(null);
+		    	TfNumero.setText("");
+			}
 		});
 		
 		CbState.setItems(MyValues.STARTING_STATE_LIST);
@@ -255,10 +271,14 @@ public class AddBirdViewController implements Initializable {
 			bird.setCage(cageRepository.getCage(CbCage.getValue().getId()));
 			
 			Integer breederID =bird.getBreeder().getId();
-			Club club = CbClub.getValue();
-			Federation federation = club.getFederation();
-			String stam = breederFederationRepository.getStamByBreederAndFederationId(breederID,federation.getId());
-			String anilha = club.getAcronym()+" "+stam+" "+TfNumero.getText()+" "+federation.getCountry()+" "+federation.getAcronym()+TfAno.getText();
+			String anilha="";
+			if (bird.getBreeder().getType().equals(MyValues.CRIADOR_PROFISSIONAL)) {
+				Club club = CbClub.getValue();
+				Federation federation = club.getFederation();
+				String stam = breederFederationRepository.getStamByBreederAndFederationId(breederID,federation.getId());
+				 anilha = club.getAcronym()+" "+stam+" "+TfNumero.getText()+" "+federation.getCountry()+" "+federation.getAcronym()+TfAno.getText();
+			}else
+				anilha = TfAno.getText()+" "+TfBand.getText();
 			bird.setBand(anilha);
 			
 			if (imageUploaded) {
@@ -304,7 +324,7 @@ public class AddBirdViewController implements Initializable {
 			validate=true;
 		}
 		
-		if (validate) {
+		if (validate && CbCriador.getValue().getType().equals(MyValues.CRIADOR_PROFISSIONAL))
 			if (CbClub.getValue()==null) {
 				CbClub.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Clube tem de ser escolhido");
@@ -314,31 +334,39 @@ public class AddBirdViewController implements Initializable {
 				LabelAlert.setText("");
 				validate=true;
 			}
-		}
 		
-		if (validate) {
-			if (CbEntryType.getValue()==null) {
-				CbEntryType.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Tipo de entrada tem de ser escolhido");
+		if (validate && CbCriador.getValue().getType().equals(MyValues.CRIADOR_PROFISSIONAL))
+			if (!TfNumero.getText().matches(Regex.INT)) {
+				TfNumero.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Numero nao esta no formato correto ou tem de ser preenchido");
 				validate=false;
 			}else {
-				CbEntryType.setStyle(null);
+				TfNumero.setStyle(null);
 				LabelAlert.setText("");
 				validate=true;
 			}
-		}
 		
-		if (validate) {
-			try {
-				DfDataEntrada.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-				DfDataEntrada.setStyle(null);
-				validate=true;
-			} catch (Exception e) {
-				DfDataEntrada.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Data entrada nao esta no formato correto ou tem de ser preenchido");
+		if (validate && !CbCriador.getValue().getType().equals(MyValues.CRIADOR_PROFISSIONAL))
+			if (!TfBand.getText().matches(Regex.CLASSIC_BAND)) {
+				TfBand.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Anilha Personalizada nao esta no formato correto ou tem de ser preenchido");
 				validate=false;
+			}else {
+				TfBand.setStyle(null);
+				LabelAlert.setText("");
+				validate=true;
 			}
-		}
+		
+		if (validate)
+			if (!TfAno.getText().matches(Regex.ANO)) {
+				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Ano nao esta no formato correto ou tem de ser preenchido. ex:2022 ou 22");
+				validate=false;
+			}else {
+				TfAno.setStyle(null);
+				LabelAlert.setText("");
+				validate=true;
+			}
 		
 		if (validate) 
 			if (CbSex.getValue()==null) {
@@ -407,24 +435,36 @@ public class AddBirdViewController implements Initializable {
 			}
 		
 		if (validate)
-			if (!TfAno.getText().matches(Regex.EMAIL)) {
-				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Ano nao esta no formato correto ou tem de ser preenchido. ex:2022 ou 22");
-				validate=false;
-			}else {
-				TfAno.setStyle(null);
-				LabelAlert.setStyle("");
+			try {
+				DfDataEntrada.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				DfDataEntrada.setStyle(null);
 				validate=true;
+			} catch (Exception e) {
+				DfDataEntrada.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Data entrada nao esta no formato correto ou tem de ser preenchido");
+				validate=false;
 			}
 		
-		if (validate)
-			if (!TfNumero.getText().matches(Regex.INT)) {
-				TfNumero.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Numero nao esta no formato correto ou tem de ser preenchido");
+		if (validate) {
+			if (CbEntryType.getValue()==null) {
+				CbEntryType.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Tipo de entrada tem de ser escolhido");
 				validate=false;
 			}else {
-				TfNumero.setStyle(null);
-				LabelAlert.setStyle("");
+				CbEntryType.setStyle(null);
+				LabelAlert.setText("");
+				validate=true;
+			}
+		}
+		
+		if (validate)
+			if (CbState.getValue()==null) {
+				CbState.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Estado tem de ser escolhido");
+				validate=false;
+			}else {
+				CbState.setStyle(null);
+				LabelAlert.setText("");
 				validate=true;
 			}
 		
@@ -439,17 +479,6 @@ public class AddBirdViewController implements Initializable {
 					LabelAlert.setText("");
 					validate=true;
 				}
-		
-		if (validate)
-			if (CbState.getValue()==null) {
-				CbState.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Estado tem de ser escolhido");
-				validate=false;
-			}else {
-				CbState.setStyle(null);
-				LabelAlert.setText("");
-				validate=true;
-			}
 		
 		if (validate)
 			if (TfObs.getText().length()>500) {
@@ -519,6 +548,7 @@ public class AddBirdViewController implements Initializable {
 		CbState.setStyle(null);
 		TfObs.setStyle(null);
 		btnUpload.setStyle(null);
+		TfBand.setStyle(null);
 	}
 	
 	public void clearAllFields() {
@@ -537,6 +567,10 @@ public class AddBirdViewController implements Initializable {
 		TfBuyPrice.setText(null);
 		CbState.setValue(null);
 		TfObs.setText(null);
+		TfBand.setText(null);
+    	ApNumero.setVisible(false);
+    	ApBand.setVisible(false);
+    	ApClub.setVisible(false);
 		clearAllErrors();
 	}
 	
