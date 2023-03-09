@@ -183,7 +183,7 @@ public class AddBirdViewController implements Initializable {
 			if (newValue != null) {
 		        try {
 		        	ObservableList<Mutation> listMutations = mutationsRepository.getMutationsBySpecie(newValue.getId());
-		        	Mutation normal = new Mutation(null, "Sem Mutacao","", "", newValue);
+		        	Mutation normal = new Mutation(null, "Sem Mutacao","", "", null, null, newValue);
 		        	listMutations.add(0,normal);
 		        	CbMutation.setItems(listMutations);
 		        	ObservableList<Bird> listFathers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.MACHO,"SpeciesId",CbSpecies.getValue().getId());

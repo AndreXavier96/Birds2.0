@@ -30,7 +30,7 @@ public class ViewAllMutationsController implements Initializable {
 	@FXML
 	private TableView<Mutation> tableID;
 	@FXML
-	private TableColumn<Mutation,String> colName,colType,colSymbol,colObservation;
+	private TableColumn<Mutation,String> colName,colVar1,colVar2,colVar3,colObs,colObservation;
 	@FXML
 	private TableColumn<Mutation,String> colSpecie;
 
@@ -40,8 +40,10 @@ public class ViewAllMutationsController implements Initializable {
 		MutationsRepository mutationsRepository = new MutationsRepository();
 		ObservableList<Mutation> mutations = mutationsRepository.getAllMutations();
 		colName.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Name"));
-		colType.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Type"));
-		colSymbol.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Symbol"));
+		colVar1.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Var1"));
+		colVar2.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Var3"));
+		colVar3.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Var2"));
+		colObs.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Obs"));
 		colSpecie.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getSpecie().getCommonName()));
 
 		tableID.setItems(mutations);

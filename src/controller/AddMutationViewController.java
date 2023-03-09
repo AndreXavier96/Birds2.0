@@ -20,6 +20,7 @@ import domains.Specie;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,7 +35,9 @@ public class AddMutationViewController implements Initializable {
 	@FXML
 	private Label labelAlert;
 	@FXML
-	private TextField TfName, TfType, TfSymbol;
+	private TextField TfName, TfVar1,TfVar2,TfVar3;
+	@FXML
+	private TextArea TfObs;
 	@FXML
 	private ComboBox<Specie> CbSpecie;
 
@@ -52,9 +55,7 @@ public class AddMutationViewController implements Initializable {
 			 public Specie fromString(String s) {
 				 return CbSpecie.getItems().stream().filter(b -> b.getCommonName().equals(s)).findFirst().orElse(null);
 			 }
-			 
 		});
-		
 	}
 	
 
@@ -63,12 +64,14 @@ public class AddMutationViewController implements Initializable {
 		if (validator()) {
 			Mutation mutation = new Mutation();
 			mutation.setName(TfName.getText());
-			mutation.setType(TfType.getText());
-			mutation.setSymbol(TfSymbol.getText());
+			mutation.setVar1(TfVar1.getText());
+			mutation.setVar2(TfVar2.getText());
+			mutation.setVar3(TfVar3.getText());
+			mutation.setObs(TfObs.getText());
 			mutation.setSpecie(CbSpecie.getValue());
 			mutationsRepository.Insert(mutation);
 			labelAlert.setStyle(MyValues.ALERT_SUCESS);
-			labelAlert.setText("Mutacao "+mutation.getName()+" inserida com sucesso!");
+			labelAlert.setText("Mutacao " + mutation.getName() + " inserida com sucesso!");
 			clearAllFields();
 		}
 	}
@@ -93,30 +96,52 @@ public class AddMutationViewController implements Initializable {
 		}
 		
 		if (validate) {
-			if (TfType.getText().length()!=0)
-				if(!TfType.getText().matches(Regex.NAME)){
-					TfType.setStyle(MyValues.ERROR_BOX_STYLE);
-					labelAlert.setText("Tipo nao esta no formato correto");
+			if (TfVar1.getText().length()!=0)
+				if(!TfVar1.getText().matches(Regex.ALL_TEXT)){
+					TfVar1.setStyle(MyValues.ERROR_BOX_STYLE);
+					labelAlert.setText("Variacao1 nao esta no formato correto");
 					validate=false;
 				}else {
-					TfType.setStyle(null);
+					TfVar1.setStyle(null);
+					labelAlert.setText("");
+					validate=true;
+				}
+		}
+		if (validate) {
+			if (TfVar2.getText().length()!=0)
+				if(!TfVar2.getText().matches(Regex.ALL_TEXT)){
+					TfVar2.setStyle(MyValues.ERROR_BOX_STYLE);
+					labelAlert.setText("Variacao2 nao esta no formato correto");
+					validate=false;
+				}else {
+					TfVar2.setStyle(null);
+					labelAlert.setText("");
+					validate=true;
+				}
+		}
+		if (validate) {
+			if (TfVar3.getText().length()!=0)
+				if(!TfVar3.getText().matches(Regex.ALL_TEXT)){
+					TfVar3.setStyle(MyValues.ERROR_BOX_STYLE);
+					labelAlert.setText("Variacao3 nao esta no formato correto");
+					validate=false;
+				}else {
+					TfVar3.setStyle(null);
 					labelAlert.setText("");
 					validate=true;
 				}
 		}
 		
-		if (validate) {
-			if (TfSymbol.getText().length()!=0)
-				if(!TfSymbol.getText().matches(Regex.NAME)){
-					TfSymbol.setStyle(MyValues.ERROR_BOX_STYLE);
-					labelAlert.setText("Simbolo nao esta no formato correto");
-					validate=false;
-				}else {
-					TfSymbol.setStyle(null);
-					labelAlert.setText("");
-					validate=true;
-				}
-		}
+		if (validate)
+			if (TfObs.getText().length()>500) {
+				TfObs.setStyle(MyValues.ERROR_BOX_STYLE);
+				labelAlert.setText("Observacoes so pode ter no maximo 500 caracteres.");
+				validate=false;
+			}else {
+				TfObs.setStyle(null);
+				labelAlert.setText("");
+				validate=true;
+			}
 		
 		if (validate) {
 			 if(CbSpecie.getValue()==null){
@@ -129,7 +154,6 @@ public class AddMutationViewController implements Initializable {
 				validate=true;
 			}
 		}
-		
 		return validate;
 	}
 	
@@ -147,15 +171,19 @@ public class AddMutationViewController implements Initializable {
 	}
 	public void clearAllErrors() {
 		TfName.setStyle(null);
-		TfType.setStyle(null);
-		TfSymbol.setStyle(null);
+		TfVar1.setStyle(null);
+		TfVar2.setStyle(null);
+		TfVar3.setStyle(null);
+		TfObs.setStyle(null);
 		CbSpecie.setStyle(null);
 	}
 	
 	public void clearAllFields() {
 		TfName.setText("");
-		TfType.setText("");
-		TfSymbol.setText("");
+		TfVar1.setText("");
+		TfVar2.setText("");
+		TfVar3.setText("");
+		TfObs.setText("");
 		CbSpecie.setValue(null);
 		clearAllErrors();
 	}
