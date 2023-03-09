@@ -23,8 +23,10 @@ public class MutationsRepository {
 			String sql = "CREATE TABLE IF NOT EXISTS MUTATIONS"
 					+" (id INTEGER auto_increment, "
 					+"Name VARCHAR(255) NOT NULL, "
-					+"Type VARCHAR(255), "
-					+"Symbol VARCHAR(10), "
+					+"Var1 VARCHAR(255), "
+					+"Var2 VARCHAR(255), "
+					+"Var3 VARCHAR(255), "
+					+"Obs VARCHAR(500), "
 					+"SpeciesId INTEGER NOT NULL, "
 					+"PRIMARY KEY (id), "
 					+"FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id))";
@@ -42,7 +44,6 @@ public class MutationsRepository {
 			Statement stmt = con.createStatement();
 			String sql = "DROP TABLE IF EXISTS MUTATIONS CASCADE";	
 			stmt.executeUpdate(sql);
-//			System.out.println("Sql: "+sql);
 			System.out.println("Table MUTATIONS Droped.");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -56,9 +57,11 @@ public class MutationsRepository {
 			Statement stmt = con.createStatement();
 			
 			String sql = "INSERT INTO "
-					+"MUTATIONS(Name,Type,Symbol,SpeciesId) "
-					+"values('"+mutation.getName()+"','"+mutation.getType()+"','"
-					+mutation.getSymbol()+"','"+mutation.getSpecie().getId()+"')";
+					+"MUTATIONS(Name,Var1,Var2,Var3,Obs,SpeciesId) "
+					+"values('"+mutation.getName()+"','"+mutation.getVar1()+"','"
+					+mutation.getVar2()+"','"+mutation.getVar3()
+					+"','"+mutation.getObs()
+					+"','"+mutation.getSpecie().getId()+"')";
 			int i = stmt.executeUpdate(sql);
 			System.out.println(i+" Mutation Record inserted");
 		} catch (Exception e) {
@@ -81,9 +84,11 @@ public class MutationsRepository {
 				Mutation m = new Mutation();
 				m.setId(rs.getInt(1));
 				m.setName(rs.getString(2));
-				m.setType(rs.getString(3));
-				m.setSymbol(rs.getString(4));
-				m.setSpecie(speciesRepository.getSpecieById(rs.getInt(5)));
+				m.setVar1(rs.getString(3));
+				m.setVar2(rs.getString(4));
+				m.setVar3(rs.getString(5));
+				m.setObs(rs.getString(6));
+				m.setSpecie(speciesRepository.getSpecieById(rs.getInt(7)));
 				mutations.add(m);
 			}
 			return mutations;
@@ -105,9 +110,11 @@ public class MutationsRepository {
 			System.out.println("Get Mutation: "+rs.getInt(1));
 			m.setId(rs.getInt(1));
 			m.setName(rs.getString(2));
-			m.setType(rs.getString(3));
-			m.setSymbol(rs.getString(4));
-			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(5)));
+			m.setVar1(rs.getString(3));
+			m.setVar2(rs.getString(4));
+			m.setVar3(rs.getString(5));
+			m.setObs(rs.getString(6));
+			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(7)));
 			mutations.add(m);
 		}
 		return mutations;
@@ -123,9 +130,11 @@ public class MutationsRepository {
 			System.out.println("Get Mutation: "+rs.getInt(1));
 			m.setId(rs.getInt(1));
 			m.setName(rs.getString(2));
-			m.setType(rs.getString(3));
-			m.setSymbol(rs.getString(4));
-			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(5)));
+			m.setVar1(rs.getString(3));
+			m.setVar2(rs.getString(4));
+			m.setVar3(rs.getString(5));
+			m.setObs(rs.getString(6));
+			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(7)));
 		}
 		return m;
 	}

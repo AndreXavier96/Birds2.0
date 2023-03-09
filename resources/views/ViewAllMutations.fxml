@@ -13,8 +13,10 @@
         <columns>
             <TableColumn fx:id="colName" prefWidth="172.0" text="Nome" />
             <TableColumn fx:id="colSpecie" prefWidth="172.0" text="Especie" />
-            <TableColumn fx:id="colType" minWidth="0.0" prefWidth="178.0" text="Tipo" />
-             <TableColumn fx:id="colSymbol" prefWidth="178.0" text="Simbolo" />
+            <TableColumn fx:id="colVar1" minWidth="0.0" prefWidth="178.0" text="Var1" />
+            <TableColumn fx:id="colVar2" minWidth="0.0" prefWidth="178.0" text="Var2" />
+            <TableColumn fx:id="colVar3" minWidth="0.0" prefWidth="178.0" text="Var3" />
+             <TableColumn fx:id="colObs" prefWidth="178.0" text="Observacoes" />
              
         </columns>
       </TableView>
