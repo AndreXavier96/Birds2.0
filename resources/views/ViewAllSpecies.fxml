@@ -17,6 +17,7 @@
              <TableColumn fx:id="colBandingDays" prefWidth="178.0" text="Dias para Anilhar" />
              <TableColumn fx:id="colOutOfCageDays" prefWidth="178.0" text="Dias para retirar Gaiola" />
              <TableColumn fx:id="colMaturityDays" prefWidth="178.0" text="Dias para Maturidade" />
+            <TableColumn fx:id="colBandSize" prefWidth="178.0" text="Tamanho da anilha em mm" />
              
         </columns>
       </TableView>

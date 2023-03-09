@@ -29,7 +29,7 @@ public class ViewAllSpeciesController implements Initializable {
 	@FXML
 	private TableView<Specie> tableID;
 	@FXML
-	private TableColumn<Specie,Integer> colId,colIncubationDays,colBandingDays,colOutOfCageDays,colMaturityDays;
+	private TableColumn<Specie,Integer> colId,colIncubationDays,colBandingDays,colOutOfCageDays,colMaturityDays,colBandSize;
 	@FXML
 	private TableColumn<Specie, String> colCommonName,colScientificName;
 
@@ -58,6 +58,7 @@ public class ViewAllSpeciesController implements Initializable {
 		colBandingDays.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("DaysToBand"));
 		colOutOfCageDays.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("OutofCageAfterDays"));
 		colMaturityDays.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("MaturityAfterDays"));
+		colBandSize.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("BandSize"));
 		tableID.setItems(species);
 	}
 }
