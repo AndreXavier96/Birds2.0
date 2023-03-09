@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -24,7 +25,12 @@
          <children>
             <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <menus>
-                <Menu fx:id="menuFile" mnemonicParsing="false" text="Passaro" />
+                <Menu fx:id="menuFile" mnemonicParsing="false" text="Passaro">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#btnChangeBirdSex" text="Mudar Sexo" />
+                        <MenuItem mnemonicParsing="false" onAction="#btnChangeBirdCage" text="Mudar Gaiola" />
+                        <MenuItem mnemonicParsing="false" onAction="#btnChangeBirdState" text="Mudar Estado" />
+                     </items></Menu>
               </menus>
             </MenuBar>
          </children>
@@ -83,14 +89,6 @@
                                              </font>
                                           </Label>
                                           <Label fx:id="LbSex" layoutX="32.0" prefHeight="17.0" prefWidth="117.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="0.0" />
-                                          <ImageView fx:id="btnEditSex" fitHeight="17.0" fitWidth="22.0" onMouseClicked="#btnChangeBirdSex" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.rightAnchor="0.0">
-                                             <image>
-                                                <Image url="@../images/img/editIco.png" />
-                                             </image>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </ImageView>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane layoutY="17.0" prefHeight="17.0" prefWidth="216.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="27.0">
@@ -121,14 +119,6 @@
                                              </font>
                                           </Label>
                                           <Label fx:id="LbCage" prefHeight="17.0" prefWidth="1.0" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="41.0" AnchorPane.topAnchor="0.0" />
-                                          <ImageView fx:id="btnEditCage" fitHeight="17.0" fitWidth="22.0" onMouseClicked="#btnChangeBirdCage" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <image>
-                                                <Image url="@../images/img/editIco.png" />
-                                             </image>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </ImageView>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane layoutY="44.0" prefHeight="17.0" prefWidth="216.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="54.0">
@@ -159,14 +149,6 @@
                                              </font>
                                           </Label>
                                           <Label fx:id="LbState" layoutX="41.0" prefHeight="17.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="0.0" />
-                                          <ImageView fx:id="btnEditState" fitHeight="17.0" fitWidth="17.0" onMouseClicked="#btnChangeBirdState" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <image>
-                                                <Image url="@../images/img/editIco.png" />
-                                             </image>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </ImageView>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane layoutY="71.0" prefHeight="17.0" prefWidth="252.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="81.0">

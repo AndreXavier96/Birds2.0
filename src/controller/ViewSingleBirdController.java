@@ -2,13 +2,10 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.ResourceBundle;
 import constants.MyValues;
 import constants.PathsConstants;
 import domains.Bird;
@@ -35,7 +32,7 @@ import javafx.stage.Stage;
 import repository.BirdsRepository;
 import repository.HistoricRepository;
 
-public class ViewSingleBirdController implements Initializable{
+public class ViewSingleBirdController{
 	
 	private Parent root;
 	private Stage stage;
@@ -76,9 +73,6 @@ public class ViewSingleBirdController implements Initializable{
 	
 	@FXML
 	private AnchorPane ApBuyPrice, ApSellPrice;
-	
-	@FXML
-	private ImageView btnEditCage,btnEditState,btnEditSex;
 	
 	@FXML
 	private TableView<Bird> TbDescendants;
@@ -350,10 +344,6 @@ public class ViewSingleBirdController implements Initializable{
 		ImGrandFatherMother.setImage(PathsConstants.DEFAULT_IMAGE);
 		ImGrandMotherMother.setImage(PathsConstants.DEFAULT_IMAGE);
 
-		btnEditState.setVisible(false);
-		btnEditCage.setVisible(false);
-		btnEditSex.setVisible(false);
-
 	}
 
 	@FXML
@@ -367,30 +357,5 @@ public class ViewSingleBirdController implements Initializable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		LbState.textProperty().addListener((Observable, oldValue, newValue) -> {
-			if (newValue != null)
-				if (!newValue.isEmpty())
-					btnEditState.setVisible(true);
-				else
-					btnEditState.setVisible(false);
-		});
-		LbCage.textProperty().addListener((Observable, oldValue, newValue) -> {
-			if (newValue != null)
-				if (!newValue.isEmpty())
-					btnEditCage.setVisible(true);
-				else
-					btnEditCage.setVisible(false);
-		});
-		LbSex.textProperty().addListener((Observable, oldValue, newValue) -> {
-			if (newValue != null)
-				if (!newValue.isEmpty())
-					btnEditSex.setVisible(true);
-				else
-					btnEditSex.setVisible(false);
-		});
 	}
 }
