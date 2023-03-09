@@ -25,6 +25,7 @@ public class SpeciesRepository {
 					+"BandingDays INTEGER NOT NULL, "
 					+"OutOfCageDays INTEGER NOT NULL, "
 					+"MaturityDays INTEGER NOT NULL, "
+					+"BandSize INTEGER NOT NULL, "
 					+"PRIMARY KEY (id))";
 		
 			stmt.executeUpdate(sql);
@@ -54,10 +55,10 @@ public class SpeciesRepository {
 			Statement stmt = con.createStatement();
 			
 			String sql = "INSERT INTO "
-					+"SPECIES(CommonName,ScientificName,IncubationDays,BandingDays,OutOfCageDays,MaturityDays) "
+					+"SPECIES(CommonName,ScientificName,IncubationDays,BandingDays,OutOfCageDays,MaturityDays,BandSize) "
 					+"values('"+specie.getCommonName()+"','"+specie.getScientificName()+"','"
 					+specie.getIncubationDays()+"','"+specie.getDaysToBand()+"','"+specie.getOutofCageAfterDays()
-					+"','"+specie.getMaturityAfterDays()+"')";
+					+"','"+specie.getMaturityAfterDays()+"','"+specie.getBandSize()+"')";
 			int i = stmt.executeUpdate(sql);
 			System.out.println(i+" Specie Record inserted");
 		} catch (Exception e) {
@@ -80,6 +81,7 @@ public class SpeciesRepository {
 				s.setDaysToBand(rs.getInt(5));
 				s.setOutofCageAfterDays(rs.getInt(6));
 				s.setMaturityAfterDays(rs.getInt(7));
+				s.setBandSize(rs.getInt(8));
 			}
 			return s;
 		} catch (Exception e) {
@@ -115,6 +117,7 @@ public class SpeciesRepository {
 				s.setDaysToBand(rs.getInt(5));
 				s.setOutofCageAfterDays(rs.getInt(6));
 				s.setMaturityAfterDays(rs.getInt(7));
+				s.setBandSize(rs.getInt(8));
 				species.add(s);
 			}
 			return species;

@@ -8,6 +8,7 @@ public class Specie {
 	private Integer DaysToBand;
 	private Integer OutofCageAfterDays;
 	private Integer MaturityAfterDays;
+	private Integer BandSize;
 	
 	public Specie() {
 		super();
@@ -15,7 +16,7 @@ public class Specie {
 
 	
 	public Specie(Integer id, String commonName, String scientificName, Integer incubationDays, Integer daysToBand,
-			Integer outofCageAfterDays, Integer maturityAfterDays) {
+			Integer outofCageAfterDays, Integer maturityAfterDays,Integer bandSize) {
 		super();
 		Id = id;
 		CommonName = commonName;
@@ -24,6 +25,7 @@ public class Specie {
 		DaysToBand = daysToBand;
 		OutofCageAfterDays = outofCageAfterDays;
 		MaturityAfterDays = maturityAfterDays;
+		BandSize=bandSize;
 	}
 
 
@@ -94,6 +96,16 @@ public class Specie {
 
 	public void setMaturityAfterDays(Integer maturityAfterDays) {
 		MaturityAfterDays = maturityAfterDays;
+	}
+
+
+	public Integer getBandSize() {
+		return BandSize;
+	}
+
+
+	public void setBandSize(Integer bandSize) {
+		BandSize = bandSize;
 	}
 
 

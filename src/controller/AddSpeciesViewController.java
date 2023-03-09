@@ -37,7 +37,7 @@ public class AddSpeciesViewController {
 	@FXML
 	private TextField TfTimeOutOfCage;
 	@FXML
-	private TextField TfMaturityAfterDays;
+	private TextField TfMaturityAfterDays,TfBandSize;
 	
 	
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
@@ -53,6 +53,7 @@ public class AddSpeciesViewController {
 			specie.setDaysToBand(Integer.parseInt(TfTimeToBand.getText()));
 			specie.setOutofCageAfterDays(Integer.parseInt(TfTimeOutOfCage.getText()));
 			specie.setMaturityAfterDays(Integer.parseInt(TfMaturityAfterDays.getText()));
+			specie.setBandSize(Integer.parseInt(TfBandSize.getText()));
 			speciesRepository.Insert(specie);
 			
 			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
@@ -142,6 +143,17 @@ public class AddSpeciesViewController {
 				validate=false;
 			}else {
 				TfMaturityAfterDays.setStyle(null);
+				LabelAlert.setText("");
+				validate=true;
+			}
+		}
+		if (validate) {
+			if (!TfBandSize.getText().matches(Regex.INT)) {
+				TfBandSize.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Tamanho de anilha nao esta no formato correto");
+				validate=false;
+			}else {
+				TfBandSize.setStyle(null);
 				LabelAlert.setText("");
 				validate=true;
 			}
