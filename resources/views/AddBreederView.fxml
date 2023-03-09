@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -11,93 +12,241 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="946.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddBreederViewController">
    <children>
-      <Label layoutX="384.0" layoutY="6.0" text="Adicionar Criador">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="28.0" layoutY="143.0" text="Cartão Cidadão*" />
-      <Label layoutX="198.0" layoutY="143.0" text="Nome*" />
-      <Label layoutX="195.0" layoutY="192.0" text="NIF*" />
-      <Label fx:id="LabelAlert" layoutX="28.0" layoutY="40.0" prefHeight="17.0" prefWidth="886.0" textFill="WHITE" />
-      <Label layoutX="28.0" layoutY="192.0" text="Telefone*" />
-      <Label layoutX="360.0" layoutY="192.0" text="Email*" />
-      <Label layoutX="31.0" layoutY="286.0" text="Morada" />
-      <Label layoutX="360.0" layoutY="238.0" text="Código Postal" />
-      <Label layoutX="28.0" layoutY="238.0" text="Localidade" />
-      <Label layoutX="195.0" layoutY="238.0" text="Distrito" />
-      <Label layoutX="30.0" layoutY="65.0" text="Tipo Criador*" />
-      
-      <TextField fx:id="TfCC" layoutX="30.0" layoutY="164.0">
-	<cursor>
-		<Cursor fx:constant="TEXT" />
-	</cursor>
-</TextField>
-	<TextField fx:id="TfName" layoutX="198.0" layoutY="164.0" prefHeight="25.0" prefWidth="317.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfPhone" layoutX="30.0" layoutY="211.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfNif" layoutX="195.0" layoutY="211.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfEmail" layoutX="356.0" layoutY="211.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfLocale" layoutX="30.0" layoutY="255.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfDistrict" layoutX="194.0" layoutY="255.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfPostalCode" layoutX="359.0" layoutY="255.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<TextField fx:id="TfAddress" layoutX="30.0" layoutY="303.0" prefHeight="25.0" prefWidth="317.0">
-		<cursor>
-			<Cursor fx:constant="TEXT" />
-		</cursor>
-	</TextField>
-	<ComboBox fx:id="CbType" layoutX="30.0" layoutY="82.0" prefWidth="150.0" promptText="Selecionar">
-		<cursor><Cursor fx:constant="HAND" /></cursor>
-	</ComboBox>
-      <AnchorPane layoutX="528.0" layoutY="56.0" prefHeight="167.0" prefWidth="415.0">
+      <AnchorPane prefHeight="43.0" prefWidth="946.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ListView fx:id="clubListViewAvailable" layoutY="19.0" prefHeight="148.0" prefWidth="149.0" />
-            <ListView fx:id="clubListViewAssigned" layoutX="237.0" layoutY="19.0" prefHeight="148.0" prefWidth="149.0" />
-            <Label layoutX="7.0" layoutY="6.0" text="Clubes Disponiveis" />
-            <Label layoutX="250.0" layoutY="5.0" text="Clubes Escolhidos*" />
-            <Button fx:id="btnAssign" layoutX="183.0" layoutY="38.0" mnemonicParsing="false" onAction="#btnAssign" text="&gt;" />
-            <Button fx:id="btnDeAssign" layoutX="183.0" layoutY="81.0" mnemonicParsing="false" onAction="#btnDeAssign" text="&lt;" />
+            <Label alignment="CENTER" text="Adicionar Criador" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelAlert" alignment="CENTER" layoutY="34.0" prefHeight="17.0" prefWidth="886.0" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="34.0" />
          </children>
       </AnchorPane>
-
-	<Button defaultButton="true" layoutX="833.0" layoutY="362.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar">
-		<cursor>
-			<Cursor fx:constant="HAND" />
-		</cursor>
-	</Button>
-	<Button cancelButton="true" layoutX="31.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar">
-		<cursor>
-			<Cursor fx:constant="HAND" />
-		</cursor>
-	</Button>
-      <Label layoutX="367.0" layoutY="366.0" text="Campos Obrigatorios assinalados com*" />
+      <AnchorPane layoutY="51.0" prefHeight="41.0" prefWidth="164.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="51.0">
+         <children>
+            <Label text="Tipo Criador*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      	<ComboBox fx:id="CbType" layoutX="14.0" layoutY="25.0" prefWidth="150.0" promptText="Selecionar" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0">
+      		<cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+      	</ComboBox>
+         </children>
+         <padding>
+            <Insets left="14.0" right="14.0" />
+         </padding>
+      </AnchorPane>
+      <AnchorPane fx:id="ApProfissional" layoutY="95.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="105.0">
+         <children>
+            <AnchorPane layoutX="14.0" prefHeight="45.0" prefWidth="164.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label text="Cartão Cidadão*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  
+                        <TextField fx:id="TfCC" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+            	<cursor>
+            		<Cursor fx:constant="TEXT" />
+            	</cursor>
+            </TextField>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="178.0" prefHeight="45.0" prefWidth="164.0">
+               <children>
+                  <Label text="NIF*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfNif" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="14.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="45.0" prefHeight="45.0" prefWidth="493.0" AnchorPane.topAnchor="55.0">
+               <children>
+                  <Label text="Nome*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            	<TextField fx:id="TfName" prefHeight="25.0" prefWidth="317.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+            		<cursor>
+            			<Cursor fx:constant="TEXT" />
+            		</cursor>
+            	</TextField>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="110.0" prefHeight="45.0" prefWidth="164.0" AnchorPane.topAnchor="110.0">
+               <children>
+                  <Label text="Telefone*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfPhone" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="178.0" layoutY="110.0" prefHeight="45.0" prefWidth="164.0">
+               <children>
+                  <Label text="Email*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfEmail" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="14.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="342.0" layoutY="110.0" prefHeight="45.0" prefWidth="164.0">
+               <children>
+                  <Label text="Código Postal" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfPostalCode" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="14.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="155.0" prefHeight="45.0" prefWidth="164.0" AnchorPane.topAnchor="165.0">
+               <children>
+                  <Label text="Distrito" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfDistrict" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="178.0" layoutY="165.0" prefHeight="45.0" prefWidth="164.0">
+               <children>
+                  <Label text="Localidade" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfLocale" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="14.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="342.0" layoutY="165.0" prefHeight="45.0" prefWidth="604.0">
+               <children>
+                  <Label text="Morada" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfAddress" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="14.0" right="14.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="506.0" prefHeight="187.0" prefWidth="439.0" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="507.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ListView fx:id="clubListViewAvailable" layoutX="3.0" layoutY="27.0" prefHeight="148.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                  <ListView fx:id="clubListViewAssigned" layoutX="257.0" layoutY="5.0" prefHeight="148.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Label layoutX="28.0" layoutY="5.0" text="Clubes Disponiveis" />
+                  <Label layoutX="275.0" layoutY="6.0" text="Clubes Escolhidos*" />
+                  <Button fx:id="btnAssign" layoutX="207.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnAssign" text="&gt;" AnchorPane.topAnchor="40.0" />
+                  <Button fx:id="btnDeAssign" layoutX="207.0" layoutY="93.0" mnemonicParsing="false" onAction="#btnDeAssign" text="&lt;" AnchorPane.bottomAnchor="40.0" />
+               </children>
+               <padding>
+                  <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+               </padding>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ApOtherType" layoutY="105.0" prefHeight="159.0" prefWidth="946.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="105.0">
+         <children>
+            <AnchorPane layoutX="14.0" prefHeight="45.0" prefWidth="493.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label text="Nome*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfNameOther" prefHeight="25.0" prefWidth="317.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="507.0" prefHeight="45.0" prefWidth="181.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label text="Telefone" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfPhoneOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="14.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="688.0" prefHeight="45.0" prefWidth="258.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Label text="Email" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfEmailOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="14.0" right="14.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="45.0" prefHeight="45.0" prefWidth="232.0" AnchorPane.topAnchor="55.0">
+               <children>
+                  <Label text="Distrito" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfDistrictOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="246.0" layoutY="55.0" prefHeight="45.0" prefWidth="258.0">
+               <children>
+                  <Label text="Localidade" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfLocaleOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="14.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="100.0" prefHeight="45.0" prefWidth="604.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="110.0">
+               <children>
+                  <Label text="Morada" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfAddressOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="51.0" prefWidth="946.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" text="Campos Obrigatorios assinalados com*" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      
+      	<Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+      		<cursor>
+      			<Cursor fx:constant="HAND" />
+      		</cursor>
+      	</Button>
+      	<Button cancelButton="true" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
+      		<cursor>
+      			<Cursor fx:constant="HAND" />
+      		</cursor>
+      	</Button>
+         </children>
+      </AnchorPane>
      
    </children>
 </AnchorPane>

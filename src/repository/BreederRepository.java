@@ -30,8 +30,8 @@ public class BreederRepository {
 					+"CC INTEGER UNIQUE, "
 					+"Name VARCHAR(255) NOT NULL, "
 					+"Nif INTEGER UNIQUE, "
-					+"Cellphone INTEGER UNIQUE, "
-					+"Email VARCHAR(255) UNIQUE, "
+					+"Cellphone INTEGER, "
+					+"Email VARCHAR(255), "
 					+"Address VARCHAR(255), "
 					+"PostalCode VARCHAR(255), "
 					+"Locale VARCHAR(255), "
@@ -143,6 +143,48 @@ public class BreederRepository {
 				breederClubRepository.Insert(breederId, c.getId());
 			for (Map.Entry<Integer, String> entry : b.getStam().entrySet())
 				breederFederationRepository.insert(breederId, entry.getKey(), entry.getValue());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void InsertOther(Breeder b) {
+		int breederId = -1;
+		try {
+			System.out.println("Insert Breeder in DataBase...");
+			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+			String sql = "INSERT INTO "
+	                +"BREEDER(Name,Cellphone,Email,Address,Locale,District,BreederType) "
+	                +"values(?,?,?,?,?,?,?)";
+			PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			
+	        stmt.setString(1, b.getName());
+	        if (b.getCellphone()==null)
+	        	stmt.setString(2, null);
+        	else
+	        	stmt.setInt(2, b.getCellphone());
+	        if (b.getEmail()==null)
+				stmt.setString(3, null);
+			else
+				stmt.setString(3, b.getEmail());
+	        if (b.getAddress()==null)
+				stmt.setString(4, null);
+			else
+				stmt.setString(4, b.getAddress());
+	        if (b.getLocale()==null)
+				stmt.setString(5, null);
+			else
+				stmt.setString(5, b.getLocale());
+	        if (b.getDistrict()==null)
+				stmt.setString(6, null);
+			else
+				stmt.setString(6, b.getDistrict());
+	        stmt.setString(7, b.getType());
+	        stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+	        if (rs.next())
+	            breederId = rs.getInt(1);
+			System.out.println("["+breederId+"] inserted: "+sql);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
