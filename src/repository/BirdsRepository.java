@@ -19,16 +19,19 @@ public class BirdsRepository {
 	private MutationsRepository mutationsRepository = new MutationsRepository();
 	private StateRepository stateRepository = new StateRepository();
 	
-	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
-            rs.close();
-        }
-        if (stmt != null) {
-            stmt.close();
-        }
-        if (con != null) {
-            con.close();
-        }
+			rs.close();
+		}
+		if (pstmt != null) {
+			pstmt.close();
+		}
+		if (stmt != null) {
+			stmt.close();
+		}
+		if (con != null) {
+			con.close();
+		}
 	}
 	
 	public void CreateTableBird(Connection con,Statement stmt) throws SQLException {
@@ -108,7 +111,7 @@ public class BirdsRepository {
 					b.setObs(rs.getString(17));
 					birds.add(b);
 				}
-				CloseConnection(con, stmt, rs);
+				CloseConnection(con, stmt, null, rs);
 				return birds;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -153,7 +156,7 @@ public class BirdsRepository {
 				b.setObs(rs.getString(17));
 				birds.add(b);
 			}
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt, null, rs);
 			return birds;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,7 +195,7 @@ public class BirdsRepository {
 	            b.setPosture(rs.getInt(15));
 	            b.setImage(rs.getString(16));
 	            b.setObs(rs.getString(17));
-	            CloseConnection(con, stmt, rs);
+	            CloseConnection(con, stmt, null, rs);
 	            return b;
 	        } else {
 	            return null;
@@ -234,7 +237,7 @@ public class BirdsRepository {
 	            b.setPosture(rs.getInt(15));
 	            b.setImage(rs.getString(16));
 	            b.setObs(rs.getString(17));
-	            CloseConnection(con, stmt, rs);
+	            CloseConnection(con, stmt, null, rs);
 	            return b;
 	        } else {
 	            return null;
@@ -267,7 +270,7 @@ public class BirdsRepository {
 			if (rs.next()) {
 				id = rs.getInt(1);
 			}
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt, null, rs);
 			System.out.println("Bird Record inserted with id: " + id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -282,7 +285,7 @@ public class BirdsRepository {
 	        stmt.setString(1, value);
 	        stmt.setInt(2, id);
 	        stmt.executeUpdate();
-	        CloseConnection(con, stmt, null);
+	        CloseConnection(con, stmt, null, null);
 	        System.out.println("Bird with id " + id + " updated, coluna "+col+" para valor: "+value+" .");
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -299,7 +302,7 @@ public class BirdsRepository {
 	        	stmt.setInt(1, value);
 	        stmt.setInt(2, id);
 	        stmt.executeUpdate();
-	        CloseConnection(con, stmt, null);
+	        CloseConnection(con, stmt, null, null);
 	        System.out.println("Bird with id " + id + " updated, coluna "+col+" para valor: "+value+" .");
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -328,7 +331,7 @@ public class BirdsRepository {
 	        stmt.setString(16, bird.getObs());
 	        stmt.setInt(17, bird.getId());
 	        stmt.executeUpdate();
-	        CloseConnection(con, stmt, null);
+	        CloseConnection(con, stmt, null, null);
 	        System.out.println("Bird with id " + bird.getId() + " updated.");
 	        return bird;
 	    } catch (SQLException e) {
@@ -373,7 +376,7 @@ public class BirdsRepository {
 				b.setObs(rs.getString(17));
 				birds.add(b);
 			}
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt, null, rs);
 			return birds;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -381,48 +384,54 @@ public class BirdsRepository {
 		}
 	}
 
-	public ObservableList<Bird> getAllWhereStringAndInteger(String col,String value,String col2,Integer value2) {
-		try {
-			System.out.println("Getting all Birds...");
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
-					MyValues.USER, MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM BIRDS WHERE "+col+"='"+value+"' AND "+col2+"="+value2+";";
-			ResultSet rs = stmt.executeQuery(sql);
-			ObservableList<Bird> birds = FXCollections.observableArrayList();
-			while (rs.next()) {
-				System.out.println("Get Bird: " + rs.getInt(1));
-				Bird b = new Bird();
-				b.setId(rs.getInt(1));
-				b.setBand(rs.getString(2));
-				b.setYear(rs.getInt(3));
-				b.setEntryDate(rs.getDate(4));
-				b.setEntryType(rs.getString(5));
-				b.setBuyPrice(rs.getDouble(6));
-				b.setState(stateRepository.getStateById(rs.getInt(7)));
-				b.setSex(rs.getString(8));
-				if (rs.getInt(9)!=0)
-					b.setFather(getBirdWhereInt("id",rs.getInt(9)));
-				else
-					b.setFather(null);
-				if (rs.getInt(10)!=0)
-					b.setMother(getBirdWhereInt("id",rs.getInt(10)));
-				else
-					b.setMother(null);
-				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(11)));
-				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(12)));
-				b.setCage(cageRepository.getCage(rs.getInt(13)));
-				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
-				b.setPosture(rs.getInt(15));
-				b.setImage(rs.getString(16));
-				b.setObs(rs.getString(17));
-				birds.add(b);
-			}
-			CloseConnection(con, stmt, rs);
-			return birds;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+	public ObservableList<Bird> getAllWhereStringAndInteger(String col, String value, String col2, Integer value2) throws SQLException {
+		System.out.println("Getting all Birds...");
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM BIRDS WHERE " + col + "='" + value + "' AND " + col2 + "=" + value2 + ";";
+		ResultSet rs = stmt.executeQuery(sql);
+		ObservableList<Bird> birds = FXCollections.observableArrayList();
+		while (rs.next()) {
+			System.out.println("Get Bird: " + rs.getInt(1));
+			Bird b = new Bird();
+			b.setId(rs.getInt(1));
+			b.setBand(rs.getString(2));
+			b.setYear(rs.getInt(3));
+			b.setEntryDate(rs.getDate(4));
+			b.setEntryType(rs.getString(5));
+			b.setBuyPrice(rs.getDouble(6));
+			b.setState(stateRepository.getStateById(rs.getInt(7)));
+			b.setSex(rs.getString(8));
+			if (rs.getInt(9) != 0)
+				b.setFather(getBirdWhereInt("id", rs.getInt(9)));
+			else
+				b.setFather(null);
+			if (rs.getInt(10) != 0)
+				b.setMother(getBirdWhereInt("id", rs.getInt(10)));
+			else
+				b.setMother(null);
+			b.setSpecies(speciesRepository.getSpecieById(rs.getInt(11)));
+			b.setMutations(mutationsRepository.getMutationsById(rs.getInt(12)));
+			b.setCage(cageRepository.getCage(rs.getInt(13)));
+			b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
+			b.setPosture(rs.getInt(15));
+			b.setImage(rs.getString(16));
+			b.setObs(rs.getString(17));
+			birds.add(b);
 		}
+		CloseConnection(con, stmt, null, rs);
+		return birds;
 	}
+	
+	public boolean checkIfExistsWithBand(String band) throws SQLException {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        String sql = "SELECT * FROM BIRDS WHERE band = ?";
+	        PreparedStatement pstmt = con.prepareStatement(sql);
+	        pstmt.setString(1, band);
+	        ResultSet rs = pstmt.executeQuery();
+	        boolean result = rs.next();
+	        CloseConnection(con, pstmt, null, rs);
+	        return result;
+	}
+
 }
