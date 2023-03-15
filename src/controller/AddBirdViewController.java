@@ -257,68 +257,99 @@ public class AddBirdViewController implements Initializable {
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
-		if(validator()) {
+		if (validator()) {
 			Bird bird = new Bird();
 			bird.setBreeder(breederRepository.getBreederbyId(CbCriador.getValue().getId()));
 			bird.setYear(Integer.parseInt(TfAno.getText()));
 			bird.setEntryDate(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			bird.setEntryType(CbEntryType.getValue().toString());
-			if (bird.getEntryType().equals(MyValues.COMPRA)) {
+			if (bird.getEntryType().equals(MyValues.COMPRA))
 				bird.setBuyPrice(Double.parseDouble(TfBuyPrice.getText()));
-			}else if (bird.getEntryType().equals(MyValues.NASCIMENTO)) {
+			else if (bird.getEntryType().equals(MyValues.NASCIMENTO)) 
 				bird.setBuyPrice(0.0);
-			}
 			String date = new SimpleDateFormat(MyValues.DATE_FORMATE).format(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-			bird.setState(stateRepository.insertState(new State(null, CbState.getValue(),date , null, null)));
+			bird.setState(stateRepository.insertState(new State(null, CbState.getValue(), date, null, null)));
 			bird.setSex(CbSex.getValue());
-			if (CbFather.getValue().getId()!=null)
-				bird.setFather(birdsRepository.getBirdWhereInt("id",CbFather.getValue().getId()));
-			if (CbMother.getValue().getId()!=null) 
-				bird.setMother(birdsRepository.getBirdWhereInt("id",CbMother.getValue().getId()));
+			if (CbFather.getValue().getId() != null)
+				bird.setFather(birdsRepository.getBirdWhereInt("id", CbFather.getValue().getId()));
+			if (CbMother.getValue().getId() != null)
+				bird.setMother(birdsRepository.getBirdWhereInt("id", CbMother.getValue().getId()));
 			bird.setSpecies(speciesRepository.getSpecieById(CbSpecies.getValue().getId()));
-			if (CbMutation.getValue().getId()!=null)
+			if (CbMutation.getValue().getId() != null)
 				bird.setMutations(mutationsRepository.getMutationsById(CbMutation.getValue().getId()));
 			else
 				bird.setMutations(null);
 			bird.setCage(cageRepository.getCage(CbCage.getValue().getId()));
-			
-			Integer breederID =bird.getBreeder().getId();
-			String anilha="";
-			if (bird.getBreeder().getType().equals(MyValues.CRIADOR_PROFISSIONAL)) {
+			Integer breederID = bird.getBreeder().getId();
+			String anilha = "";
+			String breederType = bird.getBreeder().getType();
+			if (breederType.equals(MyValues.CRIADOR_PROFISSIONAL)) {
 				Club club = CbClub.getValue();
 				Federation federation = club.getFederation();
 				String stam = breederFederationRepository.getStamByBreederAndFederationId(breederID,federation.getId());
-				 anilha = club.getAcronym()+" "+stam+" "+TfNumero.getText()+" "+federation.getCountry()+" "+federation.getAcronym()+TfAno.getText();
-			}else
-				anilha = TfAno.getText()+" "+TfBand.getText();
-			bird.setBand(anilha);
-			
-			if (imageUploaded) {
-				File defaultFolder = new File("resources/images/birds");
-				File selectedFile = new File (LbImagePath.getText());
-				try {
-					String fileName = anilha+selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));
-					Files.copy(selectedFile.toPath(), defaultFolder.toPath().resolve(fileName),StandardCopyOption.REPLACE_EXISTING);
-					bird.setImage("file:"+defaultFolder+"\\"+fileName);
-				} catch (IOException e) {
-					System.out.println(e);
+				anilha = club.getAcronym() + " " + stam + " " + TfNumero.getText() + " " + federation.getCountry() + " "+ federation.getAcronym() + TfAno.getText();
+			} else
+				anilha = TfAno.getText() + " " + TfBand.getText();
+			if (validateBand(anilha, breederType)) {
+				bird.setBand(anilha);
+				if (imageUploaded) {
+					File defaultFolder = new File("resources/images/birds");
+					File selectedFile = new File(LbImagePath.getText());
+					try {
+						String fileName = anilha+ selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));
+						Files.copy(selectedFile.toPath(), defaultFolder.toPath().resolve(fileName),StandardCopyOption.REPLACE_EXISTING);
+						bird.setImage("file:" + defaultFolder + "\\" + fileName);
+					} catch (IOException e) {
+						System.out.println(e);
+					}
 				}
+				bird.setObs(TfObs.getText());
+				Integer BirdId = birdsRepository.Insert(bird);
+				bird.setId(BirdId);
+				String obs = "";
+				String formatedDate = new SimpleDateFormat(MyValues.DATE_FORMATE).format(bird.getEntryDate());
+				if (bird.getEntryType().equals(MyValues.COMPRA))
+					obs = "Passaro comprado por " + bird.getBuyPrice() + " \\u20ac .";
+				else if (CbEntryType.getValue().equals(MyValues.NASCIMENTO))
+					obs = "Passaro nascido a " + formatedDate;
+				System.out.println(formatedDate);
+				historicRepository.insertHistoric(new Historic(MyValues.BIRD_INSERTED, formatedDate, obs, bird));
+				LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+				LabelAlert.setText("Passaro " + bird.getBand() + " inserido com sucesso!");
+				clearAllFields();
 			}
-			bird.setObs(TfObs.getText());
-			Integer BirdId = birdsRepository.Insert(bird);
-			bird.setId(BirdId);
-			String obs="";
-			String formatedDate =new SimpleDateFormat(MyValues.DATE_FORMATE).format(bird.getEntryDate());
-			if (bird.getEntryType().equals(MyValues.COMPRA))
-				obs="Passaro comprado por "+bird.getBuyPrice()+" \\u20ac .";
-			else if(CbEntryType.getValue().equals(MyValues.NASCIMENTO))
-				obs="Passaro nascido a "+formatedDate;
-			System.out.println(formatedDate);
-			historicRepository.insertHistoric(new Historic(MyValues.BIRD_INSERTED,formatedDate,obs, bird));
-			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
-			LabelAlert.setText("Passaro "+ bird.getBand()+" inserido com sucesso!");
-			clearAllFields();
 		}
+	}
+	
+	public boolean validateBand(String band, String breederType) throws SQLException {
+		boolean validate = false;
+		clearAllErrors();
+		LabelAlert.setStyle(MyValues.ALERT_ERROR);
+		LabelAlert.setText("");
+		if (birdsRepository.checkIfExistsWithBand(band)) {
+			if (breederType.equals(MyValues.CRIADOR_PROFISSIONAL)) {
+//				anilha = club.getAcronym()+" "+stam+" "+TfNumero.getText()+" "+federation.getCountry()+" "+federation.getAcronym()+TfAno.getText(); 
+				CbClub.setStyle(MyValues.ERROR_BOX_STYLE);
+				TfNumero.setStyle(MyValues.ERROR_BOX_STYLE);
+				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Anilha " + band + " ja existe!");
+				validate = false;
+			} else {
+//				anilha = TfAno.getText()+" "+TfBand.getText();
+				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
+				TfBand.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Anilha " + band + " ja existe!");
+				validate = false;
+			}
+		} else {
+			CbClub.setStyle(null);
+			TfNumero.setStyle(null);
+			TfAno.setStyle(null);
+			TfBand.setStyle(null);
+			LabelAlert.setText("");
+			validate = true;
+		}
+		return validate;
 	}
 	
 	public boolean validator() {
@@ -574,12 +605,12 @@ public class AddBirdViewController implements Initializable {
 		CbCage.setValue(null);
 		CbFather.setValue(null);
 		CbMother.setValue(null);
-		TfAno.setText(null);
-		TfNumero.setText(null);
-		TfBuyPrice.setText(null);
+		TfAno.setText("");
+		TfNumero.setText("");
+		TfBuyPrice.setText("");
 		CbState.setValue(null);
-		TfObs.setText(null);
-		TfBand.setText(null);
+		TfObs.setText("");
+		TfBand.setText("");
     	ApNumero.setVisible(false);
     	ApBand.setVisible(false);
     	ApClub.setVisible(false);
