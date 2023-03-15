@@ -12,11 +12,20 @@ import javafx.collections.ObservableList;
 
 public class CageRepository {
 	
-	public void CreateTableCage() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+		if (rs != null) {
+            rs.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+	}
+	
+	public void CreateTableCage(Connection con,Statement stmt) throws SQLException {
 			System.out.println("Creating Table CAGE ...");
-			Statement stmt = con.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS CAGE"
 					+" (id INTEGER auto_increment, "
 					+"Code VARCHAR(255) NOT NULL UNIQUE, "
@@ -24,27 +33,18 @@ public class CageRepository {
 					+"PRIMARY KEY (id))";
 			stmt.executeUpdate(sql);
 			System.out.println("Table CAGE Created.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public void DropTableCage() {
-		try {
+	public void DropTableCage(Connection con,Statement stmt) throws SQLException {
 			System.out.println("Trying to drop MUTATIONS table...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
 			String sql = "DROP TABLE IF EXISTS CAGE CASCADE";	
 			stmt.executeUpdate(sql);
+			CloseConnection(con, stmt, null);
 			System.out.println("Table CAGE Droped.");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	
-	public Cage getCage(Integer id) {
-		try {
+	public Cage getCage(Integer id) throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM CAGE WHERE CAGE.id='"+id+"'";
@@ -55,26 +55,19 @@ public class CageRepository {
 				c.setCode(rs.getString(2));
 				c.setType(rs.getString(3));
 			}
+			CloseConnection(con, stmt, rs);
 			return c;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		
 	}
 	
-	public void Insert(Cage cage) {
-		try {
+	public void Insert(Cage cage) throws SQLException {
 		System.out.println("Insert Cage in Database...");
 		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
 		String sql = "INSERT INTO CAGE(Code,Type) VALUES('"
 				+cage.getCode().replace("'","''")+"','"+cage.getType()+"')";
 		int i = stmt.executeUpdate(sql);
+		CloseConnection(con, stmt, null);
 		System.out.println(i+" Record inserted");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public boolean checkIfCodeExist(String code)  throws SQLException {
@@ -82,11 +75,12 @@ public class CageRepository {
 		Statement stmt = con.createStatement();
 		String sql = "SELECT Code FROM CAGE WHERE Code='"+code.replace("'", "''")+"';";
 		ResultSet rs = stmt.executeQuery(sql);
-		return rs.next();
+		boolean result = rs.next();
+		CloseConnection(con, stmt, rs);
+		return result;
 	}
 	
-	public ObservableList<Cage> getAllCages() {
-		try {
+	public ObservableList<Cage> getAllCages() throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM CAGE";
@@ -99,11 +93,8 @@ public class CageRepository {
 				c.setType(rs.getString(3));
 				cages.add(c);
 			}
+			CloseConnection(con, stmt, rs);
 			return cages;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
 }

@@ -16,7 +16,7 @@ public class DataBaseOperationsRepository {
 	private CageRepository cageRepository = new CageRepository();
 	private BreederRepository breederRepository = new BreederRepository();
 	private CouplesRepository couplesRepository = new CouplesRepository();
-	private PostureRepository broodingRepository = new PostureRepository();
+	private PostureRepository postureRepository = new PostureRepository();
 	private StateRepository stateRepository = new StateRepository();
 	private FederationRepository federationRepository = new FederationRepository();
 	private ClubRepository clubRepository = new ClubRepository();
@@ -36,7 +36,7 @@ public class DataBaseOperationsRepository {
 		}
 	}
 	
-	public void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
             rs.close();
         }
@@ -54,6 +54,7 @@ public class DataBaseOperationsRepository {
 			Class.forName("org.h2.Driver").getDeclaredConstructor().newInstance();
 			@SuppressWarnings("unused")
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+DbName,MyValues.USER,MyValues.PASSWORD);
+			con.close();
 			System.out.println("Database "+DbName+" created!");
 			CreateAllTables();
 		}catch (Exception e) {
@@ -61,40 +62,46 @@ public class DataBaseOperationsRepository {
 		}
 	}
 	
-	public void CreateAllTables() {
+	public void CreateAllTables() throws SQLException {
 		System.out.println("Trying to create all tables...");
-		federationRepository.createTableFederation();
-		clubRepository.createTableClub();
-		breederRepository.CreateTableBreeder();
-		cageRepository.CreateTableCage();
-		speciesRepository.CreateTableSpecies();
-		mutationsRepository.CreateTableMutations();
-		stateRepository.CreateTableState();
-		broodingRepository.CreateTableBrooding();
-		birdsRepository.CreateTableBird();
-		couplesRepository.CreateTableCouples();
-		broodingRepository.AddFK();
-		breederClubRepository.createTableBreederClub();
-		breederFederationRepository.createTableBreederFederation();
-		historicRepository.createTableHistoric();
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		federationRepository.createTableFederation(con,stmt);
+		clubRepository.createTableClub(con,stmt);
+		breederRepository.CreateTableBreeder(con,stmt);
+		cageRepository.CreateTableCage(con,stmt);
+		speciesRepository.CreateTableSpecies(con,stmt);
+		mutationsRepository.CreateTableMutations(con,stmt);
+		stateRepository.CreateTableState(con,stmt);
+		postureRepository.CreateTableBrooding(con,stmt);
+		birdsRepository.CreateTableBird(con,stmt);
+		couplesRepository.CreateTableCouples(con,stmt);
+		postureRepository.AddFK(con,stmt);
+		breederClubRepository.createTableBreederClub(con,stmt);
+		breederFederationRepository.createTableBreederFederation(con,stmt);
+		historicRepository.createTableHistoric(con,stmt);
+		CloseConnection(con, stmt, null);
 		System.out.println("All tables created!");
 	}
 	
-	public void DropAllTables() {
+	public void DropAllTables() throws SQLException {
 		System.out.println("Trying to drop all tables...");
-		historicRepository.DropTableHistoric();
-		breederFederationRepository.dropTableBreederFederation();
-		breederClubRepository.dropTableBreederClub();
-		birdsRepository.DropTableBird();
-		speciesRepository.DropTableSpecies();
-		mutationsRepository.DropTableMutations();
-		cageRepository.DropTableCage();
-		breederRepository.DropTableBreeder();
-		couplesRepository.DropTableCouples();
-		broodingRepository.DropTableBrooding();
-		stateRepository.dropTableState();
-		clubRepository.dropTableClub();
-		federationRepository.dropTableFederation();
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		historicRepository.DropTableHistoric(con,stmt);
+		breederFederationRepository.dropTableBreederFederation(con,stmt);
+		breederClubRepository.dropTableBreederClub(con,stmt);
+		birdsRepository.DropTableBird(con,stmt);
+		speciesRepository.DropTableSpecies(con,stmt);
+		mutationsRepository.DropTableMutations(con,stmt);
+		cageRepository.DropTableCage(con,stmt);
+		breederRepository.DropTableBreeder(con,stmt);
+		couplesRepository.DropTableCouples(con,stmt);
+		postureRepository.DropTableBrooding(con,stmt);
+		stateRepository.dropTableState(con,stmt);
+		clubRepository.dropTableClub(con,stmt);
+		federationRepository.dropTableFederation(con,stmt);
+		CloseConnection(con, stmt, null);
 		System.out.println("All tables dropped!");
 	}
 
@@ -105,6 +112,7 @@ public class DataBaseOperationsRepository {
 			Statement stmt = con.createStatement();
 			String sql = "ALTER TABLE "+tableName+" DROP COLUMN "+columnName;
 			stmt.executeUpdate(sql);
+			CloseConnection(con, stmt, null);
 			System.out.println(sql);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,6 +126,7 @@ public class DataBaseOperationsRepository {
 			Statement stmt = con.createStatement();
 			String sql = "ALTER TABLE "+tableName+" ADD COLUMN "+column;
 			stmt.executeUpdate(sql);
+			CloseConnection(con, stmt, null);
 			System.out.println(sql);
 		} catch (Exception e) {
 			e.printStackTrace();

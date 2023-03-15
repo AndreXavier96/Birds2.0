@@ -169,6 +169,7 @@ public class AddSpeciesViewController {
 		TfTimeToBand.setStyle(null);
 		TfTimeOutOfCage.setStyle(null);
 		TfMaturityAfterDays.setStyle(null);
+		TfBandSize.setStyle(null);
 	}
 	
 	public void clearAllFields() {
@@ -178,6 +179,7 @@ public class AddSpeciesViewController {
 		TfTimeToBand.setText("");
 		TfTimeOutOfCage.setText("");
 		TfMaturityAfterDays.setText("");
+		TfBandSize.setText("");
 		clearAllErrors();
 	}
 	

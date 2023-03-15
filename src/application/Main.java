@@ -2,6 +2,8 @@ package application;
 	
 import java.io.File;
 import java.nio.file.Paths;
+import java.sql.SQLException;
+
 import constants.MyValues;
 import constants.PathsConstants;
 import javafx.application.Application;
@@ -18,7 +20,7 @@ public class Main extends Application {
 	private DataBaseOperationsRepository databaseOperations = new DataBaseOperationsRepository();
 	
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws SQLException {
 		File f = new File("Database/",MyValues.DBNAME+".mv.db");
 		
 		// if database dont existe create ir and all tables

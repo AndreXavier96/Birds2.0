@@ -6,9 +6,11 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import domains.Specie;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
@@ -51,7 +53,13 @@ public class ViewAllSpeciesController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SpeciesRepository speciesRepository = new SpeciesRepository();
-		ObservableList<Specie> species = speciesRepository.getAllSpecies();
+		ObservableList<Specie> species=FXCollections.observableArrayList();
+		try {
+			species = speciesRepository.getAllSpecies();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		colCommonName.setCellValueFactory(new PropertyValueFactory<Specie,String>("CommonName"));
 		colScientificName.setCellValueFactory(new PropertyValueFactory<Specie,String>("ScientificName"));
 		colIncubationDays.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("IncubationDays"));

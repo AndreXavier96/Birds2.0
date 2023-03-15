@@ -14,48 +14,46 @@ import javafx.collections.ObservableList;
 public class MutationsRepository {
 	
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
-	
-	public void CreateTableMutations() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-			System.out.println("Creating Table MUTATIONS ...");
-			Statement stmt = con.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS MUTATIONS"
-					+" (id INTEGER auto_increment, "
-					+"Name VARCHAR(255) NOT NULL, "
-					+"Var1 VARCHAR(255), "
-					+"Var2 VARCHAR(255), "
-					+"Var3 VARCHAR(255), "
-					+"Obs VARCHAR(500), "
-					+"SpeciesId INTEGER NOT NULL, "
-					+"PRIMARY KEY (id), "
-					+"FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id))";
-			stmt.executeUpdate(sql);
-			System.out.println("Table MUTATIONS Created.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+		if (rs != null) {
+            rs.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
 	}
 	
-	public void DropTableMutations() {
-		try {
-			System.out.println("Trying to drop MUTATIONS table...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "DROP TABLE IF EXISTS MUTATIONS CASCADE";	
-			stmt.executeUpdate(sql);
-			System.out.println("Table MUTATIONS Droped.");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void CreateTableMutations(Connection con, Statement stmt) throws SQLException {
+		System.out.println("Creating Table MUTATIONS ...");
+		String sql = "CREATE TABLE IF NOT EXISTS MUTATIONS" 
+				+ " (id INTEGER auto_increment, "
+				+ "Name VARCHAR(255) NOT NULL, " 
+				+ "Var1 VARCHAR(255), " 
+				+ "Var2 VARCHAR(255), " 
+				+ "Var3 VARCHAR(255), "
+				+ "Obs VARCHAR(500), " 
+				+ "SpeciesId INTEGER NOT NULL, " 
+				+ "PRIMARY KEY (id), "
+				+ "FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id))";
+		stmt.executeUpdate(sql);
+		System.out.println("Table MUTATIONS Created.");
 	}
 	
-	public void Insert(Mutation mutation) {
-		try {
+	public void DropTableMutations(Connection con, Statement stmt) throws SQLException {
+		System.out.println("Trying to drop MUTATIONS table...");
+		String sql = "DROP TABLE IF EXISTS MUTATIONS CASCADE";
+		stmt.executeUpdate(sql);
+		System.out.println("Table MUTATIONS Droped.");
+	}
+	
+	public void Insert(Mutation mutation) throws SQLException {
 			System.out.println("Insert Mutation in DataBase...");
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
-			
 			String sql = "INSERT INTO "
 					+"MUTATIONS(Name,Var1,Var2,Var3,Obs,SpeciesId) "
 					+"values('"+mutation.getName()+"','"+mutation.getVar1()+"','"
@@ -63,39 +61,32 @@ public class MutationsRepository {
 					+"','"+mutation.getObs()
 					+"','"+mutation.getSpecie().getId()+"')";
 			int i = stmt.executeUpdate(sql);
+			CloseConnection(con, stmt, null);
 			System.out.println(i+" Mutation Record inserted");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	
-	public ObservableList<Mutation> getAllMutations() {
-		try {
-			System.out.println("Getting all Mutations...");
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
-					MyValues.USER, MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM MUTATIONS";
-			ResultSet rs = stmt.executeQuery(sql);
-			ObservableList<Mutation> mutations = FXCollections.observableArrayList();
-			while (rs.next()) {
-				System.out.println("Get Mutations: " + rs.getInt(1));
-				Mutation m = new Mutation();
-				m.setId(rs.getInt(1));
-				m.setName(rs.getString(2));
-				m.setVar1(rs.getString(3));
-				m.setVar2(rs.getString(4));
-				m.setVar3(rs.getString(5));
-				m.setObs(rs.getString(6));
-				m.setSpecie(speciesRepository.getSpecieById(rs.getInt(7)));
-				mutations.add(m);
-			}
-			return mutations;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+	public ObservableList<Mutation> getAllMutations() throws SQLException {
+		System.out.println("Getting all Mutations...");
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM MUTATIONS";
+		ResultSet rs = stmt.executeQuery(sql);
+		ObservableList<Mutation> mutations = FXCollections.observableArrayList();
+		while (rs.next()) {
+			System.out.println("Get Mutations: " + rs.getInt(1));
+			Mutation m = new Mutation();
+			m.setId(rs.getInt(1));
+			m.setName(rs.getString(2));
+			m.setVar1(rs.getString(3));
+			m.setVar2(rs.getString(4));
+			m.setVar3(rs.getString(5));
+			m.setObs(rs.getString(6));
+			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(7)));
+			mutations.add(m);
 		}
+		CloseConnection(con, stmt, rs);
+		return mutations;
 	}
 	
 	
@@ -117,6 +108,7 @@ public class MutationsRepository {
 			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(7)));
 			mutations.add(m);
 		}
+		CloseConnection(con, stmt, rs);
 		return mutations;
 	}
 	
@@ -136,6 +128,7 @@ public class MutationsRepository {
 			m.setObs(rs.getString(6));
 			m.setSpecie(speciesRepository.getSpecieById(rs.getInt(7)));
 		}
+		CloseConnection(con, stmt, rs);
 		return m;
 	}
 	

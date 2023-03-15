@@ -6,9 +6,11 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import domains.Cage;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
@@ -35,11 +37,15 @@ public class ViewAllCagesController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		CageRepository cageRepository = new CageRepository();
-		ObservableList<Cage> cages = cageRepository.getAllCages();
+		ObservableList<Cage> cages = FXCollections.observableArrayList();
+		try {
+			cages = cageRepository.getAllCages();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		colCode.setCellValueFactory(new PropertyValueFactory<Cage,String>("Code"));
 		colType.setCellValueFactory(new PropertyValueFactory<Cage,String>("Type"));
-//		colBird.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getSpecie().getCommonName()));
-//		colBird.setCellValueFactory(new PropertyValueFactory<Cage,String>("Type"));
 		
 		tableID.setItems(cages);
 	}

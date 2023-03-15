@@ -12,11 +12,23 @@ import constants.MyValues;
 
 public class BreederFederationRepository {
 
-	public void createTableBreederFederation() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
+		if (rs != null) {
+            rs.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+	}
+	
+	public void createTableBreederFederation(Connection con, Statement stmt) throws SQLException {
 			System.out.println("Creating Table CLUB ...");
-			Statement stmt = con.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS BREEDER_FEDERATION"
 					+" (id INTEGER auto_increment, "
 					+"Stam VARCHAR(255) NOT NULL UNIQUE, "
@@ -27,21 +39,12 @@ public class BreederFederationRepository {
 					+"FOREIGN KEY (FederationId) REFERENCES FEDERATION(id))";
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER_FEDERATION Created.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public void dropTableBreederFederation() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
+	public void dropTableBreederFederation(Connection con, Statement stmt) throws SQLException {
 			String sql = "DROP TABLE IF EXISTS BREEDER_FEDERATION";
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER_FEDERATION dropped.");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void insert(int breederId, int federationId,String stam) {
@@ -52,6 +55,7 @@ public class BreederFederationRepository {
 			pstmt.setInt(2, breederId);
 			pstmt.setInt(3, federationId);
 			pstmt.executeUpdate();
+			CloseConnection(con, null, pstmt, null);
 			System.out.println("["+stam+"] inserted: "+pstmt);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -70,9 +74,7 @@ public class BreederFederationRepository {
 	            String stam = rs.getString("Stam");
 	            stams.put(federationId, stam);
 	        }
-	        rs.close();
-	        pstmt.close();
-	        con.close();
+	        CloseConnection(con, null, pstmt, rs);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
@@ -83,32 +85,30 @@ public class BreederFederationRepository {
 	public String getStamByBreederAndFederationId(int breederId, int federationId) throws SQLException {
 	    String stam = null;
 	    String sql = "SELECT Stam FROM BREEDER_FEDERATION WHERE BreederId = ? AND FederationId = ?";
-	    try (Connection conn = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
-	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
 	        pstmt.setInt(1, breederId);
 	        pstmt.setInt(2, federationId);
 	        try (ResultSet rs = pstmt.executeQuery()) {
 	            if (rs.next()) {
 	                stam = rs.getString("stam");
 	            }
+	            CloseConnection(con, null, pstmt, rs);
 	        }
 	    }
 	    return stam;
 	}
 
-	public boolean checkIfStamExists(String stam) {
-	    boolean exists = false;
-	    try {
-	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-	        PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(*) FROM BREEDER_FEDERATION WHERE Stam = ?");
-	        pstmt.setString(1, stam);
-	        ResultSet rs = pstmt.executeQuery();
-	        rs.next();
-	        exists = rs.getInt(1) > 0;
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return exists;
+	public boolean checkIfStamExists(String stam) throws SQLException {
+		boolean exists = false;
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+		PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(*) FROM BREEDER_FEDERATION WHERE Stam = ?");
+		pstmt.setString(1, stam);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		exists = rs.getInt(1) > 0;
+		CloseConnection(con, null, pstmt, rs);
+		return exists;
 	}
 
 }

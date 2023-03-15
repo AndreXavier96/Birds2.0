@@ -1,6 +1,8 @@
 package controller;
 
 import javafx.fxml.FXML;
+
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -56,7 +58,7 @@ public class ChangeBirdSexController{
 	}
 	
 	@FXML
-	public void btnChange(ActionEvent event) {
+	public void btnChange(ActionEvent event) throws SQLException {
 		if (validate()) {
 			String newSex = CbSex.getValue();
 			String date = new SimpleDateFormat(MyValues.DATE_FORMATE).format(Date.from(Dtpicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));

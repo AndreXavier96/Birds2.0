@@ -43,7 +43,12 @@ public class AddClubViewController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		CbFederation.setItems(federationRepository.getAllFederations());
+		try {
+			CbFederation.setItems(federationRepository.getAllFederations());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		CbFederation.setConverter(new StringConverter<Federation>() {
 			public String toString(Federation f) {
 				return f.getAcronym();

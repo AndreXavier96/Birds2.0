@@ -113,7 +113,11 @@ public class AddBirdViewController implements Initializable {
     	ApNumero.setVisible(false);
     	ApBand.setVisible(false);
     	
-		CbCriador.setItems(breederRepository.getAllBreeders());
+		try {
+			CbCriador.setItems(breederRepository.getAllBreeders());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		CbCriador.setConverter(new StringConverter<Breeder>() {
 			 public String toString(Breeder b) {
 				 return b.getName();
@@ -170,7 +174,11 @@ public class AddBirdViewController implements Initializable {
 		      }
 		    });
 		CbSex.setItems(MyValues.SEXLIST);
-		CbSpecies.setItems(speciesRepository.getAllSpecies());
+		try {
+			CbSpecies.setItems(speciesRepository.getAllSpecies());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		CbSpecies.setConverter(new StringConverter<Specie>() {
 			public String toString(Specie s) {
 				return s.getCommonName();
@@ -230,7 +238,11 @@ public class AddBirdViewController implements Initializable {
 				});
 		    }
 		});
-		CbCage.setItems(cageRepository.getAllCages());
+		try {
+			CbCage.setItems(cageRepository.getAllCages());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		CbCage.setConverter(new StringConverter<Cage>() {
 			@Override
 			public String toString(Cage s) {
