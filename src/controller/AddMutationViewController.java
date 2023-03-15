@@ -11,6 +11,7 @@ import repository.SpeciesRepository;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
@@ -46,7 +47,12 @@ public class AddMutationViewController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		CbSpecie.setItems(speciesRepository.getAllSpecies());
+		try {
+			CbSpecie.setItems(speciesRepository.getAllSpecies());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		CbSpecie.setConverter(new StringConverter<Specie>() {
 			 public String toString(Specie s) {
 				 return s.getCommonName();
@@ -60,7 +66,7 @@ public class AddMutationViewController implements Initializable {
 	
 
 	@FXML
-	public void btnAdd(ActionEvent event) {
+	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validator()) {
 			Mutation mutation = new Mutation();
 			mutation.setName(TfName.getText());

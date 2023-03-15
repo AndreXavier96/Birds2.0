@@ -13,11 +13,20 @@ import javafx.collections.ObservableList;
 
 public class BreederClubRepository {
 
-	public void createTableBreederClub() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+		if (rs != null) {
+            rs.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+	}
+	
+	public void createTableBreederClub(Connection con,	Statement stmt) throws SQLException {
 			System.out.println("Creating Table CLUB ...");
-			Statement stmt = con.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS BREEDER_CLUB"
 					+" (id INTEGER auto_increment, "
 					+"BreederId INTEGER NOT NULL, "
@@ -27,22 +36,13 @@ public class BreederClubRepository {
 					+"FOREIGN KEY (ClubId) REFERENCES CLUB(id))";
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER_CLUB Created.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
-	public void dropTableBreederClub() {
-		try {
+	public void dropTableBreederClub(Connection con,	Statement stmt) throws SQLException {
 			System.out.println("Trying to drop BREEDER_CLUB table...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
 			String sql = "DROP TABLE IF EXISTS BREEDER_CLUB CASCADE";	
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER_CLUB Droped.");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void Insert(Integer breederId, Integer clubId) {
@@ -62,6 +62,7 @@ public class BreederClubRepository {
 	        if (rs.next()) {
 	            id = rs.getInt(1);
 	        }
+	        CloseConnection(con, stmt, rs);
 			System.out.println("["+id+"] BREEDER_CLUB inserted: "+sql);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,9 +76,13 @@ public class BreederClubRepository {
 			String sql = "SELECT "+select+" FROM CLUB WHERE "+col+"='"+value+"';";
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
-				return rs.getInt(0);
-			}else
+				int result = rs.getInt(0);
+				CloseConnection(con, stmt, rs);
+				return result;
+			}else {
+				CloseConnection(con, stmt, rs);
 				return null;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -94,7 +99,9 @@ public class BreederClubRepository {
 					int clubId = rs.getInt(1);
 					clubsIds.add(clubId);
 				}
+				rs.close();
 			}
+			CloseConnection(con, stmt, null);
 		}
 		return clubsIds;
 	}

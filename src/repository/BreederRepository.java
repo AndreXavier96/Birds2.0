@@ -19,12 +19,24 @@ public class BreederRepository {
 	private BreederClubRepository breederClubRepository = new BreederClubRepository();
 	private ClubRepository clubRepository = new ClubRepository();
 	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
-
-	public void CreateTableBreeder() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+	
+	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
+		if (rs != null) {
+            rs.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+	}
+	
+	public void CreateTableBreeder(Connection con, Statement stmt) throws SQLException {
 			System.out.println("Creating Table BREEDER ...");
-			Statement stmt = con.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS BREEDER"
 					+" (id INTEGER auto_increment, "
 					+"CC INTEGER UNIQUE, "
@@ -40,29 +52,18 @@ public class BreederRepository {
 					+"PRIMARY KEY (id))";
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER Created.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public void DropTableBreeder() {
-		try {
+	public void DropTableBreeder(Connection con, Statement stmt) throws SQLException {
 			System.out.println("Trying to drop BREEDER table...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
 			String sql = "DROP TABLE IF EXISTS BREEDER CASCADE";	
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER Droped.");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public ObservableList<Breeder> getAllBreeders() {
-		try {
+	public ObservableList<Breeder> getAllBreeders() throws SQLException {
 		System.out.println("Getting all Breeders...");
-		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
-				MyValues.USER, MyValues.PASSWORD);
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
 		String sql = "SELECT * FROM BREEDER";
 		ResultSet rs = stmt.executeQuery(sql);
@@ -83,111 +84,101 @@ public class BreederRepository {
 			b.setType(rs.getString(11));
 			b.setClub(clubRepository.getAllClubsByClubIds(breederClubRepository.getClubsFromBreederId(b.getId())));
 			b.setStam(breederFederationRepository.getAllByBreederId(b.getId()));
-			
 			breeders.add(b);
 		}
+		CloseConnection(con, stmt, null, rs);
 		return breeders;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
-	public void Insert(Breeder b) {
+	public void Insert(Breeder b) throws SQLException {
 		int breederId = -1;
-		try {
-			System.out.println("Insert Breeder in DataBase...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			String sql = "INSERT INTO "
-	                +"BREEDER(CC,Name,Nif,Cellphone,Email,Address,PostalCode,Locale,District,BreederType) "
-	                +"values(?,?,?,?,?,?,?,?,?,?)";
-			PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			if (b.getCC()==null)
-				stmt.setString(1, null);
-			else
-				stmt.setInt(1, b.getCC());
-	        stmt.setString(2, b.getName());
-	        if (b.getNif()==null)
-				stmt.setString(3, null);
-			else
-				stmt.setInt(3, b.getNif());
-	        stmt.setInt(4, b.getCellphone());
-	        if (b.getEmail()==null)
-				stmt.setString(5, null);
-			else
-				stmt.setString(5, b.getEmail());
-	        if (b.getAddress()==null)
-				stmt.setString(6, null);
-			else
-				stmt.setString(6, b.getAddress());
-	        if (b.getPostalCode()==null)
-				stmt.setString(7, null);
-			else
-				stmt.setString(7, b.getPostalCode());
-	        if (b.getLocale()==null)
-				stmt.setString(8, null);
-			else
-				stmt.setString(8, b.getLocale());
-	        if (b.getDistrict()==null)
-				stmt.setString(9, null);
-			else
-				stmt.setString(9, b.getDistrict());
-	        stmt.setString(10, b.getType());
-	        stmt.executeUpdate();
-			ResultSet rs = stmt.getGeneratedKeys();
-	        if (rs.next()) {
-	            breederId = rs.getInt(1);
-	        }
-			System.out.println("["+breederId+"] inserted: "+sql);
-			for (Club c : b.getClub())
-				breederClubRepository.Insert(breederId, c.getId());
-			for (Map.Entry<Integer, String> entry : b.getStam().entrySet())
-				breederFederationRepository.insert(breederId, entry.getKey(), entry.getValue());
-		} catch (Exception e) {
-			e.printStackTrace();
+		System.out.println("Insert Breeder in DataBase...");
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
+				MyValues.PASSWORD);
+		String sql = "INSERT INTO "
+				+ "BREEDER(CC,Name,Nif,Cellphone,Email,Address,PostalCode,Locale,District,BreederType) "
+				+ "values(?,?,?,?,?,?,?,?,?,?)";
+		PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		if (b.getCC() == null)
+			stmt.setString(1, null);
+		else
+			stmt.setInt(1, b.getCC());
+		stmt.setString(2, b.getName());
+		if (b.getNif() == null)
+			stmt.setString(3, null);
+		else
+			stmt.setInt(3, b.getNif());
+		stmt.setInt(4, b.getCellphone());
+		if (b.getEmail() == null)
+			stmt.setString(5, null);
+		else
+			stmt.setString(5, b.getEmail());
+		if (b.getAddress() == null)
+			stmt.setString(6, null);
+		else
+			stmt.setString(6, b.getAddress());
+		if (b.getPostalCode() == null)
+			stmt.setString(7, null);
+		else
+			stmt.setString(7, b.getPostalCode());
+		if (b.getLocale() == null)
+			stmt.setString(8, null);
+		else
+			stmt.setString(8, b.getLocale());
+		if (b.getDistrict() == null)
+			stmt.setString(9, null);
+		else
+			stmt.setString(9, b.getDistrict());
+		stmt.setString(10, b.getType());
+		stmt.executeUpdate();
+		ResultSet rs = stmt.getGeneratedKeys();
+		if (rs.next()) {
+			breederId = rs.getInt(1);
 		}
+		CloseConnection(con, null, stmt, rs);
+		System.out.println("[" + breederId + "] inserted: " + sql);
+		for (Club c : b.getClub())
+			breederClubRepository.Insert(breederId, c.getId());
+		for (Map.Entry<Integer, String> entry : b.getStam().entrySet())
+			breederFederationRepository.insert(breederId, entry.getKey(), entry.getValue());
 	}
 	
-	public void InsertOther(Breeder b) {
+	public void InsertOther(Breeder b) throws SQLException {
 		int breederId = -1;
-		try {
-			System.out.println("Insert Breeder in DataBase...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			String sql = "INSERT INTO "
-	                +"BREEDER(Name,Cellphone,Email,Address,Locale,District,BreederType) "
-	                +"values(?,?,?,?,?,?,?)";
-			PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			
-	        stmt.setString(1, b.getName());
-	        if (b.getCellphone()==null)
-	        	stmt.setString(2, null);
-        	else
-	        	stmt.setInt(2, b.getCellphone());
-	        if (b.getEmail()==null)
-				stmt.setString(3, null);
-			else
-				stmt.setString(3, b.getEmail());
-	        if (b.getAddress()==null)
-				stmt.setString(4, null);
-			else
-				stmt.setString(4, b.getAddress());
-	        if (b.getLocale()==null)
-				stmt.setString(5, null);
-			else
-				stmt.setString(5, b.getLocale());
-	        if (b.getDistrict()==null)
-				stmt.setString(6, null);
-			else
-				stmt.setString(6, b.getDistrict());
-	        stmt.setString(7, b.getType());
-	        stmt.executeUpdate();
-			ResultSet rs = stmt.getGeneratedKeys();
-	        if (rs.next())
-	            breederId = rs.getInt(1);
-			System.out.println("["+breederId+"] inserted: "+sql);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		System.out.println("Insert Breeder in DataBase...");
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		String sql = "INSERT INTO " + "BREEDER(Name,Cellphone,Email,Address,Locale,District,BreederType) "
+				+ "values(?,?,?,?,?,?,?)";
+		PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		stmt.setString(1, b.getName());
+		if (b.getCellphone() == null)
+			stmt.setString(2, null);
+		else
+			stmt.setInt(2, b.getCellphone());
+		if (b.getEmail() == null)
+			stmt.setString(3, null);
+		else
+			stmt.setString(3, b.getEmail());
+		if (b.getAddress() == null)
+			stmt.setString(4, null);
+		else
+			stmt.setString(4, b.getAddress());
+		if (b.getLocale() == null)
+			stmt.setString(5, null);
+		else
+			stmt.setString(5, b.getLocale());
+		if (b.getDistrict() == null)
+			stmt.setString(6, null);
+		else
+			stmt.setString(6, b.getDistrict());
+		stmt.setString(7, b.getType());
+		stmt.executeUpdate();
+		ResultSet rs = stmt.getGeneratedKeys();
+		if (rs.next())
+			breederId = rs.getInt(1);
+		CloseConnection(con, null, stmt, rs);
+		System.out.println("[" + breederId + "] inserted: " + sql);
+
 	}
 	
 	public boolean checkIfCCExists(int cc) throws SQLException {
@@ -195,7 +186,9 @@ public class BreederRepository {
 			Statement stmt = con.createStatement();
 			String sql = "SELECT CC FROM BREEDER WHERE CC="+cc+";";
 			ResultSet rs = stmt.executeQuery(sql);
-			return rs.next();	
+			boolean result = rs.next();
+			CloseConnection(con, stmt, null, rs);
+			return result;	
 	}
 	
 	public boolean checkIfNIFExists(int nif) throws SQLException {
@@ -203,7 +196,9 @@ public class BreederRepository {
 			Statement stmt = con.createStatement();
 			String sql = "SELECT Nif FROM BREEDER WHERE Nif="+nif+";";
 			ResultSet rs = stmt.executeQuery(sql);
-			return rs.next();
+			boolean result = rs.next();
+			CloseConnection(con, stmt,null, rs);
+			return result;
 	}
 
 	public boolean checkIfPhoneExists(int phone) throws SQLException {
@@ -211,7 +206,9 @@ public class BreederRepository {
 			Statement stmt = con.createStatement();
 			String sql = "SELECT Cellphone FROM BREEDER WHERE Cellphone="+phone+";";
 			ResultSet rs = stmt.executeQuery(sql);
-			return rs.next();
+			boolean result = rs.next();
+			CloseConnection(con, stmt,null, rs);
+			return result;
 	}
 	
 	public boolean checkIfEmailExists(String email) throws SQLException {
@@ -219,7 +216,9 @@ public class BreederRepository {
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM BREEDER WHERE Email='"+email+"';";
 			ResultSet rs = stmt.executeQuery(sql);
-			return rs.next();
+			boolean result = rs.next();
+			CloseConnection(con, stmt,null, rs);
+			return result;
 	}
 	
 	public boolean checkIfSTAMExists(String stam) throws SQLException {
@@ -227,11 +226,12 @@ public class BreederRepository {
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM BREEDER WHERE STAM='"+stam+"';";
 			ResultSet rs = stmt.executeQuery(sql);
-			return rs.next();
+			boolean result = rs.next();
+			CloseConnection(con, stmt,null, rs);
+			return result;
 	}
 	
-	public Breeder getBreederbyId(int id) {
-		try {
+	public Breeder getBreederbyId(int id) throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM BREEDER WHERE id="+id+";";
@@ -251,15 +251,11 @@ public class BreederRepository {
 				b.setDistrict(rs.getString(10));
 				b.setType(rs.getString(11));
 			}
+			CloseConnection(con, stmt, null, rs);
 			return b;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
-	public Breeder getBreederbyCC(int cc) {
-		try {
+	public Breeder getBreederbyCC(int cc) throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM BREEDER WHERE id="+cc+";";
@@ -279,11 +275,8 @@ public class BreederRepository {
 				b.setDistrict(rs.getString(10));
 				b.setType(rs.getString(11));
 			}
+			CloseConnection(con, stmt, null, rs);
 			return b;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
 }

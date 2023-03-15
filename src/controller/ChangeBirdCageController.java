@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -41,7 +42,7 @@ public class ChangeBirdCageController {
 	BirdsRepository birdsRepository = new BirdsRepository();
 	HistoricRepository historicRepository = new HistoricRepository();
 	
-	public void startValues(String band,String img,String currentCageCode) {
+	public void startValues(String band,String img,String currentCageCode) throws SQLException {
 		LbBand.setText(band);
 		IvImage.setImage(new Image(img));
 		LbCurrentCage.setText(currentCageCode);
@@ -57,7 +58,7 @@ public class ChangeBirdCageController {
 	}
 	
 	@FXML
-	public void btnChange(ActionEvent event) {
+	public void btnChange(ActionEvent event) throws SQLException {
 		if (validate()) {
 			Bird bird = birdsRepository.getBirdWhereString("Band",LbBand.getText());
 			String date = new SimpleDateFormat(MyValues.DATE_FORMATE).format(Date.from(Dtpicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -97,7 +98,6 @@ public class ChangeBirdCageController {
 				validate=false;
 			}
 		}
-		
 		return validate;
 	}
 	

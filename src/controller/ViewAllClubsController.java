@@ -6,10 +6,12 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import domains.Club;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
@@ -49,7 +51,13 @@ public class ViewAllClubsController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ClubRepository clubRepository = new ClubRepository();
-		ObservableList<Club> clubs = clubRepository.getAllClubs();
+		ObservableList<Club> clubs = FXCollections.observableArrayList();
+		try {
+			clubs = clubRepository.getAllClubs();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		colFederation.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFederation().getAcronym()));
 		colName.setCellValueFactory(new PropertyValueFactory<Club,String>("Name"));
 		colAcronym.setCellValueFactory(new PropertyValueFactory<Club,String>("Acronym"));

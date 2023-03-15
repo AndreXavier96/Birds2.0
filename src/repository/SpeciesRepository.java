@@ -12,97 +12,88 @@ import javafx.collections.ObservableList;
 
 public class SpeciesRepository {
 	
-	public void CreateTableSpecies() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-			System.out.println("Creating Table SPECIES ...");
-			Statement stmt = con.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS SPECIES"
-					+" (id INTEGER auto_increment, "
-					+"CommonName VARCHAR(255) NOT NULL, "
-					+"ScientificName VARCHAR(255) NOT NULL UNIQUE, "
-					+"IncubationDays INTEGER NOT NULL, "
-					+"BandingDays INTEGER NOT NULL, "
-					+"OutOfCageDays INTEGER NOT NULL, "
-					+"MaturityDays INTEGER NOT NULL, "
-					+"BandSize INTEGER NOT NULL, "
-					+"PRIMARY KEY (id))";
-		
-			stmt.executeUpdate(sql);
-			System.out.println("Table SPECIES Created.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+		if (rs != null) {
+            rs.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
 	}
 	
-	public void DropTableSpecies() {
-		try {
-			System.out.println("Trying to drop BIRDS table...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "DROP TABLE IF EXISTS SPECIES CASCADE";	
-			stmt.executeUpdate(sql);
-			System.out.println("Table SPECIES Droped.");
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+	public void CreateTableSpecies(Connection con, Statement stmt) throws SQLException {
+		System.out.println("Creating Table SPECIES ...");
+		String sql = "CREATE TABLE IF NOT EXISTS SPECIES" 
+					+ " (id INTEGER auto_increment, "
+					+ "CommonName VARCHAR(255) NOT NULL, " 
+					+ "ScientificName VARCHAR(255) NOT NULL UNIQUE, "
+					+ "IncubationDays INTEGER NOT NULL, " 
+					+ "BandingDays INTEGER NOT NULL, "
+					+ "OutOfCageDays INTEGER NOT NULL, " 
+					+ "MaturityDays INTEGER NOT NULL, " 
+					+ "BandSize INTEGER NOT NULL, "
+					+ "PRIMARY KEY (id))";
+		stmt.executeUpdate(sql);
+		System.out.println("Table SPECIES Created.");
 	}
 	
-	public void Insert(Specie specie) {
-		try {
+	public void DropTableSpecies(Connection con, Statement stmt) throws SQLException {
+		System.out.println("Trying to drop BIRDS table...");
+		String sql = "DROP TABLE IF EXISTS SPECIES CASCADE";
+		stmt.executeUpdate(sql);
+		System.out.println("Table SPECIES Droped.");
+	}
+	
+	public void Insert(Specie specie) throws SQLException {
 			System.out.println("Insert Specie in DataBase...");
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
-			
 			String sql = "INSERT INTO "
 					+"SPECIES(CommonName,ScientificName,IncubationDays,BandingDays,OutOfCageDays,MaturityDays,BandSize) "
 					+"values('"+specie.getCommonName()+"','"+specie.getScientificName()+"','"
 					+specie.getIncubationDays()+"','"+specie.getDaysToBand()+"','"+specie.getOutofCageAfterDays()
 					+"','"+specie.getMaturityAfterDays()+"','"+specie.getBandSize()+"')";
 			int i = stmt.executeUpdate(sql);
+			CloseConnection(con, stmt, null);
 			System.out.println(i+" Specie Record inserted");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public Specie getSpecieById(Integer id) {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM SPECIES WHERE SPECIES.id='"+id+"'";
-			ResultSet rs  = stmt.executeQuery(sql);
-			Specie s = new Specie();
-			while (rs.next()) {
-				s.setId(rs.getInt(1));
-				s.setCommonName(rs.getString(2));
-				s.setScientificName(rs.getString(3));
-				s.setIncubationDays(rs.getInt(4));
-				s.setDaysToBand(rs.getInt(5));
-				s.setOutofCageAfterDays(rs.getInt(6));
-				s.setMaturityAfterDays(rs.getInt(7));
-				s.setBandSize(rs.getInt(8));
-			}
-			return s;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;}
+	public Specie getSpecieById(Integer id) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM SPECIES WHERE SPECIES.id='" + id + "'";
+		ResultSet rs = stmt.executeQuery(sql);
+		Specie s = new Specie();
+		while (rs.next()) {
+			s.setId(rs.getInt(1));
+			s.setCommonName(rs.getString(2));
+			s.setScientificName(rs.getString(3));
+			s.setIncubationDays(rs.getInt(4));
+			s.setDaysToBand(rs.getInt(5));
+			s.setOutofCageAfterDays(rs.getInt(6));
+			s.setMaturityAfterDays(rs.getInt(7));
+			s.setBandSize(rs.getInt(8));
 		}
-	
+		CloseConnection(con, stmt, rs);
+		return s;
+	}
 	
 	public boolean checkSpecieByScientificName(String scientificName) throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM SPECIES WHERE SPECIES.ScientificName='"+scientificName+"'";
 			ResultSet rs  = stmt.executeQuery(sql);
-			return rs.next();
+			boolean result = rs.next();
+			CloseConnection(con, stmt, rs);
+			return result;
 		}
 	
-	public ObservableList<Specie> getAllSpecies() {
-		try {
+		public ObservableList<Specie> getAllSpecies() throws SQLException {
 			System.out.println("Getting all Species...");
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
-					MyValues.USER, MyValues.PASSWORD);
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM Species";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -120,10 +111,7 @@ public class SpeciesRepository {
 				s.setBandSize(rs.getInt(8));
 				species.add(s);
 			}
+			CloseConnection(con, stmt, rs);
 			return species;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
 		}
-	}
 }

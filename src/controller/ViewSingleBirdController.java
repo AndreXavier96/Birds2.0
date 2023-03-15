@@ -5,12 +5,14 @@ import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Optional;
 import constants.MyValues;
 import constants.PathsConstants;
 import domains.Bird;
 import domains.Historic;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -106,7 +108,7 @@ public class ViewSingleBirdController{
 	}
 	
 	@FXML
-	private void btnChangeBirdCage() throws IOException {
+	private void btnChangeBirdCage() throws IOException, SQLException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeBirdCage.fxml"));
 		Parent root = loader.load();
 		ChangeBirdCageController birdCageController = loader.getController();
@@ -171,7 +173,13 @@ public class ViewSingleBirdController{
 		colTitle.setCellValueFactory(new PropertyValueFactory<Historic, String>("title"));
 	    colDate.setCellValueFactory(new PropertyValueFactory<Historic, String>("date"));
 	    colObs.setCellValueFactory(new PropertyValueFactory<Historic, String>("obs"));
-	    ObservableList<Historic> historics = historicRepository.getAllByBirdId(b.getId());
+	    ObservableList<Historic> historics=FXCollections.observableArrayList();
+		try {
+			historics = historicRepository.getAllByBirdId(b.getId());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    TableHistoric.setItems(historics);
 	}
 	

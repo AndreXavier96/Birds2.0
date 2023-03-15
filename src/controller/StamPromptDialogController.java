@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import constants.MyValues;
@@ -29,7 +30,7 @@ public class StamPromptDialogController {
 	}
 	
 	@FXML
-	public void submitButton(ActionEvent event) {
+	public void submitButton(ActionEvent event) throws SQLException {
 		if (validate()) {
 			 Stage stage = (Stage) stamTextField.getScene().getWindow();
 			 promptResult = stamTextField.getText();
@@ -41,7 +42,7 @@ public class StamPromptDialogController {
 	        return promptResult;
 	    }
 	
-	public boolean validate() {
+	public boolean validate() throws SQLException {
 		boolean validate = false;
 		if (stamTextField.getText().length() == 0 || stamTextField.getText().isEmpty()) {
 			stamTextField.setStyle(MyValues.ERROR_BOX_STYLE);

@@ -6,10 +6,12 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import domains.Mutation;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
@@ -38,7 +40,13 @@ public class ViewAllMutationsController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		MutationsRepository mutationsRepository = new MutationsRepository();
-		ObservableList<Mutation> mutations = mutationsRepository.getAllMutations();
+		ObservableList<Mutation> mutations=FXCollections.observableArrayList();
+		try {
+			mutations = mutationsRepository.getAllMutations();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		colName.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Name"));
 		colVar1.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Var1"));
 		colVar2.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Var3"));

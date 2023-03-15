@@ -13,13 +13,22 @@ import javafx.collections.ObservableList;
 
 public class ClubRepository {
 	
-	FederationRepository federationRepository = new FederationRepository();
+	private FederationRepository federationRepository = new FederationRepository();
+	
+	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+		if (rs != null) {
+            rs.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+	}
 
-	public void createTableClub() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+	public void createTableClub(Connection con, Statement stmt) throws SQLException {
 			System.out.println("Creating Table CLUB ...");
-			Statement stmt = con.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS CLUB"
 					+" (id INTEGER auto_increment, "
 					+"Name VARCHAR(255) NOT NULL UNIQUE, "
@@ -33,26 +42,16 @@ public class ClubRepository {
 					+"FOREIGN KEY (FederationId) REFERENCES FEDERATION(id))";
 			stmt.executeUpdate(sql);
 			System.out.println("Table CLUB Created.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public void dropTableClub() {
-		try {
+	public void dropTableClub(Connection con, Statement stmt) throws SQLException {
 			System.out.println("Trying to drop CLUB table...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
 			String sql = "DROP TABLE IF EXISTS CLUB CASCADE";	
 			stmt.executeUpdate(sql);
 			System.out.println("Table CLUB Droped.");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
-	public void Insert(Club c) {
-		try {
+	public void Insert(Club c) throws SQLException {
 			System.out.println("Insert Club in DataBase...");
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
@@ -61,44 +60,37 @@ public class ClubRepository {
 					+"values('"+c.getName()+"','"+c.getAcronym()+"','"+c.getLocale()+"','"
 					+c.getAddress()+"','"+c.getPhone()+"','"+c.getEmail()+"','"+c.getFederation().getId()+"')";
 			int i = stmt.executeUpdate(sql);
+			CloseConnection(con, stmt, null);
 			System.out.println(i+"Club inserted: "+sql);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	
-	public ObservableList<Club> getAllClubs() {
-		try {
-			System.out.println("Getting all Clubs...");
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
-					MyValues.USER, MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM CLUB";
-			ResultSet rs = stmt.executeQuery(sql);
-			ObservableList<Club> clubs = FXCollections.observableArrayList();
-			while (rs.next()) {
-				System.out.println("Get Clubs: " + rs.getString(3));
-				Club c = new Club();
-				c.setId(rs.getInt(1));
-				c.setName(rs.getString(2));
-				c.setAcronym(rs.getString(3));
-				c.setLocale(rs.getString(4));
-				c.setAddress(rs.getString(5));;
-				c.setPhone(rs.getString(6));
-				c.setEmail(rs.getString(7));
-				c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
-				clubs.add(c);
-			}
-			return clubs;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+	public ObservableList<Club> getAllClubs() throws SQLException {
+		System.out.println("Getting all Clubs...");
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM CLUB";
+		ResultSet rs = stmt.executeQuery(sql);
+		ObservableList<Club> clubs = FXCollections.observableArrayList();
+		while (rs.next()) {
+			System.out.println("Get Clubs: " + rs.getString(3));
+			Club c = new Club();
+			c.setId(rs.getInt(1));
+			c.setName(rs.getString(2));
+			c.setAcronym(rs.getString(3));
+			c.setLocale(rs.getString(4));
+			c.setAddress(rs.getString(5));
+			;
+			c.setPhone(rs.getString(6));
+			c.setEmail(rs.getString(7));
+			c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
+			clubs.add(c);
 		}
+		CloseConnection(con, stmt, rs);
+		return clubs;
 	}
 	
-	public Club getClubWhereString(String col, String value) {
-		try {
+	public Club getClubWhereString(String col, String value) throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM CLUB WHERE "+col+"='"+value+"';";
@@ -113,17 +105,15 @@ public class ClubRepository {
 				c.setPhone(rs.getString(6));
 				c.setEmail(rs.getString(7));
 				c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
+				CloseConnection(con, stmt, rs);
 				return c;
-			}else
+			}else {
+				CloseConnection(con, stmt, rs);
 				return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+			}
 	}
 	
-	public Club getClubByID(Integer id) {
-		try {
+	public Club getClubByID(Integer id) throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM CLUB WHERE id="+id+";";
@@ -138,13 +128,13 @@ public class ClubRepository {
 				c.setPhone(rs.getString(6));
 				c.setEmail(rs.getString(7));
 				c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
+				CloseConnection(con, stmt, rs);
 				return c;
-			}else
+			}else {
+				CloseConnection(con, stmt, rs);
 				return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+			}
+				
 	}
 	
 	public boolean checkIfExistsString(String col,String value) throws SQLException {
@@ -152,12 +142,13 @@ public class ClubRepository {
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM CLUB WHERE "+col+"='"+value+"';";
 			ResultSet rs = stmt.executeQuery(sql);
-			return rs.next();	
+			boolean result = rs.next();
+			CloseConnection(con, stmt, rs);
+			return result;	
 	}
 	
 	
-	public ObservableList<Club> getAvailableClubs(Integer breederId) {
-	    try {
+	public ObservableList<Club> getAvailableClubs(Integer breederId) throws SQLException {
 	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
 	        Statement stmt = con.createStatement();
 	        String sql = "SELECT * FROM CLUB WHERE id NOT IN (SELECT ClubId FROM BREEDER_CLUB WHERE BreederId = " + breederId + ")";
@@ -175,16 +166,12 @@ public class ClubRepository {
 				c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
 	            availableClubs.add(c);
 	        }
-	        con.close();
+	        CloseConnection(con, stmt, rs);
 	        return availableClubs;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return null;
-	    }
 	}
 
 	
-	public ObservableList<Club> getAllClubsByClubIds(ObservableList<Integer> clubIds){
+	public ObservableList<Club> getAllClubsByClubIds(ObservableList<Integer> clubIds) throws SQLException{
 		 ObservableList<Club> allClubs = FXCollections.observableArrayList();
 		 for (Integer clubId : clubIds) {
 		        Club club = getClubWhereString("id",Integer.toString(clubId));

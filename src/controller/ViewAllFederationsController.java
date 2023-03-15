@@ -6,9 +6,11 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import domains.Federation;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
@@ -46,7 +48,13 @@ public class ViewAllFederationsController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		FederationRepository federationRepository = new  FederationRepository();
-		ObservableList<Federation> federations = federationRepository.getAllFederations();
+		ObservableList<Federation> federations = FXCollections.observableArrayList();
+		try {
+			federations = federationRepository.getAllFederations();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		colName.setCellValueFactory(new PropertyValueFactory<Federation,String>("Name"));
 		colAcronym.setCellValueFactory(new PropertyValueFactory<Federation,String>("Acronym"));
 		colCountry.setCellValueFactory(new PropertyValueFactory<Federation,String>("Country"));

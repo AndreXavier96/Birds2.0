@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -13,6 +14,7 @@ import domains.Breeder;
 import domains.Club;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
@@ -58,7 +60,13 @@ public class ViewAllBreedersController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		BreederRepository breederRepository = new BreederRepository();
-		ObservableList<Breeder> breeders = breederRepository.getAllBreeders();
+		ObservableList<Breeder> breeders = FXCollections.observableArrayList();;
+		try {
+			breeders = breederRepository.getAllBreeders();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		colCC.setCellValueFactory(new PropertyValueFactory<Breeder,Integer>("CC"));
 		colName.setCellValueFactory(new PropertyValueFactory<Breeder,String>("Name"));
 		colNIF.setCellValueFactory(new PropertyValueFactory<Breeder,Integer>("Nif"));
@@ -95,7 +103,13 @@ public class ViewAllBreedersController implements Initializable {
 		        for (Map.Entry<Integer, String> entry : stam.entrySet()) {
 		            Integer federationId = entry.getKey();
 		            String federationStam = entry.getValue();
-		            String federationName = federationRepository.getFederationWhereInt("id", federationId).getAcronym();
+		            String federationName = "";
+					try {
+						federationName = federationRepository.getFederationWhereInt("id", federationId).getAcronym();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 		            sb.append("[").append(federationName).append("]").append(federationStam).append(", ");
 		        }
 		        if (sb.length() > 2) {

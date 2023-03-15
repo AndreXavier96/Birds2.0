@@ -19,11 +19,20 @@ public class BirdsRepository {
 	private MutationsRepository mutationsRepository = new MutationsRepository();
 	private StateRepository stateRepository = new StateRepository();
 	
-	public void CreateTableBird() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+		if (rs != null) {
+            rs.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+	}
+	
+	public void CreateTableBird(Connection con,Statement stmt) throws SQLException {
 			System.out.println("Creating Table Birds ...");
-			Statement stmt = con.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS BIRDS"
 					+" (id INTEGER auto_increment, "
 					+"Band VARCHAR(255) NOT NULL, "
@@ -53,22 +62,13 @@ public class BirdsRepository {
 		            +"FOREIGN KEY (StateId) REFERENCES STATE (id))";
 			stmt.executeUpdate(sql);
 			System.out.println("Table BIRDS Created.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public void DropTableBird() {
-		try {
+	public void DropTableBird(Connection con,Statement stmt) throws SQLException {
 			System.out.println("Trying to drop BIRDS table...");
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
 			String sql = "DROP TABLE IF EXISTS BIRDS CASCADE";	
 			stmt.executeUpdate(sql);
 			System.out.println("Table BIRDS Droped.");
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
 	}
 	
 	public ObservableList<Bird> getAllBirds() {
@@ -108,6 +108,7 @@ public class BirdsRepository {
 					b.setObs(rs.getString(17));
 					birds.add(b);
 				}
+				CloseConnection(con, stmt, rs);
 				return birds;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -152,6 +153,7 @@ public class BirdsRepository {
 				b.setObs(rs.getString(17));
 				birds.add(b);
 			}
+			CloseConnection(con, stmt, rs);
 			return birds;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -190,6 +192,7 @@ public class BirdsRepository {
 	            b.setPosture(rs.getInt(15));
 	            b.setImage(rs.getString(16));
 	            b.setObs(rs.getString(17));
+	            CloseConnection(con, stmt, rs);
 	            return b;
 	        } else {
 	            return null;
@@ -231,6 +234,7 @@ public class BirdsRepository {
 	            b.setPosture(rs.getInt(15));
 	            b.setImage(rs.getString(16));
 	            b.setObs(rs.getString(17));
+	            CloseConnection(con, stmt, rs);
 	            return b;
 	        } else {
 	            return null;
@@ -263,6 +267,7 @@ public class BirdsRepository {
 			if (rs.next()) {
 				id = rs.getInt(1);
 			}
+			CloseConnection(con, stmt, rs);
 			System.out.println("Bird Record inserted with id: " + id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -277,6 +282,7 @@ public class BirdsRepository {
 	        stmt.setString(1, value);
 	        stmt.setInt(2, id);
 	        stmt.executeUpdate();
+	        CloseConnection(con, stmt, null);
 	        System.out.println("Bird with id " + id + " updated, coluna "+col+" para valor: "+value+" .");
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -293,6 +299,7 @@ public class BirdsRepository {
 	        	stmt.setInt(1, value);
 	        stmt.setInt(2, id);
 	        stmt.executeUpdate();
+	        CloseConnection(con, stmt, null);
 	        System.out.println("Bird with id " + id + " updated, coluna "+col+" para valor: "+value+" .");
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -320,8 +327,8 @@ public class BirdsRepository {
 	        stmt.setString(15, bird.getImage());
 	        stmt.setString(16, bird.getObs());
 	        stmt.setInt(17, bird.getId());
-	        
 	        stmt.executeUpdate();
+	        CloseConnection(con, stmt, null);
 	        System.out.println("Bird with id " + bird.getId() + " updated.");
 	        return bird;
 	    } catch (SQLException e) {
@@ -366,6 +373,7 @@ public class BirdsRepository {
 				b.setObs(rs.getString(17));
 				birds.add(b);
 			}
+			CloseConnection(con, stmt, rs);
 			return birds;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -410,6 +418,7 @@ public class BirdsRepository {
 				b.setObs(rs.getString(17));
 				birds.add(b);
 			}
+			CloseConnection(con, stmt, rs);
 			return birds;
 		} catch (Exception e) {
 			e.printStackTrace();

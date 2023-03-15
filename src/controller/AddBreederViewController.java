@@ -81,7 +81,12 @@ public class AddBreederViewController implements Initializable {
 			}
 		    }
 		});
-		availableClubs = FXCollections.observableArrayList(clubRepository.getAllClubs());
+		try {
+			availableClubs = FXCollections.observableArrayList(clubRepository.getAllClubs());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assignedClubs = FXCollections.observableArrayList();
 		clubListViewAvailable.setItems(availableClubs);
 		clubListViewAssigned.setItems(assignedClubs);

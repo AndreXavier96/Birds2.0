@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -92,7 +93,7 @@ public class ChangeBirdStateController implements Initializable{
 	}
 	
 	@FXML
-	public void btnChange(ActionEvent event) {
+	public void btnChange(ActionEvent event) throws SQLException {
 		if (validate()) {
 			State state = new State();
 			state.setType(CbState.getValue());
