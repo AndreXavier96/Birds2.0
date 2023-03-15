@@ -63,9 +63,9 @@
       </AnchorPane>
       <AnchorPane layoutX="14.0" layoutY="155.0" prefHeight="524.0" prefWidth="1252.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="155.0">
          <children>
-            <TabPane prefHeight="418.0" prefWidth="853.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TabPane fx:id="TabPane" prefHeight="418.0" prefWidth="853.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
-                <Tab text="Ficha">
+                <Tab fx:id="TabPersonalInfo" text="Ficha">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="411.0" prefWidth="853.0">
                            <children>
@@ -363,16 +363,16 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="838.0">
                            <children>
-                              <TableView fx:id="TbDescendants" layoutY="-2.0" prefHeight="389.0" prefWidth="853.0">
+                              <TableView fx:id="TbDescendants" layoutY="-2.0" prefHeight="389.0" prefWidth="853.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
-                                  <TableColumn fx:id="TcBand" prefWidth="75.0" text="Anilha" />
-                                  <TableColumn fx:id="TcFather" prefWidth="75.0" text="Pai" />
-                                    <TableColumn fx:id="TcMother" prefWidth="75.0" text="Mae" />
-                                    <TableColumn fx:id="TcState" prefWidth="75.0" text="Estado" />
+                                  <TableColumn fx:id="TcBand" prefWidth="150.0" text="Anilha" />
+                                  <TableColumn fx:id="TcFather" prefWidth="150.0" text="Pai" />
+                                    <TableColumn fx:id="TcMother" prefWidth="150.0" text="Mae" />
+                                    <TableColumn fx:id="TcState" prefWidth="150.0" text="Estado" />
                                     <TableColumn fx:id="TcCage" prefWidth="75.0" text="Gaiola" />
                                     <TableColumn fx:id="TcBrooding" prefWidth="75.0" text="Ninhada" />
-                                    <TableColumn fx:id="TcMutation" prefWidth="75.0" text="Mutacao" />
-                                    <TableColumn fx:id="TcBreeder" prefWidth="75.0" text="Criador" />
+                                    <TableColumn fx:id="TcMutation" prefWidth="150.0" text="Mutacao" />
+                                    <TableColumn fx:id="TcBreeder" prefWidth="150.0" text="Criador" />
                                 </columns>
                               </TableView>
                            </children>

@@ -21,6 +21,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -44,6 +46,11 @@ public class ViewSingleBirdController{
 	private MenuBar menuBar;
 	@FXML
 	private Menu menuFile;
+	
+	@FXML
+	private TabPane TabPane;
+	@FXML
+	private Tab TabPersonalInfo;
 	
 	@FXML
 	private Label LabelAlert;
@@ -169,6 +176,168 @@ public class ViewSingleBirdController{
 		historic(b);
 	}
 	
+	public void personalInfo(Bird b) {
+		LbTitle.setText("Bird "+b.getBand());
+		LbBand.setText(b.getBand());
+		LbSpecie.setText(b.getSpecies().getCommonName());
+		LbMutation.setText(b.getMutations().getName());
+		LbYear.setText(b.getYear().toString());
+		LbSex.setText(b.getSex());
+		LbClassification.setText("TODO");
+		LbEntryDate.setText(b.getEntryDate().toString());
+		LbCage.setText(b.getCage().getCode());
+		LbEntryType.setText(b.getEntryType());
+		LbState.setText(b.getState().getType());
+		if (LbEntryType.getText().equals(MyValues.COMPRA)) {
+			LbBuyPrice.setText(b.getBuyPrice().toString()+"\u20AC");
+			ApBuyPrice.setVisible(true);
+		}else 
+			ApBuyPrice.setVisible(false);
+		if (LbState.getText().equals(MyValues.VENDIDO)) {
+			LbSellPrice.setText(b.getState().getValor().toString()+"\u20AC");
+			ApSellPrice.setVisible(true);
+		}else
+			ApSellPrice.setVisible(false);
+		LbObs.setText(b.getObs());
+		LbBreeder.setText(b.getBreeder().getName());
+		if (!b.getImage().isEmpty()) {
+			String s = b.getImage();
+			if (Files.exists(Paths.get(s.substring(s.indexOf(':')+1))))
+				ImBird.setImage(new Image(b.getImage()));
+			else
+				ImBird.setImage(PathsConstants.DEFAULT_IMAGE);
+		}
+		
+}
+	
+	public void affiliation(Bird b) {
+		if (b.getFather() != null) {
+			LbBandFather.setText(b.getFather().getBand());
+			if (!b.getFather().getImage().isEmpty()) {
+				String s = b.getFather().getImage();
+				if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+					ImFather.setImage(new Image(b.getFather().getImage()));
+				else
+					ImFather.setImage(PathsConstants.DEFAULT_IMAGE);
+			}
+			LbBandFather.setOnMouseClicked(event -> {
+				if (event.getClickCount() == 2) {
+					search(LbBandFather.getText());
+					TabPane.getSelectionModel().select(TabPersonalInfo);
+				}
+			});
+	
+			if (b.getFather().getFather() != null) {
+				LbBandGrandFatherFather.setText(b.getFather().getFather().getBand());
+				if (!b.getFather().getFather().getImage().isEmpty()) {
+					String s = b.getFather().getFather().getImage();
+					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+						ImGrandFatherFather.setImage(new Image(b.getFather().getFather().getImage()));
+					else
+						ImGrandFatherFather.setImage(PathsConstants.DEFAULT_IMAGE);
+				}
+				LbBandGrandFatherFather.setOnMouseClicked(event -> {
+					if (event.getClickCount() == 2) {
+						search(LbBandGrandFatherFather.getText());
+						TabPane.getSelectionModel().select(TabPersonalInfo);
+					}
+				});
+			}
+			if (b.getFather().getMother() != null) {
+				LbBandGrandFatherMother.setText(b.getFather().getMother().getBand());
+				if (!b.getFather().getMother().getImage().isEmpty()) {
+					String s = b.getFather().getMother().getImage();
+					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+						ImGrandFatherMother.setImage(new Image(b.getFather().getMother().getImage()));
+					else
+						ImGrandFatherMother.setImage(PathsConstants.DEFAULT_IMAGE);
+				}
+				LbBandGrandFatherMother.setOnMouseClicked(event -> {
+					if (event.getClickCount() == 2) {
+						search(LbBandGrandFatherMother.getText());
+						TabPane.getSelectionModel().select(TabPersonalInfo);
+					}
+				});
+			}
+		}
+	
+		if (b.getMother() != null) {
+			LbBandMother.setText(b.getMother().getBand());
+			if (!b.getMother().getImage().isEmpty()) {
+				String s = b.getMother().getImage();
+				if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+					ImMother.setImage(new Image(b.getMother().getImage()));
+				else
+					ImMother.setImage(PathsConstants.DEFAULT_IMAGE);
+			}
+			LbBandMother.setOnMouseClicked(event -> {
+				if (event.getClickCount() == 2) {
+					search(LbBandMother.getText());
+					TabPane.getSelectionModel().select(TabPersonalInfo);
+				}
+			});
+	
+			if (b.getMother().getFather() != null) {
+				LbBandGrandMotherFather.setText(b.getMother().getFather().getBand());
+				if (!b.getMother().getFather().getImage().isEmpty()) {
+					String s = b.getMother().getFather().getImage();
+					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+						ImGrandMotherFather.setImage(new Image(b.getMother().getFather().getImage()));
+					else
+						ImGrandMotherFather.setImage(PathsConstants.DEFAULT_IMAGE);
+				}
+				LbBandGrandMotherFather.setOnMouseClicked(event -> {
+					if (event.getClickCount() == 2) {
+						search(LbBandGrandMotherFather.getText());
+						TabPane.getSelectionModel().select(TabPersonalInfo);
+					}
+				});
+			}
+			if (b.getMother().getMother() != null) {
+				LbBandGrandMotherMother.setText(b.getMother().getMother().getBand());
+				if (!b.getMother().getMother().getImage().isEmpty()) {
+					String s = b.getMother().getMother().getImage();
+					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
+						ImGrandMotherMother.setImage(new Image(b.getMother().getMother().getImage()));
+					else
+						ImGrandMotherMother.setImage(PathsConstants.DEFAULT_IMAGE);
+				}
+				LbBandGrandMotherMother.setOnMouseClicked(event -> {
+					if (event.getClickCount() == 2) {
+						search(LbBandGrandMotherMother.getText());
+						TabPane.getSelectionModel().select(TabPersonalInfo);
+					}
+				});
+			}
+		}
+	}
+	
+	public void descendants(Bird b) {
+		BirdsRepository birdsRepository = new BirdsRepository();
+		ObservableList<Bird> birds = birdsRepository.getAllWhereIntOrWhereInt("Father", b.getId(), "Mother", b.getId());
+		TcBand.setCellValueFactory(new PropertyValueFactory<>("Band"));
+		TcFather.setCellValueFactory(cellData -> new SimpleStringProperty(
+				Optional.ofNullable(cellData.getValue().getFather()).map(Bird::getBand).orElse("")));
+		TcMother.setCellValueFactory(cellData -> new SimpleStringProperty(
+				Optional.ofNullable(cellData.getValue().getMother()).map(Bird::getBand).orElse("")));
+		TcState.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getState().getType()));
+		TcCage.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCage().getCode()));
+//		TcBrooding
+		TcMutation.setCellValueFactory(
+				cellData -> new SimpleStringProperty(cellData.getValue().getMutations().getName()));
+		TcBreeder.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBreeder().getName()));
+		TbDescendants.setItems(birds);
+		TbDescendants.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				Bird selectedBird = TbDescendants.getSelectionModel().getSelectedItem();
+				if (selectedBird != null) {
+					search(selectedBird.getBand());
+					TabPane.getSelectionModel().select(TabPersonalInfo);
+				}
+			}
+		});
+	}
+	
 	public void historic(Bird b) {
 		colTitle.setCellValueFactory(new PropertyValueFactory<Historic, String>("title"));
 	    colDate.setCellValueFactory(new PropertyValueFactory<Historic, String>("date"));
@@ -181,122 +350,6 @@ public class ViewSingleBirdController{
 			e.printStackTrace();
 		}
 	    TableHistoric.setItems(historics);
-	}
-	
-	public void affiliation(Bird b) {
-		if (b.getFather() != null) {
-			LbBandFather.setText(b.getFather().getBand());
-			if (!b.getFather().getImage().isEmpty()) {
-				String s = b.getFather().getImage();
-				if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
-					ImFather.setImage(new Image(b.getFather().getImage()));
-				else
-					ImFather.setImage(PathsConstants.DEFAULT_IMAGE);
-			}
-			if (b.getFather().getFather() != null) {
-				LbBandGrandFatherFather.setText(b.getFather().getFather().getBand());
-				if (!b.getFather().getFather().getImage().isEmpty()) {
-					String s = b.getFather().getFather().getImage();
-					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
-						ImGrandFatherFather.setImage(new Image(b.getFather().getFather().getImage()));
-					else
-						ImGrandFatherFather.setImage(PathsConstants.DEFAULT_IMAGE);
-				}
-			}
-			if (b.getFather().getMother() != null) {
-				LbBandGrandFatherMother.setText(b.getFather().getMother().getBand());
-				if (!b.getFather().getMother().getImage().isEmpty()) {
-					String s = b.getFather().getMother().getImage();
-					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
-						ImGrandFatherMother.setImage(new Image(b.getFather().getMother().getImage()));
-					else
-						ImGrandFatherMother.setImage(PathsConstants.DEFAULT_IMAGE);
-				}
-			}
-		}
-		
-		if (b.getMother() != null) {
-			LbBandMother.setText(b.getMother().getBand());
-			if (!b.getMother().getImage().isEmpty()) {
-				String s = b.getMother().getImage();
-				if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
-					ImMother.setImage(new Image(b.getMother().getImage()));
-				else
-					ImMother.setImage(PathsConstants.DEFAULT_IMAGE);
-			}
-			if (b.getMother().getFather() != null) {
-				LbBandGrandMotherFather.setText(b.getMother().getFather().getBand());
-				if (!b.getMother().getFather().getImage().isEmpty()) {
-					String s = b.getMother().getFather().getImage();
-					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
-						ImGrandMotherFather.setImage(new Image(b.getMother().getFather().getImage()));
-					else
-						ImGrandMotherFather.setImage(PathsConstants.DEFAULT_IMAGE);
-				}
-			}
-			if (b.getMother().getMother() != null) {
-				LbBandGrandMotherMother.setText(b.getMother().getMother().getBand());
-				if (!b.getMother().getMother().getImage().isEmpty()) {
-					String s = b.getMother().getMother().getImage();
-					if (Files.exists(Paths.get(s.substring(s.indexOf(':') + 1))))
-						ImGrandMotherMother.setImage(new Image(b.getMother().getMother().getImage()));
-					else
-						ImGrandMotherMother.setImage(PathsConstants.DEFAULT_IMAGE);
-				}
-			}
-		}
-	}
-
-	public void personalInfo(Bird b) {
-			LbTitle.setText("Bird "+b.getBand());
-			LbBand.setText(b.getBand());
-			LbSpecie.setText(b.getSpecies().getCommonName());
-			LbMutation.setText(b.getMutations().getName());
-			LbYear.setText(b.getYear().toString());
-			LbSex.setText(b.getSex());
-			LbClassification.setText("TODO");
-			LbEntryDate.setText(b.getEntryDate().toString());
-			LbCage.setText(b.getCage().getCode());
-			LbEntryType.setText(b.getEntryType());
-			LbState.setText(b.getState().getType());
-			if (LbEntryType.getText().equals(MyValues.COMPRA)) {
-				LbBuyPrice.setText(b.getBuyPrice().toString()+"\u20AC");
-				ApBuyPrice.setVisible(true);
-			}else 
-				ApBuyPrice.setVisible(false);
-			if (LbState.getText().equals(MyValues.VENDIDO)) {
-				LbSellPrice.setText(b.getState().getValor().toString()+"\u20AC");
-				ApSellPrice.setVisible(true);
-			}else
-				ApSellPrice.setVisible(false);
-			LbObs.setText(b.getObs());
-			LbBreeder.setText(b.getBreeder().getName());
-			if (!b.getImage().isEmpty()) {
-				String s = b.getImage();
-				if (Files.exists(Paths.get(s.substring(s.indexOf(':')+1))))
-					ImBird.setImage(new Image(b.getImage()));
-				else
-					ImBird.setImage(PathsConstants.DEFAULT_IMAGE);
-			}
-			
-	}
-	
-	public void descendants(Bird b) {
-		BirdsRepository birdsRepository = new BirdsRepository();
-		ObservableList<Bird> birds = birdsRepository.getAllWhereIntOrWhereInt("Father",b.getId(),"Mother",b.getId());
-		TcBand.setCellValueFactory(new PropertyValueFactory<>("Band"));
-		TcFather.setCellValueFactory(cellData -> new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getFather())
-                .map(Bird::getBand)
-                .orElse("")));
-		TcMother.setCellValueFactory(cellData ->  new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getMother())
-	    		.map(Bird::getBand)
-	    		.orElse("")));
-		TcState.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getState().getType()));
-		TcCage.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getCage().getCode()));
-//		TcBrooding
-		TcMutation.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getMutations().getName()));
-		TcBreeder.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getBreeder().getName()));
-		TbDescendants.setItems(birds);
 	}
 	
 	public boolean validator() {
