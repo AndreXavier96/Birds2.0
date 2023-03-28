@@ -147,6 +147,29 @@ public class ViewSingleBirdController{
 	}
 	
 	@FXML
+	private void btnDeleteBird() throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
+		Parent root = loader.load();
+		ConfirmationController confirmationController = loader.getController();
+		confirmationController.getLbText().setText("Tem a certeza que quer apagar este passaro: '"+LbBand.getText()+"'?");
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setTitle(MyValues.TITLE_DELETE_BIRD+LbBand.getText());
+		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+		stage.setScene(scene);
+		stage.showAndWait();
+		if (confirmationController.isConfirmed()) {
+			try {
+				Bird bird = birdsRepository.getBirdWhereString("Band", LbBand.getText());
+				birdsRepository.deleteBird(bird);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			clearAllFields();
+		}
+	}
+	
+	@FXML
 	public void btnSearchForBand(ActionEvent event) {
 		clearAllFields();
 		if (validator()) {
