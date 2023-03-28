@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -156,7 +157,9 @@ public class ViewAllBirdsController implements Initializable {
 		if (confirmationController.isConfirmed()) {
 			try {
 				birdsRepository.deleteBird(bird);
-				tableID.getItems().remove(bird);
+//				tableID.getItems().remove(bird);
+				ObservableList<Bird> birds = birdsRepository.getAllBirds();
+				tableID.setItems(birds);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
