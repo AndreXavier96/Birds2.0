@@ -434,4 +434,19 @@ public class BirdsRepository {
 	        return result;
 	}
 
+	public void deleteBird(Bird bird) throws SQLException {
+		try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+		         PreparedStatement pstmt = con.prepareStatement("DELETE FROM BIRDS WHERE id=?")){
+			    pstmt.setInt(1, bird.getId());
+			    int rowsDeleted = pstmt.executeUpdate();
+			    if (rowsDeleted == 0) {
+		            throw new SQLException("Failed to delete bird, no rows affected.");
+			    }else {
+			    	 System.out.println("Bird with id " + bird.getId() + " deleted!");
+			    }
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+	
 }

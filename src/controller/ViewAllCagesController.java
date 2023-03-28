@@ -97,7 +97,7 @@ public class ViewAllCagesController implements Initializable {
 		}
 
 		ConfirmationController confirmationController = loader.getController();
-		confirmationController.getLbText().setText("Tem a certeza que quer apagar a federacao: '" + cage.getCode() + "'?");
+		confirmationController.getLbText().setText("Tem a certeza que quer apagar a gaiola: '" + cage.getCode() + "'?");
 
 		// Show the view using a new window
 		Scene scene = new Scene(root);

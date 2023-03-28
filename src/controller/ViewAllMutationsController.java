@@ -101,7 +101,7 @@ public class ViewAllMutationsController implements Initializable {
 		}
 
 		ConfirmationController confirmationController = loader.getController();
-		confirmationController.getLbText().setText("Tem a certeza que quer apagar a federacao: '" + mutation.getName() + "'?");
+		confirmationController.getLbText().setText("Tem a certeza que quer apagar a mutacao: '" + mutation.getName() + "'?");
 
 		// Show the view using a new window
 		Scene scene = new Scene(root);

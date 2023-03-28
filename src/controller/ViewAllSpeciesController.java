@@ -115,7 +115,7 @@ public class ViewAllSpeciesController implements Initializable {
 		}
 
 		ConfirmationController confirmationController = loader.getController();
-		confirmationController.getLbText().setText("Tem a certeza que quer apagar a federacao: '" + specie.getCommonName() + "'?");
+		confirmationController.getLbText().setText("Tem a certeza que quer apagar a especie: '" + specie.getCommonName() + "'?");
 
 		// Show the view using a new window
 		Scene scene = new Scene(root);
