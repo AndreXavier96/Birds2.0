@@ -13,12 +13,15 @@ import javafx.collections.ObservableList;
 
 public class BreederClubRepository {
 
-	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
             rs.close();
         }
         if (stmt != null) {
             stmt.close();
+        }
+        if (pstmt != null) {
+            pstmt.close();
         }
         if (con != null) {
             con.close();
@@ -32,8 +35,8 @@ public class BreederClubRepository {
 					+"BreederId INTEGER NOT NULL, "
 					+"ClubId INTEGER NOT NULL, "
 					+"PRIMARY KEY (id), "
-					+"FOREIGN KEY (BreederId) REFERENCES BREEDER(id), "
-					+"FOREIGN KEY (ClubId) REFERENCES CLUB(id))";
+					+"FOREIGN KEY (BreederId) REFERENCES BREEDER(id) ON DELETE CASCADE, "
+					+"FOREIGN KEY (ClubId) REFERENCES CLUB(id) ON DELETE CASCADE)";
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER_CLUB Created.");
 	}
@@ -62,7 +65,7 @@ public class BreederClubRepository {
 	        if (rs.next()) {
 	            id = rs.getInt(1);
 	        }
-	        CloseConnection(con, stmt, rs);
+	        CloseConnection(con, stmt,null, rs);
 			System.out.println("["+id+"] BREEDER_CLUB inserted: "+sql);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,10 +80,10 @@ public class BreederClubRepository {
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				int result = rs.getInt(0);
-				CloseConnection(con, stmt, rs);
+				CloseConnection(con, stmt,null, rs);
 				return result;
 			}else {
-				CloseConnection(con, stmt, rs);
+				CloseConnection(con, stmt,null, rs);
 				return null;
 			}
 		} catch (Exception e) {
@@ -101,11 +104,9 @@ public class BreederClubRepository {
 				}
 				rs.close();
 			}
-			CloseConnection(con, stmt, null);
+			CloseConnection(con, stmt,null, null);
 		}
 		return clubsIds;
 	}
-	
-	
 	
 }

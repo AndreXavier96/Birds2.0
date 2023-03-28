@@ -1,0 +1,27 @@
+.button-cancel-red {
+	-fx-background-color: #BC544B;
+	-fx-border-color: #900603;
+	-fx-text-fill: #FFFFFF;
+	-fx-border-width:2px;
+	-fx-border-radius:5;
+	-fx-background-radius:5;
+}
+
+.button-cancel-red:hover {
+  -fx-background-color: #900603;
+  -fx-text-fill: #FFFFFF;
+}
+
+.button-confirm-green {
+	-fx-background-color: #728C69;
+	-fx-border-color: #234F1E;
+	-fx-text-fill: #FFFFFF;
+	-fx-border-width:2px;
+	-fx-border-radius:5;
+	-fx-background-radius:5;
+}
+
+.button-confirm-green:hover {
+  -fx-background-color: #234F1E;
+  -fx-text-fill: #FFFFFF;
+}

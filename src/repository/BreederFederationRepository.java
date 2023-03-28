@@ -35,8 +35,8 @@ public class BreederFederationRepository {
 					+"BreederId INTEGER NOT NULL, "
 					+"FederationId INTEGER NOT NULL, "
 					+"PRIMARY KEY (id), "
-					+"FOREIGN KEY (BreederId) REFERENCES BREEDER(id), "
-					+"FOREIGN KEY (FederationId) REFERENCES FEDERATION(id))";
+					+"FOREIGN KEY (BreederId) REFERENCES BREEDER(id) ON DELETE CASCADE, "
+					+"FOREIGN KEY (FederationId) REFERENCES FEDERATION(id) ON DELETE CASCADE)";
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER_FEDERATION Created.");
 	}
@@ -110,5 +110,5 @@ public class BreederFederationRepository {
 		CloseConnection(con, null, pstmt, rs);
 		return exists;
 	}
-
+	
 }

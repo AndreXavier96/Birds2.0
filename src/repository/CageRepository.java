@@ -2,6 +2,7 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -97,4 +98,20 @@ public class CageRepository {
 			return cages;
 	}
 	
+	
+	public void deleteCage(Cage cage) throws SQLException {
+	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	         PreparedStatement pstmt = con.prepareStatement("DELETE FROM CAGE WHERE id=?")) {
+	        pstmt.setInt(1, cage.getId());
+	        int rowsDeleted = pstmt.executeUpdate();
+	        if (rowsDeleted == 0) {
+	            throw new SQLException("Failed to delete cage, no rows affected.");
+	        } else {
+	            System.out.println("Cage with id " + cage.getId() + " deleted!");
+	        }
+	    } catch (SQLException e) {
+	        throw e;
+	    }
+	}
+
 }

@@ -2,6 +2,7 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,14 +14,17 @@ import javafx.collections.ObservableList;
 
 public class ClubRepository {
 	
-	private FederationRepository federationRepository = new FederationRepository();
+	private FederationRepository federationRepository = new FederationRepository() ;
 	
-	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+	private void CloseConnection(Connection con, Statement stmt, PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
             rs.close();
         }
         if (stmt != null) {
             stmt.close();
+        }
+        if (pstmt != null) {
+            pstmt.close();
         }
         if (con != null) {
             con.close();
@@ -39,7 +43,7 @@ public class ClubRepository {
 					+"Email VARCHAR(255) NOT NULL UNIQUE, "
 					+"FederationId Integer NOT NULL, "
 					+"PRIMARY KEY (id), "
-					+"FOREIGN KEY (FederationId) REFERENCES FEDERATION(id))";
+					+"FOREIGN KEY (FederationId) REFERENCES FEDERATION(id) ON DELETE CASCADE)";
 			stmt.executeUpdate(sql);
 			System.out.println("Table CLUB Created.");
 	}
@@ -60,7 +64,7 @@ public class ClubRepository {
 					+"values('"+c.getName()+"','"+c.getAcronym()+"','"+c.getLocale()+"','"
 					+c.getAddress()+"','"+c.getPhone()+"','"+c.getEmail()+"','"+c.getFederation().getId()+"')";
 			int i = stmt.executeUpdate(sql);
-			CloseConnection(con, stmt, null);
+			CloseConnection(con, stmt,null, null);
 			System.out.println(i+"Club inserted: "+sql);
 	}
 	
@@ -86,7 +90,7 @@ public class ClubRepository {
 			c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
 			clubs.add(c);
 		}
-		CloseConnection(con, stmt, rs);
+		CloseConnection(con, stmt,null, rs);
 		return clubs;
 	}
 	
@@ -105,10 +109,10 @@ public class ClubRepository {
 				c.setPhone(rs.getString(6));
 				c.setEmail(rs.getString(7));
 				c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
-				CloseConnection(con, stmt, rs);
+				CloseConnection(con, stmt,null, rs);
 				return c;
 			}else {
-				CloseConnection(con, stmt, rs);
+				CloseConnection(con, stmt,null, rs);
 				return null;
 			}
 	}
@@ -128,10 +132,10 @@ public class ClubRepository {
 				c.setPhone(rs.getString(6));
 				c.setEmail(rs.getString(7));
 				c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
-				CloseConnection(con, stmt, rs);
+				CloseConnection(con, stmt,null, rs);
 				return c;
 			}else {
-				CloseConnection(con, stmt, rs);
+				CloseConnection(con, stmt,null, rs);
 				return null;
 			}
 				
@@ -143,10 +147,9 @@ public class ClubRepository {
 			String sql = "SELECT * FROM CLUB WHERE "+col+"='"+value+"';";
 			ResultSet rs = stmt.executeQuery(sql);
 			boolean result = rs.next();
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt,null, rs);
 			return result;	
 	}
-	
 	
 	public ObservableList<Club> getAvailableClubs(Integer breederId) throws SQLException {
 	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
@@ -166,10 +169,9 @@ public class ClubRepository {
 				c.setFederation(federationRepository.getFederationWhereInt("id", rs.getInt(8)));
 	            availableClubs.add(c);
 	        }
-	        CloseConnection(con, stmt, rs);
+	        CloseConnection(con, stmt,null, rs);
 	        return availableClubs;
 	}
-
 	
 	public ObservableList<Club> getAllClubsByClubIds(ObservableList<Integer> clubIds) throws SQLException{
 		 ObservableList<Club> allClubs = FXCollections.observableArrayList();
@@ -178,6 +180,27 @@ public class ClubRepository {
 		        allClubs.add(club);
 		    }
 		return allClubs;
+	}
+	
+	public void deleteClub(Club club) throws SQLException {
+	    Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    try {
+	        con.setAutoCommit(false);
+	        PreparedStatement pstmt = con.prepareStatement("DELETE FROM CLUB WHERE id=?");
+	        pstmt.setInt(1, club.getId());
+	        int rowsDeleted = pstmt.executeUpdate();
+	        if (rowsDeleted == 0) {
+	            throw new SQLException("Failed to delete club, no rows affected.");
+	        } else {
+	            System.out.println("Club " + club.getAcronym() + " deleted!");
+	        }
+	        con.commit();
+	    } catch (SQLException e) {
+	        con.rollback();
+	        throw e;
+	    } finally {
+	        CloseConnection(con, null, null, null);
+	    }
 	}
 	
 }
