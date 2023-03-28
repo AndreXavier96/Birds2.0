@@ -14,6 +14,7 @@
             <TableColumn fx:id="colCode" prefWidth="172.0" text="Codigo" />
             <TableColumn fx:id="colType" prefWidth="172.0" text="Tipo" />
              <TableColumn fx:id="colBird" prefWidth="172.0" text="Passaro" />
+             <TableColumn fx:id="deleteButton" prefWidth="75.0" text="" />
         </columns>
       </TableView>
       <Label layoutX="265.0" layoutY="14.0" text="Gaiolas">

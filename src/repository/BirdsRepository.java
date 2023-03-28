@@ -55,14 +55,14 @@ public class BirdsRepository {
 					+"ImagePath VARCHAR(500),"
 					+"Obs VARCHAR(500),"
 					+"PRIMARY KEY (id), "
-					+"FOREIGN KEY (Father) REFERENCES BIRDS (id), "
-					+"FOREIGN KEY (Mother) REFERENCES BIRDS (id), "
-					+"FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id), "
-					+"FOREIGN KEY (MutationsId) REFERENCES MUTATIONS (id), "
-					+"FOREIGN KEY (CageId) REFERENCES CAGE (id), "
-					+"FOREIGN KEY (BreederId) REFERENCES BREEDER (id), "
-					+"FOREIGN KEY (PostureId) REFERENCES POSTURE (id), "
-		            +"FOREIGN KEY (StateId) REFERENCES STATE (id))";
+					+"FOREIGN KEY (Father) REFERENCES BIRDS (id) ON DELETE SET NULL, "
+					+"FOREIGN KEY (Mother) REFERENCES BIRDS (id) ON DELETE SET NULL, "
+					+"FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id) ON DELETE CASCADE, "
+					+"FOREIGN KEY (MutationsId) REFERENCES MUTATIONS (id) ON DELETE SET NULL, "
+					+"FOREIGN KEY (CageId) REFERENCES CAGE (id) ON DELETE SET NULL, "
+					+"FOREIGN KEY (BreederId) REFERENCES BREEDER (id) ON DELETE SET NULL, "
+					+"FOREIGN KEY (PostureId) REFERENCES POSTURE (id) ON DELETE SET NULL, "
+		            +"FOREIGN KEY (StateId) REFERENCES STATE (id) ON DELETE SET NULL)";
 			stmt.executeUpdate(sql);
 			System.out.println("Table BIRDS Created.");
 	}

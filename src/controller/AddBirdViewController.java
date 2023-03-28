@@ -328,14 +328,12 @@ public class AddBirdViewController implements Initializable {
 		LabelAlert.setText("");
 		if (birdsRepository.checkIfExistsWithBand(band)) {
 			if (breederType.equals(MyValues.CRIADOR_PROFISSIONAL)) {
-//				anilha = club.getAcronym()+" "+stam+" "+TfNumero.getText()+" "+federation.getCountry()+" "+federation.getAcronym()+TfAno.getText(); 
 				CbClub.setStyle(MyValues.ERROR_BOX_STYLE);
 				TfNumero.setStyle(MyValues.ERROR_BOX_STYLE);
 				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Anilha " + band + " ja existe!");
 				validate = false;
 			} else {
-//				anilha = TfAno.getText()+" "+TfBand.getText();
 				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
 				TfBand.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Anilha " + band + " ja existe!");

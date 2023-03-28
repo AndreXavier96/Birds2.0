@@ -117,7 +117,7 @@ public class ViewAllFederationsController implements Initializable {
 			// Show the view using a new window
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
-			stage.setTitle(MyValues.TITLE_DELETE_CLUB+federation.getAcronym());
+			stage.setTitle(MyValues.TITLE_DELETE_FEDERATION+federation.getAcronym());
 			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
 			stage.setScene(scene);
 			stage.showAndWait();

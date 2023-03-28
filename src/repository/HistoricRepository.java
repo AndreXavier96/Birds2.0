@@ -32,9 +32,14 @@ public class HistoricRepository {
 	
 	public void createTableHistoric(Connection con, Statement stmt) throws SQLException {
 		System.out.println("Creating Table HISTORIC ...");
-		String sql = "CREATE TABLE IF NOT EXISTS HISTORIC" + " (id INTEGER auto_increment, "
-				+ "Title VARCHAR(255) NOT NULL, " + "Date VARCHAR(255) NOT NULL, " + "Obs VARCHAR(255) NOT NULL, "
-				+ "BirdId INTEGER NOT NULL, " + "PRIMARY KEY (id), " + "FOREIGN KEY (BirdId) REFERENCES BIRDS(id))";
+		String sql = "CREATE TABLE IF NOT EXISTS HISTORIC" 
+				+ " (id INTEGER auto_increment, "
+				+ "Title VARCHAR(255) NOT NULL, " 
+				+ "Date VARCHAR(255) NOT NULL, " 
+				+ "Obs VARCHAR(255) NOT NULL, "
+				+ "BirdId INTEGER NOT NULL, " 
+				+ "PRIMARY KEY (id), " 
+				+ "FOREIGN KEY (BirdId) REFERENCES BIRDS(id) ON DELETE CASCADE)";
 		stmt.executeUpdate(sql);
 		System.out.println("Table HISTORIC Created.");
 	}

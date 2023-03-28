@@ -14,13 +14,7 @@ import javafx.collections.ObservableList;
 
 public class ClubRepository {
 	
-	private FederationRepository federationRepository;
-	private BreederClubRepository breederClubRepository = new BreederClubRepository();
-	
-	public ClubRepository() {}
-	public ClubRepository(FederationRepository federationRepository) {
-	       this.federationRepository = federationRepository;
-	   }
+	private FederationRepository federationRepository = new FederationRepository() ;
 	
 	private void CloseConnection(Connection con, Statement stmt, PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
@@ -49,7 +43,7 @@ public class ClubRepository {
 					+"Email VARCHAR(255) NOT NULL UNIQUE, "
 					+"FederationId Integer NOT NULL, "
 					+"PRIMARY KEY (id), "
-					+"FOREIGN KEY (FederationId) REFERENCES FEDERATION(id))";
+					+"FOREIGN KEY (FederationId) REFERENCES FEDERATION(id) ON DELETE CASCADE)";
 			stmt.executeUpdate(sql);
 			System.out.println("Table CLUB Created.");
 	}
@@ -192,11 +186,6 @@ public class ClubRepository {
 	    Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
 	    try {
 	        con.setAutoCommit(false);
-
-	        // Delete all rows in the BREEDER_CLUB table that reference the club being deleted
-	        breederClubRepository.deleteBreederClubByClubId(con,club.getId());
-
-	        // Delete the club
 	        PreparedStatement pstmt = con.prepareStatement("DELETE FROM CLUB WHERE id=?");
 	        pstmt.setInt(1, club.getId());
 	        int rowsDeleted = pstmt.executeUpdate();
@@ -205,7 +194,6 @@ public class ClubRepository {
 	        } else {
 	            System.out.println("Club " + club.getAcronym() + " deleted!");
 	        }
-
 	        con.commit();
 	    } catch (SQLException e) {
 	        con.rollback();
@@ -214,20 +202,5 @@ public class ClubRepository {
 	        CloseConnection(con, null, null, null);
 	    }
 	}
-	
-	public void deleteClubsByFederationId(Connection con,int federationId) throws SQLException {
-        String query = "SELECT COUNT(*) FROM CLUB WHERE FederationId = ?";
-        PreparedStatement countStatement = con.prepareStatement(query);
-        countStatement.setInt(1, federationId);
-        boolean hasRows = countStatement.executeQuery().next();
-        CloseConnection(null, null, countStatement, null);
-        if (hasRows) {
-            String deleteQuery = "DELETE FROM CLUB WHERE FederationId = ?";
-            PreparedStatement deleteStatement = con.prepareStatement(deleteQuery);
-            deleteStatement.setInt(1, federationId);
-            deleteStatement.executeUpdate();
-            CloseConnection(null, null, deleteStatement, null);
-        }
-    }
 	
 }

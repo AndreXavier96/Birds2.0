@@ -38,7 +38,7 @@ public class MutationsRepository {
 				+ "Obs VARCHAR(500), " 
 				+ "SpeciesId INTEGER NOT NULL, " 
 				+ "PRIMARY KEY (id), "
-				+ "FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id))";
+				+ "FOREIGN KEY (SpeciesId) REFERENCES SPECIES (id) ON DELETE CASCADE)";
 		stmt.executeUpdate(sql);
 		System.out.println("Table MUTATIONS Created.");
 	}

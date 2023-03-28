@@ -15,16 +15,6 @@ import javafx.collections.ObservableList;
 public class FederationRepository {
 
 	BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
-	private final ClubRepository clubRepository;
-	
-	//Default Construcor
-	public FederationRepository() {
-		this.clubRepository = new ClubRepository();
-	}
-	
-	public FederationRepository(ClubRepository clubRepository) {
-		this.clubRepository=clubRepository;
-	}
 	
 	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
@@ -150,30 +140,20 @@ public class FederationRepository {
 	}
 	
 	public void deleteFederation(Federation federation) throws SQLException {
-	    try {
-	    	Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-	    	PreparedStatement pstmt = con.prepareStatement("DELETE FROM FEDERATION WHERE id=?");
-	        con.setAutoCommit(false);
-
-	        breederFederationRepository.deleteBreederFederationByFederationId(con, federation.getId());
-	        clubRepository.deleteClubsByFederationId(con, federation.getId());
-
-	        // Delete the federation
-	        pstmt.setInt(1, federation.getId());
-	        int rowsDeleted = pstmt.executeUpdate();
-	        if (rowsDeleted == 0) {
-	            throw new SQLException("Failed to delete federation, no rows affected.");
-	        } else {
-	            System.out.println("Federation " + federation.getName() + " deleted!");
-	        }
-
-	        con.commit();
-	        CloseConnection(con, null, pstmt, null);
-	    } catch (SQLException e) {
-	        throw e;
-	    }
+		try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+				PreparedStatement pstmt = con.prepareStatement("DELETE FROM FEDERATION WHERE id=?");) {
+			con.setAutoCommit(false);
+			pstmt.setInt(1, federation.getId());
+			int rowsDeleted = pstmt.executeUpdate();
+			if (rowsDeleted == 0) {
+				throw new SQLException("Failed to delete federation, no rows affected.");
+			} else {
+				System.out.println("Federation " + federation.getName() + " deleted!");
+			}
+			con.commit();
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
 
-
-	
 }

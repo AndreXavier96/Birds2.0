@@ -35,8 +35,8 @@ public class BreederClubRepository {
 					+"BreederId INTEGER NOT NULL, "
 					+"ClubId INTEGER NOT NULL, "
 					+"PRIMARY KEY (id), "
-					+"FOREIGN KEY (BreederId) REFERENCES BREEDER(id), "
-					+"FOREIGN KEY (ClubId) REFERENCES CLUB(id))";
+					+"FOREIGN KEY (BreederId) REFERENCES BREEDER(id) ON DELETE CASCADE, "
+					+"FOREIGN KEY (ClubId) REFERENCES CLUB(id) ON DELETE CASCADE)";
 			stmt.executeUpdate(sql);
 			System.out.println("Table BREEDER_CLUB Created.");
 	}
@@ -108,18 +108,5 @@ public class BreederClubRepository {
 		}
 		return clubsIds;
 	}
-	
-	public void deleteBreederClubByClubId(Connection con, int clubId) throws SQLException {
-	    PreparedStatement pstmt = con.prepareStatement("DELETE FROM BREEDER_CLUB WHERE ClubId=?");
-	    pstmt.setInt(1, clubId);
-	    int rowsDeleted = pstmt.executeUpdate();
-	    if (rowsDeleted == 0) {
-	        throw new SQLException("Failed to delete breeder club, no rows affected.");
-	    } else {
-	        System.out.println(rowsDeleted + " breeder club(s) deleted for Club ID " + clubId + "!");
-	    }
-	    CloseConnection(null, null, pstmt, null);
-	}
-
 	
 }
