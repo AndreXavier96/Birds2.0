@@ -2,6 +2,7 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,12 +14,27 @@ import javafx.collections.ObservableList;
 
 public class FederationRepository {
 
-	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+	BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
+	private final ClubRepository clubRepository;
+	
+	//Default Construcor
+	public FederationRepository() {
+		this.clubRepository = new ClubRepository();
+	}
+	
+	public FederationRepository(ClubRepository clubRepository) {
+		this.clubRepository=clubRepository;
+	}
+	
+	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
             rs.close();
         }
         if (stmt != null) {
             stmt.close();
+        }
+        if (pstmt != null) {
+            pstmt.close();
         }
         if (con != null) {
             con.close();
@@ -53,7 +69,7 @@ public class FederationRepository {
 					+ "values('" + f.getName() + "','"
 					+ f.getAcronym() + "','" + f.getEmail() + "','" + f.getCountry() + "')";
 		int i = stmt.executeUpdate(sql);
-		CloseConnection(con, stmt, null);
+		CloseConnection(con, stmt,null, null);
 		System.out.println(i + "Record inserted: " + sql);
 	}
 	
@@ -77,7 +93,7 @@ public class FederationRepository {
 			federations.add(f);
 			System.out.println(f);
 		}
-		CloseConnection(con, stmt, rs);
+		CloseConnection(con, stmt,null, rs);
 		return federations;
 
 	}
@@ -95,10 +111,10 @@ public class FederationRepository {
 			f.setEmail(rs.getString(4));
 			;
 			f.setCountry(rs.getString(5));
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt,null, rs);
 			return f;
 		} else {
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt,null, rs);
 			return null;
 		}
 	}
@@ -115,10 +131,10 @@ public class FederationRepository {
 			f.setAcronym(rs.getString(3));
 			f.setEmail(rs.getString(4));
 			f.setCountry(rs.getString(5));
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt,null, rs);
 			return f;
 		} else {
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt,null, rs);
 			return null;
 		}
 	}
@@ -129,8 +145,35 @@ public class FederationRepository {
 			String sql = "SELECT * FROM FEDERATION WHERE "+col+"='"+value+"';";
 			ResultSet rs = stmt.executeQuery(sql);
 			boolean result = rs.next();
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt,null, rs);
 			return result;	
 	}
+	
+	public void deleteFederation(Federation federation) throws SQLException {
+	    try {
+	    	Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+	    	PreparedStatement pstmt = con.prepareStatement("DELETE FROM FEDERATION WHERE id=?");
+	        con.setAutoCommit(false);
+
+	        breederFederationRepository.deleteBreederFederationByFederationId(con, federation.getId());
+	        clubRepository.deleteClubsByFederationId(con, federation.getId());
+
+	        // Delete the federation
+	        pstmt.setInt(1, federation.getId());
+	        int rowsDeleted = pstmt.executeUpdate();
+	        if (rowsDeleted == 0) {
+	            throw new SQLException("Failed to delete federation, no rows affected.");
+	        } else {
+	            System.out.println("Federation " + federation.getName() + " deleted!");
+	        }
+
+	        con.commit();
+	        CloseConnection(con, null, pstmt, null);
+	    } catch (SQLException e) {
+	        throw e;
+	    }
+	}
+
+
 	
 }

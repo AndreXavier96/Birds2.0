@@ -111,4 +111,26 @@ public class BreederFederationRepository {
 		return exists;
 	}
 
+	public void deleteBreederFederationByFederationId(Connection con, int federationId) throws SQLException {
+	    // Check if there are any rows with the given federation ID
+	    PreparedStatement checkStmt = con.prepareStatement("SELECT COUNT(*) FROM BREEDER_FEDERATION WHERE FederationId = ?");
+	    checkStmt.setInt(1, federationId);
+	    ResultSet rs = checkStmt.executeQuery();
+	    rs.next();
+	    int rowCount = rs.getInt(1);
+	    CloseConnection(null, null, checkStmt, rs);
+	    if (rowCount == 0) {
+	        System.out.println("No rows to delete for federation ID " + federationId);
+	        return;
+	    }
+	    
+	    // Delete the rows with the given federation ID
+	    PreparedStatement deleteStmt = con.prepareStatement("DELETE FROM BREEDER_FEDERATION WHERE FederationId = ?");
+	    deleteStmt.setInt(1, federationId);
+	    deleteStmt.executeUpdate();
+	    CloseConnection(null, null, deleteStmt, null);
+	    System.out.println("Deleted " + rowCount + " rows for federation ID " + federationId);
+	}
+
+	
 }

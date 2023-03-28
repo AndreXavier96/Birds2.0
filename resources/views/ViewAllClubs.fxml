@@ -12,12 +12,13 @@
       <TableView fx:id="tableID" layoutX="14.0" layoutY="48.0" prefHeight="292.0" prefWidth="565.0">
         <columns>
             <TableColumn fx:id="colFederation" prefWidth="67.0" text="Federacao" />
-            <TableColumn fx:id="colName" prefWidth="368.0" text="Nome" />
-            <TableColumn fx:id="colAcronym" minWidth="4.0" prefWidth="81.0" text="Sigla" />
-             <TableColumn fx:id="colLocale" prefWidth="171.0" text="Localidade" />
-            <TableColumn fx:id="colAddress" prefWidth="171.0" text="Morada" />
+            <TableColumn fx:id="colName" prefWidth="246.0" text="Nome" />
+            <TableColumn fx:id="colAcronym" minWidth="4.0" prefWidth="46.0" text="Sigla" />
+             <TableColumn fx:id="colLocale" prefWidth="118.0" text="Localidade" />
+            <TableColumn fx:id="colAddress" prefWidth="381.0" text="Morada" />
             <TableColumn fx:id="colContact" prefWidth="171.0" text="Contacto" />
             <TableColumn fx:id="colEmail" prefWidth="171.0" text="Email" />
+            <TableColumn fx:id="deleteButton" prefWidth="75.0" text="" />
         </columns>
       </TableView>
       <Label layoutX="265.0" layoutY="14.0" text="Clubes">

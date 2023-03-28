@@ -50,6 +50,7 @@ public class MyValues {
 	public static final String TITLE_SELECT_IMAGE = "Selecionar Imagem Passaro";
 	public static final String TITLE_CHANGE_STATE = "Alterar Estado";
 	public static final String TITLE_CHANGE_CAGE = "Alterar Gaiola";
+	public static final String TITLE_DELETE_CLUB = "Apagar Clube ";
 
 	public static final String BIRD_INSERTED = "PASSARO INSERIDO";
 	public static final String CHANGE_STATE = "ESTADO ALTERADO";

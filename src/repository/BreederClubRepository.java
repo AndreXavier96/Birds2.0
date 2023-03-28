@@ -13,12 +13,15 @@ import javafx.collections.ObservableList;
 
 public class BreederClubRepository {
 
-	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
             rs.close();
         }
         if (stmt != null) {
             stmt.close();
+        }
+        if (pstmt != null) {
+            pstmt.close();
         }
         if (con != null) {
             con.close();
@@ -62,7 +65,7 @@ public class BreederClubRepository {
 	        if (rs.next()) {
 	            id = rs.getInt(1);
 	        }
-	        CloseConnection(con, stmt, rs);
+	        CloseConnection(con, stmt,null, rs);
 			System.out.println("["+id+"] BREEDER_CLUB inserted: "+sql);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,10 +80,10 @@ public class BreederClubRepository {
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				int result = rs.getInt(0);
-				CloseConnection(con, stmt, rs);
+				CloseConnection(con, stmt,null, rs);
 				return result;
 			}else {
-				CloseConnection(con, stmt, rs);
+				CloseConnection(con, stmt,null, rs);
 				return null;
 			}
 		} catch (Exception e) {
@@ -101,11 +104,22 @@ public class BreederClubRepository {
 				}
 				rs.close();
 			}
-			CloseConnection(con, stmt, null);
+			CloseConnection(con, stmt,null, null);
 		}
 		return clubsIds;
 	}
 	
-	
+	public void deleteBreederClubByClubId(Connection con, int clubId) throws SQLException {
+	    PreparedStatement pstmt = con.prepareStatement("DELETE FROM BREEDER_CLUB WHERE ClubId=?");
+	    pstmt.setInt(1, clubId);
+	    int rowsDeleted = pstmt.executeUpdate();
+	    if (rowsDeleted == 0) {
+	        throw new SQLException("Failed to delete breeder club, no rows affected.");
+	    } else {
+	        System.out.println(rowsDeleted + " breeder club(s) deleted for Club ID " + clubId + "!");
+	    }
+	    CloseConnection(null, null, pstmt, null);
+	}
+
 	
 }
