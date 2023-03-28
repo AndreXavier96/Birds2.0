@@ -17,7 +17,7 @@
             <TableColumn fx:id="colVar2" minWidth="0.0" prefWidth="178.0" text="Var2" />
             <TableColumn fx:id="colVar3" minWidth="0.0" prefWidth="178.0" text="Var3" />
              <TableColumn fx:id="colObs" prefWidth="178.0" text="Observacoes" />
-             
+             <TableColumn fx:id="deleteButton" prefWidth="75.0" text="" />
         </columns>
       </TableView>
       <Label layoutX="253.0" layoutY="14.0" text="Mutacoes">

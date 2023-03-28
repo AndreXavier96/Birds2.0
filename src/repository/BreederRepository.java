@@ -279,4 +279,20 @@ public class BreederRepository {
 			return b;
 	}
 	
+	public void deleteBreeder(Breeder breeder) throws SQLException {
+		try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+		         PreparedStatement pstmt = con.prepareStatement("DELETE FROM BREEDER WHERE id=?")){
+			    pstmt.setInt(1, breeder.getId());
+			    int rowsDeleted = pstmt.executeUpdate();
+			    if (rowsDeleted == 0) {
+		            throw new SQLException("Failed to delete breeder, no rows affected.");
+			    }else {
+			    	 System.out.println("Breeder with id " + breeder.getId() + " deleted!");
+			    }
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+
+	
 }

@@ -18,7 +18,7 @@
              <TableColumn fx:id="colOutOfCageDays" prefWidth="178.0" text="Dias para retirar Gaiola" />
              <TableColumn fx:id="colMaturityDays" prefWidth="178.0" text="Dias para Maturidade" />
             <TableColumn fx:id="colBandSize" prefWidth="178.0" text="Tamanho da anilha em mm" />
-             
+             <TableColumn fx:id="deleteButton" prefWidth="75.0" text="" />
         </columns>
       </TableView>
       <Label layoutX="264.0" layoutY="14.0" text="Especies">

@@ -2,6 +2,7 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -132,4 +133,18 @@ public class MutationsRepository {
 		return m;
 	}
 	
+	public void deleteMutation(Mutation mutation) throws SQLException {
+		try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+		         PreparedStatement pstmt = con.prepareStatement("DELETE FROM MUTATIONS WHERE id=?")){
+			    pstmt.setInt(1, mutation.getId());
+			    int rowsDeleted = pstmt.executeUpdate();
+			    if (rowsDeleted == 0) {
+		            throw new SQLException("Failed to delete mutation, no rows affected.");
+			    }else {
+			    	 System.out.println("Mutation with id " + mutation.getId() + " deleted!");
+			    }
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
 }

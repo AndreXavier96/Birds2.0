@@ -54,6 +54,9 @@ public class MyValues {
 	public static final String TITLE_DELETE_CLUB = "Apagar Clube ";
 	public static final String TITLE_DELETE_FEDERATION = "Apagar Federacao ";
 	public static final String TITLE_DELETE_CAGE = "Apagar Gaiola ";
+	public static final String TITLE_DELETE_BREEDER = "Apagar Criador ";
+	public static final String TITLE_DELETE_SPECIE = "Apagar Especie ";
+	public static final String TITLE_DELETE_MUTATION = "Apagar criador ";
 
 	public static final String BIRD_INSERTED = "PASSARO INSERIDO";
 	public static final String CHANGE_STATE = "ESTADO ALTERADO";

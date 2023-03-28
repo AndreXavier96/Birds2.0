@@ -29,6 +29,7 @@
 			<TableColumn fx:id="colType" prefWidth="75.0" text="Tipo" />
 			<TableColumn fx:id="colClube" prefWidth="75.0" text="Clube" />
 			<TableColumn fx:id="colStam" prefWidth="138.0" text="STAM" />
+			 <TableColumn fx:id="deleteButton" prefWidth="75.0" text="" />
         </columns>
       </TableView>
    </children>
