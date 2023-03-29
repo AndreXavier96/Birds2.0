@@ -100,72 +100,81 @@ public class ViewSingleBirdController{
 	
 	@FXML
 	private void btnChangeBirdState() throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdState.fxml"));
-		Parent root = loader.load();
-	    ChangeBirdStateController birdStateController = loader.getController();
-	    birdStateController.startValues(LbBand.getText(),LbState.getText(),ImBird.getImage().getUrl());
-	    birdStateController.setViewSingleBirdController(this);
-	    Scene scene = new Scene(root);
-	    Stage stage = new Stage();
-	    stage.setTitle(MyValues.TITLE_CHANGE_STATE);
-	    stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-	    stage.setScene(scene);
-	    stage.initModality(Modality.APPLICATION_MODAL);
-	    stage.showAndWait();
+		if (validator()) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdState.fxml"));
+			Parent root = loader.load();
+			ChangeBirdStateController birdStateController = loader.getController();
+			birdStateController.startValues(LbBand.getText(), LbState.getText(), ImBird.getImage().getUrl());
+			birdStateController.setViewSingleBirdController(this);
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle(MyValues.TITLE_CHANGE_STATE);
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		}
 	}
 	
 	@FXML
 	private void btnChangeBirdCage() throws IOException, SQLException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdCage.fxml"));
-		Parent root = loader.load();
-		ChangeBirdCageController birdCageController = loader.getController();
-		birdCageController.startValues(LbBand.getText(), ImBird.getImage().getUrl(), LbCage.getText());
-		birdCageController.setViewSingleBirdController(this);
-		Scene scene = new Scene(root);
-		Stage stage = new Stage();
-		stage.setTitle(MyValues.TITLE_CHANGE_CAGE);
-		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-		stage.setScene(scene);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.showAndWait();
+		if (validator()) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdCage.fxml"));
+			Parent root = loader.load();
+			ChangeBirdCageController birdCageController = loader.getController();
+			birdCageController.startValues(LbBand.getText(), ImBird.getImage().getUrl(), LbCage.getText());
+			birdCageController.setViewSingleBirdController(this);
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle(MyValues.TITLE_CHANGE_CAGE);
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		}
 	}
 	
 	@FXML
-	private void btnChangeBirdSex() throws IOException{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdSex.fxml"));
-		Parent root = loader.load();
-		ChangeBirdSexController birdSexController = loader.getController();
-		birdSexController.startValues(LbBand.getText(), ImBird.getImage().getUrl(), LbSex.getText());
-		birdSexController.setViewSingleBirdController(this);
-		Scene scene = new Scene(root);
-		Stage stage = new Stage();
-		stage.setTitle(MyValues.TITLE_CHANGE_CAGE);
-		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-		stage.setScene(scene);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.showAndWait();
+	private void btnChangeBirdSex() throws IOException {
+		if (validator()) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdSex.fxml"));
+			Parent root = loader.load();
+			ChangeBirdSexController birdSexController = loader.getController();
+			birdSexController.startValues(LbBand.getText(), ImBird.getImage().getUrl(), LbSex.getText());
+			birdSexController.setViewSingleBirdController(this);
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle(MyValues.TITLE_CHANGE_CAGE);
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		}
 	}
 	
 	@FXML
 	private void btnDeleteBird() throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
-		Parent root = loader.load();
-		ConfirmationController confirmationController = loader.getController();
-		confirmationController.getLbText().setText("Tem a certeza que quer apagar este passaro: '"+LbBand.getText()+"'?");
-		Scene scene = new Scene(root);
-		Stage stage = new Stage();
-		stage.setTitle(MyValues.TITLE_DELETE_BIRD+LbBand.getText());
-		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-		stage.setScene(scene);
-		stage.showAndWait();
-		if (confirmationController.isConfirmed()) {
-			try {
-				Bird bird = birdsRepository.getBirdWhereString("Band", LbBand.getText());
-				birdsRepository.deleteBird(bird);
-			} catch (SQLException e) {
-				e.printStackTrace();
+		if (validator()) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
+			Parent root = loader.load();
+			ConfirmationController confirmationController = loader.getController();
+			confirmationController.getLbText()
+					.setText("Tem a certeza que quer apagar este passaro: '" + LbBand.getText() + "'?");
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle(MyValues.TITLE_DELETE_BIRD + LbBand.getText());
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.showAndWait();
+			if (confirmationController.isConfirmed()) {
+				try {
+					Bird bird = birdsRepository.getBirdWhereString("Band", LbBand.getText());
+					birdsRepository.deleteBird(bird);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				clearAllFields();
 			}
-			clearAllFields();
 		}
 	}
 	
@@ -376,17 +385,19 @@ public class ViewSingleBirdController{
 	}
 	
 	public boolean validator() {
-		LabelAlert.setStyle(MyValues.ALERT_ERROR);
 		boolean validate = false;
 		if (TfBandSearch.getText().length()==0) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Anilha tem de ser preenchido");
 			validate=false;
 		}else if (birdsRepository.getBirdWhereString("Band",TfBandSearch.getText())==null) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Anilha nao existe");
 			validate=false;
 		}else {
+//			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
 			TfBandSearch.setStyle(null);
 			LabelAlert.setText("");
 			validate=true;
