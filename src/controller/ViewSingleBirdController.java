@@ -100,7 +100,7 @@ public class ViewSingleBirdController{
 	
 	@FXML
 	private void btnChangeBirdState() throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeBirdState.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdState.fxml"));
 		Parent root = loader.load();
 	    ChangeBirdStateController birdStateController = loader.getController();
 	    birdStateController.startValues(LbBand.getText(),LbState.getText(),ImBird.getImage().getUrl());
@@ -116,7 +116,7 @@ public class ViewSingleBirdController{
 	
 	@FXML
 	private void btnChangeBirdCage() throws IOException, SQLException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeBirdCage.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdCage.fxml"));
 		Parent root = loader.load();
 		ChangeBirdCageController birdCageController = loader.getController();
 		birdCageController.startValues(LbBand.getText(), ImBird.getImage().getUrl(), LbCage.getText());
@@ -132,7 +132,7 @@ public class ViewSingleBirdController{
 	
 	@FXML
 	private void btnChangeBirdSex() throws IOException{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeBirdSex.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdSex.fxml"));
 		Parent root = loader.load();
 		ChangeBirdSexController birdSexController = loader.getController();
 		birdSexController.startValues(LbBand.getText(), ImBird.getImage().getUrl(), LbSex.getText());

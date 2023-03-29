@@ -28,7 +28,7 @@ public class MainSceneController {
 	@FXML
 	public void btnSearchBird(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/ViewSingleBird.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/birds/ViewSingleBird.fxml").toUri().toURL());
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
@@ -41,7 +41,7 @@ public class MainSceneController {
 	@FXML
 	public void btnAddFederation(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/AddFederationView.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/federation/AddFederationView.fxml").toUri().toURL());
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
@@ -54,7 +54,7 @@ public class MainSceneController {
 	@FXML
 	public void btnViewAllFederations(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/ViewAllFederations.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/federation/ViewAllFederations.fxml").toUri().toURL());
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
@@ -67,7 +67,7 @@ public class MainSceneController {
 	@FXML
 	public void btnAddClub(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/AddClubView.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/clubs/AddClubView.fxml").toUri().toURL());
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
@@ -80,7 +80,7 @@ public class MainSceneController {
 	@FXML
 	public void btnViewAllClubs(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/ViewAllClubs.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/clubs/ViewAllClubs.fxml").toUri().toURL());
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
@@ -93,7 +93,7 @@ public class MainSceneController {
 	@FXML
 	public void btnAddBreeder(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/AddBreederView.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/breeder/AddBreederView.fxml").toUri().toURL());
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
@@ -106,7 +106,7 @@ public class MainSceneController {
 	@FXML
 	public void btnViewAllBreeders(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/ViewAllBreeders.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/breeder/ViewAllBreeders.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -119,7 +119,7 @@ public class MainSceneController {
 	@FXML
 	public void btnAddBird(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/AddBirdView.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/birds/AddBirdView.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -132,7 +132,7 @@ public class MainSceneController {
 	@FXML
 	public void btnViewAllBirds(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/ViewAllBirds.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/birds/ViewAllBirds.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -145,7 +145,7 @@ public class MainSceneController {
 	@FXML
 	public void btnAddSpecies(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/AddSpeciesView.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/species/AddSpeciesView.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -189,7 +189,7 @@ public class MainSceneController {
 	@FXML
 	public void btnViewAllSpecies(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/ViewAllSpecies.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/species/ViewAllSpecies.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -202,7 +202,7 @@ public class MainSceneController {
 	@FXML
 	public void btnViewAllMutations(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/ViewAllMutations.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/mutations/ViewAllMutations.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -215,7 +215,7 @@ public class MainSceneController {
 	@FXML
 	public void BtnViewCages(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/ViewAllCages.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/cages/ViewAllCages.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -228,7 +228,7 @@ public class MainSceneController {
 	@FXML
 	public void btnAddMutation(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/AddMutationView.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/mutations/AddMutationView.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -241,7 +241,7 @@ public class MainSceneController {
 	@FXML
 	public void btnAddCage(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/AddCageView.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/cages/AddCageView.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

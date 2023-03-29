@@ -36,6 +36,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
+import constants.PathsConstants;
 import constants.Regex;
 import domains.Bird;
 import domains.Breeder;
@@ -532,15 +533,15 @@ public class AddBirdViewController implements Initializable {
 				validate=true;
 			}
 		if(validate && !LbImagePath.getText().isBlank()) {
-			String sufix = LbImagePath.getText().substring(LbImagePath.getText().lastIndexOf("."));
-			if (sufix!="png" || sufix!="jpg") {
-				btnUpload.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Imagem tem de ser .jpg ou .png");
-				validate=false;
-			}else {
+			String sufix = LbImagePath.getText().substring(LbImagePath.getText().lastIndexOf(".")+1);
+			if (sufix.equals("png") || sufix.equals("jpg")) {
 				btnUpload.setStyle(null);
 				LabelAlert.setText("");
 				validate=true;
+			}else {
+				btnUpload.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Imagem tem de ser .jpg ou .png");
+				validate=false;
 			}
 		}
 		return validate;
@@ -612,6 +613,7 @@ public class AddBirdViewController implements Initializable {
     	ApNumero.setVisible(false);
     	ApBand.setVisible(false);
     	ApClub.setVisible(false);
+    	ImImage.setImage(PathsConstants.DEFAULT_IMAGE);
 		clearAllErrors();
 	}
 	

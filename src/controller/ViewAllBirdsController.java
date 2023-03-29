@@ -116,7 +116,7 @@ public class ViewAllBirdsController implements Initializable {
 				Bird selectedBird = tableID.getSelectionModel().getSelectedItem();
 				if (selectedBird!=null) {
 					try {
-						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/ViewSingleBird.fxml"));
+						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/birds/ViewSingleBird.fxml"));
 						Parent root = loader.load();
 						ViewSingleBirdController viewSingleBirdController = loader.getController();
 						viewSingleBirdController.search(selectedBird.getBand());
