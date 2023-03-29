@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 import constants.MyValues;
 import constants.PathsConstants;
-import domains.Bird;
 import domains.Federation;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
