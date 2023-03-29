@@ -129,15 +129,26 @@ public class FederationRepository {
 		}
 	}
 	
-	public boolean checkIfExistsString(String col,String value) throws SQLException {
-			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM FEDERATION WHERE "+col+"='"+value+"';";
-			ResultSet rs = stmt.executeQuery(sql);
-			boolean result = rs.next();
-			CloseConnection(con, stmt,null, rs);
-			return result;	
+	public boolean checkIfExistsString(String col, String value) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
+				MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM FEDERATION WHERE " + col + "='" + value + "';";
+		ResultSet rs = stmt.executeQuery(sql);
+		boolean result = rs.next();
+		CloseConnection(con, stmt, null, rs);
+		return result;
 	}
+	
+	public boolean checkIfExistsString(String col,String value, int idToExclude) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM FEDERATION WHERE " + col + "='" + value + "' AND ID <> " + idToExclude;
+		ResultSet rs = stmt.executeQuery(sql);
+		boolean result = rs.next();
+		CloseConnection(con, stmt,null, rs);
+		return result;	
+}
 	
 	public void deleteFederation(Federation federation) throws SQLException {
 		try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
@@ -155,5 +166,24 @@ public class FederationRepository {
 			throw e;
 		}
 	}
+	
+	public void updateFederation(Federation federation) {
+		try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+				PreparedStatement pstmt = con.prepareStatement("UPDATE FEDERATION SET Name = ?, Acronym = ?, Email = ?, Country = ? WHERE id = ?");) {
+			pstmt.setString(1, federation.getName());
+			pstmt.setString(2, federation.getAcronym());
+			pstmt.setString(3, federation.getEmail());
+			pstmt.setString(4, federation.getCountry());
+			pstmt.setInt(5, federation.getId());
+			int rowsUpdated = pstmt.executeUpdate();
+			if (rowsUpdated > 0)
+				System.out.println("Federation updated successfully.");
+			else
+				System.out.println("Federation not found.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }

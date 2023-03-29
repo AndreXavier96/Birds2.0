@@ -170,10 +170,10 @@ public class ViewSingleBirdController{
 				try {
 					Bird bird = birdsRepository.getBirdWhereString("Band", LbBand.getText());
 					birdsRepository.deleteBird(bird);
+					clearAllFields();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				clearAllFields();
 			}
 		}
 	}

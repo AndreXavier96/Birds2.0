@@ -24,7 +24,6 @@ public class MainSceneController {
 	
 	private DataBaseOperationsRepository dataBaseOperationsRepository = new DataBaseOperationsRepository();
 
-	
 	@FXML
 	public void btnSearchBird(ActionEvent event) {
 		try {
@@ -37,6 +36,20 @@ public class MainSceneController {
 			e.printStackTrace();
 		}
 	}
+	
+	@FXML
+	public void btnSearchFederation(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/federation/ViewSingleFederation.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	@FXML
 	public void btnAddFederation(ActionEvent event) {
