@@ -68,7 +68,6 @@ public class AddFederationViewController {
 	public void btnEdit(ActionEvent event) throws NumberFormatException, SQLException {
 		
 		if(validatorEdit(federation)) {
-//			Federation f = new Federation();
 			federation.setName(TfName.getText());
 			federation.setAcronym(TfAcronym.getText());
 			federation.setCountry(TfCountry.getText());

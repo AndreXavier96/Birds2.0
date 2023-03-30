@@ -104,6 +104,19 @@ public class MainSceneController {
 	}
 	
 	@FXML
+	public void btnSearchClub(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/clubs/ViewSingleClub.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void btnAddBreeder(ActionEvent event) {
 		try {
 			root = FXMLLoader.load(Paths.get("resources/views/breeder/AddBreederView.fxml").toUri().toURL());

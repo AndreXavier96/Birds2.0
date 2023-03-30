@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddClubViewController">
    <children>
-      <Label layoutX="213.0" layoutY="14.0" text="Adicionar Clube">
+      <Label fx:id="LbTitle" layoutX="213.0" layoutY="14.0" text="Adicionar Clube">
          <font>
             <Font size="23.0" />
          </font>
@@ -55,7 +55,7 @@
 		</cursor>
 	</TextField>
 
-	<Button defaultButton="true" layoutX="497.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar">
+	<Button fx:id="btnAdd" defaultButton="true" layoutX="497.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar">
 		<cursor>
 			<Cursor fx:constant="HAND" />
 		</cursor>
@@ -66,5 +66,10 @@
 		</cursor>
 	</Button>
       <Label layoutX="189.0" layoutY="369.0" text="Campos obrigatorios assinalados com *" />
+      <Button fx:id="btnEdit" defaultButton="true" layoutX="497.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="81.0" text="Editar" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>
