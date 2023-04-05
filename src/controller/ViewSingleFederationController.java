@@ -46,7 +46,7 @@ public class ViewSingleFederationController {
 	
 	@FXML
 	public void btnDelete(ActionEvent event) throws IOException, SQLException {
-		if (validator()) {
+		if (validator()&&validatorSearch()) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
 			Parent root = loader.load();
 			ConfirmationController confirmationController = loader.getController();
@@ -72,7 +72,7 @@ public class ViewSingleFederationController {
 	
 	@FXML
 	public void btnEdit(ActionEvent event) throws IOException, SQLException {
-		if (validator()) {
+		if (validator()&&validatorSearch()) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/federation/addFederationView.fxml"));
 			Parent root = loader.load();
 			Federation federation = federationRepository.getFederationWhereString("Acronym",
@@ -125,6 +125,26 @@ public class ViewSingleFederationController {
 		LbAcronym.setText(null);
 		LbEmail.setText(null);
 		LbCountry.setText(null);
+	}
+	
+	public boolean validatorSearch(){
+		boolean validate = false;
+		if (LbAcronym.getText()==null) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			TfFederationSearch.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Federacao tem de ser procurada antes de editar/apagar.");
+			validate=false;
+		}else if (!TfFederationSearch.getText().equalsIgnoreCase(LbAcronym.getText())) {
+	        LabelAlert.setStyle(MyValues.ALERT_ERROR);
+	        TfFederationSearch.setStyle(MyValues.ERROR_BOX_STYLE);
+	        LabelAlert.setText("Federacao tem de ser procurada antes de editar/apagar.");
+	        validate = false;
+	    }else {
+	    	TfFederationSearch.setStyle(null);
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
 	}
 	
 	public boolean validator() throws SQLException {
