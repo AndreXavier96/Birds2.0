@@ -88,6 +88,25 @@ public class ViewAllMutationsController implements Initializable {
 			}
 		});
 		tableID.setItems(mutations);
+		tableID.setOnMouseClicked(event -> {
+			if(event.getClickCount()==2) {
+				Mutation selectedMutation = tableID.getSelectionModel().getSelectedItem();
+				if (selectedMutation!=null) {
+					try {
+						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/mutations/ViewSingleMutation.fxml"));
+						Parent root = loader.load();
+						ViewSingleMutationController viewSingleMutationController = loader.getController();
+						viewSingleMutationController.search(selectedMutation.getName());
+						Scene currentScene = tableID.getScene();
+						Stage currentStage =(Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 	
 	private void deleteButtonAction(Mutation mutation) {

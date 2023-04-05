@@ -210,7 +210,6 @@ public class MainSceneController {
 	@FXML
 	private void btnCreateDB(ActionEvent event) {
 		dataBaseOperationsRepository.CreateDataBase(MyValues.DBNAME);
-//		dataBaseOperationsRepository.alterTableAddColumn("BIRDS", "Obs VARCHAR(500)");
 	}
 	
 	@FXML
@@ -220,7 +219,6 @@ public class MainSceneController {
 			System.out.println("Trying to delete DB...");
 			File f =new File("./Database");
 			deleteDirectory(f);
-//			dataBaseOperationsRepository.alterTableDropColumn("MUTATIONS", "Observations");
 			System.out.println("DB deleted!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -298,6 +296,19 @@ public class MainSceneController {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void btnSearchMutation(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/mutations/ViewSingleMutation.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

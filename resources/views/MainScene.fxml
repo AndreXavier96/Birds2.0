@@ -32,6 +32,7 @@
       <Button layoutX="306.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnSearchBird" prefHeight="25.0" prefWidth="132.0" text="Procurar Pássaro" />
       <Button layoutX="148.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnDropDB" prefHeight="25.0" prefWidth="124.0" text="Drop DB" />
       <Button layoutX="26.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnCreateDB" prefHeight="25.0" prefWidth="109.0" text="Create DB" />
-      <Label layoutX="532.0" layoutY="348.0" text="Versao 1.3.0" />  
+      <Label layoutX="532.0" layoutY="348.0" text="Versao 1.3.0" />
+      <Button layoutX="306.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnSearchMutation" prefHeight="25.0" prefWidth="132.0" text="Procurar Mutacao" />  
    </children>
 </AnchorPane>

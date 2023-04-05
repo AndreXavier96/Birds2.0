@@ -44,7 +44,6 @@ public class AddSpeciesViewController {
 	
 	Specie specie=null;
 	
-	
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
 
 	

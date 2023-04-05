@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repository.SpeciesRepository;
+import repository.MutationsRepository;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -14,45 +14,43 @@ import java.sql.SQLException;
 
 import constants.MyValues;
 import constants.PathsConstants;
-import domains.Specie;
+import domains.Mutation;
 import javafx.event.ActionEvent;
+
+import javafx.scene.control.Label;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 
-public class ViewSingleSpecieController {
+public class ViewSingleMutationController {
 	private Parent root;
 	private Stage stage;
 	private Scene scene;
 	@FXML
-	private Label LabelAlert;
-	@FXML
 	private TextField TfSearch;
 	@FXML
-	private Label LbTitle,LbCommonName, LbScientificName, LbIncubationDays, LbBandDays;
-	@FXML
-	private Label LbOutOfCageDays, LbMaturityAfterDays, LbBandSize;
+	private Label LbTitle, LabelAlert,LbSpecie, LbName, LbVar1,LbVar2, LbVar3, LbObs;
 
-	private SpeciesRepository speciesRepository = new SpeciesRepository();
-	
+	private MutationsRepository mutationsRepository = new MutationsRepository();
+
+
 	@FXML
- 	public void btnEdit(ActionEvent event) throws SQLException, IOException {
+	public void btnEdit(ActionEvent event) throws SQLException, IOException {
 		if (validator() && validatorSearch()) {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/species/AddSpeciesView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/mutations/AddMutationView.fxml"));
 			Parent root = loader.load();
-			Specie s = speciesRepository.getSpecieFromString(TfSearch.getText());
-			AddSpeciesViewController addSpeciesViewController = loader.getController();
-			addSpeciesViewController.startValuesEdit(s);
+			Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText());
+			AddMutationViewController addMutationViewController =  loader.getController();
+			addMutationViewController.startValuesEdit(m);
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
-			stage.setTitle(MyValues.TITLE_EDIT_SPECIE + LbCommonName.getText());
+			stage.setTitle(MyValues.TITLE_EDIT_MUTATION + LbName.getText());
 			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
 			stage.setScene(scene);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.showAndWait();
-			Specie updatedSpecie = speciesRepository.getSpecieById(s.getId());
-			search(updatedSpecie.getCommonName());
+			Mutation updatedMutation = mutationsRepository.getMutationsById(m.getId());
+			search(updatedMutation.getName());
 		}
 	}
 
@@ -63,27 +61,27 @@ public class ViewSingleSpecieController {
 			Parent root = loader.load();
 			ConfirmationController confirmationController = loader.getController();
 			confirmationController.getLbText()
-					.setText("Tem a certeza que quer apagar a Especie: '" + LbCommonName.getText() + "'?");
+					.setText("Tem a certeza que quer apagar a Mutacao: '" + LbName.getText() + "'?");
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
-			stage.setTitle(MyValues.TITLE_DELETE_SPECIE + LbCommonName.getText());
+			stage.setTitle(MyValues.TITLE_DELETE_MUTATION + LbName.getText());
 			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
 			stage.setScene(scene);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.showAndWait();
 			if (confirmationController.isConfirmed()) {
-				Specie s = speciesRepository.getSpecieFromString(TfSearch.getText());
-				speciesRepository.deleteSpecie(s);
+				Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText());
+				mutationsRepository.deleteMutation(m);
 				clearAllFields();
 			}
 		}
 	}
-	
+
 	public void search(String name) throws SQLException {
 		clearAllFields();
 		TfSearch.setText(name);
-		Specie s = speciesRepository.getSpecieFromString(TfSearch.getText());
-		updateAllInfo(s);
+		Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText());
+		updateAllInfo(m);
 	}
 	
 	@FXML
@@ -91,11 +89,11 @@ public class ViewSingleSpecieController {
 		clearAllFields();
 		if (validator()) {
 			LabelAlert.setStyle(null);
-			Specie s = speciesRepository.getSpecieFromString(TfSearch.getText());
-			updateAllInfo(s);
+			Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText());
+			updateAllInfo(m);
 		}
 	}
-	
+
 	@FXML
 	public void btnBack(ActionEvent event) {
 		try {
@@ -108,19 +106,18 @@ public class ViewSingleSpecieController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean validatorSearch(){
 		boolean validate = false;
-		if (LbCommonName.getText()==null) {
+		if (LbName.getText()==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelAlert.setText("Especie tem de ser procurado antes de editar/apagar.");
+			LabelAlert.setText("Mutacao tem de ser procurada antes de editar/apagar.");
 			validate=false;
-		} else if (!TfSearch.getText().equalsIgnoreCase(LbCommonName.getText())
-	            && !TfSearch.getText().equalsIgnoreCase(LbScientificName.getText())) {
+		} else if (!TfSearch.getText().equalsIgnoreCase(LbName.getText())) {
 	        LabelAlert.setStyle(MyValues.ALERT_ERROR);
 	        TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-	        LabelAlert.setText("A pesquisa deve corresponder ao nome comum ou nome científico.");
+	        LabelAlert.setText("Mutacao tem de ser procurada antes de editar/apagar..");
 	        validate = false;
 	    }else {
 			TfSearch.setStyle(null);
@@ -137,7 +134,7 @@ public class ViewSingleSpecieController {
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome tem de ser preenchido");
 			validate=false;
-		}else if (speciesRepository.getSpecieFromString(TfSearch.getText())==null) {
+		}else if (mutationsRepository.getMutationWhereString("Name", TfSearch.getText())==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome nao existe");
@@ -150,26 +147,24 @@ public class ViewSingleSpecieController {
 		return validate;
 	}
 	
-	public void updateAllInfo(Specie s) {
-		LbTitle.setText(s.getCommonName());
-		LbCommonName.setText(s.getCommonName());
-		LbScientificName.setText(s.getScientificName());
-		LbIncubationDays.setText(s.getIncubationDays().toString());
-		LbBandDays.setText(s.getDaysToBand().toString());
-		LbOutOfCageDays.setText(s.getOutofCageAfterDays().toString());
-		LbMaturityAfterDays.setText(s.getMaturityAfterDays().toString());
-		LbBandSize.setText(s.getBandSize().toString());
+	public void updateAllInfo(Mutation m) {
+		LbTitle.setText(m.getName());
+		LbSpecie.setText(m.getSpecie().getCommonName()+"("+m.getSpecie().getScientificName()+")");
+		LbName.setText(m.getName());
+		LbVar1.setText(m.getVar1());
+		LbVar2.setText(m.getVar2());
+		LbVar3.setText(m.getVar3());
+		LbObs.setText(m.getObs());
 	}
 	
 	public void clearAllFields() {
 		LabelAlert.setText(null);
-		LbTitle.setText("Especie XXXX");
-		LbCommonName.setText(null);
-		LbScientificName.setText(null);
-		LbIncubationDays.setText(null);
-		LbBandDays.setText(null);
-		LbOutOfCageDays.setText(null);
-		LbMaturityAfterDays.setText(null);
-		LbBandSize.setText(null);
+		LbTitle.setText("Mutação XXXX");
+		LbSpecie.setText(null);
+		LbName.setText(null);
+		LbVar1.setText(null);
+		LbVar2.setText(null);
+		LbVar3.setText(null);
+		LbObs.setText(null);
 	}
 }
