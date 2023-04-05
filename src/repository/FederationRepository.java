@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 
 public class FederationRepository {
 
-	BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
+//	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
 	
 	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {

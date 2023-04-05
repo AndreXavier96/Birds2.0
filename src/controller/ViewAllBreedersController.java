@@ -71,7 +71,6 @@ public class ViewAllBreedersController implements Initializable {
 		try {
 			breeders = breederRepository.getAllBreeders();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		colCC.setCellValueFactory(new PropertyValueFactory<Breeder,Integer>("CC"));
@@ -114,7 +113,6 @@ public class ViewAllBreedersController implements Initializable {
 					try {
 						federationName = federationRepository.getFederationWhereInt("id", federationId).getAcronym();
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		            sb.append("[").append(federationName).append("]").append(federationStam).append(", ");
@@ -155,6 +153,25 @@ public class ViewAllBreedersController implements Initializable {
 			}
 		});
 		tableID.setItems(breeders);
+		tableID.setOnMouseClicked(event -> {
+			if(event.getClickCount()==2) {
+				Breeder selectedBreeder = tableID.getSelectionModel().getSelectedItem();
+				if (selectedBreeder!=null) {
+					try {
+						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/breeder/ViewSingleBreeder.fxml"));
+						Parent root = loader.load();
+						ViewSingleBreederController viewSingleBreederController = loader.getController();
+						viewSingleBreederController.startValues(selectedBreeder);
+						Scene currentScene = tableID.getScene();
+						Stage currentStage =(Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 	
 	

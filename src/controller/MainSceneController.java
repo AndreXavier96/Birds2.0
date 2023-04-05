@@ -143,6 +143,19 @@ public class MainSceneController {
 	}
 	
 	@FXML
+	public void btnSearchBreeder(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/breeder/ViewSingleBreeder.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void btnAddBird(ActionEvent event) {
 		try {
 			root = FXMLLoader.load(Paths.get("resources/views/birds/AddBirdView.fxml").toUri().toURL());

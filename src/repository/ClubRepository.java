@@ -226,14 +226,15 @@ public class ClubRepository {
 	}
 
 	
-	public boolean checkIfExistsString(String col,String value, int idToExclude) throws SQLException {
-		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+	public boolean checkIfExistsString(String col, String value, int idToExclude) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
+				MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
 		String sql = "SELECT * FROM CLUB WHERE " + col + "='" + value + "' AND ID <> " + idToExclude;
 		ResultSet rs = stmt.executeQuery(sql);
 		boolean result = rs.next();
-		CloseConnection(con, stmt,null, rs);
-		return result;	
-}
+		CloseConnection(con, stmt, null, rs);
+		return result;
+	}
 	
 }

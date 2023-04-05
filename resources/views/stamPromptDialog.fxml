@@ -6,17 +6,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="123.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StamPromptDialogController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="137.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StamPromptDialogController">
    <children>
-    <Label fx:id="LabelError" layoutX="14.0" layoutY="97.0" prefHeight="17.0" prefWidth="471.0" textAlignment="CENTER" textFill="RED" />
+    <Label fx:id="LabelError" layoutX="14.0" layoutY="97.0" prefHeight="17.0" prefWidth="490.0" textAlignment="CENTER" textFill="RED" />
       <Label layoutX="14.0" layoutY="7.0" text="Inserir Stam para a federacao: ">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="federationLabel" layoutX="14.0" layoutY="48.0" text="federation name" />
-      <TextField fx:id="stamTextField" layoutX="48.0" layoutY="65.0" prefHeight="25.0" prefWidth="489.0" />
+      <Label fx:id="federationLabel" layoutX="14.0" layoutY="42.0" text="federation name" />
+      <TextField fx:id="stamTextField" layoutX="48.0" layoutY="65.0" prefHeight="25.0" prefWidth="490.0" AnchorPane.rightAnchor="14.0" />
       <Label layoutX="14.0" layoutY="69.0" text="STAM:" />
-      <Button defaultButton="true" layoutX="507.0" layoutY="93.0" mnemonicParsing="false" onAction="#submitButton" text="OK" />
+      <Button defaultButton="true" layoutX="504.0" layoutY="93.0" mnemonicParsing="false" onAction="#submitButton" text="OK" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
    </children>
 </AnchorPane>

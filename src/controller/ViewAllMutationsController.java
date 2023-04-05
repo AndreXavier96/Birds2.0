@@ -52,7 +52,6 @@ public class ViewAllMutationsController implements Initializable {
 		try {
 			mutations = mutationsRepository.getAllMutations();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		colName.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Name"));

@@ -30,6 +30,7 @@
       <Button layoutX="159.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnViewAllClubs" prefHeight="25.0" prefWidth="132.0" text="Ver Todos Clubes" />
       <Button layoutX="159.0" layoutY="61.0" mnemonicParsing="false" onAction="#btnViewAllFederations" text="Ver Todas Federacoes" />
       <Button layoutX="306.0" layoutY="61.0" mnemonicParsing="false" onAction="#btnSearchFederation" prefHeight="25.0" prefWidth="132.0" text="Procurar Federacao" />
-      <Button layoutX="306.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnSearchClub" prefHeight="25.0" prefWidth="132.0" text="Procurar Clube" />  
+      <Button layoutX="306.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnSearchClub" prefHeight="25.0" prefWidth="132.0" text="Procurar Clube" />
+      <Button layoutX="306.0" layoutY="121.0" mnemonicParsing="false" onAction="#btnSearchBreeder" prefHeight="25.0" prefWidth="132.0" text="Procurar Criador" />  
    </children>
 </AnchorPane>

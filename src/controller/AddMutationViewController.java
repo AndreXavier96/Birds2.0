@@ -50,7 +50,6 @@ public class AddMutationViewController implements Initializable {
 		try {
 			CbSpecie.setItems(speciesRepository.getAllSpecies());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		CbSpecie.setConverter(new StringConverter<Specie>() {

@@ -50,7 +50,6 @@ public class ViewAllCagesController implements Initializable {
 		try {
 			cages = cageRepository.getAllCages();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		colCode.setCellValueFactory(new PropertyValueFactory<Cage,String>("Code"));

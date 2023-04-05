@@ -139,6 +139,25 @@ public class ViewAllClubsController implements Initializable {
 		});
 
 		tableID.setItems(clubs);
+		tableID.setOnMouseClicked(event -> {
+			if(event.getClickCount()==2) {
+				Club selectedClub = tableID.getSelectionModel().getSelectedItem();
+				if (selectedClub!=null) {
+					try {
+						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/clubs/ViewSingleClub.fxml"));
+						Parent root = loader.load();
+						ViewSingleClubController viewSingleClubController = loader.getController();
+						viewSingleClubController.search(selectedClub.getAcronym());
+						Scene currentScene = tableID.getScene();
+						Stage currentStage =(Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 	
 	// Create a method to handle the delete button action

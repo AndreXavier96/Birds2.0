@@ -65,7 +65,6 @@ public class ViewAllSpeciesController implements Initializable {
 		try {
 			species = speciesRepository.getAllSpecies();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		colCommonName.setCellValueFactory(new PropertyValueFactory<Specie,String>("CommonName"));

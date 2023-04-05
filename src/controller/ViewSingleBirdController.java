@@ -378,7 +378,6 @@ public class ViewSingleBirdController{
 		try {
 			historics = historicRepository.getAllByBirdId(b.getId());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    TableHistoric.setItems(historics);

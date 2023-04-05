@@ -133,6 +133,25 @@ public class ViewAllFederationsController implements Initializable {
 		});
 		
 		tableID.setItems(federations);
+		tableID.setOnMouseClicked(event -> {
+			if(event.getClickCount()==2) {
+				Federation selectedFederation = tableID.getSelectionModel().getSelectedItem();
+				if (selectedFederation!=null) {
+					try {
+						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/federation/ViewSingleFederation.fxml"));
+						Parent root = loader.load();
+						ViewSingleFederationController viewSingleFederationController = loader.getController();
+						viewSingleFederationController.search(selectedFederation.getAcronym());
+						Scene currentScene = tableID.getScene();
+						Stage currentStage =(Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 	
 	

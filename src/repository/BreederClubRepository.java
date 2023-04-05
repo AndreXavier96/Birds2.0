@@ -109,4 +109,20 @@ public class BreederClubRepository {
 		return clubsIds;
 	}
 	
+	public void deleteAllByBreederId(int breederId) {
+	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	         PreparedStatement pstmt = con.prepareStatement("DELETE FROM BREEDER_CLUB WHERE BreederId = ?");) {
+	        pstmt.setInt(1, breederId);
+	        int rowsDeleted = pstmt.executeUpdate();
+	        if (rowsDeleted > 0) {
+	            System.out.println("All clubs associated with breeder with ID " + breederId + " have been deleted.");
+	        } else {
+	            System.out.println("No clubs associated with breeder with ID " + breederId + " were found.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	
 }
