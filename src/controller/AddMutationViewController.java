@@ -25,6 +25,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 public class AddMutationViewController implements Initializable {
@@ -34,23 +35,27 @@ public class AddMutationViewController implements Initializable {
 	private Stage stage;
 	
 	@FXML
-	private Label labelAlert;
+	private Label labelAlert,LbTitle;
 	@FXML
 	private TextField TfName, TfVar1,TfVar2,TfVar3;
 	@FXML
 	private TextArea TfObs;
 	@FXML
 	private ComboBox<Specie> CbSpecie;
+	@FXML
+	private Button btnAdd,btnEdit;
+	
+	Mutation mutation=null;
 
 	MutationsRepository mutationsRepository = new MutationsRepository();
 	SpeciesRepository speciesRepository = new SpeciesRepository();
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
 			CbSpecie.setItems(speciesRepository.getAllSpecies());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		CbSpecie.setConverter(new StringConverter<Specie>() {
@@ -64,7 +69,6 @@ public class AddMutationViewController implements Initializable {
 		});
 	}
 	
-
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validator()) {
@@ -82,23 +86,58 @@ public class AddMutationViewController implements Initializable {
 		}
 	}
 	
-	public boolean validator() {
+	@FXML
+	public void btnEdit(ActionEvent event) throws SQLException {
+		if (validatorEdit(mutation)) {
+			mutation.setName(TfName.getText());
+			mutation.setVar1(TfVar1.getText());
+			mutation.setVar2(TfVar2.getText());
+			mutation.setVar3(TfVar3.getText());
+			mutation.setObs(TfObs.getText());
+			mutation.setSpecie(CbSpecie.getValue());
+			mutationsRepository.updateMutation(mutation);
+			labelAlert.setStyle(MyValues.ALERT_SUCESS);
+			labelAlert.setText(mutation.getName()+" alterada com sucesso!");
+			clearAllFields();
+			stage = (Stage) btnEdit.getScene().getWindow();
+			stage.close();
+		}
+	}
+	
+	public boolean validatorEdit(Mutation mutation) throws SQLException {
 		boolean validate = false;
 		clearAllErrors();
 		labelAlert.setStyle(MyValues.ALERT_ERROR);
 		labelAlert.setText("");
-		if (TfName.getText().length()==0) {
-			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
-			labelAlert.setText("Nome tem de ser preenchido");
-			validate=false;
-		}else if(!TfName.getText().matches(Regex.NAME)){
-			TfName.setStyle(MyValues.ERROR_BOX_STYLE);
-			labelAlert.setText("Nome nao esta no formato correto");
+		
+		 if(CbSpecie.getValue()==null){
+			 CbSpecie.setStyle(MyValues.ERROR_BOX_STYLE);
+			labelAlert.setText("Especie tem de ser escolhida");
 			validate=false;
 		}else {
-			TfName.setStyle(null);
+			CbSpecie.setStyle(null);
 			labelAlert.setText("");
 			validate=true;
+		}
+		
+		if (validate) {
+			if (TfName.getText().length()==0) {
+				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
+				labelAlert.setText("Nome tem de ser preenchido");
+				validate=false;
+			}else if(!TfName.getText().matches(Regex.NAME)){
+				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
+				labelAlert.setText("Nome nao esta no formato correto");
+				validate=false;
+			}else if(mutationsRepository.mutationExistsForSpecie(TfName.getText(),CbSpecie.getValue().getId().toString(),mutation.getId())){
+				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
+				labelAlert.setText("Nome ja existe para esta especie");
+				validate=false;
+			}else {
+				TfName.setStyle(null);
+				labelAlert.setText("");
+				validate=true;
+			}
 		}
 		
 		if (validate) {
@@ -149,17 +188,93 @@ public class AddMutationViewController implements Initializable {
 				validate=true;
 			}
 		
+		return validate;
+	}
+	
+	public boolean validator() throws SQLException {
+		boolean validate = false;
+		clearAllErrors();
+		labelAlert.setStyle(MyValues.ALERT_ERROR);
+		labelAlert.setText("");
+		
+		 if(CbSpecie.getValue()==null){
+			 CbSpecie.setStyle(MyValues.ERROR_BOX_STYLE);
+			labelAlert.setText("Especie tem de ser escolhida");
+			validate=false;
+		}else {
+			CbSpecie.setStyle(null);
+			labelAlert.setText("");
+			validate=true;
+		}
+		
 		if (validate) {
-			 if(CbSpecie.getValue()==null){
-				 CbSpecie.setStyle(MyValues.ERROR_BOX_STYLE);
-				labelAlert.setText("Especie tem de ser escolhida");
+			if (TfName.getText().length()==0) {
+				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
+				labelAlert.setText("Nome tem de ser preenchido");
+				validate=false;
+			}else if(!TfName.getText().matches(Regex.NAME)){
+				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
+				labelAlert.setText("Nome nao esta no formato correto");
+				validate=false;
+			}else if(mutationsRepository.mutationExistsForSpecie(TfName.getText(),CbSpecie.getValue().getId().toString())){
+				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
+				labelAlert.setText("Nome ja existe para esta especie");
 				validate=false;
 			}else {
-				CbSpecie.setStyle(null);
+				TfName.setStyle(null);
 				labelAlert.setText("");
 				validate=true;
 			}
 		}
+		
+		if (validate) {
+			if (TfVar1.getText().length()!=0)
+				if(!TfVar1.getText().matches(Regex.ALL_TEXT)){
+					TfVar1.setStyle(MyValues.ERROR_BOX_STYLE);
+					labelAlert.setText("Variacao1 nao esta no formato correto");
+					validate=false;
+				}else {
+					TfVar1.setStyle(null);
+					labelAlert.setText("");
+					validate=true;
+				}
+		}
+		if (validate) {
+			if (TfVar2.getText().length()!=0)
+				if(!TfVar2.getText().matches(Regex.ALL_TEXT)){
+					TfVar2.setStyle(MyValues.ERROR_BOX_STYLE);
+					labelAlert.setText("Variacao2 nao esta no formato correto");
+					validate=false;
+				}else {
+					TfVar2.setStyle(null);
+					labelAlert.setText("");
+					validate=true;
+				}
+		}
+		if (validate) {
+			if (TfVar3.getText().length()!=0)
+				if(!TfVar3.getText().matches(Regex.ALL_TEXT)){
+					TfVar3.setStyle(MyValues.ERROR_BOX_STYLE);
+					labelAlert.setText("Variacao3 nao esta no formato correto");
+					validate=false;
+				}else {
+					TfVar3.setStyle(null);
+					labelAlert.setText("");
+					validate=true;
+				}
+		}
+		
+		if (validate)
+			if (TfObs.getText().length()>500) {
+				TfObs.setStyle(MyValues.ERROR_BOX_STYLE);
+				labelAlert.setText("Observacoes so pode ter no maximo 500 caracteres.");
+				validate=false;
+			}else {
+				TfObs.setStyle(null);
+				labelAlert.setText("");
+				validate=true;
+			}
+		
 		return validate;
 	}
 	
@@ -175,6 +290,23 @@ public class AddMutationViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void startValuesEdit(Mutation mutation) throws SQLException {
+		LbTitle.setText("Editar "+mutation.getName());
+		TfName.setText(mutation.getName());
+		TfVar1.setText(mutation.getVar1());
+		TfVar2.setText(mutation.getVar2());
+		TfVar3.setText(mutation.getVar3());
+		TfObs.setText(mutation.getObs());
+		btnAdd.setVisible(false);
+		btnAdd.setDefaultButton(false);
+		btnEdit.setDefaultButton(true);
+		btnEdit.setVisible(true);
+		CbSpecie.setValue(mutation.getSpecie());
+		CbSpecie.setDisable(true);
+		this.mutation=mutation;
+	}
+	
 	public void clearAllErrors() {
 		TfName.setStyle(null);
 		TfVar1.setStyle(null);
@@ -194,7 +326,4 @@ public class AddMutationViewController implements Initializable {
 		clearAllErrors();
 	}
 
-
-
-	
 }

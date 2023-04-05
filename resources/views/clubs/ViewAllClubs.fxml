@@ -19,6 +19,7 @@
             <TableColumn fx:id="colContact" prefWidth="171.0" text="Contacto" />
             <TableColumn fx:id="colEmail" prefWidth="171.0" text="Email" />
             <TableColumn fx:id="deleteButton" prefWidth="75.0" text="" />
+            <TableColumn fx:id="editButton" prefWidth="75.0" text="" />
         </columns>
       </TableView>
       <Label layoutX="265.0" layoutY="14.0" text="Clubes">

@@ -92,6 +92,16 @@ public class SpeciesRepository {
 			return result;
 		}
 	
+	public boolean checkIfExistsString(String col,String value, int idToExclude) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM SPECIES WHERE "+col+"='"+value+"' AND ID <> "+idToExclude;
+		ResultSet rs  = stmt.executeQuery(sql);
+		boolean result = rs.next();
+		CloseConnection(con, stmt, rs);
+		return result;
+	}
+	
 		public ObservableList<Specie> getAllSpecies() throws SQLException {
 			System.out.println("Getting all Species...");
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
@@ -131,4 +141,45 @@ public class SpeciesRepository {
 			}
 		}
 		
+		public Specie getSpecieFromString(String str) throws SQLException {
+			try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
+					MyValues.USER, MyValues.PASSWORD);
+					PreparedStatement pstmt = con
+							.prepareStatement("SELECT * FROM SPECIES WHERE CommonName = ? OR ScientificName = ?")) {
+				pstmt.setString(1, str);
+				pstmt.setString(2, str);
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) {
+					Specie specie = new Specie(rs.getInt("id"), rs.getString("CommonName"),
+							rs.getString("ScientificName"), rs.getInt("IncubationDays"), rs.getInt("BandingDays"),
+							rs.getInt("OutOfCageDays"), rs.getInt("MaturityDays"), rs.getInt("BandSize"));
+					return specie;
+				} else {
+					return null;
+				}
+			} catch (Exception e) {
+				throw e;
+			}
+		}
+
+		public void updateSpecie(Specie specie) throws SQLException {
+			try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
+					MyValues.USER, MyValues.PASSWORD);
+					PreparedStatement stmt = con.prepareStatement(
+							"UPDATE SPECIES SET CommonName = ?, ScientificName = ?, IncubationDays = ?, BandingDays = ?, OutOfCageDays = ?, MaturityDays = ?, BandSize = ? WHERE id = ?");) {
+				stmt.setString(1, specie.getCommonName());
+				stmt.setString(2, specie.getScientificName());
+				stmt.setInt(3, specie.getIncubationDays());
+				stmt.setInt(4, specie.getDaysToBand());
+				stmt.setInt(5, specie.getOutofCageAfterDays());
+				stmt.setInt(6, specie.getMaturityAfterDays());
+				stmt.setInt(7, specie.getBandSize());
+				stmt.setInt(8, specie.getId());
+				stmt.executeUpdate();
+				System.out.println("Specie with id " + specie.getId() + " updated successfully!");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 }

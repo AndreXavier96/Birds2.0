@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.BreederClubRepository;
 import repository.BreederRepository;
 import repository.ClubRepository;
 
@@ -14,6 +15,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
@@ -49,21 +51,23 @@ public class AddBreederViewController implements Initializable {
 	private TextField TfNameOther, TfPhoneOther, TfEmailOther, TfDistrictOther,TfLocaleOther,TfAddressOther;
 	
 	@FXML
-	private Label LabelAlert;
+	private Label LabelAlert,LBTitle;
 	@FXML
 	private TextField TfCC, TfName, TfPhone, TfNif, TfEmail, TfDistrict, TfPostalCode, TfLocale, TfAddress;
 	@FXML
 	private ListView<Club> clubListViewAvailable,clubListViewAssigned ;
 	@FXML
-	private Button btnAssign, btnDeAssign;
+	private Button btnAssign, btnDeAssign,btnAdd,btnEdit;
 
 	private BreederRepository breederRepository = new BreederRepository();
 	private ClubRepository clubRepository = new ClubRepository();
+	private BreederClubRepository breederClubRepository = new  BreederClubRepository();
 	
 	private ObservableList<Club> availableClubs;
 	private ObservableList<Club> assignedClubs;
 	private HashMap<Integer, String> stamMap = new HashMap<>();
 	private boolean profissional;
+	Breeder breeder = null;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -84,7 +88,6 @@ public class AddBreederViewController implements Initializable {
 		try {
 			availableClubs = FXCollections.observableArrayList(clubRepository.getAllClubs());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assignedClubs = FXCollections.observableArrayList();
@@ -128,25 +131,15 @@ public class AddBreederViewController implements Initializable {
 				LabelAlert.setStyle(null);
 				stamMap.clear();
 				Breeder b = new Breeder();
-				if (TfCC.getText().isBlank())
-					b.setCC(null);
-				else
-					b.setCC(Integer.parseInt(TfCC.getText()));
+				b.setCC(Integer.parseInt(TfCC.getText()));
 				b.setName(TfName.getText());
-				if (TfNif.getText().isBlank())
-					b.setNif(null);
-				else
-					b.setNif(Integer.parseInt(TfNif.getText()));
+				b.setNif(Integer.parseInt(TfNif.getText()));
 				b.setCellphone(Integer.parseInt(TfPhone.getText()));
-				if (TfEmail.getText().isBlank())
-					b.setEmail("");
-				else
-					b.setEmail(TfEmail.getText());
+				b.setEmail(TfEmail.getText());
 				if (TfPostalCode.getText().isBlank())
 					b.setPostalCode("");
 				else
 					b.setPostalCode(TfPostalCode.getText());
-
 				if (TfLocale.getText().isBlank())
 					b.setLocale("");
 				else
@@ -208,6 +201,105 @@ public class AddBreederViewController implements Initializable {
 			ApProfissional.setVisible(false);
 			profissional = false;
 		}
+	}
+	
+	@FXML
+	public void btnEdit(ActionEvent event) throws NumberFormatException, SQLException {
+		if (validatorCbType()) {
+			if (profissional && validatorProfissionalEdit(breeder)) {
+				stamMap.clear();
+				breeder.setCC(Integer.parseInt(TfCC.getText()));
+				breeder.setName(TfName.getText());
+				breeder.setNif(Integer.parseInt(TfNif.getText()));
+				breeder.setCellphone(Integer.parseInt(TfPhone.getText()));
+				breeder.setEmail(TfEmail.getText());
+				if (TfPostalCode.getText().isBlank())
+					breeder.setPostalCode("");
+				else
+					breeder.setPostalCode(TfPostalCode.getText());
+				if (TfLocale.getText().isBlank())
+					breeder.setLocale("");
+				else
+					breeder.setLocale(TfLocale.getText());
+				if (TfAddress.getText().isBlank())
+					breeder.setAddress("");
+				else
+					breeder.setAddress(TfAddress.getText());
+				if (TfDistrict.getText().isBlank())
+					breeder.setDistrict("");
+				else
+					breeder.setDistrict(TfDistrict.getText());
+				breeder.setType(CbType.getValue());
+				breeder.setClub(assignedClubs);
+				for (Club club : assignedClubs) {
+					Federation federation = club.getFederation();
+					if (!stamMap.containsKey(federation.getId())) {
+						String stam = openStamEditPromptDialogController(federation,breeder.getId());
+						stamMap.put(federation.getId(), stam);
+					}
+				}
+				breeder.setStam(stamMap);
+				breederRepository.updateBreeder(breeder);
+				LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+				LabelAlert.setText(breeder.getName() + " alterado com sucesso!");
+				clearAllFields();
+				stage = (Stage) btnEdit.getScene().getWindow();
+				stage.close();
+			}else if(!profissional && validatorOtherEdit(breeder)) {
+				breeder.setName(TfNameOther.getText());
+				if (TfPhoneOther.getText().isBlank())
+					breeder.setCellphone(null);
+				else
+					breeder.setCellphone(Integer.parseInt(TfPhoneOther.getText()));
+				if (TfEmailOther.getText().isBlank())
+					breeder.setEmail("");
+				else
+					breeder.setEmail(TfEmailOther.getText());
+				if (TfDistrictOther.getText().isBlank())
+					breeder.setDistrict("");
+				else
+					breeder.setDistrict(TfDistrictOther.getText());
+				if (TfLocaleOther.getText().isBlank())
+					breeder.setLocale("");
+				else
+					breeder.setLocale(TfLocaleOther.getText());
+				if (TfAddressOther.getText().isBlank())
+					breeder.setAddress("");
+				else
+					breeder.setAddress(TfAddressOther.getText());
+				breeder.setType(CbType.getValue());
+				breederRepository.updateBreederOther(breeder);
+				LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+				LabelAlert.setText(breeder.getName() + " alterado com sucesso!");
+				clearAllFields();
+				stage = (Stage) btnEdit.getScene().getWindow();
+				stage.close();
+			}
+		}
+	}
+	
+	private String openStamEditPromptDialogController(Federation federation,int breederId) {
+		String promptResult = null;
+		do {
+			try {
+				LabelAlert.setStyle(null);
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/stamPromptDialog.fxml"));
+				Parent root = loader.load();
+				StamPromptDialogController stamPromptDialogController = loader.getController();
+				stamPromptDialogController.startValuesEdit(federation,stamMap,breederId);
+				Scene scene = new Scene(root);
+				Stage stage = new Stage();
+				stage.setTitle(MyValues.TITLE_BIRD_APP);
+				stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+				stage.setScene(scene);
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.showAndWait();
+				promptResult = stamPromptDialogController.getPromptResult();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} while (promptResult == null);
+		return promptResult;
 	}
 	
 	private String openStamPromptDialogController(String federationName) {
@@ -312,6 +404,104 @@ public class AddBreederViewController implements Initializable {
 				LabelAlert.setText("Email nao esta no formato correto.");
 				validated = false;
 			} else if (breederRepository.checkIfEmailExists(TfEmailOther.getText())) {
+				TfEmailOther.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Email ja existe no sistema.");
+				validated = false;
+			} else {
+				TfEmailOther.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE Distrito
+		if (validated && TfDistrictOther.getText().length() > 0)
+			if (!TfDistrictOther.getText().matches(Regex.NAME)) {
+				TfDistrictOther.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Distrito nao esta no formato correto.");
+				validated = false;
+			} else {
+				TfDistrictOther.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE Localidade
+		if (validated && TfLocaleOther.getText().length() > 0)
+			if (!TfLocaleOther.getText().matches(Regex.NAME)) {
+				TfLocaleOther.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Distrito nao esta no formato correto.");
+				validated = false;
+			} else {
+				TfLocaleOther.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE Morada
+		if (validated && TfAddressOther.getText().length() > 0)
+			if (!TfAddressOther.getText().matches(Regex.ALL_TEXT)) {
+				TfAddressOther.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Morada nao esta no formato correto.");
+				validated = false;
+			} else {
+				TfAddressOther.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+		return validated;
+	}
+	
+	public boolean validatorOtherEdit(Breeder b) throws NumberFormatException, SQLException {
+		boolean validated=false;
+		clearAllErrors();
+		LabelAlert.setStyle(MyValues.ALERT_ERROR);
+		LabelAlert.setText("");
+
+		if (TfNameOther.getText().length() == 0) {
+			TfNameOther.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Nome tem de ser preenchido.");
+			validated = false;
+		}else if (TfNameOther.getText().isBlank()) {
+			TfNameOther.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Nome tem de ser preenchido.");
+			validated = false;
+		}else if (breederRepository.checkIfExistsString("Name",TfNameOther.getText(),b.getId())) {
+			TfNameOther.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Nome ja existe no sistema");
+			validated = false;
+		}else if (!TfNameOther.getText().matches(Regex.NAME)) {
+			TfNameOther.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Nome nao esta no formato correto.");
+			validated = false;
+		} else {
+			TfNameOther.setStyle(null);
+			LabelAlert.setText("");
+			validated = true;
+		}
+
+		// VALIDATE TELEFONE
+		if (validated && TfPhoneOther.getText().length()>0)
+			if (!TfPhoneOther.getText().matches(Regex.PHONE)) {
+				TfPhoneOther.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Telefone nao esta no formato correto.");
+				validated = false;
+			} else if (breederRepository.checkIfExistsString("Cellphone",TfPhoneOther.getText(),b.getId())) {
+				TfPhoneOther.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Telefone ja existe no sistema.");
+				validated = false;
+			} else {
+				TfPhoneOther.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+		
+		// VALIDATE Email
+		if (validated && TfEmailOther.getText().length() > 0)
+			if (!TfEmailOther.getText().matches(Regex.EMAIL)) {
+				TfEmailOther.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Email nao esta no formato correto.");
+				validated = false;
+			} else if (breederRepository.checkIfExistsString("Email",TfEmailOther.getText(),b.getId())) {
 				TfEmailOther.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Email ja existe no sistema.");
 				validated = false;
@@ -509,6 +699,170 @@ public class AddBreederViewController implements Initializable {
 				validated = true;
 			}
 
+		// VALIDATE CLUBS
+		if (validated)
+			if (CbType.getValue() == MyValues.CRIADOR_PROFISSIONAL && assignedClubs.isEmpty()) {
+				clubListViewAssigned.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Criador Profissional tem de escolher pelo menos um clube");
+				validated = false;
+			} else {
+				clubListViewAssigned.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		return validated;
+	}
+	
+	public boolean validatorProfissionalEdit(Breeder b) throws NumberFormatException, SQLException {
+		boolean validated = false;
+		clearAllErrors();
+		LabelAlert.setStyle(MyValues.ALERT_ERROR);
+		LabelAlert.setText("");
+		// VALIDATE CC
+		if (TfCC.getText().length() == 0) {
+			TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Cartao Cidadao tem de ser preenchido.");
+			validated = false;
+		} else if (!TfCC.getText().matches(Regex.CC)) {
+			TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Cartao Cidadao nao esta no formato correto.");
+			validated = false;
+		} else if (breederRepository.checkIfExistsString("CC",TfCC.getText(),b.getId())) {
+			TfCC.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Cartao Cidadao ja existe no sistema.");
+			validated = false;
+		} else {
+			TfCC.setStyle(null);
+			LabelAlert.setText("");
+			validated = true;
+		}
+
+		// VALIDATE NIF
+		if (validated)
+			if (TfNif.getText().length() == 0) {
+				TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("NIF tem de ser preenchido.");
+				validated = false;
+			} else if (!TfNif.getText().matches(Regex.PHONE)) {
+				TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Nif nao esta no formato correto.");
+				validated = false;
+			} else if (breederRepository.checkIfExistsString("Nif",TfNif.getText(),b.getId())) {
+				TfNif.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("NIF ja existe no sistema.");
+				validated = false;
+			} else {
+				TfNif.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE NOME
+		if (validated)
+			if (TfName.getText().length() == 0) {
+				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Nome tem de ser preenchido.");
+				validated = false;
+			} else if (!TfName.getText().matches(Regex.NAME)) {
+				TfName.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Nome nao esta no formato correto.");
+				validated = false;
+			} else {
+				TfName.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE TELEFONE
+		if (validated)
+			if (TfPhone.getText().length() == 0) {
+				TfPhone.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Telefone tem de ser preenchido");
+				validated = false;
+			} else if (!TfPhone.getText().matches(Regex.PHONE)) {
+				TfPhone.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Telefone nao esta no formato correto.");
+				validated = false;
+			} else if (breederRepository.checkIfExistsString("Cellphone",TfPhone.getText(),b.getId())) {
+				TfPhone.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Telefone ja existe no sistema.");
+				validated = false;
+			} else {
+				TfPhone.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE Email
+		if (validated)
+			if (TfEmail.getText().length() == 0) {
+				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Email tem de ser preenchido.");
+				validated = false;
+			} else if (!TfEmail.getText().matches(Regex.EMAIL)) {
+				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Email nao esta no formato correto.");
+				validated = false;
+			} else if (breederRepository.checkIfExistsString("Email",TfEmail.getText(),b.getId())) {
+				TfEmail.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Email ja existe no sistema.");
+				validated = false;
+			} else {
+				TfEmail.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE PostalCode
+		if (validated && TfPostalCode.getText().length() > 0)
+			if (!TfPostalCode.getText().matches(Regex.POSTALCODE)) {
+				TfPostalCode.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Codigo Postal nao esta no formato correto.");
+				validated = false;
+			} else {
+				TfPostalCode.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE Distrito
+		if (validated && TfDistrict.getText().length() > 0)
+
+			if (!TfDistrict.getText().matches(Regex.NAME)) {
+				TfDistrict.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Distrito nao esta no formato correto.");
+				validated = false;
+			} else {
+				TfDistrict.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE Localidade
+		if (validated && TfLocale.getText().length() > 0)
+			if (!TfLocale.getText().matches(Regex.NAME)) {
+				TfLocale.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Distrito nao esta no formato correto.");
+				validated = false;
+			} else {
+				TfLocale.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
+		// VALIDATE Morada
+		if (validated && TfAddress.getText().length() > 0)
+			if (!TfAddress.getText().matches(Regex.ALL_TEXT)) {
+				TfAddress.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Morada nao esta no formato correto.");
+				validated = false;
+			} else {
+				TfAddress.setStyle(null);
+				LabelAlert.setText("");
+				validated = true;
+			}
+
 		// VALIDATE CLUBS2
 		if (validated)
 			if (CbType.getValue() == MyValues.CRIADOR_PROFISSIONAL && assignedClubs.isEmpty()) {
@@ -576,5 +930,50 @@ public class AddBreederViewController implements Initializable {
 		clearAllErrors();
 	}
 
-	
+	public void startValuesEdit(Breeder breeder) throws SQLException {
+		btnAdd.setVisible(false);
+		btnEdit.setVisible(true);
+		LBTitle.setText("Editar " + breeder.getName());
+		CbType.setValue(breeder.getType());
+		if (CbType.getValue().equals(MyValues.CRIADOR_PROFISSIONAL)) {
+			profissional = true;
+			ApProfissional.setVisible(true);
+			TfCC.setText(breeder.getCC().toString());
+			TfNif.setText(breeder.getNif().toString());
+			TfName.setText(breeder.getName());
+			TfPhone.setText(breeder.getCellphone().toString());
+			TfEmail.setText(breeder.getEmail());
+			TfPostalCode.setText(breeder.getPostalCode());
+			TfDistrict.setText(breeder.getDistrict());
+			TfLocale.setText(breeder.getLocale());
+			TfAddress.setText(breeder.getAddress());
+			ObservableList<Integer> clubsId = breederClubRepository.getClubsFromBreederId(breeder.getId());
+			ObservableList<Club> clubs = FXCollections.observableArrayList();
+			for (Integer i : clubsId)
+				clubs.add(clubRepository.getClubByID(i));
+			Iterator<Club> iterator=availableClubs.iterator();
+			while (iterator.hasNext()) {
+				Club ac = iterator.next();
+				for (Club c : clubs) {
+					if (c.getId()==ac.getId()) {
+						iterator.remove();
+						assignedClubs.add(ac);
+						availableClubs.remove(ac);
+						break;
+					}
+				}
+			}
+		} else {
+			profissional = false;
+			ApOtherType.setVisible(true);
+			TfNameOther.setText(breeder.getName());
+			TfPhoneOther.setText(breeder.getCellphone().toString());
+			TfEmailOther.setText(breeder.getEmail());
+			TfDistrictOther.setText(breeder.getDistrict());
+			TfLocaleOther.setText(breeder.getLocale());
+			TfAddressOther.setText(breeder.getAddress());
+		}
+		this.breeder=breeder;
+	}
+
 }

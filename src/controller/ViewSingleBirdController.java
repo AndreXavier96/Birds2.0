@@ -170,10 +170,10 @@ public class ViewSingleBirdController{
 				try {
 					Bird bird = birdsRepository.getBirdWhereString("Band", LbBand.getText());
 					birdsRepository.deleteBird(bird);
+					clearAllFields();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				clearAllFields();
 			}
 		}
 	}
@@ -378,7 +378,6 @@ public class ViewSingleBirdController{
 		try {
 			historics = historicRepository.getAllByBirdId(b.getId());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    TableHistoric.setItems(historics);

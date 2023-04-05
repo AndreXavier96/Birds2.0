@@ -203,4 +203,38 @@ public class ClubRepository {
 	    }
 	}
 	
+	public void updateClub(Club club) {
+	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	            PreparedStatement pstmt = con.prepareStatement("UPDATE CLUB SET Name = ?, Acronym = ?, Locale = ?, Address = ?, Phone = ?, Email = ?, FederationId = ? WHERE id = ?");) {
+	        pstmt.setString(1, club.getName());
+	        pstmt.setString(2, club.getAcronym());
+	        pstmt.setString(3, club.getLocale());
+	        pstmt.setString(4, club.getAddress());
+	        pstmt.setString(5, club.getPhone());
+	        pstmt.setString(6, club.getEmail());
+	        pstmt.setInt(7, club.getFederation().getId());
+	        pstmt.setInt(8, club.getId());
+	        int rowsUpdated = pstmt.executeUpdate();
+	        if (rowsUpdated > 0) {
+	            System.out.println("Club updated successfully.");
+	        } else {
+	            System.out.println("Club not found.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	
+	public boolean checkIfExistsString(String col, String value, int idToExclude) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
+				MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM CLUB WHERE " + col + "='" + value + "' AND ID <> " + idToExclude;
+		ResultSet rs = stmt.executeQuery(sql);
+		boolean result = rs.next();
+		CloseConnection(con, stmt, null, rs);
+		return result;
+	}
+	
 }

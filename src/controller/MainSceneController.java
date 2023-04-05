@@ -24,20 +24,6 @@ public class MainSceneController {
 	
 	private DataBaseOperationsRepository dataBaseOperationsRepository = new DataBaseOperationsRepository();
 
-	
-	@FXML
-	public void btnSearchBird(ActionEvent event) {
-		try {
-			root = FXMLLoader.load(Paths.get("resources/views/birds/ViewSingleBird.fxml").toUri().toURL());
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	@FXML
 	public void btnAddFederation(ActionEvent event) {
 		try {
@@ -55,6 +41,19 @@ public class MainSceneController {
 	public void btnViewAllFederations(ActionEvent event) {
 		try {
 			root = FXMLLoader.load(Paths.get("resources/views/federation/ViewAllFederations.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void btnSearchFederation(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/federation/ViewSingleFederation.fxml").toUri().toURL());
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
@@ -91,6 +90,19 @@ public class MainSceneController {
 	}
 	
 	@FXML
+	public void btnSearchClub(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/clubs/ViewSingleClub.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void btnAddBreeder(ActionEvent event) {
 		try {
 			root = FXMLLoader.load(Paths.get("resources/views/breeder/AddBreederView.fxml").toUri().toURL());
@@ -111,6 +123,19 @@ public class MainSceneController {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void btnSearchBreeder(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/breeder/ViewSingleBreeder.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -143,9 +168,9 @@ public class MainSceneController {
 	}
 	
 	@FXML
-	public void btnAddSpecies(ActionEvent event) {
+	public void btnSearchBird(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/species/AddSpeciesView.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/birds/ViewSingleBird.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -156,34 +181,16 @@ public class MainSceneController {
 	}
 	
 	@FXML
-	private void btnCreateDB(ActionEvent event) {
-		dataBaseOperationsRepository.CreateDataBase(MyValues.DBNAME);
-//		dataBaseOperationsRepository.alterTableAddColumn("BIRDS", "Obs VARCHAR(500)");
-	}
-	
-	@FXML
-	private void btnDropDB(ActionEvent event) {
-		System.out.println(System.getProperty("user.dir"));
+	public void btnAddSpecies(ActionEvent event) {
 		try {
-			System.out.println("Trying to delete DB...");
-			File f =new File("./Database");
-			deleteDirectory(f);
-//			dataBaseOperationsRepository.alterTableDropColumn("MUTATIONS", "Observations");
-			System.out.println("DB deleted!");
+			root = FXMLLoader.load(Paths.get("resources/views/species/AddSpeciesView.fxml").toUri().toURL());
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-	}
-	
-	boolean deleteDirectory(File directoryToBeDeleted) {
-	    File[] allContents = directoryToBeDeleted.listFiles();
-	    if (allContents != null) {
-	        for (File file : allContents) {
-	            deleteDirectory(file);
-	        }
-	    }
-	    return directoryToBeDeleted.delete();
 	}
 	
 	@FXML
@@ -200,9 +207,22 @@ public class MainSceneController {
 	}
 	
 	@FXML
-	public void btnViewAllMutations(ActionEvent event) {
+	public void btnSearchSpecie(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/mutations/ViewAllMutations.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/species/ViewSingleSpecie.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void btnAddCage(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/cages/AddCageView.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -226,6 +246,19 @@ public class MainSceneController {
 	}
 	
 	@FXML
+	public void btnSearchCage(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/cages/ViewSingleCage.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void btnAddMutation(ActionEvent event) {
 		try {
 			root = FXMLLoader.load(Paths.get("resources/views/mutations/AddMutationView.fxml").toUri().toURL());
@@ -239,9 +272,9 @@ public class MainSceneController {
 	}
 	
 	@FXML
-	public void btnAddCage(ActionEvent event) {
+	public void btnViewAllMutations(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/cages/AddCageView.fxml").toUri().toURL());
+			root = FXMLLoader.load(Paths.get("resources/views/mutations/ViewAllMutations.fxml").toUri().toURL());
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -250,6 +283,46 @@ public class MainSceneController {
 			e.printStackTrace();
 		}
 	}
+
+	@FXML
+	public void btnSearchMutation(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/mutations/ViewSingleMutation.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
+	boolean deleteDirectory(File directoryToBeDeleted) {
+	    File[] allContents = directoryToBeDeleted.listFiles();
+	    if (allContents != null) {
+	        for (File file : allContents) {
+	            deleteDirectory(file);
+	        }
+	    }
+	    return directoryToBeDeleted.delete();
+	}
 	
+	@FXML
+	private void btnCreateDB(ActionEvent event) {
+		dataBaseOperationsRepository.CreateDataBase(MyValues.DBNAME);
+	}
+	
+	@FXML
+	private void btnDropDB(ActionEvent event) {
+		System.out.println(System.getProperty("user.dir"));
+		try {
+			System.out.println("Trying to delete DB...");
+			File f =new File("./Database");
+			deleteDirectory(f);
+			System.out.println("DB deleted!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

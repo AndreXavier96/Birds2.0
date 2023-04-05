@@ -20,6 +20,7 @@ public class BreederRepository {
 	private ClubRepository clubRepository = new ClubRepository();
 	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
 	
+
 	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
             rs.close();
@@ -231,6 +232,16 @@ public class BreederRepository {
 			return result;
 	}
 	
+	public boolean checkIfExistsString(String col,String value, int idToExclude) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM BREEDER WHERE " + col + "='" + value + "' AND ID <> " + idToExclude;
+		ResultSet rs = stmt.executeQuery(sql);
+		boolean result = rs.next();
+		CloseConnection(con, stmt,null, rs);
+		return result;	
+}
+	
 	public Breeder getBreederbyId(int id) throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 			Statement stmt = con.createStatement();
@@ -293,6 +304,83 @@ public class BreederRepository {
 			throw e;
 		}
 	}
+	
+	public Breeder getBreederbyString(String col, String value) throws SQLException {
+	    Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
+	    Statement stmt = con.createStatement();
+	    String sql = "SELECT * FROM BREEDER WHERE "+col+"='"+value+"';";
+	    ResultSet rs = stmt.executeQuery(sql);
+	    Breeder b = new Breeder();
+	    if (rs.next()) {
+	        b.setId(rs.getInt(1));
+	        b.setCC(rs.getInt(2));
+	        b.setName(rs.getString(3));
+	        b.setNif(rs.getInt(4));
+	        b.setCellphone(rs.getInt(5));
+	        b.setEmail(rs.getString(6));
+	        b.setAddress(rs.getString(7));
+	        b.setPostalCode(rs.getString(8));
+	        b.setLocale(rs.getString(9));
+	        b.setDistrict(rs.getString(10));
+	        b.setType(rs.getString(11));
+	        CloseConnection(con, stmt,null, rs);
+	        return b;
+	    } else {
+	        CloseConnection(con, stmt,null, rs);
+	        return null;
+	    }
+	}
+
+	public void updateBreeder(Breeder breeder) {
+	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	            PreparedStatement pstmt = con.prepareStatement("UPDATE BREEDER SET CC = ?, Name = ?, Nif = ?, Cellphone = ?, Email = ?, Address = ?, PostalCode = ?, Locale = ?, District = ?, BreederType = ? WHERE id = ?");) {
+	        pstmt.setInt(1, breeder.getCC());
+	        pstmt.setString(2, breeder.getName());
+	        pstmt.setInt(3, breeder.getNif());
+	        pstmt.setInt(4, breeder.getCellphone());
+	        pstmt.setString(5, breeder.getEmail());
+	        pstmt.setString(6, breeder.getAddress());
+	        pstmt.setString(7, breeder.getPostalCode());
+	        pstmt.setString(8, breeder.getLocale());
+	        pstmt.setString(9, breeder.getDistrict());
+	        pstmt.setString(10, breeder.getType());
+	        pstmt.setInt(11, breeder.getId());
+	        int rowsUpdated = pstmt.executeUpdate();
+	        if (rowsUpdated > 0) {
+	            breederClubRepository.deleteAllByBreederId(breeder.getId());
+	            breederFederationRepository.deleteAllByBreederId(breeder.getId());
+	            for (Club c : breeder.getClub())
+	    			breederClubRepository.Insert(breeder.getId(), c.getId());
+	    		for (Map.Entry<Integer, String> entry : breeder.getStam().entrySet())
+	    			breederFederationRepository.insert(breeder.getId(), entry.getKey(), entry.getValue());
+	    		System.out.println("Breeder updated successfully.");
+	        } else {
+	            System.out.println("Breeder not found.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void updateBreederOther(Breeder breeder) throws SQLException {
+	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    		PreparedStatement pstmt = con.prepareStatement("UPDATE BREEDER SET Name=?, Email=?, Cellphone=?, District=?, Locale=?, Address=? WHERE id=?");) {
+	    	pstmt.setString(1, breeder.getName());
+	    	pstmt.setString(2, breeder.getEmail());
+	    	pstmt.setInt(3, breeder.getCellphone());
+	    	pstmt.setString(4, breeder.getDistrict());
+	    	pstmt.setString(5, breeder.getLocale());
+	    	pstmt.setString(6, breeder.getAddress());
+	    	pstmt.setInt(7, breeder.getId());
+	        int affectedRows = pstmt.executeUpdate();
+	        if (affectedRows > 0) {
+	        	System.out.println("Breeder updated successfully.");
+	        }else {
+	        	System.out.println("Breeder not found.");
+	        }
+	    }
+	}
+
 
 	
 }

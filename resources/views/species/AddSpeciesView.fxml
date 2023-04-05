@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddSpeciesViewController">
    <children>
-      <Label layoutX="172.0" layoutY="14.0" text="Adicionar Especie">
+      <Label fx:id="LbTitle" layoutX="172.0" layoutY="14.0" text="Adicionar Especie">
          <font>
             <Font size="23.0" />
          </font>
@@ -33,7 +33,8 @@
          </children>
       </AnchorPane>
       
-      <Button defaultButton="true" layoutX="428.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
+      <Button fx:id="btnAdd" defaultButton="true" layoutX="428.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
+      <Button fx:id="btnEdit" defaultButton="true" layoutX="428.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="81.0" text="Editar" visible="false" />
       <Button cancelButton="true" layoutX="11.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" />
       <Label layoutX="168.0" layoutY="369.0" text="Campos obrigatorios assinalados com *" />
       

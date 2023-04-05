@@ -13,7 +13,7 @@ import javafx.collections.ObservableList;
 
 public class HistoricRepository {
 	
-	BirdsRepository birdsRepository = new BirdsRepository();
+	private BirdsRepository birdsRepository = new BirdsRepository();
 
 	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {

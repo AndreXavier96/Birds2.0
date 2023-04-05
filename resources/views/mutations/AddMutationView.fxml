@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddMutationViewController">
    <children>
-      <Label alignment="CENTER" layoutX="165.0" layoutY="14.0" text="Adicionar Mutação" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label fx:id="LbTitle" alignment="CENTER" layoutX="165.0" layoutY="14.0" text="Adicionar Mutação" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <font>
             <Font size="23.0" />
          </font>
@@ -22,8 +22,6 @@
       <TextField fx:id="TfName" layoutX="32.0" layoutY="123.0" prefHeight="25.0" prefWidth="222.0" />
       <TextField fx:id="TfVar1" layoutX="32.0" layoutY="174.0" prefHeight="25.0" prefWidth="222.0" />
       <ComboBox fx:id="CbSpecie" layoutX="31.0" layoutY="69.0" prefHeight="25.0" prefWidth="222.0" promptText="Selecionar" />
-      
-      <Button defaultButton="true" layoutX="632.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
       <Button cancelButton="true" layoutX="13.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" />
       <Label layoutX="31.0" layoutY="51.0" text="Espécie*" />
       <Label layoutX="262.0" layoutY="407.0" text="Campos obrigatorios assinaldos com *" />
@@ -32,6 +30,9 @@
       <Label layoutX="32.0" layoutY="157.0" text="Variacao1" />
       <TextField fx:id="TfVar2" layoutX="261.0" layoutY="174.0" prefHeight="25.0" prefWidth="222.0" />
       <TextField fx:id="TfVar3" layoutX="489.0" layoutY="174.0" prefHeight="25.0" prefWidth="222.0" />
+      
+      <Button fx:id="btnAdd" defaultButton="true" layoutX="632.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
+      <Button fx:id="btnEdit" layoutX="632.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="81.0" text="Editar" visible="false" />
       
    </children>
 </AnchorPane>

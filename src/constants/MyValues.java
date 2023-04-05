@@ -59,6 +59,14 @@ public class MyValues {
 	public static final String TITLE_DELETE_MUTATION = "Apagar criador ";
 	public static final String TITLE_DELETE_BIRD = "Apagar passaro ";
 	
+	public static final String TITLE_EDIT_CLUB = "Editar Clube ";
+	public static final String TITLE_EDIT_FEDERATION = "Editar Federacao ";
+	public static final String TITLE_EDIT_CAGE = "Editar Gaiola ";
+	public static final String TITLE_EDIT_BREEDER = "Editar Criador ";
+	public static final String TITLE_EDIT_SPECIE = "Editar Especie ";
+	public static final String TITLE_EDIT_MUTATION = "Editar criador ";
+	public static final String TITLE_EDIT_BIRD = "Editar passaro ";
+	
 	public static final String BIRD_INSERTED = "PASSARO INSERIDO";
 	public static final String CHANGE_STATE = "ESTADO ALTERADO";
 	public static final String CHANGE_CAGE = "GAIOLA ALTERADA";
