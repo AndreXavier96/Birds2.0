@@ -13,12 +13,15 @@ import javafx.collections.ObservableList;
 
 public class CageRepository {
 	
-	private void CloseConnection(Connection con, Statement stmt, ResultSet rs) throws SQLException {
+	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
             rs.close();
         }
         if (stmt != null) {
             stmt.close();
+        }
+        if (pstmt != null) {
+            pstmt.close();
         }
         if (con != null) {
             con.close();
@@ -40,7 +43,7 @@ public class CageRepository {
 			System.out.println("Trying to drop MUTATIONS table...");
 			String sql = "DROP TABLE IF EXISTS CAGE CASCADE";	
 			stmt.executeUpdate(sql);
-			CloseConnection(con, stmt, null);
+			CloseConnection(con, stmt,null, null);
 			System.out.println("Table CAGE Droped.");
 	}
 	
@@ -56,7 +59,7 @@ public class CageRepository {
 				c.setCode(rs.getString(2));
 				c.setType(rs.getString(3));
 			}
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt,null, rs);
 			return c;
 	}
 	
@@ -67,7 +70,7 @@ public class CageRepository {
 		String sql = "INSERT INTO CAGE(Code,Type) VALUES('"
 				+cage.getCode().replace("'","''")+"','"+cage.getType()+"')";
 		int i = stmt.executeUpdate(sql);
-		CloseConnection(con, stmt, null);
+		CloseConnection(con, stmt,null, null);
 		System.out.println(i+" Record inserted");
 	}
 	
@@ -77,7 +80,7 @@ public class CageRepository {
 		String sql = "SELECT Code FROM CAGE WHERE Code='"+code.replace("'", "''")+"';";
 		ResultSet rs = stmt.executeQuery(sql);
 		boolean result = rs.next();
-		CloseConnection(con, stmt, rs);
+		CloseConnection(con, stmt,null, rs);
 		return result;
 	}
 	
@@ -94,7 +97,7 @@ public class CageRepository {
 				c.setType(rs.getString(3));
 				cages.add(c);
 			}
-			CloseConnection(con, stmt, rs);
+			CloseConnection(con, stmt,null, rs);
 			return cages;
 	}
 	
@@ -113,5 +116,22 @@ public class CageRepository {
 	        throw e;
 	    }
 	}
+	
+	public Cage getCageByCode(String code) throws SQLException {
+	    Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    Statement stmt = con.createStatement();
+	    String sql = "SELECT * FROM CAGE WHERE Code='" + code.replace("'", "''") + "'";
+	    ResultSet rs = stmt.executeQuery(sql);
+	    Cage cage = null;
+	    if (rs.next()) {
+	        cage = new Cage();
+	        cage.setId(rs.getInt("id"));
+	        cage.setCode(rs.getString("Code"));
+	        cage.setType(rs.getString("Type"));
+	    }
+	    CloseConnection(con, stmt, null, rs);
+	    return cage;
+	}
+
 
 }

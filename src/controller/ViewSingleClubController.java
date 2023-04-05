@@ -52,7 +52,7 @@ public class ViewSingleClubController {
 
 	@FXML
 	public void btnEdit(ActionEvent event) throws SQLException, IOException {
-		if (validator()) {
+		if (validator()&&validatorSearch()) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/clubs/AddClubView.fxml"));
 			Parent root = loader.load();
 			Club c = clubRepository.getClubWhereString("Acronym",TfSearch.getText());
@@ -72,7 +72,7 @@ public class ViewSingleClubController {
 	
 	@FXML
 	public void btnDelete(ActionEvent event) throws SQLException, IOException {
-		if (validator()) {
+		if (validator()&&validatorSearch()) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
 			Parent root = loader.load();
 			ConfirmationController confirmationController = loader.getController();
@@ -134,6 +134,26 @@ public class ViewSingleClubController {
 		LBPhone.setText(null);
 		LBLocale.setText(null);
 		LbAddress.setText(null);
+	}
+	
+	public boolean validatorSearch(){
+		boolean validate = false;
+		if (LBAcronym.getText()==null) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Clube tem de ser procurado antes de editar/apagar.");
+			validate=false;
+		}else if (!TfSearch.getText().equalsIgnoreCase(LBAcronym.getText())) {
+	        LabelAlert.setStyle(MyValues.ALERT_ERROR);
+	        TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
+	        LabelAlert.setText("Clube tem de ser procurado antes de editar/apagar.");
+	        validate = false;
+	    }else {
+			TfSearch.setStyle(null);
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
 	}
 	
 	public boolean validator() throws SQLException {

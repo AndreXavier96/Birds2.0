@@ -117,7 +117,7 @@ public class ViewSingleMutationController {
 		} else if (!TfSearch.getText().equalsIgnoreCase(LbName.getText())) {
 	        LabelAlert.setStyle(MyValues.ALERT_ERROR);
 	        TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-	        LabelAlert.setText("Mutacao tem de ser procurada antes de editar/apagar..");
+	        LabelAlert.setText("Mutacao tem de ser procurada antes de editar/apagar.");
 	        validate = false;
 	    }else {
 			TfSearch.setStyle(null);

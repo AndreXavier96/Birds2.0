@@ -84,6 +84,25 @@ public class ViewAllCagesController implements Initializable {
 		});
 		
 		tableID.setItems(cages);
+		tableID.setOnMouseClicked(event -> {
+			if(event.getClickCount()==2) {
+				Cage selectedCage = tableID.getSelectionModel().getSelectedItem();
+				if (selectedCage!=null) {
+					try {
+						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/cages/ViewSingleCage.fxml"));
+						Parent root = loader.load();
+						ViewSingleCageController viewSingleCageController = loader.getController();
+						viewSingleCageController.search(selectedCage.getCode());
+						Scene currentScene = tableID.getScene();
+						Stage currentStage =(Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 	
 	private void deleteButtonAction(Cage cage) {
