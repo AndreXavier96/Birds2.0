@@ -102,6 +102,25 @@ public class ViewAllSpeciesController implements Initializable {
 			}
 		});
 		tableID.setItems(species);
+		tableID.setOnMouseClicked(event -> {
+			if(event.getClickCount()==2) {
+				Specie selectedSpecie = tableID.getSelectionModel().getSelectedItem();
+				if (selectedSpecie!=null) {
+					try {
+						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/species/ViewSingleSpecie.fxml"));
+						Parent root = loader.load();
+						ViewSingleSpecieController viewSingleSpecieController = loader.getController();
+						viewSingleSpecieController.search(selectedSpecie.getCommonName());
+						Scene currentScene = tableID.getScene();
+						Stage currentStage =(Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 	
 	private void deleteButtonAction(Specie specie) {

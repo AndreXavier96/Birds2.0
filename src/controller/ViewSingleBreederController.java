@@ -241,7 +241,7 @@ public class ViewSingleBreederController implements Initializable{
 		if (LbCC.getText()==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearchStam.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelAlert.setText("Criador tem de ser procurado antes de apagar.");
+			LabelAlert.setText("Criador tem de ser procurado antes de editar/apagar.");
 			validate=false;
 		}else {
 			TfSearchStam.setStyle(null);
@@ -256,7 +256,7 @@ public class ViewSingleBreederController implements Initializable{
 		if (LbName2.getText()==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearchName.setStyle(MyValues.ERROR_BOX_STYLE);
-			LabelAlert.setText("Criador tem de ser procurado antes de apagar.");
+			LabelAlert.setText("Criador tem de ser procurado antes de editar/apagar.");
 			validate=false;
 		}else {
 			TfSearchName.setStyle(null);

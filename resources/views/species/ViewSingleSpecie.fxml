@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewSingleSpecieController">
+   <children>
+      <AnchorPane layoutX="12.0" layoutY="12.0" prefHeight="7.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <menus>
+                  <Menu mnemonicParsing="false" text="Alterar">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#btnEdit" text="Editar" />
+                        <MenuItem mnemonicParsing="false" onAction="#btnDelete" text="Apagar" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="25.0" prefHeight="91.0" prefWidth="521.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <Label fx:id="LbTitle" alignment="CENTER" layoutY="8.0" text="Especie XXXX" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelAlert" alignment="CENTER" contentDisplay="CENTER" layoutX="95.0" layoutY="47.0" prefHeight="17.0" prefWidth="475.0" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0" />
+            <AnchorPane prefHeight="25.0" prefWidth="216.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0">
+               <children>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#btnSearchForName" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/img/searchIco.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <TextField fx:id="TfSearch" layoutX="33.0" prefHeight="25.0" prefWidth="185.0" promptText="Nome" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="116.0" prefHeight="206.0" prefWidth="521.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="17.0" prefWidth="493.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+               <children>
+                  <Label text="Nome Comum:" AnchorPane.leftAnchor="0.0" />
+                  <Label fx:id="LbCommonName" layoutX="83.0" prefHeight="17.0" prefWidth="410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="31.0" prefHeight="17.0" prefWidth="493.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="41.0">
+               <children>
+                  <Label text="Nome Científico:" AnchorPane.leftAnchor="0.0" />
+                  <Label fx:id="LbScientificName" layoutX="91.0" prefHeight="17.0" prefWidth="402.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="91.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="58.0" prefHeight="17.0" prefWidth="493.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="68.0">
+               <children>
+                  <Label text="Dias Incubação:" AnchorPane.leftAnchor="0.0" />
+                  <Label fx:id="LbIncubationDays" layoutX="91.0" prefHeight="17.0" prefWidth="402.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="91.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="85.0" prefHeight="17.0" prefWidth="493.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="95.0">
+               <children>
+                  <Label text="Dias Anilhar:" AnchorPane.leftAnchor="0.0" />
+                  <Label fx:id="LbBandDays" layoutX="69.0" prefHeight="17.0" prefWidth="424.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="115.0" prefHeight="17.0" prefWidth="493.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="125.0">
+               <children>
+                  <Label text="Retirar da gaiola após Dias:" AnchorPane.leftAnchor="0.0" />
+                  <Label fx:id="LbOutOfCageDays" layoutX="146.0" prefHeight="17.0" prefWidth="347.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="146.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="142.0" prefHeight="17.0" prefWidth="493.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="152.0">
+               <children>
+                  <Label text="Maturidade após dias:" AnchorPane.leftAnchor="0.0" />
+                  <Label fx:id="LbMaturityAfterDays" layoutX="119.0" prefHeight="17.0" prefWidth="374.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="169.0" prefHeight="17.0" prefWidth="493.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="179.0">
+               <children>
+                  <Label text="Tamanho anilha (mm):" AnchorPane.leftAnchor="0.0" />
+                  <Label fx:id="LbBandSize" layoutX="119.0" prefHeight="17.0" prefWidth="374.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="25.0" prefWidth="521.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      
+   </children>
+</AnchorPane>

@@ -18,19 +18,20 @@
       <Button layoutX="26.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnAddMutation" prefHeight="25.0" prefWidth="124.0" text="Adicionar Mutação" />
       <Button layoutX="26.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnAddCage" prefHeight="25.0" prefWidth="124.0" text="Adicionar Gaiola" />
       <Button layoutX="26.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnAddBird" prefHeight="25.0" prefWidth="124.0" text="Adicionar Pássaro" textAlignment="CENTER" />
+      <Button layoutX="159.0" layoutY="61.0" mnemonicParsing="false" onAction="#btnViewAllFederations" text="Ver Todas Federacoes" />
+      <Button layoutX="159.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnViewAllClubs" prefHeight="25.0" prefWidth="132.0" text="Ver Todos Clubes" />
       <Button layoutX="159.0" layoutY="121.0" mnemonicParsing="false" onAction="#btnViewAllBreeders" prefHeight="25.0" prefWidth="132.0" text="Ver Todos Criadores" />
       <Button layoutX="159.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnViewAllSpecies" prefHeight="25.0" prefWidth="132.0" text="Ver Todas Espécies" />
       <Button layoutX="159.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnViewAllMutations" prefHeight="25.0" prefWidth="132.0" text="Ver Todas Mutações" />
       <Button layoutX="159.0" layoutY="225.0" mnemonicParsing="false" onAction="#BtnViewCages" prefHeight="25.0" prefWidth="132.0" text="Ver Todas Gaiolas" />
       <Button layoutX="159.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnViewAllBirds" prefHeight="25.0" prefWidth="132.0" text="Ver Todos Pássaros" />
-      <Button layoutX="306.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnSearchBird" prefHeight="25.0" prefWidth="132.0" text="Procurar Pássaro" />
-      <Button layoutX="26.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnCreateDB" prefHeight="25.0" prefWidth="109.0" text="Create DB" />
-      <Button layoutX="148.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnDropDB" prefHeight="25.0" prefWidth="124.0" text="Drop DB" />
-      <Label layoutX="532.0" layoutY="348.0" text="Versao 1.3.0" />
-      <Button layoutX="159.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnViewAllClubs" prefHeight="25.0" prefWidth="132.0" text="Ver Todos Clubes" />
-      <Button layoutX="159.0" layoutY="61.0" mnemonicParsing="false" onAction="#btnViewAllFederations" text="Ver Todas Federacoes" />
       <Button layoutX="306.0" layoutY="61.0" mnemonicParsing="false" onAction="#btnSearchFederation" prefHeight="25.0" prefWidth="132.0" text="Procurar Federacao" />
       <Button layoutX="306.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnSearchClub" prefHeight="25.0" prefWidth="132.0" text="Procurar Clube" />
-      <Button layoutX="306.0" layoutY="121.0" mnemonicParsing="false" onAction="#btnSearchBreeder" prefHeight="25.0" prefWidth="132.0" text="Procurar Criador" />  
+      <Button layoutX="306.0" layoutY="121.0" mnemonicParsing="false" onAction="#btnSearchBreeder" prefHeight="25.0" prefWidth="132.0" text="Procurar Criador" />
+      <Button layoutX="306.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnSearchSpecie" prefHeight="25.0" prefWidth="132.0" text="Procurar Espécie" />
+      <Button layoutX="306.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnSearchBird" prefHeight="25.0" prefWidth="132.0" text="Procurar Pássaro" />
+      <Button layoutX="148.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnDropDB" prefHeight="25.0" prefWidth="124.0" text="Drop DB" />
+      <Button layoutX="26.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnCreateDB" prefHeight="25.0" prefWidth="109.0" text="Create DB" />
+      <Label layoutX="532.0" layoutY="348.0" text="Versao 1.3.0" />  
    </children>
 </AnchorPane>

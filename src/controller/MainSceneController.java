@@ -195,6 +195,19 @@ public class MainSceneController {
 	}
 	
 	@FXML
+	public void btnSearchSpecie(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/species/ViewSingleSpecie.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	private void btnCreateDB(ActionEvent event) {
 		dataBaseOperationsRepository.CreateDataBase(MyValues.DBNAME);
 //		dataBaseOperationsRepository.alterTableAddColumn("BIRDS", "Obs VARCHAR(500)");
