@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.BirdsRepository;
 import repository.CageRepository;
 
 import java.io.IOException;
@@ -26,11 +27,12 @@ public class ViewSingleCageController {
 	private Stage stage;
 	private Scene scene;
 	@FXML
-	private Label LbTitle, LabelAlert,LbCode, LbType;
+	private Label LbTitle, LabelAlert,LbCode, LbType,LbBirdNr;
 	@FXML
 	private TextField TfSearch;
 	
 	private CageRepository cageRepository = new CageRepository();
+	private BirdsRepository birdsRepository = new BirdsRepository();
 
 	@FXML
 	public void btnDelete(ActionEvent event) throws IOException, SQLException {
@@ -75,10 +77,11 @@ public class ViewSingleCageController {
 		}
 	}
 
-	public void updateAllInfo(Cage c) {
+	public void updateAllInfo(Cage c) throws SQLException {
 		LbTitle.setText("Gaiola: "+c.getCode());
 		LbCode.setText(c.getCode());
 		LbType.setText(c.getType());
+		LbBirdNr.setText(String.valueOf(birdsRepository.getBirdCountByCageId(c.getId())));
 	}
 	
 	public void clearAllFields() {
@@ -86,6 +89,7 @@ public class ViewSingleCageController {
 		LbTitle.setText("Gaiola XXXX");
 		LbCode.setText(null);
 		LbType.setText(null);
+		LbBirdNr.setText(null);
 	}
 	
 	public boolean validatorSearch(){

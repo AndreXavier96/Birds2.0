@@ -449,4 +449,32 @@ public class BirdsRepository {
 		}
 	}
 	
+	public int getBirdCountByCageId(int cageId) throws SQLException {
+	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    		PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM BIRDS WHERE CageId=?")) {
+	        stmt.setInt(1, cageId);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getInt(1);
+	            }
+	        }
+	    }
+	    return 0;
+	}
+	
+	
+	public int birdCountByMotherIdOrFatherId(int id) throws SQLException {
+	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    		PreparedStatement pstmt = con.prepareStatement("SELECT COUNT(*) AS count FROM BIRDS WHERE Father=? OR Mother=?")) {
+	        pstmt.setInt(1, id);
+	        pstmt.setInt(2, id);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getInt("count");
+	            }
+	        }
+	    }
+	    return 0;
+	}
+	
 }

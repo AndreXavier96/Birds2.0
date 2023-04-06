@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.BirdsRepository;
 import repository.SpeciesRepository;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class ViewSingleSpecieController {
 	private Label LbOutOfCageDays, LbMaturityAfterDays, LbBandSize;
 
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
+	private BirdsRepository birdsRepository = new BirdsRepository();
 	
 	@FXML
  	public void btnEdit(ActionEvent event) throws SQLException, IOException {
@@ -59,22 +61,24 @@ public class ViewSingleSpecieController {
 	@FXML
 	public void btnDelete(ActionEvent event) throws SQLException, IOException {
 		if (validator() && validatorSearch()) {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
-			Parent root = loader.load();
-			ConfirmationController confirmationController = loader.getController();
-			confirmationController.getLbText()
-					.setText("Tem a certeza que quer apagar a Especie: '" + LbCommonName.getText() + "'?");
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setTitle(MyValues.TITLE_DELETE_SPECIE + LbCommonName.getText());
-			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-			stage.setScene(scene);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.showAndWait();
-			if (confirmationController.isConfirmed()) {
-				Specie s = speciesRepository.getSpecieFromString(TfSearch.getText());
-				speciesRepository.deleteSpecie(s);
-				clearAllFields();
+			Specie s = speciesRepository.getSpecieFromString(TfSearch.getText());
+			if (validatorDelete(s)) {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
+				Parent root = loader.load();
+				ConfirmationController confirmationController = loader.getController();
+				confirmationController.getLbText()
+						.setText("Tem a certeza que quer apagar a Especie: '" + LbCommonName.getText() + "'?");
+				Scene scene = new Scene(root);
+				Stage stage = new Stage();
+				stage.setTitle(MyValues.TITLE_DELETE_SPECIE + LbCommonName.getText());
+				stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+				stage.setScene(scene);
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.showAndWait();
+				if (confirmationController.isConfirmed()) {
+					speciesRepository.deleteSpecie(s);
+					clearAllFields();
+				}
 			}
 		}
 	}
@@ -107,6 +111,19 @@ public class ViewSingleSpecieController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean validatorDelete(Specie specie) throws SQLException {
+		boolean validate=false;
+		if (birdsRepository.getBirdWhereInt("SpeciesId", specie.getId()) != null) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			LabelAlert.setText("Especie nao pode ser apagada porque tem passaros associados.");
+			validate=false;
+		}else {
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
 	}
 	
 	public boolean validatorSearch(){

@@ -23,11 +23,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import repository.BirdsRepository;
 import repository.MutationsRepository;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -42,8 +44,11 @@ public class ViewAllMutationsController implements Initializable {
 	private TableColumn<Mutation,String> colName,colVar1,colVar2,colVar3,colObs,colObservation;
 	@FXML
 	private TableColumn<Mutation,String> colSpecie,deleteButton;
-
+	@FXML
+	private Label LabelAlert;
+	
 	private MutationsRepository mutationsRepository = new MutationsRepository();
+	private BirdsRepository birdsRepository = new BirdsRepository();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -55,10 +60,6 @@ public class ViewAllMutationsController implements Initializable {
 			e.printStackTrace();
 		}
 		colName.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Name"));
-		colVar1.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Var1"));
-		colVar2.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Var3"));
-		colVar3.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Var2"));
-		colObs.setCellValueFactory(new PropertyValueFactory<Mutation,String>("Obs"));
 		colSpecie.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getSpecie().getCommonName()));
 		deleteButton.setCellFactory(new Callback<TableColumn<Mutation, String>, TableCell<Mutation, String>>() {
 			@Override
@@ -70,11 +71,14 @@ public class ViewAllMutationsController implements Initializable {
 			                    @Override
 			                    public void handle(ActionEvent event) {
 			                    	Mutation mutation = getTableView().getItems().get(getIndex());
-			                        deleteButtonAction(mutation);
+			                        try {
+										deleteButtonAction(mutation);
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}
 			                    }
 			                });
 			             }
-					 
 					@Override
 					protected void updateItem(String item, boolean empty) {
 						super.updateItem(item, empty);
@@ -109,7 +113,7 @@ public class ViewAllMutationsController implements Initializable {
 		});
 	}
 	
-	private void deleteButtonAction(Mutation mutation) {
+	private void deleteButtonAction(Mutation mutation) throws SQLException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
 		Parent root = null;
 		try {
@@ -117,27 +121,39 @@ public class ViewAllMutationsController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		ConfirmationController confirmationController = loader.getController();
-		confirmationController.getLbText().setText("Tem a certeza que quer apagar a mutacao: '" + mutation.getName() + "'?");
-
-		// Show the view using a new window
-		Scene scene = new Scene(root);
-		Stage stage = new Stage();
-		stage.setTitle(MyValues.TITLE_DELETE_MUTATION+mutation.getName());
-		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-		stage.setScene(scene);
-		stage.showAndWait();
-		if (confirmationController.isConfirmed()) {
-			try {
-				mutationsRepository.deleteMutation(mutation);
-				tableID.getItems().remove(mutation);
-			} catch (SQLException e) {
-				e.printStackTrace();
+		if (validatorDelete(mutation)) {
+			ConfirmationController confirmationController = loader.getController();
+			confirmationController.getLbText()
+					.setText("Tem a certeza que quer apagar a mutacao: '" + mutation.getName() + "'?");
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle(MyValues.TITLE_DELETE_MUTATION + mutation.getName());
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.showAndWait();
+			if (confirmationController.isConfirmed()) {
+				try {
+					mutationsRepository.deleteMutation(mutation);
+					tableID.getItems().remove(mutation);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 	
+	public boolean validatorDelete(Mutation mutation) throws SQLException {
+		boolean validate=false;
+		if (birdsRepository.getBirdWhereInt("MutationsId", mutation.getId()) != null) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			LabelAlert.setText("Mutacao nao pode ser apagada porque tem passaros associados.");
+			validate=false;
+		}else {
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
+	}
 	
 	@FXML
 	public void btnBack(ActionEvent event) {

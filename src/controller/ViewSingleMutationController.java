@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.BirdsRepository;
 import repository.MutationsRepository;
 
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class ViewSingleMutationController {
 	private Label LbTitle, LabelAlert,LbSpecie, LbName, LbVar1,LbVar2, LbVar3, LbObs;
 
 	private MutationsRepository mutationsRepository = new MutationsRepository();
+	private BirdsRepository birdsRepository = new BirdsRepository();
 
 
 	@FXML
@@ -57,22 +59,24 @@ public class ViewSingleMutationController {
 	@FXML
 	public void btnDelete(ActionEvent event) throws SQLException, IOException {
 		if (validator() && validatorSearch()) {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
-			Parent root = loader.load();
-			ConfirmationController confirmationController = loader.getController();
-			confirmationController.getLbText()
-					.setText("Tem a certeza que quer apagar a Mutacao: '" + LbName.getText() + "'?");
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setTitle(MyValues.TITLE_DELETE_MUTATION + LbName.getText());
-			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-			stage.setScene(scene);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.showAndWait();
-			if (confirmationController.isConfirmed()) {
-				Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText());
-				mutationsRepository.deleteMutation(m);
-				clearAllFields();
+			Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText());
+			if (validatorDelete(m)) {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
+				Parent root = loader.load();
+				ConfirmationController confirmationController = loader.getController();
+				confirmationController.getLbText()
+						.setText("Tem a certeza que quer apagar a Mutacao: '" + LbName.getText() + "'?");
+				Scene scene = new Scene(root);
+				Stage stage = new Stage();
+				stage.setTitle(MyValues.TITLE_DELETE_MUTATION + LbName.getText());
+				stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+				stage.setScene(scene);
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.showAndWait();
+				if (confirmationController.isConfirmed()) {
+					mutationsRepository.deleteMutation(m);
+					clearAllFields();
+				}
 			}
 		}
 	}
@@ -105,6 +109,19 @@ public class ViewSingleMutationController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean validatorDelete(Mutation mutation) throws SQLException {
+		boolean validate=false;
+		if (birdsRepository.getBirdWhereInt("MutationsId", mutation.getId()) != null) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			LabelAlert.setText("Mutacao nao pode ser apagada porque tem passaros associados.");
+			validate=false;
+		}else {
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
 	}
 
 	public boolean validatorSearch(){

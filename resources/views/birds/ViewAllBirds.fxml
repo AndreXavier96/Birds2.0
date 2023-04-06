@@ -7,32 +7,37 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="1830.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewAllBirdsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewAllBirdsController">
    <children>
-      <TableView fx:id="tableID" layoutX="14.0" layoutY="48.0" prefHeight="292.0" prefWidth="1802.0">
-        <columns>
-          <TableColumn fx:id="colAnilha" minWidth="0.0" prefWidth="178.0" text="Anilha" />
-          <TableColumn fx:id="colAno" prefWidth="172.0" text="Ano" />
-          <TableColumn fx:id="colEntryDate" prefWidth="172.0" text="Data Entrada" />
-          <TableColumn fx:id="colEntryType" prefWidth="172.0" text="Tipo Entrada" />
-          <TableColumn fx:id="colBuyPrice" prefWidth="172.0" text="Preco Compra" />
-          <TableColumn fx:id="colSellPrice" prefWidth="172.0" text="Preco Venda" />
-          <TableColumn fx:id="colState" prefWidth="172.0" text="Estado" />
-          <TableColumn fx:id="colSex" prefWidth="172.0" text="Sexo" />
-          <TableColumn fx:id="colFather" prefWidth="172.0" text="Pai" />
-          <TableColumn fx:id="colMother" prefWidth="172.0" text="Mae" />
-          <TableColumn fx:id="colSpecie" prefWidth="172.0" text="Especie" />
-          <TableColumn fx:id="colMutation" prefWidth="172.0" text="Mutacao" />
-          <TableColumn fx:id="colCage" prefWidth="172.0" text="Gaiola" />
-          <TableColumn fx:id="colBreeder" prefWidth="108.0" text="Criador" />
-           <TableColumn fx:id="deleteButton" prefWidth="75.0" text="" />
-        </columns>
-      </TableView>
-      <Label layoutX="264.0" layoutY="14.0" text="Passaros">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Button cancelButton="true" layoutX="14.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnBack" text="Voltar" />
+      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="62.0" prefWidth="802.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" text="Passaros" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelAlert" alignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="46.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="85.0" prefHeight="286.0" prefWidth="709.0" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
+         <children>
+            <TableView fx:id="tableID" prefHeight="292.0" prefWidth="1802.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn fx:id="colAnilha" minWidth="0.0" prefWidth="178.0" text="Anilha" />
+                <TableColumn fx:id="colAno" prefWidth="56.0" text="Ano" />
+                  <TableColumn fx:id="colSex" prefWidth="110.0" text="Sexo" />
+                <TableColumn fx:id="colState" prefWidth="143.0" text="Estado" />
+                <TableColumn fx:id="colSpecie" prefWidth="178.0" text="Especie" />
+                <TableColumn fx:id="colCage" prefWidth="76.0" text="Gaiola" />
+                 <TableColumn fx:id="deleteButton" editable="false" prefWidth="30.0" resizable="false" sortable="false" text="" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="14.0" prefWidth="802.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#btnBack" text="Voltar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

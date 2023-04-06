@@ -25,7 +25,7 @@
       <AnchorPane layoutY="51.0" prefHeight="41.0" prefWidth="164.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="51.0">
          <children>
             <Label text="Tipo Criador*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      	<ComboBox fx:id="CbType" disable="true" layoutX="14.0" layoutY="25.0" prefWidth="150.0" promptText="Selecionar" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0">
+      	<ComboBox fx:id="CbType" layoutX="14.0" layoutY="25.0" prefWidth="150.0" promptText="Selecionar" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0">
       		<cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

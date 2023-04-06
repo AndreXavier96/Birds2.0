@@ -25,11 +25,13 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import repository.BreederClubRepository;
 import repository.ClubRepository;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -44,7 +46,11 @@ public class ViewAllClubsController implements Initializable {
 	@FXML
 	private TableColumn<Club,String> colContact, colEmail,deleteButton,editButton;
 	
+	@FXML
+	private Label LabelAlert;
+	
 	private ClubRepository clubRepository = new ClubRepository();
+	private BreederClubRepository breederClubRepository = new BreederClubRepository();
 	
 	@FXML
 	public void btnBack(ActionEvent event) {
@@ -71,12 +77,6 @@ public class ViewAllClubsController implements Initializable {
 		colFederation.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFederation().getAcronym()));
 		colName.setCellValueFactory(new PropertyValueFactory<Club,String>("Name"));
 		colAcronym.setCellValueFactory(new PropertyValueFactory<Club,String>("Acronym"));
-		colLocale.setCellValueFactory(new PropertyValueFactory<Club,String>("Locale"));
-		colAddress.setCellValueFactory(new PropertyValueFactory<Club,String>("Address"));
-		colContact.setCellValueFactory(new PropertyValueFactory<Club,String>("Phone"));
-		colEmail.setCellValueFactory(new PropertyValueFactory<Club,String>("Email"));
-		
-		// Set up the delete button column
 		deleteButton.setCellFactory(new Callback<TableColumn<Club, String>, TableCell<Club, String>>() {
 			@Override
 			public TableCell<Club, String> call(TableColumn<Club, String> column) {
@@ -87,11 +87,14 @@ public class ViewAllClubsController implements Initializable {
 			                    @Override
 			                    public void handle(ActionEvent event) {
 			                        Club club = getTableView().getItems().get(getIndex());
-			                        deleteButtonAction(club);
+			                        try {
+										deleteButtonAction(club);
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}
 			                    }
 			                });
 			             }
-					 
 					@Override
 					protected void updateItem(String item, boolean empty) {
 						super.updateItem(item, empty);
@@ -104,12 +107,10 @@ public class ViewAllClubsController implements Initializable {
 				};
 			}
 		});
-		
 		editButton.setCellFactory(new Callback<TableColumn<Club, String>, TableCell<Club, String>>() {
 			@Override
 			public TableCell<Club, String> call(TableColumn<Club, String> column) {
 				return new TableCell<Club, String>() {
-
 					final Button editButton = new Button();
 					 {
 						 ImageView editImage = new ImageView(PathsConstants.EDIT_ICO);
@@ -124,7 +125,6 @@ public class ViewAllClubsController implements Initializable {
 			                    }
 			                });
 			             }
-					 
 					@Override
 					protected void updateItem(String item, boolean empty) {
 						super.updateItem(item, empty);
@@ -137,7 +137,6 @@ public class ViewAllClubsController implements Initializable {
 				};
 			}
 		});
-
 		tableID.setItems(clubs);
 		tableID.setOnMouseClicked(event -> {
 			if(event.getClickCount()==2) {
@@ -160,8 +159,7 @@ public class ViewAllClubsController implements Initializable {
 		});
 	}
 	
-	// Create a method to handle the delete button action
-	private void deleteButtonAction(Club club) {
+	private void deleteButtonAction(Club club) throws SQLException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
 		Parent root = null;
 		try {
@@ -169,25 +167,37 @@ public class ViewAllClubsController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		ConfirmationController confirmationController = loader.getController();
-		confirmationController.getLbText().setText("Tem a certeza que quer apagar o clube: '" + club.getName() + "'?");
-
-		// Show the view using a new window
-		Scene scene = new Scene(root);
-		Stage stage = new Stage();
-		stage.setTitle(MyValues.TITLE_DELETE_CLUB+club.getAcronym());
-		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-		stage.setScene(scene);
-		stage.showAndWait();
-		if (confirmationController.isConfirmed()) {
-			try {
-				clubRepository.deleteClub(club);
-				tableID.getItems().remove(club);
-			} catch (SQLException e) {
-				e.printStackTrace();
+		if (validatorDelete(club)) {
+			ConfirmationController confirmationController = loader.getController();
+			confirmationController.getLbText().setText("Tem a certeza que quer apagar o clube: '" + club.getName() + "'?");
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle(MyValues.TITLE_DELETE_CLUB+club.getAcronym());
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.showAndWait();
+			if (confirmationController.isConfirmed()) {
+				try {
+					clubRepository.deleteClub(club);
+					tableID.getItems().remove(club);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
+	}
+	
+	public boolean validatorDelete(Club club) throws SQLException {
+		boolean validate=false;
+		if (breederClubRepository.clubHasBreeders(club.getId())) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			LabelAlert.setText("Clube nao pode ser apagado porque tem criadores associados.");
+			validate=false;
+		}else {
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
 	}
 	
 	private void editButtonAction(Club club) {

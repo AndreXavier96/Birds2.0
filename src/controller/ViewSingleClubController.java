@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.BreederClubRepository;
 import repository.ClubRepository;
 
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class ViewSingleClubController {
 	private Label LbAddress;
 	
 	private ClubRepository clubRepository = new ClubRepository();
+	private BreederClubRepository breederClubRepository= new BreederClubRepository();
 
 	@FXML
 	public void btnEdit(ActionEvent event) throws SQLException, IOException {
@@ -72,25 +74,28 @@ public class ViewSingleClubController {
 	
 	@FXML
 	public void btnDelete(ActionEvent event) throws SQLException, IOException {
-		if (validator()&&validatorSearch()) {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
-			Parent root = loader.load();
-			ConfirmationController confirmationController = loader.getController();
-			confirmationController.getLbText().setText("Tem a certeza que quer apagar o Clube: '" + LBAcronym.getText() + "'?");
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setTitle(MyValues.TITLE_DELETE_CLUB+LBAcronym.getText());
-			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-			stage.setScene(scene);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.showAndWait();
-			if (confirmationController.isConfirmed()) {
-				try {
-					Club c = clubRepository.getClubWhereString("Acronym",TfSearch.getText());
-					clubRepository.deleteClub(c);
-					clearAllFields();
-				} catch (SQLException e) {
-					e.printStackTrace();
+		if (validator() && validatorSearch()) {
+			Club c = clubRepository.getClubWhereString("Acronym", TfSearch.getText());
+			if (validatorDelete(c)) {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
+				Parent root = loader.load();
+				ConfirmationController confirmationController = loader.getController();
+				confirmationController.getLbText()
+						.setText("Tem a certeza que quer apagar o Clube: '" + LBAcronym.getText() + "'?");
+				Scene scene = new Scene(root);
+				Stage stage = new Stage();
+				stage.setTitle(MyValues.TITLE_DELETE_CLUB + LBAcronym.getText());
+				stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+				stage.setScene(scene);
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.showAndWait();
+				if (confirmationController.isConfirmed()) {
+					try {
+						clubRepository.deleteClub(c);
+						clearAllFields();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -134,6 +139,19 @@ public class ViewSingleClubController {
 		LBPhone.setText(null);
 		LBLocale.setText(null);
 		LbAddress.setText(null);
+	}
+	
+	public boolean validatorDelete(Club club) throws SQLException {
+		boolean validate=false;
+		if (breederClubRepository.clubHasBreeders(club.getId())) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			LabelAlert.setText("Clube nao pode ser apagado porque tem criadores associados.");
+			validate=false;
+		}else {
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
 	}
 	
 	public boolean validatorSearch(){

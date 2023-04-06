@@ -54,7 +54,6 @@ public class ViewAllCagesController implements Initializable {
 		}
 		colCode.setCellValueFactory(new PropertyValueFactory<Cage,String>("Code"));
 		colType.setCellValueFactory(new PropertyValueFactory<Cage,String>("Type"));
-		
 		deleteButton.setCellFactory(new Callback<TableColumn<Cage, String>, TableCell<Cage, String>>() {
 			@Override
 			public TableCell<Cage, String> call(TableColumn<Cage, String> column) {

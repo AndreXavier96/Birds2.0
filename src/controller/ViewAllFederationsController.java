@@ -24,11 +24,13 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import repository.BreederFederationRepository;
 import repository.FederationRepository;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -40,8 +42,11 @@ public class ViewAllFederationsController implements Initializable {
 	private TableView<Federation> tableID;
 	@FXML
 	private TableColumn<Federation, String> colName, colAcronym, colCountry, colEmail, deleteButton, editButton;
+	@FXML
+	private Label LabelAlert;
 	
 	private FederationRepository federationRepository = new FederationRepository();
+	private BreederFederationRepository breederFederationRepository= new BreederFederationRepository();
 	
 	@FXML
 	public void btnBack(ActionEvent event) {
@@ -67,10 +72,6 @@ public class ViewAllFederationsController implements Initializable {
 		}
 		colName.setCellValueFactory(new PropertyValueFactory<Federation,String>("Name"));
 		colAcronym.setCellValueFactory(new PropertyValueFactory<Federation,String>("Acronym"));
-		colCountry.setCellValueFactory(new PropertyValueFactory<Federation,String>("Country"));
-		colEmail.setCellValueFactory(new PropertyValueFactory<Federation,String>("Email"));
-		
-		// Set up the delete button column
 		deleteButton.setCellFactory(new Callback<TableColumn<Federation, String>, TableCell<Federation, String>>() {
 			@Override
 			public TableCell<Federation, String> call(TableColumn<Federation, String> column) {
@@ -81,7 +82,11 @@ public class ViewAllFederationsController implements Initializable {
 			                    @Override
 			                    public void handle(ActionEvent event) {
 			                    	Federation federation = getTableView().getItems().get(getIndex());
-			                        deleteButtonAction(federation);
+			                        try {
+										deleteButtonAction(federation);
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}
 			                    }
 			                });
 			             }
@@ -98,7 +103,6 @@ public class ViewAllFederationsController implements Initializable {
 				};
 			}
 		});
-		
 		editButton.setCellFactory(new Callback<TableColumn<Federation, String>, TableCell<Federation, String>>() {
 			@Override
 			public TableCell<Federation, String> call(TableColumn<Federation, String> column) {
@@ -131,7 +135,6 @@ public class ViewAllFederationsController implements Initializable {
 				};
 			}
 		});
-		
 		tableID.setItems(federations);
 		tableID.setOnMouseClicked(event -> {
 			if(event.getClickCount()==2) {
@@ -153,25 +156,22 @@ public class ViewAllFederationsController implements Initializable {
 			}
 		});
 	}
-	
-	
-	// Create a method to handle the delete button action
-		private void deleteButtonAction(Federation federation) {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
-			Parent root = null;
-			try {
-				root = loader.load();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 
+	private void deleteButtonAction(Federation federation) throws SQLException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (validatorDelete(federation)) {
 			ConfirmationController confirmationController = loader.getController();
-			confirmationController.getLbText().setText("Tem a certeza que quer apagar a federacao: '" + federation.getName() + "'?");
-
-			// Show the view using a new window
+			confirmationController.getLbText()
+					.setText("Tem a certeza que quer apagar a federacao: '" + federation.getName() + "'?");
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
-			stage.setTitle(MyValues.TITLE_DELETE_FEDERATION+federation.getAcronym());
+			stage.setTitle(MyValues.TITLE_DELETE_FEDERATION + federation.getAcronym());
 			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
 			stage.setScene(scene);
 			stage.initModality(Modality.APPLICATION_MODAL);
@@ -185,7 +185,20 @@ public class ViewAllFederationsController implements Initializable {
 				}
 			}
 		}
+	}
 		
+	public boolean validatorDelete(Federation federation) throws SQLException {
+		boolean validate=false;
+		if (breederFederationRepository.federationHasBreeders(federation.getId())) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			LabelAlert.setText("Federacao nao pode ser apagada porque tem criadores associados.");
+			validate=false;
+		}else {
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
+	}
 		
 		private void editButtonAction(Federation federation) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/federation/addFederationView.fxml"));

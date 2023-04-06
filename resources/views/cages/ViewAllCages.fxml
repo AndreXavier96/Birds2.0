@@ -11,10 +11,9 @@
    <children>
       <TableView fx:id="tableID" layoutX="14.0" layoutY="48.0" prefHeight="292.0" prefWidth="565.0">
         <columns>
-            <TableColumn fx:id="colCode" prefWidth="172.0" text="Codigo" />
-            <TableColumn fx:id="colType" prefWidth="172.0" text="Tipo" />
-             <TableColumn fx:id="colBird" prefWidth="172.0" text="Passaro" />
-             <TableColumn fx:id="deleteButton" prefWidth="75.0" text="" />
+            <TableColumn fx:id="colCode" prefWidth="278.0" text="Codigo" />
+            <TableColumn fx:id="colType" prefWidth="236.0" text="Tipo" />
+             <TableColumn fx:id="deleteButton" editable="false" prefWidth="48.0" resizable="false" sortable="false" text="" />
         </columns>
       </TableView>
       <Label layoutX="265.0" layoutY="14.0" text="Gaiolas">
