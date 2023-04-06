@@ -10,7 +10,6 @@ import repository.BreederClubRepository;
 import repository.ClubRepository;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import constants.MyValues;
@@ -197,7 +196,8 @@ public class ViewSingleClubController {
 	@FXML
 	public void btnBack(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainScene.fxml"));
+			root = loader.load();
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);

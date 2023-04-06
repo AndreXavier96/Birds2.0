@@ -1,7 +1,6 @@
 package application;
 	
 import java.io.File;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import constants.MyValues;
@@ -32,7 +31,8 @@ public class Main extends Application {
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		//show main scene
 		try {
-			Parent root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainScene.fxml"));
+			Parent root = loader.load();
 			Scene scene = new Scene(root);
 			primaryStage.setTitle(MyValues.TITLE_BIRD_APP);
 			primaryStage.getIcons().add(new Image(PathsConstants.ICON_PATH));

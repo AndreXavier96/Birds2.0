@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -46,7 +45,8 @@ public class ViewAllBirdsController implements Initializable {
 	@FXML
 	public void btnBack(ActionEvent event) {
 		try {
-			Parent root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainScene.fxml"));
+			Parent root = loader.load();
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
