@@ -11,6 +11,7 @@ public class MyValues {
 	public static final String ERROR_BOX_STYLE = "-fx-border-color: red; -fx-border-width:2px;";
 	public static final String ALERT_ERROR = "-fx-background-color: red; -fx-border-width: 0; -fx-background-radius: 5;";
 	public static final String ALERT_SUCESS = "-fx-background-color: green; -fx-border-width: 0; -fx-background-radius: 5;";
+	public static final String ALERT_INFO = "-fx-background-color: blue; -fx-border-width: 0; -fx-background-radius: 5;";
 
 	public static final String COMPRA = "Compra";
 	public static final String NASCIMENTO = "Nascimento";

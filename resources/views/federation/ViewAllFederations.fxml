@@ -9,21 +9,32 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewAllFederationsController">
    <children>
-      <TableView fx:id="tableID" layoutX="14.0" layoutY="48.0" prefHeight="292.0" prefWidth="565.0">
-        <columns>
-            <TableColumn fx:id="colName" prefWidth="307.0" text="Nome" />
-            <TableColumn fx:id="colAcronym" prefWidth="73.0" text="Sigla" />
-             <TableColumn fx:id="colCountry" prefWidth="100.0" text="Pais" />
-            <TableColumn fx:id="colEmail" prefWidth="100.0" text="Email" />
-            <TableColumn fx:id="deleteButton" prefWidth="75.0" text="" />
-            <TableColumn fx:id="editButton" prefWidth="75.0" text="" />
-        </columns>
-      </TableView>
-      <Label layoutX="265.0" layoutY="14.0" text="Federacoes">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Button cancelButton="true" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnBack" text="Voltar" />
+      <AnchorPane prefHeight="60.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" text="Federacoes" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelAlert" alignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="46.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="77.0" prefHeight="285.0" prefWidth="600.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="77.0">
+         <children>
+            <TableView fx:id="tableID" prefHeight="292.0" prefWidth="565.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                  <TableColumn fx:id="colName" prefWidth="374.0" text="Nome" />
+                  <TableColumn fx:id="colAcronym" prefWidth="123.0" text="Sigla" />
+                  <TableColumn fx:id="deleteButton" editable="false" minWidth="0.0" prefWidth="36.0" resizable="false" sortable="false" text="" />
+                  <TableColumn fx:id="editButton" editable="false" prefWidth="37.0" resizable="false" sortable="false" text="" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="17.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#btnBack" text="Voltar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

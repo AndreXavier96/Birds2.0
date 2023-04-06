@@ -22,11 +22,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import repository.BirdsRepository;
 import repository.SpeciesRepository;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -41,8 +43,11 @@ public class ViewAllSpeciesController implements Initializable {
 	private TableColumn<Specie,Integer> colId,colIncubationDays,colBandingDays,colOutOfCageDays,colMaturityDays,colBandSize;
 	@FXML
 	private TableColumn<Specie, String> colCommonName,colScientificName,deleteButton;
+	@FXML
+	private Label LabelAlert;
 
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
+	private BirdsRepository birdsRepository = new BirdsRepository();
 
 	@FXML
 	public void btnBack(ActionEvent event) {
@@ -57,7 +62,6 @@ public class ViewAllSpeciesController implements Initializable {
 		}
 	}
 
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SpeciesRepository speciesRepository = new SpeciesRepository();
@@ -69,11 +73,6 @@ public class ViewAllSpeciesController implements Initializable {
 		}
 		colCommonName.setCellValueFactory(new PropertyValueFactory<Specie,String>("CommonName"));
 		colScientificName.setCellValueFactory(new PropertyValueFactory<Specie,String>("ScientificName"));
-		colIncubationDays.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("IncubationDays"));
-		colBandingDays.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("DaysToBand"));
-		colOutOfCageDays.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("OutofCageAfterDays"));
-		colMaturityDays.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("MaturityAfterDays"));
-		colBandSize.setCellValueFactory(new PropertyValueFactory<Specie,Integer>("BandSize"));
 		deleteButton.setCellFactory(new Callback<TableColumn<Specie, String>, TableCell<Specie, String>>() {
 			@Override
 			public TableCell<Specie, String> call(TableColumn<Specie, String> column) {
@@ -84,11 +83,14 @@ public class ViewAllSpeciesController implements Initializable {
 			                    @Override
 			                    public void handle(ActionEvent event) {
 			                    	Specie specie = getTableView().getItems().get(getIndex());
-			                        deleteButtonAction(specie);
+			                        try {
+										deleteButtonAction(specie);
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}
 			                    }
 			                });
 			             }
-					 
 					@Override
 					protected void updateItem(String item, boolean empty) {
 						super.updateItem(item, empty);
@@ -123,7 +125,7 @@ public class ViewAllSpeciesController implements Initializable {
 		});
 	}
 	
-	private void deleteButtonAction(Specie specie) {
+	private void deleteButtonAction(Specie specie) throws SQLException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
 		Parent root = null;
 		try {
@@ -131,24 +133,37 @@ public class ViewAllSpeciesController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		ConfirmationController confirmationController = loader.getController();
-		confirmationController.getLbText().setText("Tem a certeza que quer apagar a especie: '" + specie.getCommonName() + "'?");
-
-		// Show the view using a new window
-		Scene scene = new Scene(root);
-		Stage stage = new Stage();
-		stage.setTitle(MyValues.TITLE_DELETE_SPECIE+specie.getCommonName());
-		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-		stage.setScene(scene);
-		stage.showAndWait();
-		if (confirmationController.isConfirmed()) {
-			try {
-				speciesRepository.deleteSpecie(specie);
-				tableID.getItems().remove(specie);
-			} catch (SQLException e) {
-				e.printStackTrace();
+		if (validatorDelete(specie)) {
+			ConfirmationController confirmationController = loader.getController();
+			confirmationController.getLbText()
+					.setText("Tem a certeza que quer apagar a especie: '" + specie.getCommonName() + "'?");
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle(MyValues.TITLE_DELETE_SPECIE + specie.getCommonName());
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.showAndWait();
+			if (confirmationController.isConfirmed()) {
+				try {
+					speciesRepository.deleteSpecie(specie);
+					tableID.getItems().remove(specie);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
+	}
+	
+	public boolean validatorDelete(Specie specie) throws SQLException {
+		boolean validate=false;
+		if (birdsRepository.getBirdWhereInt("SpeciesId", specie.getId()) != null) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			LabelAlert.setText("Especie nao pode ser apagada porque tem passaros associados.");
+			validate=false;
+		}else {
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
 	}
 }

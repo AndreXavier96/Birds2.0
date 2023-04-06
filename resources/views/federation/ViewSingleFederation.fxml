@@ -35,7 +35,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label fx:id="LabelAlert" alignment="CENTER" layoutY="42.0" prefHeight="17.0" prefWidth="1267.0" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0" />
+            <Label fx:id="LabelAlert" alignment="CENTER" layoutY="42.0" prefHeight="17.0" prefWidth="1267.0" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
             <AnchorPane layoutX="14.0" layoutY="43.0" prefHeight="25.0" prefWidth="216.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0">
                <children>
                   <Button defaultButton="true" mnemonicParsing="false" onAction="#btnSearchForAcronym" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">

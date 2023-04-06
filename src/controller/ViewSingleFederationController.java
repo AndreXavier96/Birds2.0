@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.BreederFederationRepository;
 import repository.FederationRepository;
 
 import java.io.IOException;
@@ -42,29 +43,32 @@ public class ViewSingleFederationController {
 	private Label LbCountry;
 
 	private FederationRepository federationRepository = new FederationRepository();
+	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
 	
 	
 	@FXML
 	public void btnDelete(ActionEvent event) throws IOException, SQLException {
 		if (validator()&&validatorSearch()) {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
-			Parent root = loader.load();
-			ConfirmationController confirmationController = loader.getController();
-			confirmationController.getLbText().setText("Tem a certeza que quer apagar a federacao: '" + LbAcronym.getText() + "'?");
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setTitle(MyValues.TITLE_DELETE_FEDERATION+LbAcronym.getText());
-			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-			stage.setScene(scene);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.showAndWait();
-			if (confirmationController.isConfirmed()) {
-				try {
-					Federation federation = federationRepository.getFederationWhereString("Acronym", TfFederationSearch.getText());
-					federationRepository.deleteFederation(federation);
-					clearAllFields();
-				} catch (SQLException e) {
-					e.printStackTrace();
+			Federation federation = federationRepository.getFederationWhereString("Acronym", TfFederationSearch.getText());
+			if (validatorDelete(federation)) {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
+				Parent root = loader.load();
+				ConfirmationController confirmationController = loader.getController();
+				confirmationController.getLbText().setText("Tem a certeza que quer apagar a federacao: '" + LbAcronym.getText() + "'?");
+				Scene scene = new Scene(root);
+				Stage stage = new Stage();
+				stage.setTitle(MyValues.TITLE_DELETE_FEDERATION+LbAcronym.getText());
+				stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+				stage.setScene(scene);
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.showAndWait();
+				if (confirmationController.isConfirmed()) {
+					try {
+						federationRepository.deleteFederation(federation);
+						clearAllFields();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -125,6 +129,19 @@ public class ViewSingleFederationController {
 		LbAcronym.setText(null);
 		LbEmail.setText(null);
 		LbCountry.setText(null);
+	}
+	
+	public boolean validatorDelete(Federation federation) throws SQLException {
+		boolean validate=false;
+		if (breederFederationRepository.federationHasBreeders(federation.getId())) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			LabelAlert.setText("Federacao nao pode ser apagada porque tem criadores associados.");
+			validate=false;
+		}else {
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
 	}
 	
 	public boolean validatorSearch(){

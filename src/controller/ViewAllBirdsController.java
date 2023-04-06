@@ -8,13 +8,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
 import constants.PathsConstants;
 import domains.Bird;
-import domains.State;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,6 +27,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -38,9 +37,9 @@ public class ViewAllBirdsController implements Initializable {
 	@FXML
 	private TableColumn<Bird, Integer> colAno;
 	@FXML
-	private TableColumn<Bird, String> colAnilha,colEntryDate,colEntryType,
-		colBuyPrice,colSellPrice,colState,colSex,colFather,colMother,colSpecie,colMutation,
-		colCage,colBreeder,deleteButton;
+	private TableColumn<Bird, String> colAnilha,colState,colSex,colSpecie,colCage,deleteButton;
+	@FXML
+	private Label LabelAlert;
 
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	
@@ -63,25 +62,10 @@ public class ViewAllBirdsController implements Initializable {
 		ObservableList<Bird> birds = birdsRepository.getAllBirds();
 		colAnilha.setCellValueFactory(new PropertyValueFactory<>("Band"));
 		colAno.setCellValueFactory(new PropertyValueFactory<>("Year"));
-		colEntryDate.setCellValueFactory(new PropertyValueFactory<>("EntryDate"));
-		colEntryType.setCellValueFactory(new PropertyValueFactory<>("EntryType"));
-		colBuyPrice.setCellValueFactory(new PropertyValueFactory<>("BuyPrice"));
-		colSellPrice.setCellValueFactory(cellData ->  new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getState())
-	    		.map(State::getValor)
-	    		.map(String::valueOf)
-	    		.orElse("0")));
 		colState.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getState().getType()));
 		colSex.setCellValueFactory(new PropertyValueFactory<>("Sex"));
-	    colFather.setCellValueFactory(cellData -> new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getFather())
-                .map(Bird::getBand)
-                .orElse("")));
-	    colMother.setCellValueFactory(cellData ->  new SimpleStringProperty(Optional.ofNullable(cellData.getValue().getMother())
-	    		.map(Bird::getBand)
-	    		.orElse("")));
 		colSpecie.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getSpecies().getCommonName()));
-		colMutation.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getMutations().getName()));
 		colCage.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getCage().getCode()));
-		colBreeder.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getBreeder().getName()));
 		deleteButton.setCellFactory(new Callback<TableColumn<Bird, String>, TableCell<Bird, String>>() {
 			@Override
 			public TableCell<Bird, String> call(TableColumn<Bird, String> column) {
@@ -92,11 +76,14 @@ public class ViewAllBirdsController implements Initializable {
 			                    @Override
 			                    public void handle(ActionEvent event) {
 			                    	Bird bird = getTableView().getItems().get(getIndex());
-			                        deleteButtonAction(bird);
+			                        try {
+										deleteButtonAction(bird);
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}
 			                    }
 			                });
 			             }
-					 
 					@Override
 					protected void updateItem(String item, boolean empty) {
 						super.updateItem(item, empty);
@@ -109,7 +96,6 @@ public class ViewAllBirdsController implements Initializable {
 				};
 			}
 		});
-		
 		tableID.setItems(birds);
 		tableID.setOnMouseClicked(event -> {
 			if(event.getClickCount()==2) {
@@ -132,9 +118,7 @@ public class ViewAllBirdsController implements Initializable {
 		});
 	}
 	
-	
-	
-	private void deleteButtonAction(Bird bird) {
+	private void deleteButtonAction(Bird bird) throws SQLException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
 		Parent root = null;
 		try {
@@ -142,11 +126,12 @@ public class ViewAllBirdsController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		ConfirmationController confirmationController = loader.getController();
-		confirmationController.getLbText().setText("Tem a certeza que quer apagar o passaro: '" + bird.getBand() + "'?");
-
-		// Show the view using a new window
+		int sons = birdsRepository.birdCountByMotherIdOrFatherId(bird.getId());
+		if (sons>0)
+			confirmationController.getLbText().setText("O passaro: '" + bird.getBand() + "' tem "+sons+" filhos, tem a certeza que pretende apagar e perder a informacao relativa a linhagem deste passaro?");
+		else 
+			confirmationController.getLbText().setText("Tem a certeza que quer apagar o passaro: '" + bird.getBand() + "'?");
 		Scene scene = new Scene(root);
 		Stage stage = new Stage();
 		stage.setTitle(MyValues.TITLE_DELETE_BIRD+bird.getBand());
@@ -156,7 +141,6 @@ public class ViewAllBirdsController implements Initializable {
 		if (confirmationController.isConfirmed()) {
 			try {
 				birdsRepository.deleteBird(bird);
-//				tableID.getItems().remove(bird);
 				ObservableList<Bird> birds = birdsRepository.getAllBirds();
 				tableID.setItems(birds);
 			} catch (SQLException e) {

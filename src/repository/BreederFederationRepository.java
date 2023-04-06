@@ -180,6 +180,16 @@ public class BreederFederationRepository {
 		return result;
 	}
 
+	public boolean federationHasBreeders(int federationId) throws SQLException {
+	    Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    Statement stmt = con.createStatement();
+	    String sql = "SELECT COUNT(*) FROM BREEDER_FEDERATION WHERE FederationId=" + federationId;
+	    ResultSet rs = stmt.executeQuery(sql);
+	    rs.next();
+	    int count = rs.getInt(1);
+	    CloseConnection(con, stmt, null, rs);
+	    return count > 0;
+	}
 
 
 }

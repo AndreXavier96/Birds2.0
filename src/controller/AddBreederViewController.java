@@ -935,6 +935,7 @@ public class AddBreederViewController implements Initializable {
 		btnEdit.setVisible(true);
 		LBTitle.setText("Editar " + breeder.getName());
 		CbType.setValue(breeder.getType());
+		CbType.setDisable(true);
 		if (CbType.getValue().equals(MyValues.CRIADOR_PROFISSIONAL)) {
 			profissional = true;
 			ApProfissional.setVisible(true);
