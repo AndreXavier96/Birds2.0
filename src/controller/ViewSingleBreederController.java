@@ -406,6 +406,7 @@ public class ViewSingleBreederController implements Initializable{
 	
 	public void startValues(Breeder b) throws SQLException {
 		if (b.getType().equals(MyValues.CRIADOR_PROFISSIONAL)) {
+			CbType.setValue(b.getType());
 			TfSearchName.setText(null);
 			TfSearchStam.setText(null);
 			LabelAlert.setStyle(null);
@@ -417,6 +418,7 @@ public class ViewSingleBreederController implements Initializable{
 			profissional = true;
 			searchStam(b.getStam().values().toArray()[0].toString());
 		}else {
+			CbType.setValue(b.getType());
 			TfSearchName.setText(null);
 			TfSearchStam.setText(null);
 			LabelAlert.setStyle(null);

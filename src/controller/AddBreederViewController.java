@@ -57,7 +57,7 @@ public class AddBreederViewController implements Initializable {
 	@FXML
 	private ListView<Club> clubListViewAvailable,clubListViewAssigned ;
 	@FXML
-	private Button btnAssign, btnDeAssign,btnAdd,btnEdit;
+	private Button btnAssign, btnDeAssign,btnAdd,btnEdit,btnBack,btnClose;
 
 	private BreederRepository breederRepository = new BreederRepository();
 	private ClubRepository clubRepository = new ClubRepository();
@@ -340,6 +340,12 @@ public class AddBreederViewController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@FXML
+	public void btnClose(ActionEvent event) {
+		Stage stage = (Stage) btnClose.getScene().getWindow();
+		stage.close();
 	}
 	
 	public boolean validatorCbType() {
@@ -936,6 +942,8 @@ public class AddBreederViewController implements Initializable {
 	public void startValuesEdit(Breeder breeder) throws SQLException {
 		btnAdd.setVisible(false);
 		btnEdit.setVisible(true);
+		btnBack.setVisible(false);
+		btnClose.setVisible(true);
 		LBTitle.setText("Editar " + breeder.getName());
 		CbType.setValue(breeder.getType());
 		CbType.setDisable(true);

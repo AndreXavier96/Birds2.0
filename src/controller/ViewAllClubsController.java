@@ -21,8 +21,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import repository.BreederClubRepository;
@@ -44,7 +42,7 @@ public class ViewAllClubsController implements Initializable {
 	@FXML
 	private TableColumn<Club,String> colFederation, colName, colAcronym, colLocale, colAddress;
 	@FXML
-	private TableColumn<Club,String> colContact, colEmail,deleteButton,editButton;
+	private TableColumn<Club,String> colContact, colEmail,deleteButton;
 	
 	@FXML
 	private Label LabelAlert;
@@ -107,36 +105,36 @@ public class ViewAllClubsController implements Initializable {
 				};
 			}
 		});
-		editButton.setCellFactory(new Callback<TableColumn<Club, String>, TableCell<Club, String>>() {
-			@Override
-			public TableCell<Club, String> call(TableColumn<Club, String> column) {
-				return new TableCell<Club, String>() {
-					final Button editButton = new Button();
-					 {
-						 ImageView editImage = new ImageView(PathsConstants.EDIT_ICO);
-						 editImage.setFitHeight(16);
-						 editImage.setFitWidth(16);
-						 editButton.setGraphic(editImage);
-						 editButton.setOnAction(new EventHandler<ActionEvent>() {
-			                    @Override
-			                    public void handle(ActionEvent event) {
-			                    	Club club = getTableView().getItems().get(getIndex());
-			                    	editButtonAction(club);
-			                    }
-			                });
-			             }
-					@Override
-					protected void updateItem(String item, boolean empty) {
-						super.updateItem(item, empty);
-						if (!empty) {
-							setGraphic(editButton);
-						} else {
-							setGraphic(null);
-						}
-					}
-				};
-			}
-		});
+//		editButton.setCellFactory(new Callback<TableColumn<Club, String>, TableCell<Club, String>>() {
+//			@Override
+//			public TableCell<Club, String> call(TableColumn<Club, String> column) {
+//				return new TableCell<Club, String>() {
+//					final Button editButton = new Button();
+//					 {
+//						 ImageView editImage = new ImageView(PathsConstants.EDIT_ICO);
+//						 editImage.setFitHeight(16);
+//						 editImage.setFitWidth(16);
+//						 editButton.setGraphic(editImage);
+//						 editButton.setOnAction(new EventHandler<ActionEvent>() {
+//			                    @Override
+//			                    public void handle(ActionEvent event) {
+//			                    	Club club = getTableView().getItems().get(getIndex());
+//			                    	editButtonAction(club);
+//			                    }
+//			                });
+//			             }
+//					@Override
+//					protected void updateItem(String item, boolean empty) {
+//						super.updateItem(item, empty);
+//						if (!empty) {
+//							setGraphic(editButton);
+//						} else {
+//							setGraphic(null);
+//						}
+//					}
+//				};
+//			}
+//		});
 		tableID.setItems(clubs);
 		tableID.setOnMouseClicked(event -> {
 			if(event.getClickCount()==2) {
@@ -200,33 +198,33 @@ public class ViewAllClubsController implements Initializable {
 		return validate;
 	}
 	
-	private void editButtonAction(Club club) {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/clubs/addClubView.fxml"));
-		Parent root = null;
-		try {
-			root = loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		AddClubViewController addClubViewController = loader.getController();
-		try {
-			addClubViewController.startValuesEdit(club);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		// Show the view using a new window
-		Scene scene = new Scene(root);
-		Stage stage = new Stage();
-		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-		stage.setScene(scene);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.showAndWait();
-		ObservableList<Club> clubs;
-		try {
-			clubs = clubRepository.getAllClubs();
-			tableID.setItems(clubs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	private void editButtonAction(Club club) {
+//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/clubs/addClubView.fxml"));
+//		Parent root = null;
+//		try {
+//			root = loader.load();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		AddClubViewController addClubViewController = loader.getController();
+//		try {
+//			addClubViewController.startValuesEdit(club);
+//		} catch (SQLException e1) {
+//			e1.printStackTrace();
+//		}
+//		// Show the view using a new window
+//		Scene scene = new Scene(root);
+//		Stage stage = new Stage();
+//		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+//		stage.setScene(scene);
+//		stage.initModality(Modality.APPLICATION_MODAL);
+//		stage.showAndWait();
+//		ObservableList<Club> clubs;
+//		try {
+//			clubs = clubRepository.getAllClubs();
+//			tableID.setItems(clubs);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

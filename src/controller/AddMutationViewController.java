@@ -45,7 +45,7 @@ public class AddMutationViewController implements Initializable {
 	@FXML
 	private ComboBox<Specie> CbSpecie;
 	@FXML
-	private Button btnAdd,btnEdit;
+	private Button btnAdd,btnEdit,btnBack,btnClose;
 	
 	Mutation mutation=null;
 
@@ -299,6 +299,12 @@ public class AddMutationViewController implements Initializable {
 		}
 	}
 	
+	@FXML
+	public void btnClose(ActionEvent event) {
+		Stage stage = (Stage) btnClose.getScene().getWindow();
+		stage.close();
+	}
+	
 	public void startValuesEdit(Mutation mutation) throws SQLException {
 		LbTitle.setText("Editar "+mutation.getName());
 		TfName.setText(mutation.getName());
@@ -310,6 +316,8 @@ public class AddMutationViewController implements Initializable {
 		btnAdd.setDefaultButton(false);
 		btnEdit.setDefaultButton(true);
 		btnEdit.setVisible(true);
+		btnBack.setVisible(false);
+		btnClose.setVisible(true);
 		CbSpecie.setValue(mutation.getSpecie());
 		CbSpecie.setDisable(true);
 		this.mutation=mutation;

@@ -25,9 +25,8 @@
               <columns>
                   <TableColumn fx:id="colFederation" prefWidth="75.0" text="Federacao" />
                   <TableColumn fx:id="colAcronym" minWidth="4.0" prefWidth="74.0" text="Sigla" />
-                  <TableColumn fx:id="colName" prefWidth="338.0" text="Nome" />
-                  <TableColumn fx:id="deleteButton" editable="false" prefWidth="31.0" resizable="false" sortable="false" text="" />
-                  <TableColumn fx:id="editButton" editable="false" prefWidth="44.0" resizable="false" sortable="false" text="" />
+                  <TableColumn fx:id="colName" prefWidth="389.0" text="Nome" />
+                  <TableColumn fx:id="deleteButton" editable="false" prefWidth="30.0" resizable="false" sortable="false" text="" />
               </columns>
             </TableView>
          </children>

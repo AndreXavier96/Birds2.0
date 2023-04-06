@@ -40,7 +40,7 @@ public class AddSpeciesViewController {
 	@FXML
 	private TextField TfMaturityAfterDays,TfBandSize;
 	@FXML
-	private Button btnAdd,btnEdit;
+	private Button btnAdd,btnEdit,btnBack,btnClose;
 	
 	Specie specie=null;
 	
@@ -317,6 +317,8 @@ public class AddSpeciesViewController {
 		TfBandSize.setText(specie.getBandSize().toString());
 		btnAdd.setVisible(false);
 		btnEdit.setVisible(true);
+		btnBack.setVisible(false);
+		btnClose.setVisible(true);
 		this.specie=specie;
 	}
 	
@@ -331,5 +333,11 @@ public class AddSpeciesViewController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	public void btnClose(ActionEvent event) {
+		Stage stage = (Stage) btnClose.getScene().getWindow();
+		stage.close();
 	}
 }

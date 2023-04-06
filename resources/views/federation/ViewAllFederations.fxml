@@ -23,10 +23,9 @@
          <children>
             <TableView fx:id="tableID" prefHeight="292.0" prefWidth="565.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
               <columns>
-                  <TableColumn fx:id="colName" prefWidth="374.0" text="Nome" />
-                  <TableColumn fx:id="colAcronym" prefWidth="123.0" text="Sigla" />
-                  <TableColumn fx:id="deleteButton" editable="false" minWidth="0.0" prefWidth="36.0" resizable="false" sortable="false" text="" />
-                  <TableColumn fx:id="editButton" editable="false" prefWidth="37.0" resizable="false" sortable="false" text="" />
+                  <TableColumn fx:id="colName" prefWidth="360.0" text="Nome" />
+                  <TableColumn fx:id="colAcronym" prefWidth="172.0" text="Sigla" />
+                  <TableColumn fx:id="deleteButton" editable="false" minWidth="0.0" prefWidth="34.0" resizable="false" sortable="false" text="" />
               </columns>
             </TableView>
          </children>

@@ -41,7 +41,7 @@ public class AddClubViewController implements Initializable {
 	@FXML
 	private ComboBox<Federation> CbFederation;
 	@FXML
-	private Button btnAdd,btnEdit;
+	private Button btnAdd,btnEdit,btnBack,btnClose;
 	
 	Club club = null;
 	
@@ -123,6 +123,12 @@ public class AddClubViewController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@FXML
+	public void btnClose(ActionEvent event) {
+		Stage stage = (Stage) btnClose.getScene().getWindow();
+		stage.close();
 	}
 	
 	public boolean validatorEdit(Club c) throws NumberFormatException, SQLException {
@@ -407,6 +413,8 @@ public class AddClubViewController implements Initializable {
 		CbFederation.setValue(club.getFederation());
 		btnAdd.setVisible(false);
 		btnEdit.setVisible(true);
+		btnBack.setVisible(false);
+		btnClose.setVisible(true);
 		this.club=club;
 	}
 	

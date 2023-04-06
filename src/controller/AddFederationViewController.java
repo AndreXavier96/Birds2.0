@@ -29,7 +29,7 @@ public class AddFederationViewController {
 	@FXML
 	private TextField TfAcronym, TfName, TfEmail,TfAddress,TfCountry;
 	@FXML
-	private Button btnAdd,btnEdit;
+	private Button btnAdd,btnEdit,btnBack,btnClose;
 	
 	FederationRepository federationRepository = new FederationRepository();
 	
@@ -50,20 +50,7 @@ public class AddFederationViewController {
 			clearAllFields();
 		}	
 	}
-	
-	@FXML
-	public void btnBack(ActionEvent event) {
-		try {
-			root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+
 	@FXML
 	public void btnEdit(ActionEvent event) throws NumberFormatException, SQLException {
 		
@@ -82,6 +69,24 @@ public class AddFederationViewController {
 		}	
 	}
 	
+	@FXML
+	public void btnBack(ActionEvent event) {
+		try {
+			root = FXMLLoader.load(Paths.get("resources/views/MainScene.fxml").toUri().toURL());
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void btnClose(ActionEvent event) {
+		Stage stage = (Stage) btnClose.getScene().getWindow();
+		stage.close();
+	}
 	
 	public boolean validatorEdit(Federation f) throws NumberFormatException, SQLException {
 		boolean validated = false;
@@ -165,7 +170,6 @@ public class AddFederationViewController {
 		}
 		return validated;
 	}
-	
 	
 	public boolean validator() throws NumberFormatException, SQLException {
 		boolean validated = false;
@@ -265,7 +269,6 @@ public class AddFederationViewController {
 		clearAllErrors();
 	}
 
-	
 	public void startValues(Federation federation) {
 		LbTitle.setText("Editar Federacao "+federation.getName());
 		TfName.setText(federation.getName());
@@ -273,7 +276,9 @@ public class AddFederationViewController {
 		TfCountry.setText(federation.getCountry());
 		TfEmail.setText(federation.getEmail());
 		btnAdd.setVisible(false);
+		btnBack.setVisible(false);
 		btnEdit.setVisible(true);
+		btnClose.setVisible(true);
 		this.federation=federation;
 	}
 	

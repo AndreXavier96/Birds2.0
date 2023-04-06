@@ -20,7 +20,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -41,7 +40,7 @@ public class ViewAllFederationsController implements Initializable {
 	@FXML
 	private TableView<Federation> tableID;
 	@FXML
-	private TableColumn<Federation, String> colName, colAcronym, colCountry, colEmail, deleteButton, editButton;
+	private TableColumn<Federation, String> colName, colAcronym, colCountry, colEmail, deleteButton;
 	@FXML
 	private Label LabelAlert;
 	
@@ -103,38 +102,38 @@ public class ViewAllFederationsController implements Initializable {
 				};
 			}
 		});
-		editButton.setCellFactory(new Callback<TableColumn<Federation, String>, TableCell<Federation, String>>() {
-			@Override
-			public TableCell<Federation, String> call(TableColumn<Federation, String> column) {
-				return new TableCell<Federation, String>() {
-
-					final Button editButton = new Button();
-					 {
-						 ImageView editImage = new ImageView(PathsConstants.EDIT_ICO);
-						 editImage.setFitHeight(16);
-						 editImage.setFitWidth(16);
-						 editButton.setGraphic(editImage);
-						 editButton.setOnAction(new EventHandler<ActionEvent>() {
-			                    @Override
-			                    public void handle(ActionEvent event) {
-			                    	Federation federation = getTableView().getItems().get(getIndex());
-			                    	editButtonAction(federation);
-			                    }
-			                });
-			             }
-					 
-					@Override
-					protected void updateItem(String item, boolean empty) {
-						super.updateItem(item, empty);
-						if (!empty) {
-							setGraphic(editButton);
-						} else {
-							setGraphic(null);
-						}
-					}
-				};
-			}
-		});
+//		editButton.setCellFactory(new Callback<TableColumn<Federation, String>, TableCell<Federation, String>>() {
+//			@Override
+//			public TableCell<Federation, String> call(TableColumn<Federation, String> column) {
+//				return new TableCell<Federation, String>() {
+//
+//					final Button editButton = new Button();
+//					 {
+//						 ImageView editImage = new ImageView(PathsConstants.EDIT_ICO);
+//						 editImage.setFitHeight(16);
+//						 editImage.setFitWidth(16);
+//						 editButton.setGraphic(editImage);
+//						 editButton.setOnAction(new EventHandler<ActionEvent>() {
+//			                    @Override
+//			                    public void handle(ActionEvent event) {
+//			                    	Federation federation = getTableView().getItems().get(getIndex());
+//			                    	editButtonAction(federation);
+//			                    }
+//			                });
+//			             }
+//					 
+//					@Override
+//					protected void updateItem(String item, boolean empty) {
+//						super.updateItem(item, empty);
+//						if (!empty) {
+//							setGraphic(editButton);
+//						} else {
+//							setGraphic(null);
+//						}
+//					}
+//				};
+//			}
+//		});
 		tableID.setItems(federations);
 		tableID.setOnMouseClicked(event -> {
 			if(event.getClickCount()==2) {
@@ -200,29 +199,29 @@ public class ViewAllFederationsController implements Initializable {
 		return validate;
 	}
 		
-		private void editButtonAction(Federation federation) {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/federation/addFederationView.fxml"));
-			Parent root = null;
-			try {
-				root = loader.load();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			AddFederationViewController addFederationViewController = loader.getController();
-			addFederationViewController.startValues(federation);
-			// Show the view using a new window
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-			stage.setScene(scene);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.showAndWait();
-			ObservableList<Federation> federations;
-			try {
-				federations = federationRepository.getAllFederations();
-				tableID.setItems(federations);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+//		private void editButtonAction(Federation federation) {
+//			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/federation/addFederationView.fxml"));
+//			Parent root = null;
+//			try {
+//				root = loader.load();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			AddFederationViewController addFederationViewController = loader.getController();
+//			addFederationViewController.startValues(federation);
+//			// Show the view using a new window
+//			Scene scene = new Scene(root);
+//			Stage stage = new Stage();
+//			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+//			stage.setScene(scene);
+//			stage.initModality(Modality.APPLICATION_MODAL);
+//			stage.showAndWait();
+//			ObservableList<Federation> federations;
+//			try {
+//				federations = federationRepository.getAllFederations();
+//				tableID.setItems(federations);
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
 }

@@ -41,7 +41,6 @@ public class AddCageViewController implements Initializable {
 		CbType.setItems(MyValues.CAGE_TIPE);
 	}
 	
-	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validator()) {
@@ -99,7 +98,6 @@ public class AddCageViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
 
 	public void clearAllErros() {
 		TfCode.setStyle(null);
