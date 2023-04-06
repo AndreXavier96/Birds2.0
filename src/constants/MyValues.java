@@ -47,7 +47,7 @@ public class MyValues {
 	public static final String CRIADEIRA = "Criadeira";
 	public static final ObservableList<String> CAGE_TIPE = FXCollections.observableArrayList(VOADEIRA,EXPOSICAO,CRIADEIRA);	
 
-	public static final String TITLE_BIRD_APP = "Bird Application";
+	public static final String TITLE_BIRD_APP = "Aviário Virtual";
 	public static final String TITLE_SELECT_IMAGE = "Selecionar Imagem Passaro";
 	public static final String TITLE_CHANGE_STATE = "Alterar Estado";
 	public static final String TITLE_CHANGE_CAGE = "Alterar Gaiola";
