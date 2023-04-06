@@ -18,6 +18,8 @@ import constants.MyValues;
 import constants.Regex;
 import domains.Club;
 import domains.Federation;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
@@ -48,8 +50,10 @@ public class AddClubViewController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		ObservableList<Federation> federations=FXCollections.observableArrayList();
 		try {
-			CbFederation.setItems(federationRepository.getAllFederations());
+			federations = federationRepository.getAllFederations();
+			CbFederation.setItems(federations);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -62,7 +66,10 @@ public class AddClubViewController implements Initializable {
 				return CbFederation.getItems().stream().filter(b -> b.getAcronym().equals(s)).findFirst().orElse(null);
 			}
 		});
-		
+		if (federations.isEmpty()) {
+			LabelAlert.setStyle(MyValues.ALERT_INFO);
+			LabelAlert.setText("Para criar um clube necessita de criar uma federacao antes");
+		}
 	}
 	
 	@FXML
