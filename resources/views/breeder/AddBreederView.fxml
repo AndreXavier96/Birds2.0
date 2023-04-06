@@ -41,7 +41,7 @@
                <children>
                   <Label text="Cartão Cidadão*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   
-                        <TextField fx:id="TfCC" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                        <TextField fx:id="TfCC" promptText="12345678" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
             	<cursor>
             		<Cursor fx:constant="TEXT" />
             	</cursor>
@@ -51,7 +51,7 @@
             <AnchorPane layoutX="178.0" prefHeight="45.0" prefWidth="164.0">
                <children>
                   <Label text="NIF*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfNif" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfNif" promptText="123456789" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -64,7 +64,7 @@
             <AnchorPane layoutX="14.0" layoutY="45.0" prefHeight="45.0" prefWidth="493.0" AnchorPane.topAnchor="55.0">
                <children>
                   <Label text="Nome*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            	<TextField fx:id="TfName" prefHeight="25.0" prefWidth="317.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+            	<TextField fx:id="TfName" prefHeight="25.0" prefWidth="317.0" promptText="Nome Criador" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
             		<cursor>
             			<Cursor fx:constant="TEXT" />
             		</cursor>
@@ -74,7 +74,7 @@
             <AnchorPane layoutX="14.0" layoutY="110.0" prefHeight="45.0" prefWidth="164.0" AnchorPane.topAnchor="110.0">
                <children>
                   <Label text="Telefone*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfPhone" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfPhone" promptText="960000000" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -84,7 +84,7 @@
             <AnchorPane layoutX="178.0" layoutY="110.0" prefHeight="45.0" prefWidth="164.0">
                <children>
                   <Label text="Email*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfEmail" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfEmail" promptText="criador@email.pt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -97,7 +97,7 @@
             <AnchorPane layoutX="342.0" layoutY="110.0" prefHeight="45.0" prefWidth="164.0">
                <children>
                   <Label text="Código Postal" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfPostalCode" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfPostalCode" promptText="0000-000" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -110,7 +110,7 @@
             <AnchorPane layoutX="14.0" layoutY="155.0" prefHeight="45.0" prefWidth="164.0" AnchorPane.topAnchor="165.0">
                <children>
                   <Label text="Distrito" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfDistrict" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfDistrict" promptText="Distrito do Criador" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -120,7 +120,7 @@
             <AnchorPane layoutX="178.0" layoutY="165.0" prefHeight="45.0" prefWidth="164.0">
                <children>
                   <Label text="Localidade" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfLocale" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfLocale" promptText="Localidade do Criador" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -133,7 +133,7 @@
             <AnchorPane layoutX="342.0" layoutY="165.0" prefHeight="45.0" prefWidth="604.0">
                <children>
                   <Label text="Morada" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfAddress" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfAddress" promptText="Rua do Criador" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -158,12 +158,12 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ApOtherType" layoutY="105.0" prefHeight="159.0" prefWidth="946.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="105.0">
+      <AnchorPane fx:id="ApOtherType" layoutY="105.0" prefHeight="159.0" prefWidth="946.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="105.0">
          <children>
             <AnchorPane layoutX="14.0" prefHeight="45.0" prefWidth="493.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label text="Nome*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfNameOther" prefHeight="25.0" prefWidth="317.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfNameOther" prefHeight="25.0" prefWidth="317.0" promptText="Nome" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -173,7 +173,7 @@
             <AnchorPane layoutX="507.0" prefHeight="45.0" prefWidth="181.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label text="Telefone" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfPhoneOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfPhoneOther" promptText="920000000" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -186,7 +186,7 @@
             <AnchorPane layoutX="688.0" prefHeight="45.0" prefWidth="258.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <Label text="Email" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfEmailOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfEmailOther" promptText="email@email.pt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -199,7 +199,7 @@
             <AnchorPane layoutX="14.0" layoutY="45.0" prefHeight="45.0" prefWidth="232.0" AnchorPane.topAnchor="55.0">
                <children>
                   <Label text="Distrito" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfDistrictOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfDistrictOther" promptText="Distrito" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -209,7 +209,7 @@
             <AnchorPane layoutX="246.0" layoutY="55.0" prefHeight="45.0" prefWidth="258.0">
                <children>
                   <Label text="Localidade" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfLocaleOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfLocaleOther" promptText="Localidade" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -222,7 +222,7 @@
             <AnchorPane layoutX="14.0" layoutY="100.0" prefHeight="45.0" prefWidth="604.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="110.0">
                <children>
                   <Label text="Morada" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="TfAddressOther" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="TfAddressOther" promptText="Morada" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>

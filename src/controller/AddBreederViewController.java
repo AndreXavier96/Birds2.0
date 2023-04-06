@@ -73,17 +73,21 @@ public class AddBreederViewController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		CbType.setItems(MyValues.BREEDERTYPELIST);
 		CbType.valueProperty().addListener((observable, oldValue, newValue) -> {
-		    if (newValue != null) {
-		      if (newValue.equals(MyValues.LOJA)||newValue.equals(MyValues.CRIADOR_AMADOR)) {
-				ApOtherType.setVisible(true);
-				ApProfissional.setVisible(false);
-				profissional=false;
-			}else if (newValue.equals(MyValues.CRIADOR_PROFISSIONAL)) {
-				ApOtherType.setVisible(false);
-				ApProfissional.setVisible(true);
-				profissional=true;
+			if (newValue != null) {
+				if (newValue.equals(MyValues.LOJA) || newValue.equals(MyValues.CRIADOR_AMADOR)) {
+					ApOtherType.setVisible(true);
+					ApProfissional.setVisible(false);
+					profissional = false;
+				} else if (newValue.equals(MyValues.CRIADOR_PROFISSIONAL)) {
+					ApOtherType.setVisible(false);
+					ApProfissional.setVisible(true);
+					profissional = true;
+					if (availableClubs.isEmpty() && assignedClubs.isEmpty()) {
+						LabelAlert.setStyle(MyValues.ALERT_INFO);
+						LabelAlert.setText("Para criar um criador necessita de criar um clube antes");
+					}
+				}
 			}
-		    }
 		});
 		try {
 			availableClubs = FXCollections.observableArrayList(clubRepository.getAllClubs());
@@ -93,7 +97,6 @@ public class AddBreederViewController implements Initializable {
 		assignedClubs = FXCollections.observableArrayList();
 		clubListViewAvailable.setItems(availableClubs);
 		clubListViewAssigned.setItems(assignedClubs);
-		
 	}
 	
 	@FXML

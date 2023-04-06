@@ -20,16 +20,16 @@
       <Label layoutX="31.0" layoutY="142.0" text="Dias Anilhar*" />
       <Label layoutX="194.0" layoutY="142.0" text="Retirar da gaiola após Dias*" />
       <Label layoutX="364.0" layoutY="142.0" text="Maturidade após dias*" />
-      <TextField fx:id="TfCommonName" layoutX="33.0" layoutY="102.0" />
-      <TextField fx:id="TfScientificName" layoutX="198.0" layoutY="102.0" />
-      <TextField fx:id="TfIncubationTime" layoutX="360.0" layoutY="102.0" />
-      <TextField fx:id="TfTimeToBand" layoutX="33.0" layoutY="159.0" />
-      <TextField fx:id="TfTimeOutOfCage" layoutX="195.0" layoutY="159.0" />
-      <TextField fx:id="TfMaturityAfterDays" layoutX="360.0" layoutY="159.0" />
+      <TextField fx:id="TfCommonName" layoutX="33.0" layoutY="102.0" promptText="Nome comum" />
+      <TextField fx:id="TfScientificName" layoutX="198.0" layoutY="102.0" promptText="Nome cientifico" />
+      <TextField fx:id="TfIncubationTime" layoutX="360.0" layoutY="102.0" promptText="1" />
+      <TextField fx:id="TfTimeToBand" layoutX="33.0" layoutY="159.0" promptText="1" />
+      <TextField fx:id="TfTimeOutOfCage" layoutX="195.0" layoutY="159.0" promptText="1" />
+      <TextField fx:id="TfMaturityAfterDays" layoutX="360.0" layoutY="159.0" promptText="1" />
       <AnchorPane layoutX="33.0" layoutY="193.0" prefHeight="41.0" prefWidth="147.0" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="193.0">
          <children>
             <Label text="Tamanho anilha (mm)*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <TextField fx:id="TfBandSize" layoutX="26.0" layoutY="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <TextField fx:id="TfBandSize" layoutX="26.0" layoutY="16.0" promptText="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
       

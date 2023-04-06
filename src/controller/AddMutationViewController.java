@@ -18,6 +18,8 @@ import constants.MyValues;
 import constants.Regex;
 import domains.Mutation;
 import domains.Specie;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
@@ -53,8 +55,10 @@ public class AddMutationViewController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		ObservableList<Specie> species = FXCollections.observableArrayList();
 		try {
-			CbSpecie.setItems(speciesRepository.getAllSpecies());
+			species=speciesRepository.getAllSpecies();
+			CbSpecie.setItems(species);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -67,6 +71,10 @@ public class AddMutationViewController implements Initializable {
 				 return CbSpecie.getItems().stream().filter(b -> b.getCommonName().equals(s)).findFirst().orElse(null);
 			 }
 		});
+		if (species.isEmpty()) {
+			labelAlert.setStyle(MyValues.ALERT_INFO);
+			labelAlert.setText("Para criar uma mutacao necessita de criar uma especie antes");
+		}
 	}
 	
 	@FXML

@@ -6,9 +6,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import repository.BirdsRepository;
@@ -113,9 +116,12 @@ public class AddBirdViewController implements Initializable {
 		ApClub.setVisible(false);
     	ApNumero.setVisible(false);
     	ApBand.setVisible(false);
-    	
+    	ObservableList<Breeder> breeders = FXCollections.observableArrayList();
+    	ObservableList<Specie> species = FXCollections.observableArrayList();
+    	ObservableList<Cage> cages = FXCollections.observableArrayList();
 		try {
-			CbCriador.setItems(breederRepository.getAllBreeders());
+			breeders=breederRepository.getAllBreeders();
+			CbCriador.setItems(breeders);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -176,7 +182,8 @@ public class AddBirdViewController implements Initializable {
 		    });
 		CbSex.setItems(MyValues.SEXLIST);
 		try {
-			CbSpecies.setItems(speciesRepository.getAllSpecies());
+			species=speciesRepository.getAllSpecies();
+			CbSpecies.setItems(species);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -240,7 +247,8 @@ public class AddBirdViewController implements Initializable {
 		    }
 		});
 		try {
-			CbCage.setItems(cageRepository.getAllCages());
+			cages=cageRepository.getAllCages();
+			CbCage.setItems(cages);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -254,8 +262,19 @@ public class AddBirdViewController implements Initializable {
 				return CbCage.getItems().stream().filter(b -> b.getCode().equals(s)).findFirst().orElse(null);
 			}
 		});
+		
+		if (breeders.isEmpty()) {
+			LabelAlert.setStyle(MyValues.ALERT_INFO);
+			LabelAlert.setText("Para criar um passaro necessita de criar uma criador antes");
+		}else if (species.isEmpty()) {
+			LabelAlert.setStyle(MyValues.ALERT_INFO);
+			LabelAlert.setText("Para criar um passaro necessita de criar uma especie antes");
+		}else if (cages.isEmpty()) {
+			LabelAlert.setStyle(MyValues.ALERT_INFO);
+			LabelAlert.setText("Para criar um passaro necessita de criar uma gaiola antes");
+		}
 	}
-	
+
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validator()) {

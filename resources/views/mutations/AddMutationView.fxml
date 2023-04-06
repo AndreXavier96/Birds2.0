@@ -16,18 +16,18 @@
          </font>
       </Label>
       <Label layoutX="31.0" layoutY="106.0" text="Nome*" />
-      <Label layoutX="260.0" layoutY="158.0" text="Variacao2" />
+      <Label layoutX="260.0" layoutY="158.0" text="Variação2" />
       <Label fx:id="labelAlert" alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="34.0" prefHeight="17.0" prefWidth="475.0" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="34.0" />
-      <Label layoutX="32.0" layoutY="279.0" text="Descricao" />
-      <TextField fx:id="TfName" layoutX="32.0" layoutY="123.0" prefHeight="25.0" prefWidth="222.0" />
-      <TextField fx:id="TfVar1" layoutX="32.0" layoutY="174.0" prefHeight="25.0" prefWidth="222.0" />
+      <Label layoutX="32.0" layoutY="279.0" text="Descrição" />
+      <TextField fx:id="TfName" layoutX="32.0" layoutY="123.0" prefHeight="25.0" prefWidth="222.0" promptText="Nome Mutação" />
+      <TextField fx:id="TfVar1" layoutX="31.0" layoutY="174.0" prefHeight="25.0" prefWidth="222.0" />
       <ComboBox fx:id="CbSpecie" layoutX="31.0" layoutY="69.0" prefHeight="25.0" prefWidth="222.0" promptText="Selecionar" />
       <Button cancelButton="true" layoutX="13.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" />
       <Label layoutX="31.0" layoutY="51.0" text="Espécie*" />
       <Label layoutX="262.0" layoutY="407.0" text="Campos obrigatorios assinaldos com *" />
       <TextArea fx:id="TfObs" layoutX="31.0" layoutY="296.0" prefHeight="99.0" prefWidth="681.0" />
-      <Label layoutX="489.0" layoutY="158.0" text="Variacao3" />
-      <Label layoutX="32.0" layoutY="157.0" text="Variacao1" />
+      <Label layoutX="489.0" layoutY="158.0" text="Variação3" />
+      <Label layoutX="32.0" layoutY="157.0" text="Variação1" />
       <TextField fx:id="TfVar2" layoutX="261.0" layoutY="174.0" prefHeight="25.0" prefWidth="222.0" />
       <TextField fx:id="TfVar3" layoutX="489.0" layoutY="174.0" prefHeight="25.0" prefWidth="222.0" />
       
