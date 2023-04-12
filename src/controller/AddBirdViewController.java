@@ -309,7 +309,7 @@ public class AddBirdViewController implements Initializable {
 			if (validateBand(anilha, breederType)) {
 				bird.setBand(anilha);
 				if (imageUploaded) {
-					File defaultFolder = new File("resources/images/birds");
+					File defaultFolder = new File(PathsConstants.DEFAULT_PATH_TO_SAVE_IMAGE);
 					File selectedFile = new File(LbImagePath.getText());
 					try {
 						String fileName = anilha+ selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));

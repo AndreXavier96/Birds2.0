@@ -202,7 +202,7 @@
                   <Label fx:id="LbImagePath" opacity="0.0" />
                   <ImageView fx:id="ImImage" fitHeight="500.0" fitWidth="550.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
                      <image>
-                        <Image url="@../../images/img/default.png" />
+                        <Image url="@../../img/default.png" />
                      </image></ImageView>
                   <Button fx:id="btnUpload" layoutX="299.0" layoutY="477.0" mnemonicParsing="false" onAction="#btnUploadImage" prefHeight="25.0" prefWidth="174.0" text="Upload image" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="14.0" />
                </children>
