@@ -10,7 +10,6 @@ import repository.BirdsRepository;
 import repository.SpeciesRepository;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import constants.MyValues;

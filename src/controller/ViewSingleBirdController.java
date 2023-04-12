@@ -19,8 +19,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -41,11 +39,6 @@ public class ViewSingleBirdController{
 	private Parent root;
 	private Stage stage;
 	private Scene scene;
-	
-	@FXML
-	private MenuBar menuBar;
-	@FXML
-	private Menu menuFile;
 	
 	@FXML
 	private TabPane TabPane;
@@ -100,7 +93,7 @@ public class ViewSingleBirdController{
 	
 	@FXML
 	private void btnChangeBirdState() throws IOException {
-		if (validator()) {
+		if (validator() && validatorSearch()) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdState.fxml"));
 			Parent root = loader.load();
 			ChangeBirdStateController birdStateController = loader.getController();
@@ -118,7 +111,7 @@ public class ViewSingleBirdController{
 	
 	@FXML
 	private void btnChangeBirdCage() throws IOException, SQLException {
-		if (validator()) {
+		if (validator() && validatorSearch()) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdCage.fxml"));
 			Parent root = loader.load();
 			ChangeBirdCageController birdCageController = loader.getController();
@@ -136,7 +129,7 @@ public class ViewSingleBirdController{
 	
 	@FXML
 	private void btnChangeBirdSex() throws IOException {
-		if (validator()) {
+		if (validator() && validatorSearch()) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdSex.fxml"));
 			Parent root = loader.load();
 			ChangeBirdSexController birdSexController = loader.getController();
@@ -145,6 +138,24 @@ public class ViewSingleBirdController{
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
 			stage.setTitle(MyValues.TITLE_CHANGE_CAGE);
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		}
+	}
+	
+	@FXML
+	private void btnChangeBirdPhoto() throws IOException {
+		if (validator() && validatorSearch()) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ChangeBirdPhoto.fxml"));
+			Parent root = loader.load();
+			ChangeBirdPhotoController birdPhotoController = loader.getController();
+			birdPhotoController.startValues(LbBand.getText(), ImBird.getImage().getUrl());
+			birdPhotoController.setViewSingleBirdController(this);
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle(MyValues.TITLE_CHANGE_IMAGE);
 			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
 			stage.setScene(scene);
 			stage.initModality(Modality.APPLICATION_MODAL);
@@ -381,6 +392,26 @@ public class ViewSingleBirdController{
 			e.printStackTrace();
 		}
 	    TableHistoric.setItems(historics);
+	}
+	
+	public boolean validatorSearch(){
+		boolean validate = false;
+		if (LbBand.getText()==null) {
+			LabelAlert.setStyle(MyValues.ALERT_ERROR);
+			TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Passaro tem de ser procurado antes de editar/apagar.");
+			validate=false;
+		}else if (!TfBandSearch.getText().equalsIgnoreCase(LbBand.getText())) {
+	        LabelAlert.setStyle(MyValues.ALERT_ERROR);
+	        TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
+	        LabelAlert.setText("Passaro tem de ser procurado antes de editar/apagar.");
+	        validate = false;
+	    }else {
+	    	TfBandSearch.setStyle(null);
+			LabelAlert.setText("");
+			validate=true;
+		}
+		return validate;
 	}
 	
 	public boolean validator() {
