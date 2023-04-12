@@ -2,6 +2,7 @@ package repository;
 
 import constants.MyValues;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -57,6 +58,8 @@ public class DataBaseOperationsRepository {
 			con.close();
 			System.out.println("Database "+DbName+" created!");
 			CreateAllTables();
+			File folder = new File("Database/bird_images");
+			folder.mkdir();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
