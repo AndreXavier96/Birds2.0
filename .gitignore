@@ -3,3 +3,4 @@
 *.db
 Database/BirdDataBase.mv.db
 Database/BirdDataBase.trace.db
+/Database/
