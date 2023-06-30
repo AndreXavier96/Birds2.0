@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import repository.BirdsRepository;
 import repository.SpeciesRepository;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,9 +32,6 @@ import javafx.scene.control.TableColumn;
 
 public class ViewAllSpeciesController implements Initializable {
 	
-	private Parent root;
-	private Stage stage;
-	private Scene scene;
 	@FXML
 	private TableView<Specie> tableID;
 	@FXML
@@ -49,17 +45,9 @@ public class ViewAllSpeciesController implements Initializable {
 	private BirdsRepository birdsRepository = new BirdsRepository();
 
 	@FXML
-	public void btnBack(ActionEvent event) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainScene.fxml"));
-			root = loader.load();
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void btnClose(ActionEvent event) {
+		Stage stage = (Stage) tableID.getScene().getWindow();
+		stage.close();
 	}
 
 	@Override
