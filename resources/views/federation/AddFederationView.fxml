@@ -45,11 +45,6 @@
 			<Cursor fx:constant="HAND" />
 		</cursor>
 	</Button>
-	<Button fx:id="btnBack" cancelButton="true" layoutX="34.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar">
-		<cursor>
-			<Cursor fx:constant="HAND" />
-		</cursor>
-	</Button>
       <Label fx:id="labelAlert" alignment="CENTER" layoutX="34.0" layoutY="48.0" prefHeight="17.0" prefWidth="550.0" textAlignment="CENTER" textFill="WHITE" />
       <Label layoutX="192.0" layoutY="369.0" text="Campos obrigadtorios assinalados com *" />
       <Button fx:id="btnEdit" defaultButton="true" layoutX="499.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="81.0" text="Editar" visible="false">
@@ -57,7 +52,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnClose" layoutX="34.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="25.0" prefWidth="81.0" text="Cancelar" visible="false">
+      <Button fx:id="btnClose" layoutX="34.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="25.0" prefWidth="81.0" text="Cancelar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

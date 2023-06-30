@@ -60,18 +60,13 @@
 			<Cursor fx:constant="HAND" />
 		</cursor>
 	</Button>
-	<Button fx:id="btnBack" cancelButton="true" layoutX="31.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar">
-		<cursor>
-			<Cursor fx:constant="HAND" />
-		</cursor>
-	</Button>
       <Label layoutX="189.0" layoutY="369.0" text="Campos obrigatorios assinalados com *" />
       <Button fx:id="btnEdit" defaultButton="true" layoutX="497.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="81.0" text="Editar" visible="false">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnClose" cancelButton="true" layoutX="31.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="25.0" prefWidth="81.0" text="Cancelar" visible="false">
+      <Button fx:id="btnClose" cancelButton="true" layoutX="31.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="25.0" prefWidth="81.0" text="Cancelar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

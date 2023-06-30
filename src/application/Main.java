@@ -19,6 +19,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
+<<<<<<< Updated upstream
 		File f = new File("Database/", MyValues.DBNAME + ".mv.db");
 
 		// if database dont existe create ir and all tables, else create only the tables, sql validate if table exists
@@ -28,6 +29,15 @@ public class Main extends Application {
 			databaseOperations.CreateAllTables();
 		 System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		// show main scene
+=======
+		File f = new File("Database/",MyValues.DBNAME+".mv.db");
+		
+		if(!f.exists()) 
+			databaseOperations.CreateDataBase(MyValues.DBNAME);
+		else
+			databaseOperations.CreateAllTables();
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
+>>>>>>> Stashed changes
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainScene.fxml"));
 			Parent root = loader.load();
@@ -35,7 +45,13 @@ public class Main extends Application {
 			primaryStage.setTitle(MyValues.TITLE_BIRD_APP);
 			primaryStage.getIcons().add(new Image(PathsConstants.ICON_PATH));
 			primaryStage.setScene(scene);
+<<<<<<< Updated upstream
 			primaryStage.setMaximized(true);
+=======
+			
+			primaryStage.setMaximized(true);
+			
+>>>>>>> Stashed changes
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -36,7 +36,7 @@
       </AnchorPane>
       <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="14.0" prefWidth="802.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button cancelButton="true" mnemonicParsing="false" onAction="#btnBack" text="Voltar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#btnClose" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
          </children>
       </AnchorPane>
    </children>

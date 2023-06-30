@@ -22,7 +22,6 @@
       <TextField fx:id="TfName" layoutX="32.0" layoutY="123.0" prefHeight="25.0" prefWidth="222.0" promptText="Nome Mutação" />
       <TextField fx:id="TfVar1" layoutX="31.0" layoutY="174.0" prefHeight="25.0" prefWidth="222.0" />
       <ComboBox fx:id="CbSpecie" layoutX="31.0" layoutY="69.0" prefHeight="25.0" prefWidth="222.0" promptText="Selecionar" />
-      <Button fx:id="btnBack" cancelButton="true" layoutX="13.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnBack" prefHeight="25.0" prefWidth="81.0" text="Voltar" />
       <Label layoutX="31.0" layoutY="51.0" text="Espécie*" />
       <Label layoutX="262.0" layoutY="407.0" text="Campos obrigatorios assinaldos com *" />
       <TextArea fx:id="TfObs" layoutX="31.0" layoutY="296.0" prefHeight="99.0" prefWidth="681.0" />
@@ -33,7 +32,7 @@
       
       <Button fx:id="btnAdd" defaultButton="true" layoutX="632.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" />
       <Button fx:id="btnEdit" layoutX="632.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="81.0" text="Editar" visible="false" />
-      <Button fx:id="btnClose" cancelButton="true" layoutX="13.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="25.0" prefWidth="81.0" text="Cancelar" visible="false" />
+      <Button fx:id="btnClose" cancelButton="true" layoutX="29.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="25.0" prefWidth="81.0" text="Cancelar" />
       
    </children>
 </AnchorPane>

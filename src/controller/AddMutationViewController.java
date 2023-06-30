@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -23,16 +22,11 @@ import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 public class AddMutationViewController implements Initializable {
 	
-	private Parent root;
-	private Scene scene;
 	private Stage stage;
 	
 	@FXML
@@ -44,7 +38,7 @@ public class AddMutationViewController implements Initializable {
 	@FXML
 	private ComboBox<Specie> CbSpecie;
 	@FXML
-	private Button btnAdd,btnEdit,btnBack,btnClose;
+	private Button btnAdd,btnEdit,btnClose;
 	
 	Mutation mutation=null;
 
@@ -286,20 +280,6 @@ public class AddMutationViewController implements Initializable {
 	}
 	
 	@FXML
-	public void btnBack(ActionEvent event) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainScene.fxml"));
-			root = loader.load();
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@FXML
 	public void btnClose(ActionEvent event) {
 		Stage stage = (Stage) btnClose.getScene().getWindow();
 		stage.close();
@@ -316,8 +296,6 @@ public class AddMutationViewController implements Initializable {
 		btnAdd.setDefaultButton(false);
 		btnEdit.setDefaultButton(true);
 		btnEdit.setVisible(true);
-		btnBack.setVisible(false);
-		btnClose.setVisible(true);
 		CbSpecie.setValue(mutation.getSpecie());
 		CbSpecie.setDisable(true);
 		this.mutation=mutation;

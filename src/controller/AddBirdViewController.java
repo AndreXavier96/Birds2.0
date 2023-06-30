@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -50,8 +49,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -59,11 +56,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class AddBirdViewController implements Initializable {
-	private Parent root;
-	private Scene scene;
-	private Stage stage;
-	
-	
 	
 	@FXML
 	private ComboBox<Breeder> CbCriador;
@@ -563,18 +555,11 @@ public class AddBirdViewController implements Initializable {
 	}
 	
 	@FXML
-	public void btnBack(ActionEvent event) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainScene.fxml"));
-			root = loader.load();
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void btnCancel(ActionEvent event) {
+	        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	        stage.close(); 
 	}
+
 	
 	@FXML
 	public void btnUploadImage(ActionEvent event) {

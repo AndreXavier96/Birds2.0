@@ -22,7 +22,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import repository.BirdsRepository;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -43,17 +42,9 @@ public class ViewAllBirdsController implements Initializable {
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	
 	@FXML
-	public void btnBack(ActionEvent event) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainScene.fxml"));
-			Parent root = loader.load();
-			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void btnClose(ActionEvent event) {
+		Stage stage = (Stage) tableID.getScene().getWindow();
+		stage.close();
 	}
 
 	@Override

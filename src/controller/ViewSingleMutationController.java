@@ -18,14 +18,10 @@ import domains.Mutation;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 public class ViewSingleMutationController {
-	private Parent root;
-	private Stage stage;
-	private Scene scene;
 	@FXML
 	private TextField TfSearch;
 	@FXML
@@ -98,17 +94,9 @@ public class ViewSingleMutationController {
 	}
 
 	@FXML
-	public void btnBack(ActionEvent event) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainScene.fxml"));
-			root = loader.load();
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void btnClose(ActionEvent event) {
+		Stage stage = (Stage) LabelAlert.getScene().getWindow();
+		stage.close();
 	}
 	
 	public boolean validatorDelete(Mutation mutation) throws SQLException {

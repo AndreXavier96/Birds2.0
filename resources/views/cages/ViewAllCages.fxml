@@ -21,6 +21,6 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button cancelButton="true" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnBack" text="Voltar" />
+      <Button cancelButton="true" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnClose" text="Cancelar" />
    </children>
 </AnchorPane>
