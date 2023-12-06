@@ -1,2 +1,2 @@
 *.db
-*.class
+bin/*.class
