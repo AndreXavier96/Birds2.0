@@ -6,3 +6,4 @@ Database/BirdDataBase2.trace.bd
 /Database/
 *.class
 *.class
+bin/application/Main.class
