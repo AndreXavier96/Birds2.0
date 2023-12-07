@@ -105,7 +105,13 @@ public class ViewSingleBreederController{
 	public void searchName(String name) throws SQLException {
 		clearAllFields();
 		TfSearchName.setText(name);
-		Breeder breeder = breederRepository.getBreederbyString("Name", TfSearchName.getText());
+		Breeder breeder = breederRepository.getBreederbyString("Name", TfSearchName.getText().toLowerCase());
+		ObservableList<Integer> clubsId= breederClubRepository.getClubsFromBreederId(breeder.getId());
+		ObservableList<Club> clubs = FXCollections.observableArrayList();
+		for (Integer i : clubsId) 
+			clubs.add(clubRepository.getClubByID(i));
+		breeder.setClub(clubs);
+		breeder.setStam(breederFederationRepository.getAllByBreederId(breeder.getId()));
 		updateInfo(breeder);
 	}
 
@@ -161,7 +167,13 @@ public class ViewSingleBreederController{
 		clearAllFields();
 		if (validatorName()) {
 			LabelAlert.setStyle(null);
-			Breeder breeder = breederRepository.getBreederbyString("Name", TfSearchName.getText());
+			Breeder breeder = breederRepository.getBreederbyString("Name", TfSearchName.getText().toLowerCase());
+			ObservableList<Integer> clubsId= breederClubRepository.getClubsFromBreederId(breeder.getId());
+			ObservableList<Club> clubs = FXCollections.observableArrayList();
+			for (Integer i : clubsId) 
+				clubs.add(clubRepository.getClubByID(i));
+			breeder.setClub(clubs);
+			breeder.setStam(breederFederationRepository.getAllByBreederId(breeder.getId()));
 			updateInfo(breeder);
 		}
 	}
@@ -208,7 +220,7 @@ public class ViewSingleBreederController{
 			TfSearchName.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome tem de ser preenchido");
 			validate=false;
-		}else if (breederRepository.getBreederbyString("Name", TfSearchName.getText())==null) {
+		}else if (breederRepository.getBreederbyString("Name", TfSearchName.getText().toLowerCase())==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearchName.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome nao existe");
