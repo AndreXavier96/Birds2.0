@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 public class MyValues {
 	public static final String USER = "admin";
 	public static final String PASSWORD = "admin";
-	public static final String DBNAME = "BirdDataBase";
+	public static final String DBNAME = "BirdDataBase2";
 	
 	public static final String ERROR_BOX_STYLE = "-fx-border-color: red; -fx-border-width:2px;";
 	public static final String ALERT_ERROR = "-fx-background-color: red; -fx-border-width: 0; -fx-background-radius: 5;";
@@ -36,11 +36,6 @@ public class MyValues {
 
 	public static final String SEM_PAI = "Sem Pai";
 	public static final String SEM_MAE = "Sem Mae";
-
-	public static final String CRIADOR_AMADOR = "Amador";
-	public static final String LOJA = "Loja";
-	public static final String CRIADOR_PROFISSIONAL = "Profissional";
-	public static final ObservableList<String> BREEDERTYPELIST = FXCollections.observableArrayList(CRIADOR_AMADOR,LOJA,CRIADOR_PROFISSIONAL);
 
 	public static final String VOADEIRA = "Voadeira";
 	public static final String EXPOSICAO = "Exposicao";
