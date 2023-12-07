@@ -85,6 +85,7 @@ public class ViewSingleBreederController{
 			TfSearchStam.setText(null);
 			LabelAlert.setStyle(null);
 			clearAllFields();
+			TfSearchStam.setText("");
 			searchName(b.getName());
 	}
 	
