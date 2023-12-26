@@ -14,5 +14,5 @@ public class Regex {
 	public static final String POSTALCODE = "^\\d{4}(-\\d{3})?$";
 	public static final String STAM = "^([A-Z]|[0-9])+$";
 	public static final String CLASSIC_BAND = "^([A-Z]|[0-9]| |\\-)+$";
-	public static final String FULL_BAND = "^[A-Z]{2,4} \\d{2,4}[A-Z] \\d{1,4} [A-Z]{2,3} [A-Z]{2,4} \\d{2}$";
+	public static final String FULL_BAND = "^[A-Z]{2,4} \\d{2,4}[A-Z] \\d{3} [A-Z]{2,3} [A-Z]{2,4} \\d{2}$";
 }

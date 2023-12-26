@@ -256,7 +256,7 @@ public class ViewSingleBreederController{
         if (clubs!=null)	
 	        for (Club club : clubs) {
 	            Federation federation = club.getFederation();
-	            String federationName = federation.getName();
+	            String federationName = federation.getAcronym();
 	            String breederStam = breeder.getStam().get(federation.getId());
 	            ClubFederation clubFederation = new ClubFederation(club.getAcronym(), federationName, breederStam);
 	            clubFederations.add(clubFederation);

@@ -290,6 +290,7 @@ public class AddBirdViewController implements Initializable {
 		clearAllErrors();
 		LabelAlert.setStyle(MyValues.ALERT_ERROR);
 		LabelAlert.setText("");
+		String[] infoAnilha=band.split(" ");
 		if (birdsRepository.checkIfExistsWithBand(band)) {
 			TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Anilha " + band + " ja existe!");
@@ -527,7 +528,7 @@ public class AddBirdViewController implements Initializable {
 			}
 		if(validate && !LbImagePath.getText().isBlank()) {
 			String sufix = LbImagePath.getText().substring(LbImagePath.getText().lastIndexOf(".")+1);
-			if (sufix.equals("png") || sufix.equals("jpg")) {
+			if (sufix.toLowerCase().equals("png") || sufix.toLowerCase().equals("jpg")) {
 				btnUpload.setStyle(null);
 				LabelAlert.setText("");
 				validate=true;
