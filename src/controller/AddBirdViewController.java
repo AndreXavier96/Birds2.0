@@ -11,8 +11,11 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import repository.BirdsRepository;
+import repository.BreederClubRepository;
+import repository.BreederFederationRepository;
 import repository.BreederRepository;
 import repository.CageRepository;
+import repository.ClubRepository;
 import repository.HistoricRepository;
 import repository.MutationsRepository;
 import repository.SpeciesRepository;
@@ -28,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
@@ -36,6 +40,7 @@ import constants.Regex;
 import domains.Bird;
 import domains.Breeder;
 import domains.Cage;
+import domains.Club;
 import domains.Historic;
 import domains.Mutation;
 import domains.Specie;
@@ -81,12 +86,16 @@ public class AddBirdViewController implements Initializable {
 	
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	private BreederRepository breederRepository = new BreederRepository();
+	private BreederClubRepository breederClubRepository = new BreederClubRepository();
+	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
+	private ClubRepository clubRepository = new ClubRepository();
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
 	private MutationsRepository mutationsRepository = new MutationsRepository();
 	private CageRepository cageRepository = new CageRepository();
 	private StateRepository stateRepository=new StateRepository();
 	private HistoricRepository historicRepository = new HistoricRepository();
 	
+	private Club clubBand=null;
 	private boolean imageUploaded=false;
 	
 	@Override
@@ -264,7 +273,7 @@ public class AddBirdViewController implements Initializable {
 				String obs = "";
 				String formatedDate = new SimpleDateFormat(MyValues.DATE_FORMATE).format(bird.getEntryDate());
 				if (bird.getEntryType().equals(MyValues.COMPRA))
-					obs = "Passaro comprado por " + bird.getBuyPrice() + " \\u20ac .";
+					obs = "Passaro comprado por " + bird.getBuyPrice() + " euros .";
 				else if (CbEntryType.getValue().equals(MyValues.NASCIMENTO))
 					obs = "Passaro nascido a " + formatedDate;
 				System.out.println(formatedDate);
@@ -295,6 +304,7 @@ public class AddBirdViewController implements Initializable {
 	
 	public boolean validator() throws SQLException {
 		boolean validate= false;
+		clubBand=null;
 		clearAllErrors();
 		LabelAlert.setStyle(MyValues.ALERT_ERROR);
 		LabelAlert.setText("");		//0		1	2	3	4  5
@@ -322,12 +332,17 @@ public class AddBirdViewController implements Initializable {
 			}
 		
 		if (validate && infoAnilha.length>0) {
+			String ano;
+			if (TfAno.getText().length()>2) 
+				ano =TfAno.getText().substring(2);
+			else 
+				ano = TfAno.getText();
+			
 			if (!TfAno.getText().matches(Regex.ANO)) {
 				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Ano nao esta no formato correto ou tem de ser preenchido. ex:2023");
 				validate = false;
-			}
-			if (TfAno.getText().equals(infoAnilha[5])) {
+			} else if (!ano.equals(infoAnilha[5])) {
 				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Ano nao coincide com ano da anilha");
 				validate = false;
@@ -335,6 +350,56 @@ public class AddBirdViewController implements Initializable {
 				TfAno.setStyle(null);
 				LabelAlert.setText("");
 				validate = true;
+			}
+		}
+		
+		if (validate) {// validate clubs in band
+			List<Integer> clubs = breederClubRepository.getClubsFromBreederId(CbCriador.getValue().getId());
+			validate = false;
+			for (Integer c : clubs) {
+				Club club = clubRepository.getClubByID(c);
+				if (club.getAcronym().equals(infoAnilha[0])) {
+					validate = true;
+					clubBand = club;
+				}
+			}
+			if (!validate) {
+				TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Clube da anilha nao existe");
+			}
+		}
+		
+		if (validate) {//validate stam in band
+			String stam = breederFederationRepository.getStamByBreederAndFederationId(CbCriador.getValue().getId(), clubBand.getFederation().getId());
+			validate=false;
+			if (stam.equals(infoAnilha[1])) {
+				validate=true;
+			}
+			if (!validate) {
+				TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("STAM da anilha nao pertence ao criador selecionado");
+			}
+		}
+		
+		if (validate) {//validate fed in band
+			validate=false;
+			if (clubBand.getFederation().getAcronym().equals(infoAnilha[4])) {
+				validate=true;
+			}
+			if (!validate) {
+				TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Federacao da anilha nao pertence ao criador selecionado");
+			}
+		}
+		
+		if (validate) {//validate country in band
+			validate=false;
+			if (clubBand.getFederation().getCountry().equals(infoAnilha[3])) {
+				validate=true;
+			}
+			if (!validate) {
+				TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Pais da anilha nao pertence ao criador selecionado");
 			}
 		}
 		
@@ -513,6 +578,7 @@ public class AddBirdViewController implements Initializable {
 	}
 	
 	public void clearAllFields() {
+		clubBand=null;
 		CbCriador.setValue(null);
 		CbEntryType.setValue(null);
 		DfDataEntrada.setValue(null);

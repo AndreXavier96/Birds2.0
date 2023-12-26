@@ -71,7 +71,7 @@ public class AddClubViewController implements Initializable {
 			Club c = new Club();
 			c.setName(TfName.getText().toUpperCase());
 			c.setFederation(CbFederation.getValue());
-			c.setAcronym(TfAcronym.getText());
+			c.setAcronym(TfAcronym.getText().toUpperCase());
 			c.setLocale(TfLocale.getText());
 			c.setAddress(TfAddress.getText());
 			c.setEmail(TfEmail.getText());
@@ -90,7 +90,7 @@ public class AddClubViewController implements Initializable {
 		if(validatorEdit(club)) {
 			club.setName(TfName.getText().toUpperCase());
 			club.setFederation(CbFederation.getValue());
-			club.setAcronym(TfAcronym.getText());
+			club.setAcronym(TfAcronym.getText().toUpperCase());
 			club.setLocale(TfLocale.getText());
 			club.setAddress(TfAddress.getText());
 			club.setEmail(TfEmail.getText());
