@@ -47,34 +47,24 @@
                   <ComboBox fx:id="CbCriador" layoutY="21.0" prefHeight="25.0" prefWidth="181.0" promptText="Selecionar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="188.0" layoutY="24.0" prefHeight="36.0" prefWidth="174.0">
+            <AnchorPane layoutX="187.0" layoutY="24.0" prefHeight="46.0" prefWidth="347.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Clube*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Anilha*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <ComboBox fx:id="CbClub" disable="true" layoutY="21.0" prefHeight="25.0" prefWidth="181.0" promptText="Selecionar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
+                  <TextField fx:id="TfAnilha" layoutX="10.0" layoutY="20.0" prefHeight="25.0" prefWidth="164.0" promptText="CLUB STAM 123 PT FED 23" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="362.0" layoutY="24.0" prefHeight="36.0" prefWidth="174.0">
+            <AnchorPane layoutX="534.0" layoutY="24.0" prefHeight="46.0" prefWidth="174.0">
                <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Número Serie da anilha*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Ano *" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="TfNumero" layoutX="10.0" layoutY="20.0" prefHeight="25.0" prefWidth="164.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="536.0" layoutY="24.0" prefHeight="36.0" prefWidth="174.0">
-               <children>
-                  <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Ano da anilha*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <TextField fx:id="TfAno" layoutX="10.0" layoutY="20.0" prefHeight="25.0" prefWidth="164.0" promptText="2023 ou 23" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
+                  <TextField fx:id="TfAno" layoutX="10.0" layoutY="20.0" prefHeight="25.0" prefWidth="164.0" promptText="2023" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="22.0" layoutY="70.0" prefHeight="36.0" prefWidth="174.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="80.0">

@@ -44,7 +44,7 @@ public class AddSpeciesViewController {
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validator()) {
 			Specie specie = new Specie();
-			specie.setCommonName(TfCommonName.getText());
+			specie.setCommonName(TfCommonName.getText().toUpperCase());
 			specie.setScientificName(TfScientificName.getText());
 			specie.setIncubationDays(Integer.parseInt(TfIncubationTime.getText()));
 			specie.setDaysToBand(Integer.parseInt(TfTimeToBand.getText()));
@@ -62,7 +62,7 @@ public class AddSpeciesViewController {
 	@FXML
 	public void btnEdit(ActionEvent event) throws SQLException {
 		if (validatorEdit(specie)) {
-			specie.setCommonName(TfCommonName.getText());
+			specie.setCommonName(TfCommonName.getText().toUpperCase());
 			specie.setScientificName(TfScientificName.getText());
 			specie.setIncubationDays(Integer.parseInt(TfIncubationTime.getText()));
 			specie.setDaysToBand(Integer.parseInt(TfTimeToBand.getText()));

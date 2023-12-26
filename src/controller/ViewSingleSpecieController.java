@@ -81,7 +81,7 @@ public class ViewSingleSpecieController {
 	public void search(String name) throws SQLException {
 		clearAllFields();
 		TfSearch.setText(name);
-		Specie s = speciesRepository.getSpecieFromString(TfSearch.getText());
+		Specie s = speciesRepository.getSpecieFromString(TfSearch.getText().toUpperCase());
 		updateAllInfo(s);
 	}
 	
@@ -90,7 +90,7 @@ public class ViewSingleSpecieController {
 		clearAllFields();
 		if (validator()) {
 			LabelAlert.setStyle(null);
-			Specie s = speciesRepository.getSpecieFromString(TfSearch.getText());
+			Specie s = speciesRepository.getSpecieFromString(TfSearch.getText().toUpperCase());
 			updateAllInfo(s);
 		}
 	}
@@ -121,8 +121,8 @@ public class ViewSingleSpecieController {
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Especie tem de ser procurado antes de editar/apagar.");
 			validate=false;
-		} else if (!TfSearch.getText().equalsIgnoreCase(LbCommonName.getText())
-	            && !TfSearch.getText().equalsIgnoreCase(LbScientificName.getText())) {
+		} else if (!TfSearch.getText().equalsIgnoreCase(LbCommonName.getText().toUpperCase())
+	            && !TfSearch.getText().equalsIgnoreCase(LbScientificName.getText().toUpperCase())) {
 	        LabelAlert.setStyle(MyValues.ALERT_ERROR);
 	        TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 	        LabelAlert.setText("A pesquisa deve corresponder ao nome comum ou nome científico.");
@@ -142,7 +142,7 @@ public class ViewSingleSpecieController {
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome tem de ser preenchido");
 			validate=false;
-		}else if (speciesRepository.getSpecieFromString(TfSearch.getText())==null) {
+		}else if (speciesRepository.getSpecieFromString(TfSearch.getText().toUpperCase())==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome nao existe");

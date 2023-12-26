@@ -92,7 +92,7 @@ public class ViewSingleBreederController{
 	public void searchStam(String stam) throws SQLException {
 		clearAllFields();
 		TfSearchStam.setText(stam);
-		Breeder breeder = breederRepository.getBreederbyId(breederFederationRepository.getBreederIdByStam(TfSearchStam.getText()));
+		Breeder breeder = breederRepository.getBreederbyId(breederFederationRepository.getBreederIdByStam(TfSearchStam.getText().toUpperCase()));
 		ObservableList<Integer> clubsId= breederClubRepository.getClubsFromBreederId(breeder.getId());
 		ObservableList<Club> clubs = FXCollections.observableArrayList();
 		for (Integer i : clubsId) 
@@ -149,7 +149,7 @@ public class ViewSingleBreederController{
 		clearAllFields();
 		if (validatorStam()) {
 			LabelAlert.setStyle(null);
-			Breeder breeder = breederRepository.getBreederbyId(breederFederationRepository.getBreederIdByStam(TfSearchStam.getText()));
+			Breeder breeder = breederRepository.getBreederbyId(breederFederationRepository.getBreederIdByStam(TfSearchStam.getText().toUpperCase()));
 			ObservableList<Integer> clubsId= breederClubRepository.getClubsFromBreederId(breeder.getId());
 			ObservableList<Club> clubs = FXCollections.observableArrayList();
 			for (Integer i : clubsId) 
@@ -200,7 +200,7 @@ public class ViewSingleBreederController{
 			TfSearchStam.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("STAM tem de ser preenchido");
 			validate=false;
-		}else if (!breederFederationRepository.stamExists(TfSearchStam.getText())) {
+		}else if (!breederFederationRepository.stamExists(TfSearchStam.getText().toUpperCase())) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearchStam.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("STAM nao existe");

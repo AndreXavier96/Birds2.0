@@ -58,7 +58,7 @@ public class ViewSingleCageController {
 	public void search(String code) throws SQLException {
 		clearAllFields();
 		TfSearch.setText(code);
-		Cage c = cageRepository.getCageByCode(TfSearch.getText());
+		Cage c = cageRepository.getCageByCode(TfSearch.getText().toUpperCase());
 		updateAllInfo(c);
 	}
 	
@@ -67,7 +67,7 @@ public class ViewSingleCageController {
 		clearAllFields();
 		if (validator()) {
 			LabelAlert.setStyle(null);
-			Cage c = cageRepository.getCageByCode(TfSearch.getText());
+			Cage c = cageRepository.getCageByCode(TfSearch.getText().toUpperCase());
 			updateAllInfo(c);
 		}
 	}
@@ -114,7 +114,7 @@ public class ViewSingleCageController {
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Codigo tem de ser preenchido");
 			validate=false;
-		}else if (!cageRepository.checkIfCodeExist(TfSearch.getText())) {
+		}else if (!cageRepository.checkIfCodeExist(TfSearch.getText().toUpperCase())) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Codigo nao existe");

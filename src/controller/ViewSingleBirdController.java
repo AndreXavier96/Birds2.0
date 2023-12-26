@@ -189,7 +189,7 @@ public class ViewSingleBirdController{
 		clearAllFields();
 		if (validator()) {
 			LabelAlert.setStyle(null);
-			Bird b = birdsRepository.getBirdWhereString("Band",TfBandSearch.getText());
+			Bird b = birdsRepository.getBirdWhereString("Band",TfBandSearch.getText().toUpperCase());
 			updateAllInfo(b);
 		}
 	}
@@ -416,7 +416,7 @@ public class ViewSingleBirdController{
 			TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Anilha tem de ser preenchido");
 			validate=false;
-		}else if (birdsRepository.getBirdWhereString("Band",TfBandSearch.getText())==null) {
+		}else if (birdsRepository.getBirdWhereString("Band",TfBandSearch.getText().toUpperCase())==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfBandSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Anilha nao existe");

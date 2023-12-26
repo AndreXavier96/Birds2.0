@@ -37,7 +37,7 @@ public class AddCageViewController implements Initializable {
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validator()) {
 			Cage cage = new Cage();
-			cage.setCode(TfCode.getText());
+			cage.setCode(TfCode.getText().toUpperCase());
 			cage.setType(CbType.getValue());
 			cageRepository.Insert(cage);
 			LabelAlert.setStyle(MyValues.ALERT_SUCESS);

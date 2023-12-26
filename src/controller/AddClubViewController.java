@@ -69,7 +69,7 @@ public class AddClubViewController implements Initializable {
 	public void btnAdd(ActionEvent event) throws NumberFormatException, SQLException {
 		if(validator()) {
 			Club c = new Club();
-			c.setName(TfName.getText());
+			c.setName(TfName.getText().toUpperCase());
 			c.setFederation(CbFederation.getValue());
 			c.setAcronym(TfAcronym.getText());
 			c.setLocale(TfLocale.getText());
@@ -88,7 +88,7 @@ public class AddClubViewController implements Initializable {
 	public void btnEdit(ActionEvent event) throws NumberFormatException, SQLException {
 		
 		if(validatorEdit(club)) {
-			club.setName(TfName.getText());
+			club.setName(TfName.getText().toUpperCase());
 			club.setFederation(CbFederation.getValue());
 			club.setAcronym(TfAcronym.getText());
 			club.setLocale(TfLocale.getText());

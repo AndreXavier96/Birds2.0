@@ -74,7 +74,7 @@ public class AddMutationViewController implements Initializable {
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validator()) {
 			Mutation mutation = new Mutation();
-			mutation.setName(TfName.getText());
+			mutation.setName(TfName.getText().toUpperCase());
 			mutation.setVar1(TfVar1.getText());
 			mutation.setVar2(TfVar2.getText());
 			mutation.setVar3(TfVar3.getText());
@@ -90,7 +90,7 @@ public class AddMutationViewController implements Initializable {
 	@FXML
 	public void btnEdit(ActionEvent event) throws SQLException {
 		if (validatorEdit(mutation)) {
-			mutation.setName(TfName.getText());
+			mutation.setName(TfName.getText().toUpperCase());
 			mutation.setVar1(TfVar1.getText());
 			mutation.setVar2(TfVar2.getText());
 			mutation.setVar3(TfVar3.getText());

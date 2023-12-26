@@ -79,7 +79,7 @@ public class ViewSingleMutationController {
 	public void search(String name) throws SQLException {
 		clearAllFields();
 		TfSearch.setText(name);
-		Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText());
+		Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText().toUpperCase());
 		updateAllInfo(m);
 	}
 	
@@ -88,7 +88,7 @@ public class ViewSingleMutationController {
 		clearAllFields();
 		if (validator()) {
 			LabelAlert.setStyle(null);
-			Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText());
+			Mutation m = mutationsRepository.getMutationWhereString("Name", TfSearch.getText().toUpperCase());
 			updateAllInfo(m);
 		}
 	}
@@ -119,7 +119,7 @@ public class ViewSingleMutationController {
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Mutacao tem de ser procurada antes de editar/apagar.");
 			validate=false;
-		} else if (!TfSearch.getText().equalsIgnoreCase(LbName.getText())) {
+		} else if (!TfSearch.getText().equalsIgnoreCase(LbName.getText().toUpperCase())) {
 	        LabelAlert.setStyle(MyValues.ALERT_ERROR);
 	        TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 	        LabelAlert.setText("Mutacao tem de ser procurada antes de editar/apagar.");
@@ -139,7 +139,7 @@ public class ViewSingleMutationController {
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome tem de ser preenchido");
 			validate=false;
-		}else if (mutationsRepository.getMutationWhereString("Name", TfSearch.getText())==null) {
+		}else if (mutationsRepository.getMutationWhereString("Name", TfSearch.getText().toUpperCase())==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Nome nao existe");

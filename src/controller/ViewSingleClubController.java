@@ -98,7 +98,7 @@ public class ViewSingleClubController {
 	public void search(String Acronym) throws SQLException {
 		clearAllFields();
 		TfSearch.setText(Acronym);
-		Club c = clubRepository.getClubWhereString("Acronym",TfSearch.getText());
+		Club c = clubRepository.getClubWhereString("Acronym",TfSearch.getText().toUpperCase());
 		updateAllInfo(c);
 	}
 	
@@ -107,7 +107,7 @@ public class ViewSingleClubController {
 		clearAllFields();
 		if (validator()) {
 			LabelAlert.setStyle(null);
-			Club c = clubRepository.getClubWhereString("Acronym",TfSearch.getText());
+			Club c = clubRepository.getClubWhereString("Acronym",TfSearch.getText().toUpperCase());
 			updateAllInfo(c);
 		}
 	}
@@ -155,7 +155,7 @@ public class ViewSingleClubController {
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Clube tem de ser procurado antes de editar/apagar.");
 			validate=false;
-		}else if (!TfSearch.getText().equalsIgnoreCase(LBAcronym.getText())) {
+		}else if (!TfSearch.getText().equalsIgnoreCase(LBAcronym.getText().toUpperCase())) {
 	        LabelAlert.setStyle(MyValues.ALERT_ERROR);
 	        TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 	        LabelAlert.setText("Clube tem de ser procurado antes de editar/apagar.");
@@ -175,7 +175,7 @@ public class ViewSingleClubController {
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Sigla tem de ser preenchido");
 			validate=false;
-		}else if (clubRepository.getClubWhereString("Acronym",TfSearch.getText())==null) {
+		}else if (clubRepository.getClubWhereString("Acronym",TfSearch.getText().toUpperCase())==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Sigla nao existe");

@@ -84,7 +84,7 @@ public class StamPromptDialogController {
 		return validate;
 	}
 	
-	public boolean validateEdit() throws SQLException {
+	public boolean validateEdit() throws SQLException {//TODO adicionar novo clube e stam
 		boolean validate = false;
 		Integer breederFederationId = breederFederationRepository.getIdByBreederAndFederationId(breederId, federationId);
 		if (stamTextField.getText().length() == 0 || stamTextField.getText().isEmpty()) {
