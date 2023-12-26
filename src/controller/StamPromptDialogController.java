@@ -83,10 +83,12 @@ public class StamPromptDialogController {
 		}
 		return validate;
 	}
-	
-	public boolean validateEdit() throws SQLException {//TODO adicionar novo clube e stam
+
+	public boolean validateEdit() throws SQLException {
 		boolean validate = false;
-		Integer breederFederationId = breederFederationRepository.getIdByBreederAndFederationId(breederId, federationId);
+		Integer breederFederationId = breederFederationRepository.getIdByBreederAndFederationId(breederId,federationId);
+		if (breederFederationId==null)
+			breederFederationId=-1;
 		if (stamTextField.getText().length() == 0 || stamTextField.getText().isEmpty()) {
 			stamTextField.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelError.setText("Stam tem de ser preenchido!");
@@ -95,7 +97,7 @@ public class StamPromptDialogController {
 			stamTextField.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelError.setText("Stam nao esta no formato correto!");
 			validate = false;
-		}else if (breederFederationRepository.checkIfExistsString("Stam",stamTextField.getText(),breederFederationId) || stamMap.containsValue(stamTextField.getText())) {
+		} else if (breederFederationRepository.checkIfExistsString("Stam", stamTextField.getText(), breederFederationId) || stamMap.containsValue(stamTextField.getText())) {
 			stamTextField.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelError.setText("Stam ja existe!");
 			validate = false;
