@@ -32,7 +32,7 @@ public class AddFederationViewController {
 	public void btnAdd(ActionEvent event) throws NumberFormatException, SQLException {
 		if(validator()) {
 			Federation f = new Federation();
-			f.setName(TfName.getText());
+			f.setName(TfName.getText().toUpperCase());
 			f.setAcronym(TfAcronym.getText());
 			f.setCountry(TfCountry.getText());
 			f.setEmail(TfEmail.getText());
@@ -48,7 +48,7 @@ public class AddFederationViewController {
 	public void btnEdit(ActionEvent event) throws NumberFormatException, SQLException {
 		
 		if(validatorEdit(federation)) {
-			federation.setName(TfName.getText());
+			federation.setName(TfName.getText().toUpperCase());
 			federation.setAcronym(TfAcronym.getText());
 			federation.setCountry(TfCountry.getText());
 			federation.setEmail(TfEmail.getText());

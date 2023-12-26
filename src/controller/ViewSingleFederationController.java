@@ -94,7 +94,7 @@ public class ViewSingleFederationController {
 	public void search(String Acronym) throws SQLException {
 		clearAllFields();
 		TfFederationSearch.setText(Acronym);
-		Federation updatedFederation = federationRepository.getFederationWhereString("Acronym",TfFederationSearch.getText());
+		Federation updatedFederation = federationRepository.getFederationWhereString("Acronym",TfFederationSearch.getText().toUpperCase());
 		updateAllInfo(updatedFederation);
 	}
 	
@@ -103,7 +103,7 @@ public class ViewSingleFederationController {
 		clearAllFields();
 		if (validator()) {
 			LabelAlert.setStyle(null);
-			Federation f = federationRepository.getFederationWhereString("Acronym", TfFederationSearch.getText());
+			Federation f = federationRepository.getFederationWhereString("Acronym", TfFederationSearch.getText().toUpperCase());
 			updateAllInfo(f);
 		}
 	}
@@ -165,7 +165,7 @@ public class ViewSingleFederationController {
 			TfFederationSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Sigla tem de ser preenchido");
 			validate=false;
-		}else if (federationRepository.getFederationWhereString("Acronym",TfFederationSearch.getText())==null) {
+		}else if (federationRepository.getFederationWhereString("Acronym",TfFederationSearch.getText().toUpperCase())==null) {
 			LabelAlert.setStyle(MyValues.ALERT_ERROR);
 			TfFederationSearch.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Sigla nao existe");

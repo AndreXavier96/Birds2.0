@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import constants.MyValues;
@@ -40,7 +41,6 @@ import domains.Bird;
 import domains.Breeder;
 import domains.Cage;
 import domains.Club;
-import domains.Federation;
 import domains.Historic;
 import domains.Mutation;
 import domains.Specie;
@@ -70,17 +70,15 @@ public class AddBirdViewController implements Initializable {
 	@FXML
 	private ComboBox<Bird> CbFather,CbMother;
 	@FXML
-	private TextField TfAno, TfNumero, TfBuyPrice,TfBand;
+	private TextField TfAnilha, TfAno, TfBuyPrice;
 	@FXML
 	private TextArea TfObs;
 	@FXML
 	private DatePicker DfDataEntrada;
 	@FXML
-	private Label LabelAnilha, LabelAlert,LbImagePath;
+	private Label LabelAlert,LbImagePath;
 	@FXML
-	private ComboBox<Club> CbClub;
-	@FXML
-	private AnchorPane ApBuyPrice, ApBand,ApNumero,ApClub;
+	private AnchorPane ApBuyPrice;
 	@FXML
 	private ImageView ImImage;
 	@FXML
@@ -88,22 +86,20 @@ public class AddBirdViewController implements Initializable {
 	
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	private BreederRepository breederRepository = new BreederRepository();
+	private BreederClubRepository breederClubRepository = new BreederClubRepository();
+	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
+	private ClubRepository clubRepository = new ClubRepository();
 	private SpeciesRepository speciesRepository = new SpeciesRepository();
 	private MutationsRepository mutationsRepository = new MutationsRepository();
 	private CageRepository cageRepository = new CageRepository();
 	private StateRepository stateRepository=new StateRepository();
-	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
-	private ClubRepository clubRepository = new ClubRepository();
-	private BreederClubRepository breederClubRepository = new BreederClubRepository();
 	private HistoricRepository historicRepository = new HistoricRepository();
 	
+	private Club clubBand=null;
 	private boolean imageUploaded=false;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ApClub.setVisible(false);
-    	ApNumero.setVisible(false);
-    	ApBand.setVisible(false);
     	ObservableList<Breeder> breeders = FXCollections.observableArrayList();
     	ObservableList<Specie> species = FXCollections.observableArrayList();
     	ObservableList<Cage> cages = FXCollections.observableArrayList();
@@ -122,38 +118,6 @@ public class AddBirdViewController implements Initializable {
 				 return CbCriador.getItems().stream().filter(b -> b.getName().equals(s)).findFirst().orElse(null);
 			 }
 			 
-		});
-		CbCriador.valueProperty().addListener((observable, oldValue, newValue) -> {
-		    if (newValue != null && newValue.getType().equals(MyValues.CRIADOR_PROFISSIONAL)) {
-		    	ApClub.setVisible(true);
-		    	ApNumero.setVisible(true);
-		    	ApBand.setVisible(false);
-		    	TfBand.setText("");
-		        try {
-		        	ObservableList<Club> clubList = FXCollections.observableArrayList();
-		        	for (Integer i : breederClubRepository.getClubsFromBreederId(newValue.getId())) {
-						clubList.add(clubRepository.getClubByID(i));
-					}
-		            CbClub.setItems(clubList);
-		            CbClub.setDisable(false);
-		            CbClub.setConverter(new StringConverter<Club>() {
-		                public String toString(Club c) {
-		                    return c.getAcronym();
-		                }
-		                public Club fromString(String s) {
-		                    return CbClub.getItems().stream().filter(c -> c.getAcronym().equals(s)).findFirst().orElse(null);
-		                }
-		            });
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-		    }else if (newValue !=null && !newValue.getType().equals(MyValues.CRIADOR_PROFISSIONAL)) {
-		    	ApClub.setVisible(false);
-		    	ApNumero.setVisible(false);
-		    	ApBand.setVisible(true);
-		    	CbClub.setValue(null);
-		    	TfNumero.setText("");
-			}
 		});
 		
 		CbState.setItems(MyValues.STARTING_STATE_LIST);
@@ -288,17 +252,9 @@ public class AddBirdViewController implements Initializable {
 			else
 				bird.setMutations(null);
 			bird.setCage(cageRepository.getCage(CbCage.getValue().getId()));
-			Integer breederID = bird.getBreeder().getId();
-			String anilha = "";
-			String breederType = bird.getBreeder().getType();
-			if (breederType.equals(MyValues.CRIADOR_PROFISSIONAL)) {
-				Club club = CbClub.getValue();
-				Federation federation = club.getFederation();
-				String stam = breederFederationRepository.getStamByBreederAndFederationId(breederID,federation.getId());
-				anilha = club.getAcronym() + " " + stam + " " + TfNumero.getText() + " " + federation.getCountry() + " "+ federation.getAcronym() + TfAno.getText();
-			} else
-				anilha = TfAno.getText() + " " + TfBand.getText();
-			if (validateBand(anilha, breederType)) {
+			
+			String anilha = TfAnilha.getText().toUpperCase();
+			if (validateBand(anilha)) {
 				bird.setBand(anilha);
 				if (imageUploaded) {
 					File defaultFolder = new File(PathsConstants.DEFAULT_PATH_TO_SAVE_IMAGE);
@@ -317,7 +273,7 @@ public class AddBirdViewController implements Initializable {
 				String obs = "";
 				String formatedDate = new SimpleDateFormat(MyValues.DATE_FORMATE).format(bird.getEntryDate());
 				if (bird.getEntryType().equals(MyValues.COMPRA))
-					obs = "Passaro comprado por " + bird.getBuyPrice() + " \\u20ac .";
+					obs = "Passaro comprado por " + bird.getBuyPrice() + " euros .";
 				else if (CbEntryType.getValue().equals(MyValues.NASCIMENTO))
 					obs = "Passaro nascido a " + formatedDate;
 				System.out.println(formatedDate);
@@ -329,40 +285,30 @@ public class AddBirdViewController implements Initializable {
 		}
 	}
 	
-	public boolean validateBand(String band, String breederType) throws SQLException {
+	public boolean validateBand(String band) throws SQLException {
 		boolean validate = false;
 		clearAllErrors();
 		LabelAlert.setStyle(MyValues.ALERT_ERROR);
 		LabelAlert.setText("");
 		if (birdsRepository.checkIfExistsWithBand(band)) {
-			if (breederType.equals(MyValues.CRIADOR_PROFISSIONAL)) {
-				CbClub.setStyle(MyValues.ERROR_BOX_STYLE);
-				TfNumero.setStyle(MyValues.ERROR_BOX_STYLE);
-				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Anilha " + band + " ja existe!");
-				validate = false;
-			} else {
-				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
-				TfBand.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Anilha " + band + " ja existe!");
-				validate = false;
-			}
+			TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+			LabelAlert.setText("Anilha " + band + " ja existe!");
+			validate = false;
 		} else {
-			CbClub.setStyle(null);
-			TfNumero.setStyle(null);
-			TfAno.setStyle(null);
-			TfBand.setStyle(null);
+			TfAnilha.setStyle(null);
 			LabelAlert.setText("");
 			validate = true;
 		}
 		return validate;
 	}
 	
-	public boolean validator() {
+	public boolean validator() throws SQLException {
 		boolean validate= false;
+		clubBand=null;
 		clearAllErrors();
 		LabelAlert.setStyle(MyValues.ALERT_ERROR);
-		LabelAlert.setText("");
+		LabelAlert.setText("");		//0		1	2	3	4  5
+		String[] infoAnilha = null; //CLUB STAM 123 PT FED 23
 		if (CbCriador.getValue()==null) {
 			CbCriador.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Criador tem de ser escolhido");
@@ -373,49 +319,89 @@ public class AddBirdViewController implements Initializable {
 			validate=true;
 		}
 		
-		if (validate && CbCriador.getValue().getType().equals(MyValues.CRIADOR_PROFISSIONAL))
-			if (CbClub.getValue()==null) {
-				CbClub.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Clube tem de ser escolhido");
-				validate=false;
-			}else {
-				CbClub.setStyle(null);
-				LabelAlert.setText("");
-				validate=true;
-			}
-		
-		if (validate && CbCriador.getValue().getType().equals(MyValues.CRIADOR_PROFISSIONAL))
-			if (!TfNumero.getText().matches(Regex.INT)) {
-				TfNumero.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Numero nao esta no formato correto ou tem de ser preenchido");
-				validate=false;
-			}else {
-				TfNumero.setStyle(null);
-				LabelAlert.setText("");
-				validate=true;
-			}
-		
-		if (validate && !CbCriador.getValue().getType().equals(MyValues.CRIADOR_PROFISSIONAL))
-			if (!TfBand.getText().matches(Regex.CLASSIC_BAND)) {
-				TfBand.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Anilha Personalizada nao esta no formato correto ou tem de ser preenchido");
-				validate=false;
-			}else {
-				TfBand.setStyle(null);
-				LabelAlert.setText("");
-				validate=true;
-			}
-		
 		if (validate)
+			if (!TfAnilha.getText().matches(Regex.FULL_BAND)) {
+				TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Anilha nao esta no formato correto ou tem de ser preenchido");
+				validate=false;
+			}else {
+				TfAnilha.setStyle(null);
+				LabelAlert.setText("");
+				infoAnilha=TfAnilha.getText().split(" ");
+				validate=true;
+			}
+		
+		if (validate && infoAnilha.length>0) {
+			String ano;
+			if (TfAno.getText().length()>2) 
+				ano =TfAno.getText().substring(2);
+			else 
+				ano = TfAno.getText();
+			
 			if (!TfAno.getText().matches(Regex.ANO)) {
 				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
-				LabelAlert.setText("Ano nao esta no formato correto ou tem de ser preenchido. ex:2022 ou 22");
-				validate=false;
-			}else {
+				LabelAlert.setText("Ano nao esta no formato correto ou tem de ser preenchido. ex:2023");
+				validate = false;
+			} else if (!ano.equals(infoAnilha[5])) {
+				TfAno.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Ano nao coincide com ano da anilha");
+				validate = false;
+			} else {
 				TfAno.setStyle(null);
 				LabelAlert.setText("");
+				validate = true;
+			}
+		}
+		
+		if (validate) {// validate clubs in band
+			List<Integer> clubs = breederClubRepository.getClubsFromBreederId(CbCriador.getValue().getId());
+			validate = false;
+			for (Integer c : clubs) {
+				Club club = clubRepository.getClubByID(c);
+				if (club.getAcronym().equals(infoAnilha[0])) {
+					validate = true;
+					clubBand = club;
+				}
+			}
+			if (!validate) {
+				TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Clube da anilha nao existe");
+			}
+		}
+		
+		if (validate) {//validate stam in band
+			String stam = breederFederationRepository.getStamByBreederAndFederationId(CbCriador.getValue().getId(), clubBand.getFederation().getId());
+			validate=false;
+			if (stam.equals(infoAnilha[1])) {
 				validate=true;
 			}
+			if (!validate) {
+				TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("STAM da anilha nao pertence ao criador selecionado");
+			}
+		}
+		
+		if (validate) {//validate fed in band
+			validate=false;
+			if (clubBand.getFederation().getAcronym().equals(infoAnilha[4])) {
+				validate=true;
+			}
+			if (!validate) {
+				TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Federacao da anilha nao pertence ao criador selecionado");
+			}
+		}
+		
+		if (validate) {//validate country in band
+			validate=false;
+			if (clubBand.getFederation().getCountry().equals(infoAnilha[3])) {
+				validate=true;
+			}
+			if (!validate) {
+				TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Pais da anilha nao pertence ao criador selecionado");
+			}
+		}
 		
 		if (validate) 
 			if (CbSex.getValue()==null) {
@@ -560,7 +546,6 @@ public class AddBirdViewController implements Initializable {
 	        stage.close(); 
 	}
 
-	
 	@FXML
 	public void btnUploadImage(ActionEvent event) {
 			FileChooser fileChooser = new FileChooser();
@@ -576,7 +561,6 @@ public class AddBirdViewController implements Initializable {
 	
 	public void clearAllErrors() {
 		CbCriador.setStyle(null);
-		CbClub.setStyle(null);
 		CbEntryType.setStyle(null);
 		DfDataEntrada.setStyle(null);
 		CbSex.setStyle(null);
@@ -586,17 +570,16 @@ public class AddBirdViewController implements Initializable {
 		CbFather.setStyle(null);
 		CbMother.setStyle(null);
 		TfAno.setStyle(null);
-		TfNumero.setStyle(null);
+		TfAnilha.setStyle(null);
 		TfBuyPrice.setStyle(null);
 		CbState.setStyle(null);
 		TfObs.setStyle(null);
 		btnUpload.setStyle(null);
-		TfBand.setStyle(null);
 	}
 	
 	public void clearAllFields() {
+		clubBand=null;
 		CbCriador.setValue(null);
-		CbClub.setValue(null);
 		CbEntryType.setValue(null);
 		DfDataEntrada.setValue(null);
 		CbSex.setValue(null);
@@ -606,14 +589,10 @@ public class AddBirdViewController implements Initializable {
 		CbFather.setValue(null);
 		CbMother.setValue(null);
 		TfAno.setText("");
-		TfNumero.setText("");
+		TfAnilha.setText("");
 		TfBuyPrice.setText("");
 		CbState.setValue(null);
 		TfObs.setText("");
-		TfBand.setText("");
-    	ApNumero.setVisible(false);
-    	ApBand.setVisible(false);
-    	ApClub.setVisible(false);
     	ImImage.setImage(PathsConstants.DEFAULT_IMAGE);
 		clearAllErrors();
 	}
