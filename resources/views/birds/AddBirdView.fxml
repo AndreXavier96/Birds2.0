@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -12,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddBirdViewController">
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="861.0" prefWidth="1280" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddBirdViewController">
    <children>
       <AnchorPane prefHeight="82.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -35,7 +37,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="-4.0" layoutY="101.0" prefHeight="355.0" prefWidth="1278.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="101.0">
+      <AnchorPane layoutX="-4.0" layoutY="101.0" prefHeight="716.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="101.0">
          <children>
             <AnchorPane layoutX="14.0" layoutY="24.0" prefHeight="36.0" prefWidth="174.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="24.0">
                <children>
@@ -114,7 +116,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <ComboBox fx:id="CbFather" disable="true" layoutY="21.0" prefHeight="25.0" prefWidth="181.0" promptText="Selecionar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
+                  <TextField fx:id="TfFather" disable="true" layoutX="10.0" layoutY="21.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="188.0" layoutY="136.0" prefHeight="36.0" prefWidth="174.0">
@@ -124,7 +126,21 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <ComboBox fx:id="CbMother" disable="true" layoutY="21.0" prefHeight="25.0" prefWidth="181.0" promptText="Selecionar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
+                  <TextField fx:id="TfMother" disable="true" layoutX="20.0" layoutY="31.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="28.0" layoutY="182.0" prefHeight="167.0" prefWidth="337.0" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="192.0">
+               <children>
+                  <ListView fx:id="LvFathers" prefHeight="159.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ListView>
+                  <ListView fx:id="LvMothers" prefHeight="123.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ListView>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="362.0" layoutY="136.0" prefHeight="36.0" prefWidth="174.0">
@@ -147,17 +163,17 @@
                   <ComboBox fx:id="CbEntryType" layoutY="21.0" prefHeight="25.0" prefWidth="181.0" promptText="Selecionar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="14.0" layoutY="182.0" prefHeight="36.0" prefWidth="174.0" AnchorPane.topAnchor="192.0">
+            <AnchorPane layoutX="362.0" layoutY="192.0" prefHeight="36.0" prefWidth="174.0" AnchorPane.leftAnchor="362.0" AnchorPane.topAnchor="192.0">
                <children>
                   <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Estado*" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
-                        <Insets left="10.0" />
+                        <Insets left="14.0" />
                      </padding>
                   </Label>
-                  <ComboBox fx:id="CbState" layoutY="21.0" prefHeight="25.0" prefWidth="181.0" promptText="Selecionar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
+                  <ComboBox fx:id="CbState" layoutY="21.0" prefHeight="25.0" prefWidth="181.0" promptText="Selecionar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="ApBuyPrice" layoutX="188.0" layoutY="192.0" prefHeight="36.0" prefWidth="174.0" visible="false" AnchorPane.leftAnchor="188.0" AnchorPane.topAnchor="192.0">
+            <AnchorPane fx:id="ApBuyPrice" layoutX="534.0" layoutY="192.0" prefHeight="36.0" prefWidth="174.0" visible="false" AnchorPane.leftAnchor="534.0" AnchorPane.topAnchor="192.0">
                <children>
                   <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Preço Compra" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
@@ -167,11 +183,11 @@
                   <TextField fx:id="TfBuyPrice" layoutX="10.0" layoutY="20.0" prefHeight="25.0" prefWidth="164.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="14.0" layoutY="238.0" prefHeight="295.0" prefWidth="698.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="248.0">
+            <AnchorPane layoutX="23.0" layoutY="407.0" prefHeight="295.0" prefWidth="698.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="407.0">
                <children>
                   <Label layoutX="7.0" layoutY="7.0" prefHeight="10.0" prefWidth="174.0" text="Observacoes" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
-                        <Insets left="10.0" />
+                        <Insets left="14.0" />
                      </padding>
                   </Label>
                   <TextArea fx:id="TfObs" layoutX="22.0" layoutY="17.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="17.0" />

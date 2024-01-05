@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -33,6 +34,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import constants.MyValues;
 import constants.PathsConstants;
@@ -48,11 +50,14 @@ import domains.State;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
 public class AddBirdViewController implements Initializable {
@@ -67,8 +72,13 @@ public class AddBirdViewController implements Initializable {
 	private ComboBox<Cage> CbCage;
 	@FXML
 	private ComboBox<String> CbEntryType, CbSex, CbState;
+
+	
 	@FXML
-	private ComboBox<Bird> CbFather,CbMother;
+	private TextField TfFather,TfMother;
+	@FXML
+	private ListView<Bird> LvFathers,LvMothers;
+	
 	@FXML
 	private TextField TfAnilha, TfAno, TfBuyPrice;
 	@FXML
@@ -119,9 +129,7 @@ public class AddBirdViewController implements Initializable {
 			 }
 			 
 		});
-		
 		CbState.setItems(MyValues.STARTING_STATE_LIST);
-		
 		CbEntryType.setItems(MyValues.ENTRYTYPELIST);
 		CbEntryType.valueProperty().addListener((observable, oldValue, newValue) -> {
 		      if (MyValues.ENTRYTYPELIST.get(0).equals(newValue)) {
@@ -154,14 +162,6 @@ public class AddBirdViewController implements Initializable {
 		        	Mutation normal = new Mutation(null, "Sem Mutacao","", "", null, null, newValue);
 		        	listMutations.add(0,normal);
 		        	CbMutation.setItems(listMutations);
-		        	ObservableList<Bird> listFathers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.MACHO,"SpeciesId",CbSpecies.getValue().getId());
-		        	Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null,null, null, null, null, null, null, null,null);
-		    		listFathers.add(0,defaultFather);
-		    		CbFather.setItems(listFathers);
-		    		ObservableList<Bird> listMothers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.FEMEA,"SpeciesId",CbSpecies.getValue().getId());
-		    		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null,null, null, null, null, null, null, null, null,null);
-		    		listMothers.add(0,defaultMother);
-		    		CbMother.setItems(listMothers);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -174,28 +174,93 @@ public class AddBirdViewController implements Initializable {
 		                return CbMutation.getItems().stream().filter(b -> b.getName().equals(s)).findFirst().orElse(null);
 		            }
 		        });
-		        CbFather.setDisable(false);
-		    	CbFather.setConverter(new StringConverter<Bird>() {
-					@Override
-					public String toString(Bird s) {
-						return s.getBand();
-					}
-					@Override
-					public Bird fromString(String s) {
-						return CbFather.getItems().stream().filter(b -> b.getBand().equals(s)).findFirst().orElse(null);
-					}
-				});
-		    	CbMother.setDisable(false);
-		    	CbMother.setConverter(new StringConverter<Bird>() {
-					@Override
-					public String toString(Bird s) {
-						return s.getBand();
-					}
-					@Override
-					public Bird fromString(String s) {
-						return CbMother.getItems().stream().filter(b -> b.getId().equals(s)).findFirst().orElse(null);
-					}
-				});
+		        
+		        TfFather.setDisable(false);
+		        EventHandler<MouseEvent> showAllFathersEvent = event -> {
+		            String searchTerm = TfFather.getText();
+					ObservableList<Bird> listFathers = filterBirdsFather(searchTerm);
+					LvFathers.setItems(listFathers);
+					LvFathers.setVisible(true); // Show the ListView
+		        };
+		        TfFather.setOnMouseClicked(showAllFathersEvent);
+		        TfFather.textProperty().addListener((observableFather, oldValueFather, newValueFather) -> {
+		            ObservableList<Bird> listFathers = filterBirdsFather(newValueFather);
+					LvFathers.setItems(listFathers);
+					LvFathers.setVisible(true); // Show the ListView
+		        });
+		        
+		        LvFathers.setCellFactory(param -> new ListCell<Bird>() {
+		            @Override
+		            protected void updateItem(Bird bird, boolean empty) {
+		                super.updateItem(bird, empty);
+		                if (empty || bird == null) {
+		                    setText(null);
+		                } else {
+		                    setText(bird.getBand());
+		                }
+		            }
+		        });
+		        LvMothers.setCellFactory(param -> new ListCell<Bird>() {
+		            @Override
+		            protected void updateItem(Bird bird, boolean empty) {
+		                super.updateItem(bird, empty);
+		                if (empty || bird == null) {
+		                    setText(null);
+		                } else {
+		                    setText(bird.getBand());
+		                }
+		            }
+		        });
+		    	
+		        TfMother.setDisable(false);
+		        EventHandler<MouseEvent> showAllMothersEvent = event -> {
+		            String searchTerm = TfMother.getText();
+					ObservableList<Bird> listMothers = filterBirdsMother(searchTerm);
+					LvMothers.setItems(listMothers);
+					LvMothers.setVisible(true); // Show the ListView
+		        };
+		        TfMother.setOnMouseClicked(showAllMothersEvent);
+		        TfMother.textProperty().addListener((observableMother, oldValueMother, newValueMother) -> {
+		            ObservableList<Bird> listMothers = filterBirdsFather(newValueMother);
+		            LvMothers.setItems(listMothers);
+		            LvMothers.setVisible(true); // Show the ListView
+		        });
+		        
+		        TfFather.focusedProperty().addListener((observableFocusFather, oldValueFocusFather, newValueFocusFather) -> {
+		            if (!newValueFocusFather) {
+		                LvFathers.setVisible(false); // Hide the ListView when TfFather loses focus
+		            }
+		        });		        
+		        LvFathers.focusedProperty().addListener((observableFocusLvFathers, oldValueFocusLvFathers, newValueFocusLvFathers) -> {
+		            if (!newValueFocusLvFathers) {
+		                LvFathers.setVisible(false); // Hide the ListView when LvFathers loses focus
+		            }
+		        });
+		        
+		        TfMother.focusedProperty().addListener((observableFocusMother, oldValueFocusMother, newValueFocusMother) -> {
+		            if (!newValueFocusMother) {
+		            	LvMothers.setVisible(false); // Hide the ListView when TfFather loses focus
+		            }
+		        });		        
+		        LvMothers.focusedProperty().addListener((observableFocusLvMothers, oldValueFocusLvMothers, newValueFocusLvMothers) -> {
+		            if (!newValueFocusLvMothers) {
+		            	LvMothers.setVisible(false); // Hide the ListView when LvFathers loses focus
+		            }
+		        });
+		        
+		        LvFathers.getSelectionModel().selectedItemProperty().addListener((observableSelectionLvFathers, oldValueSelectionLvFathers, newValueSelectionLvFathers) -> {
+		            if (newValueSelectionLvFathers != null) {
+		                TfFather.setText(newValueSelectionLvFathers.getBand());
+		                LvFathers.setVisible(false); // Hide the ListView after selecting a value
+		            }
+		        });
+		        LvMothers.getSelectionModel().selectedItemProperty().addListener((observableSelectionLvMothers, oldValueSelectionLvMothers, newValueSelectionLvMothers) -> {
+		            if (newValueSelectionLvMothers != null) {
+		                TfMother.setText(newValueSelectionLvMothers.getBand());
+		                LvMothers.setVisible(false); // Hide the ListView after selecting a value
+		            }
+		        });
+		        
 		    }
 		});
 		try {
@@ -227,9 +292,39 @@ public class AddBirdViewController implements Initializable {
 		}
 	}
 
+	private ObservableList<Bird> filterBirdsFather(String searchTerm) {
+	    try {
+	        ObservableList<Bird> listFathers = birdsRepository.getAllWhereStringAndInteger("Sex", MyValues.MACHO, "SpeciesId", CbSpecies.getValue().getId());
+	        Bird defaultFather = new Bird(null, null, MyValues.SEM_PAI, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+	        listFathers.add(0, defaultFather);
+	        List<Bird> filteredBirds = listFathers.stream()
+	                .filter(bird -> bird.getBand().toLowerCase().contains(searchTerm.toLowerCase()))
+	                .collect(Collectors.toList());
+	        return FXCollections.observableArrayList(filteredBirds);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return FXCollections.observableArrayList(); // Return an empty list in case of an exception
+	}
+	  
+	  private ObservableList<Bird> filterBirdsMother(String searchTerm) {
+			try {
+				ObservableList<Bird> listMothers = birdsRepository.getAllWhereStringAndInteger("Sex",MyValues.FEMEA,"SpeciesId",CbSpecies.getValue().getId());
+		  		Bird defaultMother = new Bird(null, null, MyValues.SEM_MAE, null, null, null, null, null,null, null, null, null, null, null, null, null,null);
+		  		listMothers.add(0,defaultMother);
+		        List<Bird> filteredBirds = listMothers.stream()
+		                .filter(bird -> bird.getBand().toLowerCase().contains(searchTerm.toLowerCase()))
+		                .collect(Collectors.toList());
+		        return FXCollections.observableArrayList(filteredBirds);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return FXCollections.observableArrayList();
+	    }
+	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
-		if (validator()) {
+		if (validator()) {//TODO validator TfFather and TfMother
 			Bird bird = new Bird();
 			bird.setBreeder(breederRepository.getBreederbyId(CbCriador.getValue().getId()));
 			bird.setYear(Integer.parseInt(TfAno.getText()));
@@ -242,10 +337,10 @@ public class AddBirdViewController implements Initializable {
 			String date = new SimpleDateFormat(MyValues.DATE_FORMATE).format(Date.from(DfDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			bird.setState(stateRepository.insertState(new State(null, CbState.getValue(), date, null, null)));
 			bird.setSex(CbSex.getValue());
-			if (CbFather.getValue().getId() != null)
-				bird.setFather(birdsRepository.getBirdWhereInt("id", CbFather.getValue().getId()));
-			if (CbMother.getValue().getId() != null)
-				bird.setMother(birdsRepository.getBirdWhereInt("id", CbMother.getValue().getId()));
+			if (!TfFather.getText().equals(MyValues.SEM_PAI))
+				bird.setFather(birdsRepository.getBirdWhereString("Band", TfFather.getText()));
+			if (!TfMother.getText().equals(MyValues.SEM_MAE))
+				bird.setMother(birdsRepository.getBirdWhereString("Band", TfMother.getText()));
 			bird.setSpecies(speciesRepository.getSpecieById(CbSpecies.getValue().getId()));
 			if (CbMutation.getValue().getId() != null)
 				bird.setMutations(mutationsRepository.getMutationsById(CbMutation.getValue().getId()));
@@ -290,7 +385,6 @@ public class AddBirdViewController implements Initializable {
 		clearAllErrors();
 		LabelAlert.setStyle(MyValues.ALERT_ERROR);
 		LabelAlert.setText("");
-		String[] infoAnilha=band.split(" ");
 		if (birdsRepository.checkIfExistsWithBand(band)) {
 			TfAnilha.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Anilha " + band + " ja existe!");
@@ -449,23 +543,31 @@ public class AddBirdViewController implements Initializable {
 			}
 		
 		if (validate)
-			if (CbFather.getValue()==null) {
-				CbFather.setStyle(MyValues.ERROR_BOX_STYLE);
+			if (TfFather.getText()==null) {
+				TfFather.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Pai tem de ser escolhido.(Caso nao tenha Pai escolher 'Sem Pai')");
 				validate=false;
+			}else if (birdsRepository.getBirdWhereString("Band", TfFather.getText())==null && !TfFather.getText().equals(MyValues.SEM_PAI)) {
+				TfFather.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Anilha de Pai nao existe");
+				validate=false;
 			}else {
-				CbFather.setStyle(null);
+				TfFather.setStyle(null);
 				LabelAlert.setText("");
 				validate=true;
 			}
 		
 		if (validate)
-			if (CbMother.getValue()==null) {
-				CbMother.setStyle(MyValues.ERROR_BOX_STYLE);
+			if (TfMother.getText()==null) {
+				TfMother.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Mae tem de ser escolhida.(Caso nao tenha Mae escolher 'Sem Mae')");
 				validate=false;
+			}else if (birdsRepository.getBirdWhereString("Band", TfMother.getText())==null && !TfMother.getText().equals(MyValues.SEM_MAE)) {
+				TfMother.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Anilha de Mae nao existe");
+				validate=false;
 			}else {
-				CbMother.setStyle(null);
+				TfMother.setStyle(null);
 				LabelAlert.setText("");
 				validate=true;
 			}
@@ -568,8 +670,8 @@ public class AddBirdViewController implements Initializable {
 		CbSpecies.setStyle(null);
 		CbMutation.setStyle(null);
 		CbCage.setStyle(null);
-		CbFather.setStyle(null);
-		CbMother.setStyle(null);
+		TfFather.setStyle(null);
+		TfMother.setStyle(null);
 		TfAno.setStyle(null);
 		TfAnilha.setStyle(null);
 		TfBuyPrice.setStyle(null);
@@ -587,8 +689,8 @@ public class AddBirdViewController implements Initializable {
 		CbSpecies.setValue(null);
 		CbMutation.setValue(null);
 		CbCage.setValue(null);
-		CbFather.setValue(null);
-		CbMother.setValue(null);
+		TfFather.setText("");
+		TfMother.setText("");
 		TfAno.setText("");
 		TfAnilha.setText("");
 		TfBuyPrice.setText("");
