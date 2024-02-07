@@ -221,7 +221,7 @@ public class AddBirdViewController implements Initializable {
 		        };
 		        TfMother.setOnMouseClicked(showAllMothersEvent);
 		        TfMother.textProperty().addListener((observableMother, oldValueMother, newValueMother) -> {
-		            ObservableList<Bird> listMothers = filterBirdsFather(newValueMother);
+		            ObservableList<Bird> listMothers = filterBirdsMother(newValueMother);
 		            LvMothers.setItems(listMothers);
 		            LvMothers.setVisible(true); // Show the ListView
 		        });

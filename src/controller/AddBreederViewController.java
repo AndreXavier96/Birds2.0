@@ -133,7 +133,7 @@ public class AddBreederViewController implements Initializable {
 			b.setStam(stamMap);
 			breederRepository.Insert(b);
 			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
-			LabelAlert.setText("Criador" + b.getName() + " inserido com sucesso!");
+			LabelAlert.setText("Criador " + b.getName() + " inserido com sucesso!");
 			clearAllFields();
 		}
 	}

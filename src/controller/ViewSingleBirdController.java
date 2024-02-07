@@ -27,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -224,6 +225,10 @@ public class ViewSingleBirdController{
 		LbClassification.setText("TODO");
 		LbEntryDate.setText(b.getEntryDate().toString());
 		LbCage.setText(b.getCage().getCode());
+		LbCage.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	openViewCage(LbCage.getText());
+		});
 		LbEntryType.setText(b.getEntryType());
 		LbState.setText(b.getState().getType());
 		if (LbEntryType.getText().equals(MyValues.COMPRA)) {
@@ -470,5 +475,22 @@ public class ViewSingleBirdController{
 	public void btnClose(ActionEvent event) {
 		Stage stage = (Stage) LabelAlert.getScene().getWindow();
 		stage.close();
+	}
+	
+	private void openViewCage(String code) {
+	    try {
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/cages/ViewSingleCage.fxml"));
+	    	Parent root = loader.load();
+	    	ViewSingleCageController viewSingleCageController = loader.getController();
+	    	viewSingleCageController.search(code);
+	    	Scene currentScene = LbTitle.getScene();
+	    	Stage currentStage =(Stage) currentScene.getWindow();
+	    	currentScene.setRoot(root);
+	    	currentStage.sizeToScene();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
