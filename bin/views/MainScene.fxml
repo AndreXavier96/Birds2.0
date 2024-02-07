@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
    <center>
       <AnchorPane maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0">
          <children>
@@ -85,6 +84,13 @@
                   <MenuItem mnemonicParsing="false" onAction="#btnAddBird" text="Adicionar" />
                   <MenuItem mnemonicParsing="false" onAction="#btnViewAllBirds" text="Ver Todas" />
                   <MenuItem mnemonicParsing="false" onAction="#btnSearchBird" text="Procurar" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Casais">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#btnAddCouple" text="Adicionar" />
+                  <MenuItem mnemonicParsing="false" onAction="#btnViewAllCouple" text="Ver Todos" />
+                  <MenuItem mnemonicParsing="false" onAction="#btnSearchCouple" text="Procurar" />
                </items>
             </Menu>
         </menus>

@@ -17,6 +17,10 @@ public class MyValues {
 	public static final String NASCIMENTO = "Nascimento";
 	public static final ObservableList<String> ENTRYTYPELIST = FXCollections.observableArrayList(COMPRA,NASCIMENTO);
 
+	public static final String JUNTOS = "Juntos";
+	public static final String SEPARADOS = "Separados";
+	public static final ObservableList<String> COUPLESTATELIST = FXCollections.observableArrayList(JUNTOS,SEPARADOS);
+
 	public static final String FEMEA = "Femea";
 	public static final String MACHO = "Macho";
 	public static final String DESCONHECIDO = "Desconhecido";
@@ -64,6 +68,8 @@ public class MyValues {
 	public static final String TITLE_EDIT_MUTATION = "Editar criador ";
 	public static final String TITLE_EDIT_BIRD = "Editar passaro ";
 	
+	public static final String TITLE_SEPARATE_COUPLE = "Separar Casal ";
+	
 	public static final String BIRD_INSERTED = "PASSARO INSERIDO";
 	public static final String CHANGE_STATE = "ESTADO ALTERADO";
 	public static final String CHANGE_CAGE = "GAIOLA ALTERADA";
@@ -72,6 +78,7 @@ public class MyValues {
 	
 	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
 	public static final String CHANGE_SEX_SUCCESS = "Genero alterado com sucesso!";
+	public static final String ADD_COUPLE = "Passaro acasalado";
 	
 	public static final String DATE_FORMATE = "dd-MM-yyyy";
 	
