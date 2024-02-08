@@ -93,6 +93,13 @@
                   <MenuItem mnemonicParsing="false" onAction="#btnSearchCouple" text="Procurar" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Tratamentos">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#btnAddTreatment" text="Adicionar" />
+                  <MenuItem mnemonicParsing="false" onAction="#btnViewAllTreatment" text="Ver Todos" />
+                  <MenuItem mnemonicParsing="false" onAction="#btnTreatBird" text="Tratar Passaro" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>

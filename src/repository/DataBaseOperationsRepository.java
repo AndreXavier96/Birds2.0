@@ -24,6 +24,7 @@ public class DataBaseOperationsRepository {
 	private BreederClubRepository breederClubRepository = new BreederClubRepository();
 	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
 	private HistoricRepository historicRepository = new HistoricRepository();
+	private TreatmentRepository treatmentRepository = new TreatmentRepository();
 	
 	public Connection GetConnection(String DbName,String user, String pass) {
 		try {
@@ -83,6 +84,7 @@ public class DataBaseOperationsRepository {
 		breederClubRepository.createTableBreederClub(con,stmt);
 		breederFederationRepository.createTableBreederFederation(con,stmt);
 		historicRepository.createTableHistoric(con,stmt);
+		treatmentRepository.createTableTreatment(con, stmt);
 		CloseConnection(con, stmt, null);
 		System.out.println("All tables created!");
 	}
@@ -104,6 +106,7 @@ public class DataBaseOperationsRepository {
 		stateRepository.dropTableState(con,stmt);
 		clubRepository.dropTableClub(con,stmt);
 		federationRepository.dropTableFederation(con,stmt);
+		treatmentRepository.dropTableTreatment(con, stmt);
 		CloseConnection(con, stmt, null);
 		System.out.println("All tables dropped!");
 	}
