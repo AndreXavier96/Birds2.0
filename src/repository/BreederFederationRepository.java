@@ -29,7 +29,7 @@ public class BreederFederationRepository {
 	}
 	
 	public void createTableBreederFederation(Connection con, Statement stmt) throws SQLException {
-			System.out.println("Creating Table CLUB ...");
+			System.out.println("Creating Table BREEDER_FEDERATION ...");
 			String sql = "CREATE TABLE IF NOT EXISTS BREEDER_FEDERATION"
 					+" (id INTEGER auto_increment, "
 					+"Stam VARCHAR(255) NOT NULL UNIQUE, "

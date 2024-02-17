@@ -27,6 +27,21 @@ public class StateRepository {
         }
 	}
 	
+	public void getStatesConsole() {
+		Connection con;
+		try {
+			con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM STATE");
+			if (rs.next()) {
+				System.out.println("Id:" + rs.getInt(1) + " Type:" + rs.getString(2));
+			}
+			CloseConnection(con, stmt, null, rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void CreateTableState(Connection con, Statement stmt) throws SQLException {
 	        System.out.println("Creating Table STATE ...");
 	        String sql = "CREATE TABLE IF NOT EXISTS STATE"

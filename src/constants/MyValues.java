@@ -45,7 +45,18 @@ public class MyValues {
 	public static final String EXPOSICAO = "Exposicao";
 	public static final String CRIADEIRA = "Criadeira";
 	public static final ObservableList<String> CAGE_TIPE = FXCollections.observableArrayList(VOADEIRA,EXPOSICAO,CRIADEIRA);	
+	
+	public static final String HORA = "HORA";
+	public static final String DIA = "DIA";
+	public static final String SEMANA = "SEMANA";
+	public static final ObservableList<String> FREQUENCIA = FXCollections.observableArrayList(HORA,DIA,SEMANA);	
 
+	public static final String UNICO = "UNICO";
+	public static final String MULTIPLOS = "MULTIPLOS";
+	public static final String TODOS = "TODOS";
+	public static final ObservableList<String> TREATMENT_TYPE = FXCollections.observableArrayList(UNICO,MULTIPLOS,TODOS);	
+
+	
 	public static final String TITLE_BIRD_APP = "Aviário Virtual";
 	public static final String TITLE_SELECT_IMAGE = "Selecionar Imagem Passaro";
 	public static final String TITLE_CHANGE_STATE = "Alterar Estado";
@@ -59,6 +70,7 @@ public class MyValues {
 	public static final String TITLE_DELETE_SPECIE = "Apagar Especie ";
 	public static final String TITLE_DELETE_MUTATION = "Apagar criador ";
 	public static final String TITLE_DELETE_BIRD = "Apagar passaro ";
+	public static final String TITLE_DELETE_TREATMENT = "Apagar Tratamento ";
 	
 	public static final String TITLE_EDIT_CLUB = "Editar Clube ";
 	public static final String TITLE_EDIT_FEDERATION = "Editar Federacao ";
@@ -67,6 +79,7 @@ public class MyValues {
 	public static final String TITLE_EDIT_SPECIE = "Editar Especie ";
 	public static final String TITLE_EDIT_MUTATION = "Editar criador ";
 	public static final String TITLE_EDIT_BIRD = "Editar passaro ";
+	public static final String TITLE_EDIT_TREATMENT = "Editar tratamento ";
 	
 	public static final String TITLE_SEPARATE_COUPLE = "Separar Casal ";
 	

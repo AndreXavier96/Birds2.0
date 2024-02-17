@@ -377,13 +377,50 @@ public class MainSceneController {
 		}
 	}
 	
+	@FXML
+	public void btnAddTreatment(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/treatments/AddTreatmentView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
+	@FXML
+	public void btnViewAllTreatment(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/treatments/ViewAllTreatments.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
-	
-	
-	
-	
-	
+	@FXML
+	public void btnTreatBird(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/treatments/BirdTreatmentView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	boolean deleteDirectory(File directoryToBeDeleted) {
 	    File[] allContents = directoryToBeDeleted.listFiles();
