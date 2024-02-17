@@ -15,19 +15,26 @@ import constants.Regex;
 import domains.Treatment;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 public class AddTreatmentViewController implements Initializable {
+	private Stage stage;
+	
 	
 	@FXML
-	private Label LabelAlert;
+	private Label LabelAlert,LbTitle;
 	@FXML
 	private TextField TfName,TfDesc,TfFreq,TfDuration;
 	@FXML
 	private ComboBox<String> CbFreqType;
+	@FXML
+	private Button btnAdd,btnEdit;
 
 	TreatmentRepository treatmentRepository = new TreatmentRepository();
+	
+	Treatment treatment = null;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -57,6 +64,38 @@ public class AddTreatmentViewController implements Initializable {
 			clearAllFields();
 		}
 	}	
+	
+
+	@FXML
+	public void btnEdit(ActionEvent event) throws SQLException {
+		if (validator()) {
+			treatment.setName(TfName.getText());
+			treatment.setDescription(TfDesc.getText());
+			treatment.setFrequency(Integer.parseInt(TfFreq.getText()));
+			treatment.setFrequencyType(CbFreqType.getValue());
+			treatment.setDurationDays(Integer.parseInt(TfDuration.getText()));
+			treatmentRepository.updateTreatment(treatment);
+			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+			LabelAlert.setText(treatment.getName()+" alterada com sucesso");
+			clearAllFields();
+			stage = (Stage) btnEdit.getScene().getWindow();
+			stage.close();
+		}
+	}
+	
+	public void startValuesEdit(Treatment treatment) {
+		LbTitle.setText("Editar "+treatment.getName());
+		TfName.setText(treatment.getName());
+		TfDesc.setText(treatment.getDescription());
+		CbFreqType.setValue(treatment.getFrequencyType());
+		TfDuration.setText(treatment.getDurationDays().toString());
+		TfFreq.setText(treatment.getFrequency().toString());
+		btnAdd.setVisible(false);
+		btnAdd.setDefaultButton(false);
+		btnEdit.setVisible(true);
+		btnEdit.setDefaultButton(true);
+		this.treatment = treatment;
+	}
 	
 	public boolean validator() throws SQLException {
 		boolean validate= false;

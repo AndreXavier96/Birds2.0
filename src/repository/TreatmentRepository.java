@@ -81,6 +81,30 @@ public class TreatmentRepository {
 		System.out.println(i+" Record inserted");
 	}
 	
+	public void updateTreatment(Treatment treatment) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		PreparedStatement stmt = null;
+		try {
+			String sql = "UPDATE TREATMENT SET Name = ?, Description = ?, Frequency = ?, FrequencyType = ?, DurationDays = ? WHERE id = ?";
+			stmt = con.prepareStatement(sql);
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, treatment.getName());
+			stmt.setString(2, treatment.getDescription());
+			stmt.setInt(3, treatment.getFrequency());
+			stmt.setString(4, treatment.getFrequencyType());
+			stmt.setInt(5, treatment.getDurationDays());
+			stmt.setInt(6, treatment.getId());
+			int rowsAffected = stmt.executeUpdate();
+			if (rowsAffected > 0) {
+				System.out.println("Treatment updated successfully.");
+			} else {
+				System.out.println("Treatment not found.");
+			}
+		} finally {
+			CloseConnection(con, stmt, null, null);
+		}
+	}
+	
 //	public boolean checkIfCodeExist(String code)  throws SQLException {
 //		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 //		Statement stmt = con.createStatement();

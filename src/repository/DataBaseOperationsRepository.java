@@ -25,6 +25,7 @@ public class DataBaseOperationsRepository {
 	private BreederFederationRepository breederFederationRepository = new BreederFederationRepository();
 	private HistoricRepository historicRepository = new HistoricRepository();
 	private TreatmentRepository treatmentRepository = new TreatmentRepository();
+	private BirdTreatmentRepository birdTreatmentRepository = new BirdTreatmentRepository();
 	
 	public Connection GetConnection(String DbName,String user, String pass) {
 		try {
@@ -70,6 +71,7 @@ public class DataBaseOperationsRepository {
 		System.out.println("Trying to create all tables...");
 		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
+		stateRepository.getStatesConsole();
 		federationRepository.createTableFederation(con,stmt);
 		clubRepository.createTableClub(con,stmt);
 		breederRepository.CreateTableBreeder(con,stmt);
@@ -85,6 +87,7 @@ public class DataBaseOperationsRepository {
 		breederFederationRepository.createTableBreederFederation(con,stmt);
 		historicRepository.createTableHistoric(con,stmt);
 		treatmentRepository.createTableTreatment(con, stmt);
+		birdTreatmentRepository.createTableBirdTreatment(con, stmt);
 		CloseConnection(con, stmt, null);
 		System.out.println("All tables created!");
 	}
@@ -107,6 +110,7 @@ public class DataBaseOperationsRepository {
 		clubRepository.dropTableClub(con,stmt);
 		federationRepository.dropTableFederation(con,stmt);
 		treatmentRepository.dropTableTreatment(con, stmt);
+		birdTreatmentRepository.createTableBirdTreatment(con, stmt);
 		CloseConnection(con, stmt, null);
 		System.out.println("All tables dropped!");
 	}

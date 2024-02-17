@@ -119,6 +119,51 @@ public class BirdsRepository {
 			}
 		}
 	
+	public ObservableList<Bird> getAllBirdsOwned() {
+		try {
+			System.out.println("Getting all Birds Owned...");
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
+					MyValues.USER, MyValues.PASSWORD);
+			Statement stmt = con.createStatement();
+			 String sql = "SELECT * FROM BIRDS JOIN STATE ON BIRDS.StateId = STATE.id WHERE STATE.Type NOT IN ('Morto', 'Vendido')";
+			ResultSet rs = stmt.executeQuery(sql);
+			ObservableList<Bird> birds = FXCollections.observableArrayList();
+			while (rs.next()) {
+				System.out.println("Get Bird: " + rs.getInt(1));
+				Bird b = new Bird();
+				b.setId(rs.getInt(1));
+				b.setBand(rs.getString(2));
+				b.setYear(rs.getInt(3));
+				b.setEntryDate(rs.getDate(4));
+				b.setEntryType(rs.getString(5));
+				b.setBuyPrice(rs.getDouble(6));
+				b.setState(stateRepository.getStateById(rs.getInt(7)));
+				b.setSex(rs.getString(8));
+				if (rs.getInt(9)!=0)
+					b.setFather(getBirdWhereInt("id",rs.getInt(9)));
+				else
+					b.setFather(null);
+				if (rs.getInt(10)!=0)
+					b.setMother(getBirdWhereInt("id",rs.getInt(10)));
+				else
+					b.setMother(null);
+				b.setSpecies(speciesRepository.getSpecieById(rs.getInt(11)));
+				b.setMutations(mutationsRepository.getMutationsById(rs.getInt(12)));
+				b.setCage(cageRepository.getCage(rs.getInt(13)));
+				b.setBreeder(breederRepository.getBreederbyId(rs.getInt(14)));
+				b.setPosture(rs.getInt(15));
+				b.setImage(rs.getString(16));
+				b.setObs(rs.getString(17));
+				birds.add(b);
+			}
+			CloseConnection(con, stmt, null, rs);
+			return birds;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public ObservableList<Bird> getAllWhere(String col,String value) {
 		try {
 			System.out.println("Getting all Birds...");

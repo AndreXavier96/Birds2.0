@@ -409,7 +409,17 @@ public class MainSceneController {
 	
 	@FXML
 	public void btnTreatBird(ActionEvent event) {
-		
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/treatments/BirdTreatmentView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	boolean deleteDirectory(File directoryToBeDeleted) {

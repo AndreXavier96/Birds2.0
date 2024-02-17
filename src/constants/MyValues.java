@@ -51,6 +51,12 @@ public class MyValues {
 	public static final String SEMANA = "SEMANA";
 	public static final ObservableList<String> FREQUENCIA = FXCollections.observableArrayList(HORA,DIA,SEMANA);	
 
+	public static final String UNICO = "UNICO";
+	public static final String MULTIPLOS = "MULTIPLOS";
+	public static final String TODOS = "TODOS";
+	public static final ObservableList<String> TREATMENT_TYPE = FXCollections.observableArrayList(UNICO,MULTIPLOS,TODOS);	
+
+	
 	public static final String TITLE_BIRD_APP = "Aviário Virtual";
 	public static final String TITLE_SELECT_IMAGE = "Selecionar Imagem Passaro";
 	public static final String TITLE_CHANGE_STATE = "Alterar Estado";
@@ -73,6 +79,7 @@ public class MyValues {
 	public static final String TITLE_EDIT_SPECIE = "Editar Especie ";
 	public static final String TITLE_EDIT_MUTATION = "Editar criador ";
 	public static final String TITLE_EDIT_BIRD = "Editar passaro ";
+	public static final String TITLE_EDIT_TREATMENT = "Editar tratamento ";
 	
 	public static final String TITLE_SEPARATE_COUPLE = "Separar Casal ";
 	

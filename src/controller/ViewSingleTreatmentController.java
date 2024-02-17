@@ -24,7 +24,7 @@ public class ViewSingleTreatmentController {
 	
 	private TreatmentRepository treatmentRepository = new TreatmentRepository();
 	
-	Treatment treatment = null;
+//	Treatment treatment = null;
 
 	@FXML
 	public void btnDelete(ActionEvent event) throws IOException, SQLException {
@@ -52,8 +52,21 @@ public class ViewSingleTreatmentController {
 	}
 	
 	@FXML
-	public void btnEdit(ActionEvent event) {//TODO usar o add para o edit
-		treatment.setName(Tf);
+	public void btnEdit(ActionEvent event) throws IOException, NumberFormatException, SQLException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/treatments/AddTreatmentView.fxml"));
+		Parent root = loader.load();
+		Treatment t = treatmentRepository.getTreatmentById(Integer.parseInt(LbId.getText()));
+		AddTreatmentViewController addTreatmentViewController =  loader.getController();
+		addTreatmentViewController.startValuesEdit(t);
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setTitle(MyValues.TITLE_EDIT_TREATMENT + LbName.getText());
+		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+		stage.setScene(scene);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.showAndWait();
+		Treatment updatedTreatment = treatmentRepository.getTreatmentById(t.getId());
+		search(updatedTreatment.getId());
 	}
 	
 
@@ -77,7 +90,7 @@ public class ViewSingleTreatmentController {
 		}
 		LbTimesAplied.setText(null);//TODO
 		LbBirdsTreated.setText(null);//TODO
-		treatment=t;
+//		treatment=t;
 	}
 	
 	@FXML

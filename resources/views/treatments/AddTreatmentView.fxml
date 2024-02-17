@@ -12,7 +12,7 @@
    <children>
       <AnchorPane prefHeight="47.0" prefWidth="538.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Adicionar Tratamento" textAlignment="JUSTIFY" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+            <Label fx:id="LbTitle" alignment="CENTER" contentDisplay="CENTER" text="Adicionar Tratamento" textAlignment="JUSTIFY" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
                <font>
                   <Font size="23.0" />
                </font>
@@ -60,9 +60,10 @@
       <AnchorPane prefHeight="51.0" prefWidth="538.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+            <Button fx:id="btnAdd" defaultButton="true" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
             <Button cancelButton="true" mnemonicParsing="false" onAction="#btnCancel" prefHeight="25.0" prefWidth="81.0" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
             <Label layoutX="164.0" layoutY="24.0" text="Campos obrigatorios assinalados com *" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="164.0" AnchorPane.rightAnchor="164.0" />
+            <Button fx:id="btnEdit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="81.0" text="Editar" visible="false" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
          </children>
       </AnchorPane>
       
