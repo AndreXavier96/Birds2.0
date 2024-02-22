@@ -12,7 +12,11 @@ import repository.BirdsRepository;
 import repository.TreatmentRepository;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
+
 import constants.MyValues;
 import domains.Bird;
 import domains.BirdTreatment;
@@ -151,17 +155,25 @@ public class BirdTreatmentViewController implements Initializable {
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
 		if (validator()) {
+			Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+0"));
+			Date today = calendar.getTime();
 			if (CbType.getValue().equals(MyValues.UNICO)) {
 				BirdTreatment bt = new BirdTreatment();
 				Bird b =birdsRepository.getBirdWhereString("Band", TfSearchSingle.getText());
 				bt.setBird(b);
 				bt.setTreatment(treatmentRepository.getTreatmentById(CbTreatment.getValue().getId()));
+				bt.setStart(today);
+				calendar.add(Calendar.DAY_OF_MONTH, bt.getTreatment().getDurationDays());
+				bt.setFinish(calendar.getTime());
 				birdTreatmentRepository.insert(bt);
 			}else if (CbType.getValue().equals(MyValues.MULTIPLOS)) {
 				for (Bird b : assignedBirds) {
 					BirdTreatment bt = new BirdTreatment();
 					bt.setBird(b);
 					bt.setTreatment(treatmentRepository.getTreatmentById(CbTreatment.getValue().getId()));
+					bt.setStart(today);
+					calendar.add(Calendar.DAY_OF_MONTH, bt.getTreatment().getDurationDays());
+					bt.setFinish(calendar.getTime());
 					birdTreatmentRepository.insert(bt);
 				}
 			}else if (CbType.getValue().equals(MyValues.TODOS)) {
@@ -169,6 +181,9 @@ public class BirdTreatmentViewController implements Initializable {
 					BirdTreatment bt = new BirdTreatment();
 					bt.setBird(b);
 					bt.setTreatment(treatmentRepository.getTreatmentById(CbTreatment.getValue().getId()));
+					bt.setStart(today);
+					calendar.add(Calendar.DAY_OF_MONTH, bt.getTreatment().getDurationDays());
+					bt.setFinish(calendar.getTime());
 					birdTreatmentRepository.insert(bt);
 				}
 			}
@@ -254,7 +269,6 @@ public class BirdTreatmentViewController implements Initializable {
 	public void clearAllFields() {
 		CbType.setValue(null);
 		CbTreatment.setValue(null);
-		CbTreatment.setDisable(true);
 		TfSearchSingle.setStyle(null);
 		Integer assignedSize = assignedBirds.size();
 		for (int i = 0; i<assignedSize;i++) {

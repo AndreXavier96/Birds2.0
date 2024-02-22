@@ -6,12 +6,14 @@ public class BirdTreatment {
     private Bird bird;
     private Treatment treatment;
     private Date start;
+    private Date finish;
     
-	public BirdTreatment(Bird bird, Treatment treatment, Date start) {
+	public BirdTreatment(Bird bird, Treatment treatment, Date start, Date finish) {
 		super();
 		this.bird = bird;
 		this.treatment = treatment;
 		this.start = start;
+		this.finish = finish;
 	}
 
 	public BirdTreatment() {
@@ -42,6 +44,14 @@ public class BirdTreatment {
 		this.start = start;
 	}
 
-   
+	public Date getFinish() {
+		return finish;
+	}
+
+	public void setFinish(Date finish) {
+		this.finish = finish;
+	}
+
+	
 }
 
