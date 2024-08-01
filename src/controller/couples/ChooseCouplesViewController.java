@@ -23,7 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import repository.BirdsRepository;
-import repository.CageRepository;
 import repository.CouplesRepository;
 
 public class ChooseCouplesViewController implements Initializable{

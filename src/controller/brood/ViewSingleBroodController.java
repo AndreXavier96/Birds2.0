@@ -4,8 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import repository.CageRepository;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
