@@ -26,6 +26,9 @@ public class DataBaseOperationsRepository {
 	private HistoricRepository historicRepository = new HistoricRepository();
 	private TreatmentRepository treatmentRepository = new TreatmentRepository();
 	private BirdTreatmentRepository birdTreatmentRepository = new BirdTreatmentRepository();
+	private EggRepository eggRepository = new EggRepository();
+	private BroodRepository broodRepository = new BroodRepository();
+	private AdoptiveParentsRepository adoptiveParentsRepository = new AdoptiveParentsRepository();
 	
 	public Connection GetConnection(String DbName,String user, String pass) {
 		try {
@@ -71,7 +74,6 @@ public class DataBaseOperationsRepository {
 		System.out.println("Trying to create all tables...");
 		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
-		stateRepository.getStatesConsole();
 		federationRepository.createTableFederation(con,stmt);
 		clubRepository.createTableClub(con,stmt);
 		breederRepository.CreateTableBreeder(con,stmt);
@@ -88,6 +90,9 @@ public class DataBaseOperationsRepository {
 		historicRepository.createTableHistoric(con,stmt);
 		treatmentRepository.createTableTreatment(con, stmt);
 		birdTreatmentRepository.createTableBirdTreatment(con, stmt);
+		broodRepository.createTableBrood(con, stmt);
+		eggRepository.createTableEgg(con, stmt);
+		adoptiveParentsRepository.createTableAdoptiveParents(con, stmt);
 		CloseConnection(con, stmt, null);
 		System.out.println("All tables created!");
 	}
@@ -110,7 +115,10 @@ public class DataBaseOperationsRepository {
 		clubRepository.dropTableClub(con,stmt);
 		federationRepository.dropTableFederation(con,stmt);
 		treatmentRepository.dropTableTreatment(con, stmt);
-		birdTreatmentRepository.createTableBirdTreatment(con, stmt);
+		birdTreatmentRepository.dropTableBirdTreatment(con, stmt);
+		broodRepository.dropTableBrood(con, stmt);
+		eggRepository.dropTableEgg(con, stmt);
+		adoptiveParentsRepository.createTableAdoptiveParents(con, stmt);
 		CloseConnection(con, stmt, null);
 		System.out.println("All tables dropped!");
 	}

@@ -137,6 +137,29 @@ public class CouplesRepository {
 		}
 	}
 	
+	public Couples getCouplesWhereBirdJunto(Bird bird) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM COUPLES WHERE (MaleId='"+bird.getId()+"' OR FemaleId='"+bird.getId()+"') AND State='"+MyValues.JUNTOS+"';";
+		ResultSet rs = stmt.executeQuery(sql);
+		Couples c = new Couples();
+		BirdsRepository birdsRepository = new BirdsRepository();
+		CageRepository cageRepository = new CageRepository();
+		if (rs.next()) {//TODO verificar se e mais do que 1 resultado
+			c.setId(rs.getInt(1));
+			c.setMale(birdsRepository.getBirdWhereInt("id", rs.getInt(2)));
+			c.setFemale(birdsRepository.getBirdWhereInt("id", rs.getInt(3)));
+			c.setCage(cageRepository.getCage(rs.getInt(4)));
+			c.setState(rs.getString(5));
+			CloseConnection(con, stmt,null, rs);
+			return c;
+		} else {
+			CloseConnection(con, stmt,null, rs);
+			return null;
+		}
+	}
+	
+	
 	public void deleteCouple(Couples couple) throws SQLException {
 	    try (Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
 	         PreparedStatement pstmt = con.prepareStatement("DELETE FROM COUPLES WHERE id=?")) {
