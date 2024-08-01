@@ -586,6 +586,36 @@ public class MainSceneController implements Initializable {
 		}
 	}
 	
+	@FXML
+	public void btnAddBrood(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/AddBroodView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void btnViewAllBrood(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/ViewAllBrood.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	boolean deleteDirectory(File directoryToBeDeleted) {
 	    File[] allContents = directoryToBeDeleted.listFiles();
 	    if (allContents != null) {

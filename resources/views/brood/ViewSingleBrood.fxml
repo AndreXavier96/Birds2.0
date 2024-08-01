@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.brood.ViewSingleBroodController">
+   <children>
+      <AnchorPane layoutX="2.0" layoutY="2.0" prefHeight="7.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <menus>
+                  <Menu mnemonicParsing="false" text="Alterar">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="xx" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="32.0" prefHeight="92.0" prefWidth="546.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <Label fx:id="LbTitle" alignment="CENTER" layoutY="9.0" text="Ninhada XXXX" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelAlert" alignment="CENTER" layoutY="42.0" prefHeight="17.0" prefWidth="1267.0" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-14.0" layoutY="137.0" prefHeight="371.0" prefWidth="572.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+         <children>
+            <AnchorPane prefHeight="85.0" prefWidth="922.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label text="Casal:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <AnchorPane layoutY="33.0" prefHeight="17.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="33.0">
+                     <children>
+                        <Label text="Macho:" AnchorPane.leftAnchor="0.0" />
+                        <Label fx:id="LbMale" layoutX="44.0" prefHeight="17.0" prefWidth="229.0" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="17.0" prefWidth="273.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
+                     <children>
+                        <Label text="Femea:" />
+                        <Label fx:id="LbFemale" layoutX="44.0" prefHeight="17.0" prefWidth="229.0" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="17.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                     <children>
+                        <Label text="Gaiola:" AnchorPane.leftAnchor="0.0" />
+                        <Label fx:id="LbCage" layoutX="42.0" AnchorPane.leftAnchor="42.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="106.0">
+               <children>
+                  <AnchorPane prefHeight="261.0" prefWidth="410.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Ovos" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="TvEggs" prefHeight="241.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                          <columns>
+                            <TableColumn fx:id="colDate" prefWidth="95.0" text="Data Postura" />
+                            <TableColumn fx:id="colType" prefWidth="144.0" text="Tipo" />
+                              <TableColumn fx:id="colStatute" prefWidth="170.0" text="Estatuto" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="261.0" prefWidth="410.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Pais Adotivos" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="TvAdoptive" layoutX="-96.0" prefHeight="241.0" prefWidth="369.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                           <columns>
+                              <TableColumn fx:id="colBand" prefWidth="203.0" text="Anilha" />
+                              <TableColumn fx:id="colSpecie" prefWidth="206.0" text="Especie" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="32.0" layoutY="211.0" prefHeight="25.0" prefWidth="416.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+      	<Button cancelButton="true" layoutX="57.0" layoutY="164.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="25.0" prefWidth="81.0" text="Cancelar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0">
+      		<cursor>
+      			<Cursor fx:constant="HAND" />
+      		</cursor>
+      	</Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

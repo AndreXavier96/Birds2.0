@@ -97,4 +97,15 @@ public class MyValues {
 	
 	public static final String aSUPERSCRIPT = "\u00AA";
 	public static final String oSUPERSCRIPT = "\u00BA";
+	
+	public static final String DESCONHECIDO2 = "Desconhecido";
+	public static final String PARTIDO = "Partido";
+	public static final String ESVAZIAR = "Esvaziar";
+	public static final String EM_DESENVOLVIMENTO = "Em Desenvolvimento";
+	public static final String CHOCADO = "Chocado";
+	public static final String MORTE_NO_OVO = "Morte No Ovo";
+	public static final String AUSENCIA_DE = "Ausencia De Embriao";
+	public static final ObservableList<String> OVO_LIST = FXCollections.observableArrayList(PARTIDO,DESCONHECIDO2,ESVAZIAR,EM_DESENVOLVIMENTO,CHOCADO,MORTE_NO_OVO,AUSENCIA_DE);
+
+	public static final String FECUNDADO = "Fecundado";
 }

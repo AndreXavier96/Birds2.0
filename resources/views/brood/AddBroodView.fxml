@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="946.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.brood.AddBroodViewController">
+   <children>
+      <AnchorPane prefHeight="43.0" prefWidth="946.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="LBTitle" alignment="CENTER" text="Adicionar Ninhada" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelAlert" alignment="CENTER" layoutY="34.0" prefHeight="17.0" prefWidth="886.0" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="34.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="95.0" prefHeight="73.0" prefWidth="946.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="105.0">
+         <children>
+            <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="73.0" prefWidth="313.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+               <children>
+                  <Label text="Casal*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button layoutX="41.0" layoutY="-4.0" mnemonicParsing="false" onAction="#btnChooseCouple" prefHeight="17.0" prefWidth="91.0" text="Escolher Casal" AnchorPane.leftAnchor="41.0" AnchorPane.topAnchor="-4.0" />
+                  <Label layoutX="-3.0" layoutY="24.0" text="Macho:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="24.0" />
+                  <TextField fx:id="TfMale" disable="true" layoutX="51.0" prefHeight="25.0" prefWidth="262.0" promptText="(Anilha) Macho" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Label layoutX="11.0" layoutY="52.0" text="Femea:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="52.0" />
+                  <TextField fx:id="TfFemale" disable="true" layoutY="39.0" promptText="(Anilha) Femea" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="328.0" layoutY="14.0" prefHeight="45.0" prefWidth="150.0" AnchorPane.leftAnchor="342.0" AnchorPane.topAnchor="14.0">
+               <children>
+                  <Label text="Data Inicio postura*" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <DatePicker fx:id="DtStart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="492.0" layoutY="14.0" prefHeight="45.0" prefWidth="150.0" AnchorPane.leftAnchor="506.0" AnchorPane.topAnchor="14.0">
+               <children>
+                  <Label text="Data Fim postura" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <DatePicker fx:id="DtFinish" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="656.0" layoutY="14.0" prefHeight="45.0" prefWidth="150.0" AnchorPane.leftAnchor="670.0" AnchorPane.topAnchor="14.0">
+               <children>
+                  <Label text="Gaiola" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="TfCage" disable="true" editable="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="177.0" prefHeight="420.0" prefWidth="467.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="475.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <Label layoutX="45.0" layoutY="14.0" text="Ovos" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="14.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <TableView fx:id="TvEggs" prefHeight="372.0" prefWidth="457.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="48.0">
+              <columns>
+                <TableColumn fx:id="colDate" prefWidth="108.0" text="Data Postura" />
+                <TableColumn fx:id="colType" prefWidth="138.0" text="Tipo" />
+                  <TableColumn fx:id="colStatute" minWidth="0.0" prefWidth="210.0" text="Estatuto" />
+              </columns>
+            </TableView>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddEggs" text="+" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="187.0" prefHeight="420.0" prefWidth="467.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="475.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <Label layoutX="45.0" layoutY="14.0" text="Pais Adotivos" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="14.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <TableView fx:id="TvAdoptive" layoutX="7.0" layoutY="48.0" prefHeight="372.0" prefWidth="457.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="48.0">
+               <columns>
+                  <TableColumn fx:id="colBand" prefWidth="226.0" text="Anilha" />
+                  <TableColumn fx:id="colSpecie" minWidth="0.0" prefWidth="230.0" text="Especie" />
+               </columns>
+            </TableView>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddAdoptives" text="+" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="51.0" prefWidth="946.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" text="Campos Obrigatorios assinalados com*" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      
+      	<Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="81.0" text="Adicionar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+      		<cursor>
+      			<Cursor fx:constant="HAND" />
+      		</cursor>
+      	</Button>
+            <Button cancelButton="true" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="25.0" prefWidth="81.0" text="Cancelar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+     
+   </children>
+</AnchorPane>
