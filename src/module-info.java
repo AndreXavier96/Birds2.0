@@ -5,6 +5,7 @@ module Birds {
 	requires javafx.graphics;
 	requires javafx.base;
 	requires com.h2database;
+	requires lombok;
 	
 	opens application to javafx.graphics, javafx.fxml;
 	opens controller to javafx.fxml;
