@@ -1,5 +1,10 @@
 package domains;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ClubFederation {
     private String clubAcronym;
     private String federationName;
@@ -10,18 +15,5 @@ public class ClubFederation {
         this.federationName = federationName;
         this.breederStam = breederStam;
     }
-
-    public String getClubAcronym() {
-        return clubAcronym;
-    }
-
-    public String getFederationName() {
-        return federationName;
-    }
-
-    public String getBreederStam() {
-        return breederStam;
-    }
-
 }
 

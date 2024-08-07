@@ -1,5 +1,10 @@
 package domains;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Historic {
 	private Integer id;
 	private String title;
@@ -25,37 +30,5 @@ public class Historic {
 		this.date = date;
 		this.obs = obs;
 		this.bird=bird;
-	}
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
-	}
-	public String getObs() {
-		return obs;
-	}
-	public void setObs(String obs) {
-		this.obs = obs;
-	}
-	
-	public Bird getBird() {
-		return bird;
-	}
-	public void setBird(Bird bird) {
-		this.bird = bird;
 	}
 }
