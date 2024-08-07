@@ -17,6 +17,7 @@ module Birds {
 	opens controller.couples to javafx.fxml;
 	opens controller.egg to javafx.fxml;
 	opens controller.federation to javafx.fxml;
+	opens controller.club to javafx.fxml;
 	opens controller.mutation to javafx.fxml;
 	opens controller.species to javafx.fxml;
 	opens controller.treatment to javafx.fxml;
