@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import controller.bird.ViewSingleBirdController;
 import controller.breeder.ViewSingleBreederController;
 import controller.cage.ViewSingleCageController;
+import controller.couples.ViewSingleCouplesController;
 import controller.federation.ViewSingleFederationController;
 import controller.mutation.ViewSingleMutationController;
 import controller.species.ViewSingleSpecieController;
@@ -16,6 +17,22 @@ import javafx.stage.Stage;
 
 public class HiperligacoesController {
 
+	public void openViewSingleCouple(Scene currentScene,String band) {
+	    try {
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/couples/ViewSingleCouple.fxml"));
+	    	Parent root = loader.load();
+	    	ViewSingleCouplesController controller = loader.getController();
+	    	controller.search(band);
+	    	Stage currentStage =(Stage) currentScene.getWindow();
+	    	currentScene.setRoot(root);
+	    	currentStage.sizeToScene();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void openViewSingleBird(Scene currentScene,String band) {
 	    try {
 	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ViewSingleBird.fxml"));

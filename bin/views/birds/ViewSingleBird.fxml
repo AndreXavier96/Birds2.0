@@ -88,14 +88,17 @@
                                           <Label fx:id="LbBand" layoutX="41.0" prefHeight="17.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="350.0" prefHeight="17.0" prefWidth="148.0">
+                                    <AnchorPane fx:id="ApCouple" layoutX="350.0" prefHeight="17.0" prefWidth="337.0" visible="false">
                                        <children>
-                                          <Label text="Sexo:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <Label text="Acasalado com:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="LbSex" layoutX="32.0" prefHeight="17.0" prefWidth="117.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="0.0" />
+                                          <Label fx:id="LbCouple" layoutX="89.0" prefHeight="17.0" prefWidth="248.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor></Label>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane layoutY="17.0" prefHeight="17.0" prefWidth="216.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="27.0">
@@ -108,7 +111,8 @@
                                           <Label fx:id="LbSpecie" layoutX="45.0" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
-                                             </cursor></Label>
+                                             </cursor>
+                                          </Label>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane layoutX="220.0" layoutY="27.0" prefHeight="17.0" prefWidth="216.0">
@@ -160,7 +164,17 @@
                                           <Label fx:id="LbYear" layoutX="27.0" prefHeight="17.0" prefWidth="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="328.0" layoutY="54.0" prefHeight="17.0" prefWidth="216.0">
+                                    <AnchorPane layoutX="288.0" layoutY="54.0" prefHeight="17.0" prefWidth="148.0">
+                                       <children>
+                                          <Label text="Sexo:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="LbSex" layoutX="32.0" prefHeight="17.0" prefWidth="117.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="436.0" layoutY="54.0" prefHeight="17.0" prefWidth="216.0">
                                        <children>
                                           <Label text="Estado:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <font>
