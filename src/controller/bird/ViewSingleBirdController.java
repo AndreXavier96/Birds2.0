@@ -14,13 +14,14 @@ import constants.MyValues;
 import constants.PathsConstants;
 import controller.ConfirmationController;
 import controller.HiperligacoesController;
-import controller.cage.ViewSingleCageController;
 import domains.Bird;
+import domains.Couples;
 import domains.Historic;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -38,6 +39,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import repository.BirdsRepository;
+import repository.CouplesRepository;
 import repository.HistoricRepository;
 
 public class ViewSingleBirdController implements Initializable{
@@ -50,7 +52,7 @@ public class ViewSingleBirdController implements Initializable{
 	@FXML
 	private Label LabelAlert;
 	@FXML
-	private Label LbTitle,LbBand,LbYear,LbEntryDate,LbEntryType;
+	private Label LbTitle,LbBand,LbYear,LbEntryDate,LbEntryType,LbCouple;
 	@FXML
 	private Label LbSex,LbBuyPrice,LbSpecie,LbMutation,LbClassification;
 	@FXML
@@ -76,7 +78,7 @@ public class ViewSingleBirdController implements Initializable{
 	private ImageView ImGrandFatherMother,ImGrandMotherMother;
 	
 	@FXML
-	private AnchorPane ApBuyPrice, ApSellPrice;
+	private AnchorPane ApBuyPrice, ApSellPrice,ApCouple;
 	
 	@FXML
 	private TableView<Bird> TbDescendants;
@@ -92,6 +94,7 @@ public class ViewSingleBirdController implements Initializable{
 	
 	BirdsRepository birdsRepository=new BirdsRepository();
 	HistoricRepository historicRepository = new HistoricRepository();
+	CouplesRepository couplesRepository = new CouplesRepository();
 	
 	private HiperligacoesController hiperligacoes = new HiperligacoesController();
 	
@@ -112,6 +115,10 @@ public class ViewSingleBirdController implements Initializable{
 		LbCage.setOnMouseClicked(event -> {
 		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
 		    	hiperligacoes.openViewCage(LbTitle.getScene(),LbCage.getText());
+		});
+		LbCouple.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewSingleCouple(LbTitle.getScene(),LbCouple.getText());
 		});
 	}
 	
@@ -246,6 +253,25 @@ public class ViewSingleBirdController implements Initializable{
 	public void personalInfo(Bird b) {
 		LbTitle.setText("Bird "+b.getBand());
 		LbBand.setText(b.getBand());
+		try {
+			Couples c = couplesRepository.getCouplesWhereBird(b);
+			if (c != null) {
+				ApCouple.setVisible(true);
+				LbCouple.setStyle("-fx-underline:true;");
+				LbCouple.setCursor(Cursor.HAND);
+				if (c.getMale() == b)
+					LbCouple.setText(c.getFemale().getBand());
+				else
+					LbCouple.setText(c.getMale().getBand());
+			}else {
+				LbCouple.setStyle("-fx-underline:false;");
+				LbCouple.setCursor(Cursor.DEFAULT);
+				ApCouple.setVisible(false);
+				LbCouple.setText(MyValues.NO_COUPLE);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		LbSpecie.setText(b.getSpecies().getCommonName());
 		LbMutation.setText(b.getMutations().getName());
 		LbYear.setText(b.getYear().toString());
@@ -253,10 +279,6 @@ public class ViewSingleBirdController implements Initializable{
 		LbClassification.setText("TODO");
 		LbEntryDate.setText(b.getEntryDate().toString());
 		LbCage.setText(b.getCage().getCode());
-		LbCage.setOnMouseClicked(event -> {
-		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
-		    	openViewCage(LbCage.getText());
-		});
 		LbEntryType.setText(b.getEntryType());
 		LbState.setText(b.getState().getType());
 		if (LbEntryType.getText().equals(MyValues.COMPRA)) {
@@ -503,22 +525,5 @@ public class ViewSingleBirdController implements Initializable{
 	public void btnClose(ActionEvent event) {
 		Stage stage = (Stage) LabelAlert.getScene().getWindow();
 		stage.close();
-	}
-	
-	private void openViewCage(String code) {
-	    try {
-	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/cages/ViewSingleCage.fxml"));
-	    	Parent root = loader.load();
-	    	ViewSingleCageController viewSingleCageController = loader.getController();
-	    	viewSingleCageController.search(code);
-	    	Scene currentScene = LbTitle.getScene();
-	    	Stage currentStage =(Stage) currentScene.getWindow();
-	    	currentScene.setRoot(root);
-	    	currentStage.sizeToScene();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    } catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 }

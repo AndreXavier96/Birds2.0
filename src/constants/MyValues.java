@@ -92,6 +92,7 @@ public class MyValues {
 	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
 	public static final String CHANGE_SEX_SUCCESS = "Genero alterado com sucesso!";
 	public static final String ADD_COUPLE = "Passaro acasalado";
+	public static final String NO_COUPLE = "Passaro nao acasalado";
 	
 	public static final String DATE_FORMATE = "dd-MM-yyyy";
 	
