@@ -2,26 +2,31 @@ package controller.club;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import repository.BreederClubRepository;
 import repository.ClubRepository;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import constants.MyValues;
 import constants.PathsConstants;
 import controller.ConfirmationController;
+import controller.HiperligacoesController;
 import domains.Club;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
-public class ViewSingleClubController {
+public class ViewSingleClubController implements Initializable{
 	
 	@FXML
 	private Label LbTitle;
@@ -47,6 +52,16 @@ public class ViewSingleClubController {
 	private ClubRepository clubRepository = new ClubRepository();
 	private BreederClubRepository breederClubRepository= new BreederClubRepository();
 
+	private HiperligacoesController hiperligacoes = new HiperligacoesController();
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		LBFederation.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewFederation(LbTitle.getScene(),LBFederation.getText());
+		});
+	}
+	
 	@FXML
 	public void btnEdit(ActionEvent event) throws SQLException, IOException {
 		if (validator()&&validatorSearch()) {

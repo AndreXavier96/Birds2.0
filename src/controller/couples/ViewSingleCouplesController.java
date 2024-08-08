@@ -11,19 +11,16 @@ import javafx.stage.Stage;
 import repository.BirdsRepository;
 import repository.CouplesRepository;
 import repository.HistoricRepository;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-
 import constants.MyValues;
 import constants.PathsConstants;
 import controller.ConfirmationController;
-import controller.bird.ViewSingleBirdController;
-import controller.cage.ViewSingleCageController;
+import controller.HiperligacoesController;
 import domains.Bird;
 import domains.Couples;
 import domains.Historic;
@@ -44,6 +41,8 @@ public class ViewSingleCouplesController {
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	private HistoricRepository historicRepository = new HistoricRepository();
 
+	private HiperligacoesController hiperligacoes = new HiperligacoesController();
+	
 	@FXML
 	public void btnSeparar(ActionEvent event) throws IOException, SQLException {
 		if (validator()&&validatorSearch()) {
@@ -99,54 +98,22 @@ public class ViewSingleCouplesController {
 		LbMale.setText(c.getMale().getBand());
 		LbMale.setOnMouseClicked(event -> {
 		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-		        openViewSingleBird(LbMale.getText());
+		    	hiperligacoes.openViewSingleBird(LbTitle.getScene(),LbMale.getText());
 		    }
 		});
 		LbFemale.setText(c.getFemale().getBand());
 		LbFemale.setOnMouseClicked(event -> {
 		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
-		        openViewSingleBird(LbFemale.getText());
+		    	hiperligacoes.openViewSingleBird(LbTitle.getScene(),LbFemale.getText());
 		});
 		LbEstado.setText(c.getState());
 		LbCage.setText(c.getCage().getCode());
 		LbCage.setOnMouseClicked(event -> {
 		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
-		    	openViewCage(LbCage.getText());
+		    	hiperligacoes.openViewCage(LbTitle.getScene(),LbCage.getText());
 		});
 		IvMale.setImage(new Image(c.getMale().getImage()));
 		IvFemale.setImage(new Image(c.getFemale().getImage()));
-	}
-	
-	private void openViewSingleBird(String band) {
-	    try {
-	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ViewSingleBird.fxml"));
-	    	Parent root = loader.load();
-	    	ViewSingleBirdController viewSingleBirdController = loader.getController();
-	    	viewSingleBirdController.search(band);
-	    	Scene currentScene = LbTitle.getScene();
-	    	Stage currentStage =(Stage) currentScene.getWindow();
-	    	currentScene.setRoot(root);
-	    	currentStage.sizeToScene();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	}
-	
-	private void openViewCage(String code) {
-	    try {
-	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/cages/ViewSingleCage.fxml"));
-	    	Parent root = loader.load();
-	    	ViewSingleCageController viewSingleCageController = loader.getController();
-	    	viewSingleCageController.search(code);
-	    	Scene currentScene = LbTitle.getScene();
-	    	Stage currentStage =(Stage) currentScene.getWindow();
-	    	currentScene.setRoot(root);
-	    	currentStage.sizeToScene();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    } catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void clearAllFields() {
