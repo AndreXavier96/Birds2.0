@@ -3,12 +3,9 @@ package controller.couples;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
-import controller.cage.ViewSingleCageController;
 import domains.Couples;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -48,8 +45,8 @@ public class ViewAllCouplesController implements Initializable {
 					try {
 						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/couples/ViewSingleCouple.fxml"));
 						Parent root = loader.load();
-						ViewSingleCageController viewSingleCageController = loader.getController();
-						viewSingleCageController.search(selectedCouples.getMale().getBand());
+						ViewSingleCouplesController viewSingleCouplesController = loader.getController();
+						viewSingleCouplesController.search(selectedCouples.getMale().getBand());
 						Scene currentScene = tableID.getScene();
 						Stage currentStage =(Stage) currentScene.getWindow();
 						currentScene.setRoot(root);

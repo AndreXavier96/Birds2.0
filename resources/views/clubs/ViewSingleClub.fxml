@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.club.ViewSingleClubController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.club.ViewSingleClubController">
    <children>
       <AnchorPane layoutX="2.0" layoutY="2.0" prefHeight="7.0" prefWidth="600.0">
          <children>
@@ -63,7 +63,10 @@
             <AnchorPane layoutX="14.0" layoutY="17.0" prefHeight="17.0" prefWidth="572.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="27.0">
                <children>
                   <Label text="Federacao:" />
-                  <Label fx:id="LBFederation" layoutX="60.0" prefHeight="17.0" prefWidth="512.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label fx:id="LBFederation" layoutX="60.0" prefHeight="17.0" prefWidth="0.0" underline="true" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Label>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="14.0" layoutY="44.0" prefHeight="17.0" prefWidth="109.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="477.0" AnchorPane.topAnchor="54.0">

@@ -2,19 +2,24 @@ package controller.mutation;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import repository.BirdsRepository;
 import repository.MutationsRepository;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import constants.MyValues;
 import constants.PathsConstants;
 import controller.ConfirmationController;
+import controller.HiperligacoesController;
 import domains.Mutation;
 import javafx.event.ActionEvent;
 
@@ -22,7 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-public class ViewSingleMutationController {
+public class ViewSingleMutationController implements Initializable {
 	@FXML
 	private TextField TfSearch;
 	@FXML
@@ -31,6 +36,15 @@ public class ViewSingleMutationController {
 	private MutationsRepository mutationsRepository = new MutationsRepository();
 	private BirdsRepository birdsRepository = new BirdsRepository();
 
+	private HiperligacoesController hiperligacoes = new HiperligacoesController();
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		LbSpecie.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewSpecie(LbTitle.getScene(),LbSpecie.getText().substring(0, LbSpecie.getText().indexOf('(')));
+		});
+	}
 
 	@FXML
 	public void btnEdit(ActionEvent event) throws SQLException, IOException {

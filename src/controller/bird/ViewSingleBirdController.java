@@ -2,14 +2,18 @@ package controller.bird;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import constants.MyValues;
 import constants.PathsConstants;
 import controller.ConfirmationController;
+import controller.HiperligacoesController;
 import controller.cage.ViewSingleCageController;
 import domains.Bird;
 import domains.Historic;
@@ -36,7 +40,7 @@ import javafx.stage.Stage;
 import repository.BirdsRepository;
 import repository.HistoricRepository;
 
-public class ViewSingleBirdController{
+public class ViewSingleBirdController implements Initializable{
 	
 	@FXML
 	private TabPane TabPane;
@@ -88,6 +92,28 @@ public class ViewSingleBirdController{
 	
 	BirdsRepository birdsRepository=new BirdsRepository();
 	HistoricRepository historicRepository = new HistoricRepository();
+	
+	private HiperligacoesController hiperligacoes = new HiperligacoesController();
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		LbSpecie.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewSpecie(LbTitle.getScene(),LbSpecie.getText());
+		});
+		LbBreeder.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewBreeder(LbTitle.getScene(),LbBreeder.getText());
+		});
+		LbMutation.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewMutation(LbTitle.getScene(),LbMutation.getText());
+		});
+		LbCage.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewCage(LbTitle.getScene(),LbCage.getText());
+		});
+	}
 	
 	@FXML
 	private void btnChangeBirdState() throws IOException {
