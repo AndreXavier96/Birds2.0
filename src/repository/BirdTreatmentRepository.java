@@ -13,7 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 import constants.MyValues;
+import domains.Bird;
 import domains.BirdTreatment;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class BirdTreatmentRepository {
 	
@@ -98,6 +101,29 @@ public class BirdTreatmentRepository {
 		return birdTreatments;
 	}
 	
+	public ObservableList<BirdTreatment> getBirdTreatmentByBird(Bird b) {
+		ObservableList<BirdTreatment> birdTreatments = FXCollections.observableArrayList();
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,
+					MyValues.PASSWORD);
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM BIRD_TREATMENT WHERE BirdId=?");
+			pstmt.setInt(1, b.getId()); // Set the date parameter
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				BirdTreatment bt = new BirdTreatment();
+				bt.setBird(birdsRepository.getBirdWhereInt("id", rs.getInt("BirdId")));
+				bt.setTreatment(treatmentRepository.getTreatmentById(rs.getInt("TreatmentId")));
+				bt.setStart(dateFormat.parse(rs.getString("Start")));
+				bt.setFinish(dateFormat.parse(rs.getString("Finish")));
+				birdTreatments.add(bt);
+			}
+			CloseConnection(con, null, pstmt, rs);
+		} catch (SQLException | ParseException e) {
+			e.printStackTrace();
+		}
+		return birdTreatments;
+	}
 	
 	public void getAllBirdTreatments() {
         String sql = "SELECT * FROM BIRD_TREATMENT";

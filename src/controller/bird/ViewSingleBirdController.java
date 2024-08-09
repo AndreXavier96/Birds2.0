@@ -8,6 +8,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import constants.MyValues;
@@ -15,6 +17,7 @@ import constants.PathsConstants;
 import controller.ConfirmationController;
 import controller.HiperligacoesController;
 import domains.Bird;
+import domains.BirdTreatment;
 import domains.Couples;
 import domains.Historic;
 import javafx.beans.property.SimpleStringProperty;
@@ -38,9 +41,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.BirdTreatmentRepository;
 import repository.BirdsRepository;
 import repository.CouplesRepository;
 import repository.HistoricRepository;
+import repository.TreatmentRepository;
 
 public class ViewSingleBirdController implements Initializable{
 	
@@ -82,10 +87,14 @@ public class ViewSingleBirdController implements Initializable{
 	
 	@FXML
 	private TableView<Bird> TbDescendants;
-	
 	@FXML
 	private TableColumn<Bird, String> TcBand,TcFather,TcMother,TcState,
 		TcCage,TcBrooding,TcMutation,TcBreeder;
+	
+	@FXML
+	private TableView<BirdTreatment> TbTreatments;
+	@FXML
+	private TableColumn<BirdTreatment, String> TcTreatmentName,TcTreatmentDesc,TcTreatmentStart,TcTreatmentEnd;
 	
 	@FXML
 	private TableView<Historic> TableHistoric;
@@ -95,6 +104,8 @@ public class ViewSingleBirdController implements Initializable{
 	BirdsRepository birdsRepository=new BirdsRepository();
 	HistoricRepository historicRepository = new HistoricRepository();
 	CouplesRepository couplesRepository = new CouplesRepository();
+	TreatmentRepository treatmentRepository = new TreatmentRepository();
+	BirdTreatmentRepository birdTreatmentRepository = new BirdTreatmentRepository();
 	
 	private HiperligacoesController hiperligacoes = new HiperligacoesController();
 	
@@ -248,6 +259,7 @@ public class ViewSingleBirdController implements Initializable{
 		affiliation(b);
 		descendants(b);
 		historic(b);
+		treatments(b);
 	}
 	
 	public void personalInfo(Bird b) {
@@ -429,6 +441,24 @@ public class ViewSingleBirdController implements Initializable{
 				}
 			}
 		});
+	}
+	
+	public void treatments(Bird b) {
+		ObservableList<BirdTreatment> birdTreatments = birdTreatmentRepository.getBirdTreatmentByBird(b);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		TcTreatmentName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTreatment().getName()));
+		TcTreatmentDesc.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTreatment().getDescription()));
+		TcTreatmentStart.setCellValueFactory(cellData -> {
+		    Date startDate = cellData.getValue().getStart();
+		    String formattedStartDate = dateFormat.format(startDate);
+		    return new SimpleStringProperty(formattedStartDate);
+		});
+		TcTreatmentEnd.setCellValueFactory(cellData -> {
+		    Date finishDate = cellData.getValue().getFinish();
+		    String displayText = (finishDate != null) ? dateFormat.format(finishDate) : MyValues.EM_TRATAMENTO;
+		    return new SimpleStringProperty(displayText);
+		});
+		TbTreatments.setItems(birdTreatments);
 	}
 	
 	public void historic(Bird b) {
