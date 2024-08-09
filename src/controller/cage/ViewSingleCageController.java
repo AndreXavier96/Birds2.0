@@ -2,34 +2,69 @@ package controller.cage;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import repository.BirdsRepository;
 import repository.CageRepository;
-
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import constants.MyValues;
 import constants.PathsConstants;
 import controller.ConfirmationController;
+import controller.bird.ViewSingleBirdController;
+import domains.Bird;
 import domains.Cage;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
-public class ViewSingleCageController {
+public class ViewSingleCageController implements Initializable {
 	@FXML
 	private Label LbTitle, LabelAlert,LbCode, LbType,LbBirdNr;
 	@FXML
 	private TextField TfSearch;
+	@FXML
+	private TableView<Bird> TbBird;
+	@FXML
+	private TableColumn<Bird,String> TcBand,TcSpecie,TcMutation;
 	
 	private CageRepository cageRepository = new CageRepository();
 	private BirdsRepository birdsRepository = new BirdsRepository();
 
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		TbBird.setOnMouseClicked(event -> {
+			if(event.getClickCount()==2) {
+				Bird selectedBird = TbBird.getSelectionModel().getSelectedItem();
+				if (selectedBird!=null) {
+					try {
+						FXMLLoader loader =  new FXMLLoader(getClass().getResource("/views/birds/ViewSingleBird.fxml"));
+						Parent root = loader.load();
+						ViewSingleBirdController viewSingleBirdController = loader.getController();
+						viewSingleBirdController.search(selectedBird.getBand());
+						Scene currentScene = TbBird.getScene();
+						Stage currentStage =(Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+	}
+	
 	@FXML
 	public void btnDelete(ActionEvent event) throws IOException, SQLException {
 		if (validator()&&validatorSearch()) {
@@ -78,6 +113,11 @@ public class ViewSingleCageController {
 		LbCode.setText(c.getCode());
 		LbType.setText(c.getType());
 		LbBirdNr.setText(String.valueOf(birdsRepository.getBirdCountByCageId(c.getId())));
+		ObservableList<Bird> birdList = birdsRepository.getAllWhereInt("CageId", c.getId());
+		TcBand.setCellValueFactory(cellData-> new SimpleStringProperty(cellData.getValue().getBand()));
+		TcSpecie.setCellValueFactory(cellData-> new SimpleStringProperty(cellData.getValue().getSpecies().getCommonName()));
+		TcMutation.setCellValueFactory(cellData-> new SimpleStringProperty(cellData.getValue().getMutations().getName()));
+		TbBird.setItems(birdList);
 	}
 	
 	public void clearAllFields() {
