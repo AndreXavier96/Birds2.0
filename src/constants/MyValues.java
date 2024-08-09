@@ -109,4 +109,6 @@ public class MyValues {
 	public static final ObservableList<String> OVO_LIST = FXCollections.observableArrayList(PARTIDO,DESCONHECIDO2,ESVAZIAR,EM_DESENVOLVIMENTO,CHOCADO,MORTE_NO_OVO,AUSENCIA_DE);
 
 	public static final String FECUNDADO = "Fecundado";
+	
+	public static final String EM_TRATAMENTO = "Em Tratamento";
 }
