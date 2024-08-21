@@ -13,7 +13,7 @@ import domains.Bird;
 
 public class AdoptiveParentsRepository {
 	
-	private SpeciesRepository speciesRepository = new SpeciesRepository();
+	private BirdsRepository birdsRepository = new BirdsRepository();
 	
 	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
@@ -72,10 +72,7 @@ public class AdoptiveParentsRepository {
 	            pstmt.setInt(1, broodId);
 	            ResultSet rs = pstmt.executeQuery();
 	            while (rs.next()) {
-	            	Bird b = new Bird();
-	                b.setId(rs.getInt("id"));
-	                b.setBand(rs.getString("Band"));
-	                b.setSpecies(speciesRepository.getSpecieById(rs.getInt("Specie")));
+	            	Bird b = birdsRepository.getBirdWhereInt("id", rs.getInt("id"));
 	                birds.add(b);
 	            }
 	            CloseConnection(con, null, pstmt, rs);

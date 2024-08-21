@@ -1,14 +1,18 @@
 package controller.brood;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
+import controller.HiperligacoesController;
+import controller.bird.ViewSingleBirdController;
 import domains.Bird;
 import domains.Brood;
 import domains.Egg;
@@ -16,6 +20,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -39,6 +45,8 @@ public class ViewSingleBroodController implements Initializable {
 
 	private ObservableList<Egg> eggs = FXCollections.observableArrayList();
 	private ObservableList<Bird> adoptiveParents = FXCollections.observableArrayList();
+	
+	private HiperligacoesController hiperligacoes = new HiperligacoesController();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -64,105 +72,68 @@ public class ViewSingleBroodController implements Initializable {
 		colBand.setCellValueFactory(new PropertyValueFactory<>("Band"));
 		colSpecie.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getSpecies().getCommonName()));
 		TvAdoptive.setItems(adoptiveParents);
+		
+		LbMale.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewSingleBird(LbTitle.getScene(),LbMale.getText());
+		});
+		LbFemale.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewSingleBird(LbTitle.getScene(),LbFemale.getText());
+		});
+		LbCage.setOnMouseClicked(event -> {
+		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+		    	hiperligacoes.openViewCage(LbTitle.getScene(),LbCage.getText());
+		});
+//		TvEggs.setOnMouseClicked(event -> { TODO Eggs
+//			if (event.getClickCount() == 2) {
+//				Brood selectedBrood = tableID.getSelectionModel().getSelectedItem();
+//				if (selectedBrood != null) {
+//					try {
+//						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/ViewSingleBrood.fxml"));
+//						Parent root = loader.load();
+//						ViewSingleBroodController viewSingleBroodController = loader.getController();
+//						viewSingleBroodController.updateAllInfo(selectedBrood);
+//						Scene currentScene = tableID.getScene();
+//						Stage currentStage = (Stage) currentScene.getWindow();
+//						currentScene.setRoot(root);
+//						currentStage.sizeToScene();
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		});
+		
+		TvAdoptive.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				Bird selectedBird = TvAdoptive.getSelectionModel().getSelectedItem();
+				if (selectedBird != null) {
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ViewSingleBird.fxml"));
+						Parent root = loader.load();
+						ViewSingleBirdController viewSingleBirdController = loader.getController();
+						viewSingleBirdController.search(selectedBird.getBand());
+						Scene currentScene = TvAdoptive.getScene();
+						Stage currentStage = (Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
 	}
 
 	public void updateAllInfo(Brood b) throws SQLException {
 		LbMale.setText(b.getFather().getBand());
 		LbFemale.setText(b.getMother().getBand());
 		LbCage.setText(b.getCage().getCode());
-		TvEggs.setItems(FXCollections.observableList(b.getEggs()));//TODO empty
-		TvAdoptive.setItems(FXCollections.observableList(b.getAdoptiveParents()));//TODO empty
+		TvEggs.setItems(FXCollections.observableList(b.getEggs()));
+		TvAdoptive.setItems(FXCollections.observableList(b.getAdoptiveParents()));
 	}
-	
-//	private void openViewSingleBird(String band) {
-//	    try {
-//	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ViewSingleBird.fxml"));
-//	    	Parent root = loader.load();
-//	    	ViewSingleBirdController viewSingleBirdController = loader.getController();
-//	    	viewSingleBirdController.search(band);
-//	    	Scene currentScene = LbTitle.getScene();
-//	    	Stage currentStage =(Stage) currentScene.getWindow();
-//	    	currentScene.setRoot(root);
-//	    	currentStage.sizeToScene();
-//	    } catch (IOException e) {
-//	        e.printStackTrace();
-//	    }
-//	}
-	
-//	private void openViewCage(String code) {
-//	    try {
-//	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/cages/ViewSingleCage.fxml"));
-//	    	Parent root = loader.load();
-//	    	ViewSingleCageController viewSingleCageController = loader.getController();
-//	    	viewSingleCageController.search(code);
-//	    	Scene currentScene = LbTitle.getScene();
-//	    	Stage currentStage =(Stage) currentScene.getWindow();
-//	    	currentScene.setRoot(root);
-//	    	currentStage.sizeToScene();
-//	    } catch (IOException e) {
-//	        e.printStackTrace();
-//	    } catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
-
-//	public void clearAllFields() {
-//		LabelAlert.setText(null);
-//		LbTitle.setText("Gaiola XXXX");
-//		LbMale.setText(null);
-//		LbFemale.setText(null);
-//		LbCage.setText(null);
-//		eggs.clear();
-//		adoptiveParents.clear();
-//		TvEggs.setItems(eggs);
-//		TvAdoptive.setItems(adoptiveParents);
-//	}
-	
-//	public boolean validatorSearch(){
-//		boolean validate = false;
-//		if (LbMale.getText()==null) {
-//			LabelAlert.setStyle(MyValues.ALERT_ERROR);
-//			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-//			LabelAlert.setText("Casal tem de ser procurado.");
-//			validate=false;
-//		}else if (!TfSearch.getText().equalsIgnoreCase(LbMale.getText()) && !TfSearch.getText().equalsIgnoreCase(LbFemale.getText())) {
-//	        LabelAlert.setStyle(MyValues.ALERT_ERROR);
-//	        TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-//	        LabelAlert.setText("Casal tem de ser procurado.");
-//	        validate = false;
-//	    }else {
-//			TfSearch.setStyle(null);
-//			LabelAlert.setText("");
-//			validate=true;
-//		}
-//		return validate;
-//	}
-	
-//	public boolean validator() throws SQLException {
-//		boolean validate = false;
-//		Bird bird = birdsRepository.getBirdWhereString("Band", TfSearch.getText().toUpperCase());
-//		if (TfSearch.getText().length()==0) {
-//			LabelAlert.setStyle(MyValues.ALERT_ERROR);
-//			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-//			LabelAlert.setText("Pesquisa tem de ser preenchida");
-//			validate=false;
-//		}else if (bird==null) {
-//			LabelAlert.setStyle(MyValues.ALERT_ERROR);
-//			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-//			LabelAlert.setText("Passaro nao existe");
-//			validate=false;
-//		}else if (!broodRepository.checkIfBroodExists(bird.getId())) {
-//			LabelAlert.setStyle(MyValues.ALERT_ERROR);
-//			TfSearch.setStyle(MyValues.ERROR_BOX_STYLE);
-//			LabelAlert.setText("Passaro nao tem ninhada");
-//			validate=false;
-//		}else {
-//			TfSearch.setStyle(null);
-//			LabelAlert.setText("");
-//			validate=true;
-//		}
-//		return validate;
-//	}
 	
 	@FXML
 	public void btnClose(ActionEvent event) {

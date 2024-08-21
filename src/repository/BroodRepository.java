@@ -17,6 +17,7 @@ public class BroodRepository {
 	EggRepository eggRepository = new EggRepository();
 	AdoptiveParentsRepository adoptiveParentsRepository = new AdoptiveParentsRepository();
 	BirdsRepository birdsRepository = new BirdsRepository();
+	CageRepository cageRepository = new CageRepository();
 	
 	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
@@ -85,28 +86,29 @@ public class BroodRepository {
 		}
 		CloseConnection(con, null, pstmt, null);
 	}
-	
-//	public boolean checkIfBroodExists(Integer birdId) throws SQLException {
-//		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-//		PreparedStatement pstmt = null; 
-//		ResultSet rs = null;
-//		boolean exists = false;
-//		try {
-//			 String sql = "SELECT COUNT(*) FROM BROOD WHERE FatherId = ? OR MotherId = ?";
-//			 pstmt = con.prepareStatement(sql);
-//			 pstmt.setInt(1, birdId);
-//		     pstmt.setInt(2, birdId);
-//		     rs = pstmt.executeQuery();
-//		     if (rs.next()) {
-//		            int count = rs.getInt(1);
-//		            exists = count > 0;
-//		        }
-//		} finally {
-//			CloseConnection(con, null, pstmt, rs);
-//		}
-//		return exists;
-//	}
 
+//	public Brood getAllBroodById(int id) {
+//	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
+//	                MyValues.USER, MyValues.PASSWORD);
+//	        Statement stmt = con.createStatement();
+//	        String sql = "SELECT * FROM BROOD WHERE id="+id+";";
+//	        ResultSet rs = stmt.executeQuery(sql);
+//	        Brood b = new Brood();
+//	        while (rs.next()) {
+//	            System.out.println("Get Brood: " + rs.getInt(1));
+//	            b.setId(rs.getInt(1));
+//	            b.setStart(rs.getDate(2));
+//	            b.setFinish(rs.getDate(3));
+//	            b.setFather(birdsRepository.getBirdWhereInt("id", rs.getInt(4)));
+//	            b.setMother(birdsRepository.getBirdWhereInt("id", rs.getInt(5)));
+//	            b.setEggs(eggRepository.getEggsForBrood(rs.getInt(1)));
+//	            b.setAdoptiveParents(adoptiveParentsRepository.getAdoptiveParentsForBrood(rs.getInt(1)));
+//	            broods.add(b);
+//	        }
+//	        CloseConnection(con, stmt, null, rs);
+//	        return broods;
+//	}
+	
 	public ObservableList<Brood> getAllBroods() {
 	    try {
 	        System.out.println("Getting all Broods...");
@@ -124,6 +126,7 @@ public class BroodRepository {
 	            b.setFinish(rs.getDate(3));
 	            b.setFather(birdsRepository.getBirdWhereInt("id", rs.getInt(4)));
 	            b.setMother(birdsRepository.getBirdWhereInt("id", rs.getInt(5)));
+	            b.setCage(cageRepository.getCage(rs.getInt(6)));
 	            b.setEggs(eggRepository.getEggsForBrood(rs.getInt(1)));
 	            b.setAdoptiveParents(adoptiveParentsRepository.getAdoptiveParentsForBrood(rs.getInt(1)));
 	            broods.add(b);
