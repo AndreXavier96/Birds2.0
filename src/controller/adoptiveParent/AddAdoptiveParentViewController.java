@@ -1,29 +1,83 @@
 package controller.adoptiveParent;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import repository.BirdsRepository;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import constants.MyValues;
 import constants.Regex;
 import controller.brood.AddBroodViewController;
 import domains.Bird;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import repository.BirdsRepository;
 
-public class AddAdoptiveParentViewController {
+public class AddAdoptiveParentViewController implements Initializable {
 	@FXML
 	private Label LabelAlert,LBTitle;
 	@FXML
 	private TextField TfBand;
+	@FXML
+	private ListView<Bird> LvBand;
 	
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	private AddBroodViewController addBroodViewController;
 	
 	public void setAddBroodViewController(AddBroodViewController addBroodViewController) {
 		this.addBroodViewController = addBroodViewController;
+	}
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		EventHandler<MouseEvent> showAllEvent = event -> {
+            String searchTerm = TfBand.getText();
+			ObservableList<Bird> listBirds = filterBirds(searchTerm);
+			LvBand.setItems(listBirds);
+			LvBand.setVisible(true); // Show the ListView
+        };
+        TfBand.setOnMouseClicked(showAllEvent);
+        TfBand.textProperty().addListener((observable, oldValue, newValue) -> {
+            ObservableList<Bird> listBirds = filterBirds(newValue);
+            LvBand.setItems(listBirds);
+            LvBand.setVisible(true); // Show the ListView
+        });
+        LvBand.setCellFactory(param -> new ListCell<Bird>() {
+            @Override
+            protected void updateItem(Bird bird, boolean empty) {
+                super.updateItem(bird, empty);
+                if (empty || bird == null) {
+                    setText(null);
+                } else {
+                    setText(bird.getBand());
+                }
+            } //Show only Band as String
+        });
+        LvBand.getSelectionModel().selectedItemProperty().addListener((observableSelection, oldValueSelection, newValueSelection) -> {
+            if (newValueSelection != null) {
+            	TfBand.setText(newValueSelection.getBand());//Select Value
+            	LvBand.setVisible(false); // Hide the ListView after selecting a value
+            }
+        });
+	}
+	
+	private ObservableList<Bird> filterBirds(String searchTerm) {
+		ObservableList<Bird> listBirds = birdsRepository.getAllBirds();
+		 List<Bird> filteredBirds = listBirds.stream()
+		            .filter(bird -> bird.getBand().toLowerCase().contains(searchTerm.toLowerCase()))
+		            .collect(Collectors.toList());
+		return FXCollections.observableArrayList(filteredBirds);
 	}
 	
 	@FXML
