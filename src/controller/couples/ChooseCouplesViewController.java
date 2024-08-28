@@ -123,7 +123,7 @@ public class ChooseCouplesViewController implements Initializable{
 			Bird male = birdsRepository.getBirdWhereString("Band", TfMale.getText());
 			Couples couple = new Couples();
 			try {
-				couple = couplesRepository.getCouplesWhereBirdJunto(male);//TODO erro possivel, cada macho so pode ter uma femea no casal
+				couple = couplesRepository.getCouplesWhereBirdJunto(male);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

@@ -33,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import repository.BroodRepository;
@@ -56,6 +57,9 @@ public class AddBroodViewController implements Initializable {
 	private TableView<Bird> TvAdoptive;
 	@FXML
 	private TableColumn<Bird,String> colBand,colSpecie;
+	
+	@FXML
+	private AnchorPane ApAdoptiveParents;
 	
 	private BroodRepository broodRepository = new BroodRepository();
 	private CageRepository cageRepository = new CageRepository();
@@ -88,6 +92,12 @@ public class AddBroodViewController implements Initializable {
 		colBand.setCellValueFactory(new PropertyValueFactory<>("Band"));
 		colSpecie.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getSpecies().getCommonName()));
 		TvAdoptive.setItems(adoptiveParents);
+		TfMale.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == null || newValue.isEmpty())
+				ApAdoptiveParents.setDisable(true);
+			else
+				ApAdoptiveParents.setDisable(false);
+		});
 	}
 	
 	@FXML
@@ -134,7 +144,7 @@ public class AddBroodViewController implements Initializable {
 	        stage.setScene(scene);
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	        AddAdoptiveParentViewController addAdoptiveParentViewController = loader.getController();
-	        addAdoptiveParentViewController.setAddBroodViewController(this);
+	        addAdoptiveParentViewController.setAddBroodViewController(this,TfMale.getText(),TfFemale.getText());
 	        stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();

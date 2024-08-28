@@ -324,7 +324,7 @@ public class AddBirdViewController implements Initializable {
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
-		if (validator()) {//TODO validator TfFather and TfMother
+		if (validator()) {
 			Bird bird = new Bird();
 			bird.setBreeder(breederRepository.getBreederbyId(CbCriador.getValue().getId()));
 			bird.setYear(Integer.parseInt(TfAno.getText()));

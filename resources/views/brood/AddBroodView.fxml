@@ -83,7 +83,7 @@
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddEggs" text="+" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="10.0" layoutY="187.0" prefHeight="420.0" prefWidth="467.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="475.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+      <AnchorPane fx:id="ApAdoptiveParents" disable="true" layoutX="10.0" layoutY="187.0" prefHeight="420.0" prefWidth="467.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="475.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
          <children>
             <Label layoutX="45.0" layoutY="14.0" text="Pais Adotivos" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="14.0">
                <font>

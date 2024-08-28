@@ -154,44 +154,52 @@ public class BirdTreatmentViewController implements Initializable {
 	
 	@FXML
 	public void btnAdd(ActionEvent event) throws SQLException {
+		Integer countBirds=0;
 		if (validator()) {
 			Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+0"));
 			Date today = calendar.getTime();
+			Treatment t = treatmentRepository.getTreatmentById(CbTreatment.getValue().getId());
 			if (CbType.getValue().equals(MyValues.UNICO)) {
 				BirdTreatment bt = new BirdTreatment();
 				Bird b =birdsRepository.getBirdWhereString("Band", TfSearchSingle.getText());
 				bt.setBird(b);
-				bt.setTreatment(treatmentRepository.getTreatmentById(CbTreatment.getValue().getId()));
+				bt.setTreatment(t);
 				bt.setStart(today);
 				calendar.add(Calendar.DAY_OF_MONTH, bt.getTreatment().getDurationDays());
 				bt.setFinish(calendar.getTime());
 				birdTreatmentRepository.insert(bt);
+				countBirds++;
 			}else if (CbType.getValue().equals(MyValues.MULTIPLOS)) {
 				for (Bird b : assignedBirds) {
 					BirdTreatment bt = new BirdTreatment();
 					bt.setBird(b);
-					bt.setTreatment(treatmentRepository.getTreatmentById(CbTreatment.getValue().getId()));
+					bt.setTreatment(t);
 					bt.setStart(today);
 					calendar.add(Calendar.DAY_OF_MONTH, bt.getTreatment().getDurationDays());
 					bt.setFinish(calendar.getTime());
 					birdTreatmentRepository.insert(bt);
+					countBirds++;
 				}
 			}else if (CbType.getValue().equals(MyValues.TODOS)) {
 				for (Bird b : birdsRepository.getAllBirds()) {
 					BirdTreatment bt = new BirdTreatment();
 					bt.setBird(b);
-					bt.setTreatment(treatmentRepository.getTreatmentById(CbTreatment.getValue().getId()));
+					bt.setTreatment(t);
 					bt.setStart(today);
 					calendar.add(Calendar.DAY_OF_MONTH, bt.getTreatment().getDurationDays());
 					bt.setFinish(calendar.getTime());
 					birdTreatmentRepository.insert(bt);
+					countBirds++;
 				}
 			}
 			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
 			LabelAlert.setText("Tratamento iniciado!");
+			treatmentRepository.updateTreatmentStats(t, t.getTimesAplied()+1, t.getBirdsTreated()+countBirds);
 			clearAllFields();
 		}
 	}
+	
+	
 	
 	public boolean validator() throws SQLException {
 		boolean validate= false;

@@ -10,4 +10,6 @@ public class Treatment {
 	private Integer Frequency;
 	private String FrequencyType;
 	private Integer DurationDays;
+	private Integer TimesAplied;
+	private Integer BirdsTreated;
 }

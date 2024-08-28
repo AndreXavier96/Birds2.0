@@ -35,8 +35,13 @@ public class AddAdoptiveParentViewController implements Initializable {
 	private BirdsRepository birdsRepository = new BirdsRepository();
 	private AddBroodViewController addBroodViewController;
 	
-	public void setAddBroodViewController(AddBroodViewController addBroodViewController) {
+	private String fatherBand;
+	private String motherBand;
+	
+	public void setAddBroodViewController(AddBroodViewController addBroodViewController,String fatherBand, String motherBand) {
 		this.addBroodViewController = addBroodViewController;
+		this.fatherBand = fatherBand;
+		this.motherBand = motherBand;
 	}
 	
 	@Override
@@ -76,6 +81,8 @@ public class AddAdoptiveParentViewController implements Initializable {
 		ObservableList<Bird> listBirds = birdsRepository.getAllBirds();
 		 List<Bird> filteredBirds = listBirds.stream()
 		            .filter(bird -> bird.getBand().toLowerCase().contains(searchTerm.toLowerCase()))
+		            .filter(bird -> !bird.getBand().toLowerCase().equals(fatherBand.toLowerCase()))
+		            .filter(bird -> !bird.getBand().toLowerCase().equals(motherBand.toLowerCase()))
 		            .collect(Collectors.toList());
 		return FXCollections.observableArrayList(filteredBirds);
 	}
@@ -96,7 +103,7 @@ public class AddAdoptiveParentViewController implements Initializable {
 		stage.close();
 	}
 
-	public boolean validator() throws NumberFormatException, SQLException {//TODO pais adoptivos nao podem ser eles proprios
+	public boolean validator() throws NumberFormatException, SQLException {
 		boolean validated = false;
 		clearAllErrors();
 		LabelAlert.setStyle(MyValues.ALERT_ERROR);

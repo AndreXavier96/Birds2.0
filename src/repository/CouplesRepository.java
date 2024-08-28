@@ -145,7 +145,7 @@ public class CouplesRepository {
 		Couples c = new Couples();
 		BirdsRepository birdsRepository = new BirdsRepository();
 		CageRepository cageRepository = new CageRepository();
-		if (rs.next()) {//TODO verificar se e mais do que 1 resultado
+		if (rs.next()) {
 			c.setId(rs.getInt(1));
 			c.setMale(birdsRepository.getBirdWhereInt("id", rs.getInt(2)));
 			c.setFemale(birdsRepository.getBirdWhereInt("id", rs.getInt(3)));

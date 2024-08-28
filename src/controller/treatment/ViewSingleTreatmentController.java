@@ -21,11 +21,10 @@ public class ViewSingleTreatmentController {
 	@FXML
 	private Label LbTitle, LabelAlert,LbName, LbDesc, LbDuracao, LbFreq,LbId;
 	@FXML
-	private Label LbTimesAplied, LbBirdsTreated; //TODO
+	private Label LbTimesAplied, LbBirdsTreated;
 	
 	private TreatmentRepository treatmentRepository = new TreatmentRepository();
 	
-//	Treatment treatment = null;
 
 	@FXML
 	public void btnDelete(ActionEvent event) throws IOException, SQLException {
@@ -89,9 +88,8 @@ public class ViewSingleTreatmentController {
 		}else if (t.getFrequencyType().equals(MyValues.SEMANA)) {
 			LbFreq.setText("De "+t.getFrequency()+" em "+t.getFrequency()+" Semanas");
 		}
-		LbTimesAplied.setText(null);//TODO
-		LbBirdsTreated.setText(null);//TODO
-//		treatment=t;
+		LbTimesAplied.setText(t.getTimesAplied().toString());
+		LbBirdsTreated.setText(t.getBirdsTreated().toString());
 	}
 	
 	@FXML

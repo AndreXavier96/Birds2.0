@@ -37,6 +37,8 @@ public class TreatmentRepository {
 	                   + "Frequency INTEGER NOT NULL, "
 	                   + "FrequencyType  VARCHAR(255) NOT NULL, "
 	                   + "DurationDays INTEGER NOT NULL, "
+	                   + "TimesAplied INTEGER NOT NULL, "
+	                   + "BirdsTreated INTEGER NOT NULL, "
 	                   + "PRIMARY KEY (id))";
 	        stmt.executeUpdate(sql);
 	        System.out.println("Table TREATMENT Created.");
@@ -64,6 +66,8 @@ public class TreatmentRepository {
 				t.setFrequency(rs.getInt(4));
 				t.setFrequencyType(rs.getString(5));
 				t.setDurationDays(rs.getInt(6));
+				t.setTimesAplied(rs.getInt(7));
+				t.setBirdsTreated(rs.getInt(8));
 			}
 			CloseConnection(con, stmt,null, rs);
 			return t;
@@ -73,12 +77,12 @@ public class TreatmentRepository {
 		System.out.println("Insert Treatment in Database...");
 		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
-		String sql = "INSERT INTO TREATMENT(Name, Description, Frequency,FrequencyType,DurationDays) VALUES ('"
+		String sql = "INSERT INTO TREATMENT(Name, Description, Frequency,FrequencyType,DurationDays,TimesAplied,BirdsTreated) VALUES ('"
                 + treatment.getName().replace("'", "''") + "','" + treatment.getDescription().replace("'", "''") + "','"
-                + treatment.getFrequency()+ "','" + treatment.getFrequencyType().replace("'", "''")+ "','" +treatment.getDurationDays() + "')";
+                + treatment.getFrequency()+ "','" + treatment.getFrequencyType().replace("'", "''")+ "','" +treatment.getDurationDays()+ "','"+ 0 + "','"+ 0 + "')";
         int i = stmt.executeUpdate(sql);
 		CloseConnection(con, stmt,null, null);
-		System.out.println(i+" Record inserted");
+		System.out.println(i+" Record inserted: "+sql);
 	}
 	
 	public void updateTreatment(Treatment treatment) throws SQLException {
@@ -105,15 +109,25 @@ public class TreatmentRepository {
 		}
 	}
 	
-//	public boolean checkIfCodeExist(String code)  throws SQLException {
-//		Connection con = DriverManager.getConnection("jdbc:h2:"+"./Database/"+MyValues.DBNAME,MyValues.USER,MyValues.PASSWORD);
-//		Statement stmt = con.createStatement();
-//		String sql = "SELECT Code FROM CAGE WHERE Code='"+code.replace("'", "''")+"';";
-//		ResultSet rs = stmt.executeQuery(sql);
-//		boolean result = rs.next();
-//		CloseConnection(con, stmt,null, rs);
-//		return result;
-//	}
+	public void updateTreatmentStats(Treatment treatment,Integer timesAplied,Integer birdsTreated) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		PreparedStatement stmt = null;
+		try {
+			String sql = "UPDATE TREATMENT SET TimesAplied = ?, BirdsTreated = ? WHERE id = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, timesAplied);
+			stmt.setInt(2, birdsTreated);
+			stmt.setInt(3, treatment.getId());
+			int rowsAffected = stmt.executeUpdate();
+			if (rowsAffected > 0) {
+				System.out.println("Treatment stats updated successfully.");
+			} else {
+				System.out.println("Treatment not found.");
+			}
+		} finally {
+			CloseConnection(con, stmt, null, null);
+		}
+	}
 	
 	public ObservableList<Treatment> getAllTreatments() throws SQLException {
 			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
@@ -129,6 +143,8 @@ public class TreatmentRepository {
 				t.setFrequency(rs.getInt(4));
 				t.setFrequencyType(rs.getString(5));
 				t.setDurationDays(rs.getInt(6));
+				t.setTimesAplied(rs.getInt(7));
+				t.setBirdsTreated(rs.getInt(8));
 				treatments.add(t);
 			}
 			CloseConnection(con, stmt,null, rs);
@@ -150,22 +166,5 @@ public class TreatmentRepository {
 	        throw e;
 	    }
 	}
-	
-//	public Cage getCageByCode(String code) throws SQLException {
-//	    Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
-//	    Statement stmt = con.createStatement();
-//	    String sql = "SELECT * FROM CAGE WHERE Code='" + code.replace("'", "''") + "'";
-//	    ResultSet rs = stmt.executeQuery(sql);
-//	    Cage cage = null;
-//	    if (rs.next()) {
-//	        cage = new Cage();
-//	        cage.setId(rs.getInt("id"));
-//	        cage.setCode(rs.getString("Code"));
-//	        cage.setType(rs.getString("Type"));
-//	    }
-//	    CloseConnection(con, stmt, null, rs);
-//	    return cage;
-//	}
-
 
 }
