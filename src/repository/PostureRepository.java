@@ -43,7 +43,7 @@ public class PostureRepository {
 			System.out.println("FK from couple added to POSTURE.");
 	}
 	
-	public void DropTableBrooding(Connection con, Statement stmt) throws SQLException {
+	public void dropTableBrooding(Connection con, Statement stmt) throws SQLException {
 			System.out.println("Trying to drop POSTURE table...");
 			String sql = "DROP TABLE IF EXISTS POSTURE CASCADE";	
 			stmt.executeUpdate(sql);

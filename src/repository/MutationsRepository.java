@@ -47,7 +47,7 @@ public class MutationsRepository {
 		System.out.println("Table MUTATIONS Created.");
 	}
 	
-	public void DropTableMutations(Connection con, Statement stmt) throws SQLException {
+	public void dropTableMutations(Connection con, Statement stmt) throws SQLException {
 		System.out.println("Trying to drop MUTATIONS table...");
 		String sql = "DROP TABLE IF EXISTS MUTATIONS CASCADE";
 		stmt.executeUpdate(sql);

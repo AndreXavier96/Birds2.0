@@ -29,6 +29,8 @@ public class DataBaseOperationsRepository {
 	private EggRepository eggRepository = new EggRepository();
 	private BroodRepository broodRepository = new BroodRepository();
 	private AdoptiveParentsRepository adoptiveParentsRepository = new AdoptiveParentsRepository();
+	private ExibithionRepository exibithionRepository = new ExibithionRepository();
+	private AwardRepository awardRepository = new AwardRepository();
 	
 	public Connection GetConnection(String DbName,String user, String pass) {
 		try {
@@ -93,6 +95,8 @@ public class DataBaseOperationsRepository {
 		broodRepository.createTableBrood(con, stmt);
 		eggRepository.createTableEgg(con, stmt);
 		adoptiveParentsRepository.createTableAdoptiveParents(con, stmt);
+		exibithionRepository.createTableExibithion(con, stmt);
+		awardRepository.createTableAward(con, stmt);
 		CloseConnection(con, stmt, null);
 		System.out.println("All tables created!");
 	}
@@ -101,16 +105,16 @@ public class DataBaseOperationsRepository {
 		System.out.println("Trying to drop all tables...");
 		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 		Statement stmt = con.createStatement();
-		historicRepository.DropTableHistoric(con,stmt);
+		historicRepository.dropTableHistoric(con,stmt);
 		breederFederationRepository.dropTableBreederFederation(con,stmt);
 		breederClubRepository.dropTableBreederClub(con,stmt);
-		birdsRepository.DropTableBird(con,stmt);
-		speciesRepository.DropTableSpecies(con,stmt);
-		mutationsRepository.DropTableMutations(con,stmt);
-		cageRepository.DropTableCage(con,stmt);
-		breederRepository.DropTableBreeder(con,stmt);
-		couplesRepository.DropTableCouples(con,stmt);
-		postureRepository.DropTableBrooding(con,stmt);
+		birdsRepository.dropTableBird(con,stmt);
+		speciesRepository.dropTableSpecies(con,stmt);
+		mutationsRepository.dropTableMutations(con,stmt);
+		cageRepository.dropTableCage(con,stmt);
+		breederRepository.dropTableBreeder(con,stmt);
+		couplesRepository.dropTableCouples(con,stmt);
+		postureRepository.dropTableBrooding(con,stmt);
 		stateRepository.dropTableState(con,stmt);
 		clubRepository.dropTableClub(con,stmt);
 		federationRepository.dropTableFederation(con,stmt);
@@ -118,7 +122,9 @@ public class DataBaseOperationsRepository {
 		birdTreatmentRepository.dropTableBirdTreatment(con, stmt);
 		broodRepository.dropTableBrood(con, stmt);
 		eggRepository.dropTableEgg(con, stmt);
-		adoptiveParentsRepository.createTableAdoptiveParents(con, stmt);
+		adoptiveParentsRepository.dropTableAdoptiveParents(con, stmt);
+		exibithionRepository.dropTableExibithion(con, stmt);
+		awardRepository.dropTableAward(con, stmt);
 		CloseConnection(con, stmt, null);
 		System.out.println("All tables dropped!");
 	}

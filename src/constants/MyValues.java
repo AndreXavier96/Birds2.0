@@ -93,6 +93,8 @@ public class MyValues {
 	public static final String CHANGE_SEX_SUCCESS = "Genero alterado com sucesso!";
 	public static final String ADD_COUPLE = "Passaro acasalado";
 	public static final String NO_COUPLE = "Passaro nao acasalado";
+	public static final String CHANGE_IMAGE_SUCCESS = "Foto alterada com sucesso!";
+	public static final String AWARD_SUCCESS = "Passaro premiado com sucesso!";
 	
 	public static final String DATE_FORMATE = "dd-MM-yyyy";
 	
@@ -111,4 +113,7 @@ public class MyValues {
 	public static final String FECUNDADO = "Fecundado";
 	
 	public static final String EM_TRATAMENTO = "Em Tratamento";
+	
+	public static final String TITLE_SELECT_JULGAMENTO = "Selecionar Imagem Passaro";
+	
 }

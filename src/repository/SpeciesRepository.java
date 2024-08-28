@@ -41,7 +41,7 @@ public class SpeciesRepository {
 		System.out.println("Table SPECIES Created.");
 	}
 	
-	public void DropTableSpecies(Connection con, Statement stmt) throws SQLException {
+	public void dropTableSpecies(Connection con, Statement stmt) throws SQLException {
 		System.out.println("Trying to drop BIRDS table...");
 		String sql = "DROP TABLE IF EXISTS SPECIES CASCADE";
 		stmt.executeUpdate(sql);

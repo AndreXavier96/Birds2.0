@@ -51,7 +51,7 @@ public class BreederRepository {
 			System.out.println("Table BREEDER Created.");
 	}
 	
-	public void DropTableBreeder(Connection con, Statement stmt) throws SQLException {
+	public void dropTableBreeder(Connection con, Statement stmt) throws SQLException {
 			System.out.println("Trying to drop BREEDER table...");
 			String sql = "DROP TABLE IF EXISTS BREEDER CASCADE";	
 			stmt.executeUpdate(sql);

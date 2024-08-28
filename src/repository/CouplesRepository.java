@@ -176,7 +176,7 @@ public class CouplesRepository {
 	}
 
 	
-	public void DropTableCouples(Connection con,Statement stmt) throws SQLException  {
+	public void dropTableCouples(Connection con,Statement stmt) throws SQLException  {
 			System.out.println("Trying to drop COUPLES table...");
 			String sql = "DROP TABLE IF EXISTS COUPLES CASCADE";	
 			stmt.executeUpdate(sql);

@@ -653,7 +653,7 @@ public class AddBirdViewController implements Initializable {
 	public void btnUploadImage(ActionEvent event) {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(MyValues.TITLE_SELECT_IMAGE);
-			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files","*.png","*.jpg"));
+			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files","*.png","*.jpg","*.jpeg"));
 			File selectedFile = fileChooser.showOpenDialog(null);
 			if (selectedFile!=null) {
 				LbImagePath.setText(selectedFile.toPath().toString());

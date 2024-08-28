@@ -21,5 +21,7 @@ module Birds {
 	opens controller.mutation to javafx.fxml;
 	opens controller.species to javafx.fxml;
 	opens controller.treatment to javafx.fxml;
+	opens controller.award to javafx.fxml;
+	opens controller.exibithion to javafx.fxml;
 	opens domains to javafx.base;
 }

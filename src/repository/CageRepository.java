@@ -39,7 +39,7 @@ public class CageRepository {
 			System.out.println("Table CAGE Created.");
 	}
 	
-	public void DropTableCage(Connection con,Statement stmt) throws SQLException {
+	public void dropTableCage(Connection con,Statement stmt) throws SQLException {
 			System.out.println("Trying to drop MUTATIONS table...");
 			String sql = "DROP TABLE IF EXISTS CAGE CASCADE";	
 			stmt.executeUpdate(sql);

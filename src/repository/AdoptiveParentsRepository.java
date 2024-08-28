@@ -43,7 +43,7 @@ public class AdoptiveParentsRepository {
 	        System.out.println("Table ADOPTIVE_PARENTS Created.");
 	}
 	
-	public void dropTableBrood(Connection con, Statement stmt) throws SQLException {
+	public void dropTableAdoptiveParents(Connection con, Statement stmt) throws SQLException {
 	        System.out.println("Trying to drop ADOPTIVE_PARENTS table...");
 	        String sql = "DROP TABLE IF EXISTS ADOPTIVE_PARENTS CASCADE"; 
 	        stmt.executeUpdate(sql);
