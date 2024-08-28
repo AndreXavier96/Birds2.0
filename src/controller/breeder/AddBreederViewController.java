@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 import constants.MyValues;
 import constants.PathsConstants;
 import constants.Regex;
+import controller.GenericController;
 import controller.StamPromptDialogController;
 import domains.Breeder;
 import domains.Club;
@@ -102,7 +103,7 @@ public class AddBreederViewController implements Initializable {
 			LabelAlert.setStyle(null);
 			stamMap.clear();
 			Breeder b = new Breeder();
-			b.setName(replaceSpecialCharacters(TfName.getText().toLowerCase()));		
+			b.setName(GenericController.replacePortugueseSpecialCharacters(TfName.getText().toLowerCase()));		
 			if (TfPhone.getText().isBlank())
 				b.setCellphone(0);
 			else
@@ -143,7 +144,7 @@ public class AddBreederViewController implements Initializable {
 	public void btnEdit(ActionEvent event) throws NumberFormatException, SQLException {
 		if (validatorEdit(breeder)) {
 			stamMap.clear();
-			breeder.setName(replaceSpecialCharacters(TfName.getText().toLowerCase()));
+			breeder.setName(GenericController.replacePortugueseSpecialCharacters(TfName.getText().toLowerCase()));
 			if (TfPhone.getText().isBlank())
 				breeder.setCellphone(0);
 			else
@@ -259,18 +260,6 @@ public class AddBreederViewController implements Initializable {
 		}
 		return validated;
 	}
-	
-	private static String replaceSpecialCharacters(String input) {
-        // Replace specific special characters
-        String replacedString = input
-                .replace("á", "a")
-                .replace("é", "e")
-                .replace("í", "i")
-                .replace("ó", "o")
-                .replace("ú", "u")
-                .replace("ü", "u");
-        return replacedString;
-    }
 	
 	public boolean validatorEdit(Breeder b) throws NumberFormatException, SQLException {
 		boolean validated = false;

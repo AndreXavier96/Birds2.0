@@ -87,7 +87,7 @@ public class ChangeBirdPhotoController {
 			historicRepository.insertHistoric(new Historic(null,MyValues.CHANGE_IMAGE,date,"Nova imagem", bird));
 			Stage stage = (Stage) LbBand.getScene().getWindow();
 		    stage.close();
-			viewSingleBirdController.setSuccess(MyValues.CHANGE_STATE_SUCCESS, birdsRepository.getBirdWhereString("Band",LbBand.getText()));
+			viewSingleBirdController.setSuccess(MyValues.CHANGE_IMAGE_SUCCESS, birdsRepository.getBirdWhereString("Band",LbBand.getText()));
 		}
 	}
 	

@@ -44,7 +44,7 @@ public class HistoricRepository {
 		System.out.println("Table HISTORIC Created.");
 	}
 	
-	public void DropTableHistoric(Connection con, Statement stmt) throws SQLException {
+	public void dropTableHistoric(Connection con, Statement stmt) throws SQLException {
 		System.out.println("Trying to drop HISTORIC table...");
 		String sql = "DROP TABLE IF EXISTS HISTORIC CASCADE";
 		stmt.executeUpdate(sql);

@@ -16,6 +16,9 @@ import constants.MyValues;
 import constants.PathsConstants;
 import controller.ConfirmationController;
 import controller.HiperligacoesController;
+import controller.award.AddAwardViewController;
+import controller.award.ViewSingleAwardController;
+import domains.Award;
 import domains.Bird;
 import domains.BirdTreatment;
 import domains.Couples;
@@ -41,6 +44,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.AwardRepository;
 import repository.BirdTreatmentRepository;
 import repository.BirdsRepository;
 import repository.CouplesRepository;
@@ -101,11 +105,17 @@ public class ViewSingleBirdController implements Initializable{
 	@FXML
 	private TableColumn<Historic, String> colTitle,colDate,colObs;
 	
+	@FXML
+	private TableView<Award> TbAwards;
+	@FXML
+	private TableColumn<Award, String> TcExibithion,TcPontuation;
+	
 	BirdsRepository birdsRepository=new BirdsRepository();
 	HistoricRepository historicRepository = new HistoricRepository();
 	CouplesRepository couplesRepository = new CouplesRepository();
 	TreatmentRepository treatmentRepository = new TreatmentRepository();
 	BirdTreatmentRepository birdTreatmentRepository = new BirdTreatmentRepository();
+	AwardRepository awardRepository = new AwardRepository();
 	
 	private HiperligacoesController hiperligacoes = new HiperligacoesController();
 	
@@ -131,7 +141,46 @@ public class ViewSingleBirdController implements Initializable{
 		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
 		    	hiperligacoes.openViewSingleCouple(LbTitle.getScene(),LbCouple.getText());
 		});
+		
+		TbAwards.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				Award selectedAward = TbAwards.getSelectionModel().getSelectedItem();
+				if (selectedAward != null) {
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/awards/ViewSingleAward.fxml"));
+						Parent root = loader.load();
+						ViewSingleAwardController viewSingleAwardController = loader.getController();
+						viewSingleAwardController.search(selectedAward.getId());
+						Scene currentScene = TbAwards.getScene();
+						Stage currentStage = (Stage) currentScene.getWindow();
+						currentScene.setRoot(root);
+						currentStage.sizeToScene();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
+	
+	
+	@FXML
+	private void btnAward() throws IOException {
+		if (validator() && validatorSearch()) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/awards/AddAwardView.fxml"));
+			Parent root = loader.load();
+			AddAwardViewController addAwardViewController = loader.getController();
+			addAwardViewController.startValues(LbBand.getText());
+			addAwardViewController.setViewSingleBirdController(this);
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+		}
+	}
+	
 	
 	@FXML
 	private void btnChangeBirdState() throws IOException {
@@ -260,6 +309,7 @@ public class ViewSingleBirdController implements Initializable{
 		descendants(b);
 		historic(b);
 		treatments(b);
+		awards(b);
 	}
 	
 	public void personalInfo(Bird b) {
@@ -459,6 +509,13 @@ public class ViewSingleBirdController implements Initializable{
 		    return new SimpleStringProperty(displayText);
 		});
 		TbTreatments.setItems(birdTreatments);
+	}
+	
+	public void awards(Bird b) {
+		ObservableList<Award> birdAwards = awardRepository.getAwardsByBird(b);
+		TcExibithion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExibithion().getName()));
+		TcPontuation.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPontuation().toString()));
+		TbAwards.setItems(birdAwards);
 	}
 	
 	public void historic(Bird b) {
