@@ -148,7 +148,8 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Exposicoes">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Premiar Passaro" />
+                  <MenuItem mnemonicParsing="false" onAction="#btnAddExposithion" text="Adicionar Exposicao" />
+                  <MenuItem mnemonicParsing="false" onAction="#btnAddAward" text="Premiar Passaro" />
                </items>
             </Menu>
         </menus>

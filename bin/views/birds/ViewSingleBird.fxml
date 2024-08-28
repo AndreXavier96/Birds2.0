@@ -38,6 +38,11 @@
                       <MenuItem mnemonicParsing="false" onAction="#btnDeleteBird" text="Apagar Passaro" />
                     </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="Exposicoes">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#btnAward" text="Premiar Passaro" />
+                     </items>
+                  </Menu>
               </menus>
             </MenuBar>
          </children>
@@ -429,7 +434,15 @@
                   </Tab>
                   <Tab text="Concursos">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="TbAwards" prefHeight="200.0" prefWidth="710.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                  <TableColumn fx:id="TcExibithion" editable="false" prefWidth="845.0" resizable="false" text="Exposicao" />
+                                  <TableColumn fx:id="TcPontuation" editable="false" minWidth="0.0" prefWidth="405.0" resizable="false" text="Pontuacao" />
+                                </columns>
+                              </TableView>
+                           </children></AnchorPane>
                      </content>
                   </Tab>
                   <Tab text="Historico">
