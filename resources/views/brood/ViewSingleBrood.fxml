@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.brood.ViewSingleBroodController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="482.0" minWidth="857.0" prefHeight="575.0" prefWidth="989.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.brood.ViewSingleBroodController">
    <children>
       <AnchorPane layoutX="2.0" layoutY="2.0" prefHeight="7.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -28,7 +28,7 @@
       </AnchorPane>
       <AnchorPane layoutX="10.0" layoutY="32.0" prefHeight="92.0" prefWidth="546.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
-            <Label fx:id="LbTitle" alignment="CENTER" layoutY="9.0" text="Ninhada XXXX" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Label fx:id="LbTitle" alignment="CENTER" layoutY="9.0" text="Ninhada" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font size="23.0" />
                </font>
@@ -87,18 +87,19 @@
             </AnchorPane>
             <AnchorPane layoutX="14.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="106.0">
                <children>
-                  <AnchorPane prefHeight="261.0" prefWidth="410.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane prefHeight="261.0" prefWidth="543.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label text="Ovos" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="TvEggs" prefHeight="241.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                        <TableView fx:id="TvEggs" prefHeight="241.0" prefWidth="507.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="20.0">
                           <columns>
                             <TableColumn fx:id="colDate" prefWidth="95.0" text="Data Postura" />
                             <TableColumn fx:id="colType" prefWidth="144.0" text="Tipo" />
                               <TableColumn fx:id="colStatute" prefWidth="170.0" text="Estatuto" />
+                              <TableColumn fx:id="colDateEclo" prefWidth="95.0" text="Data Eclosao" />
                           </columns>
                         </TableView>
                      </children>

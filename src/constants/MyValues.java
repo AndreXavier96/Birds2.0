@@ -80,6 +80,7 @@ public class MyValues {
 	public static final String TITLE_EDIT_MUTATION = "Editar criador ";
 	public static final String TITLE_EDIT_BIRD = "Editar passaro ";
 	public static final String TITLE_EDIT_TREATMENT = "Editar tratamento ";
+	public static final String TITLE_EDIT_EGG = "Editar Ovo ";
 	
 	public static final String TITLE_SEPARATE_COUPLE = "Separar Casal ";
 	
@@ -108,9 +109,12 @@ public class MyValues {
 	public static final String CHOCADO = "Chocado";
 	public static final String MORTE_NO_OVO = "Morte No Ovo";
 	public static final String AUSENCIA_DE = "Ausencia De Embriao";
-	public static final ObservableList<String> OVO_LIST = FXCollections.observableArrayList(PARTIDO,DESCONHECIDO2,ESVAZIAR,EM_DESENVOLVIMENTO,CHOCADO,MORTE_NO_OVO,AUSENCIA_DE);
-
 	public static final String FECUNDADO = "Fecundado";
+	public static final String VAZIO = "Vazio";
+	public static final ObservableList<String> OVO_TYPE =  FXCollections.observableArrayList(FECUNDADO,DESCONHECIDO2,VAZIO);
+	public static final ObservableList<String> OVO_STATUTE =  FXCollections.observableArrayList(CHOCADO,EM_DESENVOLVIMENTO,PARTIDO,DESCONHECIDO2,MORTE_NO_OVO,AUSENCIA_DE);
+	
+	
 	
 	public static final String EM_TRATAMENTO = "Em Tratamento";
 	

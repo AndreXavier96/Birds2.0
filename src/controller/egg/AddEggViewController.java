@@ -37,7 +37,7 @@ public class AddEggViewController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		CbType.setItems(MyValues.OVO_LIST);
+		CbType.setItems(MyValues.OVO_STATUTE);
 	}
 	
 	public void setAddBroodViewController(AddBroodViewController addBroodViewController) {
@@ -72,8 +72,6 @@ public class AddEggViewController implements Initializable {
 			return new String[] { MyValues.DESCONHECIDO2, MyValues.DESCONHECIDO2 };
 		case MyValues.PARTIDO:
 			return new String[] { MyValues.DESCONHECIDO2, MyValues.PARTIDO };
-		case MyValues.ESVAZIAR:
-			return new String[] {MyValues.ESVAZIAR, MyValues.ESVAZIAR};
 		case MyValues.EM_DESENVOLVIMENTO:
 			return new String[] {MyValues.FECUNDADO, MyValues.EM_DESENVOLVIMENTO};
 		case MyValues.CHOCADO:
@@ -118,7 +116,7 @@ public class AddEggViewController implements Initializable {
 				LabelAlert.setText("Tipo tem de ser escolhido.");
 				validated = false;
 			} else {
-				TfQuantidade.setStyle(null);
+				CbType.setStyle(null);
 				LabelAlert.setText("");
 				validated = true;
 			}

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import controller.HiperligacoesController;
 import controller.bird.ViewSingleBirdController;
+import controller.egg.ViewSingleEggController;
 import domains.Bird;
 import domains.Brood;
 import domains.Egg;
@@ -36,7 +38,7 @@ public class ViewSingleBroodController implements Initializable {
 	@FXML
 	private TableColumn<Egg,String>colType,colStatute;
 	@FXML
-	private TableColumn<Egg,Date>colDate;
+	private TableColumn<Egg,Date>colDate, colDateEclo;
 	
 	@FXML
 	private TableView<Bird> TvAdoptive;
@@ -65,6 +67,23 @@ public class ViewSingleBroodController implements Initializable {
 				}
 			};
 		});
+		
+		colDateEclo.setCellValueFactory(new PropertyValueFactory<>("outbreakDate"));
+		colDateEclo.setCellFactory(column -> {
+			return new TableCell<Egg, Date>() {
+				private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				
+				@Override
+				protected void updateItem(Date item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item==null || empty)
+						setText(null);
+					else
+						setText(sdf.format(item));
+				}
+			};
+		});
+
 		colType.setCellValueFactory(new PropertyValueFactory<>("type"));
 		colStatute.setCellValueFactory(new PropertyValueFactory<>("statute"));
 		TvEggs.setItems(eggs);
@@ -85,25 +104,26 @@ public class ViewSingleBroodController implements Initializable {
 		    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
 		    	hiperligacoes.openViewCage(LbTitle.getScene(),LbCage.getText());
 		});
-//		TvEggs.setOnMouseClicked(event -> { TODO Eggs
-//			if (event.getClickCount() == 2) {
-//				Brood selectedBrood = tableID.getSelectionModel().getSelectedItem();
-//				if (selectedBrood != null) {
-//					try {
-//						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/ViewSingleBrood.fxml"));
-//						Parent root = loader.load();
-//						ViewSingleBroodController viewSingleBroodController = loader.getController();
-//						viewSingleBroodController.updateAllInfo(selectedBrood);
-//						Scene currentScene = tableID.getScene();
-//						Stage currentStage = (Stage) currentScene.getWindow();
-//						currentScene.setRoot(root);
-//						currentStage.sizeToScene();
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		});
+		TvEggs.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				Egg selectedEgg = TvEggs.getSelectionModel().getSelectedItem();
+				if (selectedEgg != null) {
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/egg/ViewSingleEgg.fxml"));
+						Parent root = loader.load();
+						ViewSingleEggController viewSingleEggController = loader.getController();
+						viewSingleEggController.startValues(selectedEgg);
+						
+						Stage stage = new Stage();
+						stage.setScene(new Scene(root));
+						stage.initModality(Modality.APPLICATION_MODAL);
+						stage.showAndWait();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 		
 		TvAdoptive.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {

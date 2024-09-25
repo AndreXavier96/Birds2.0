@@ -95,22 +95,30 @@ public class EggRepository {
 	        return eggs;
 	    }
 
-//	public State getStateById(int id) throws SQLException {
-//		State state = new State();
-//		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-//		Statement stmt = con.createStatement();
-//		ResultSet rs = stmt.executeQuery("SELECT * FROM STATE WHERE ID = " + id);
-//		if (rs.next()) {
-//			state.setId(rs.getInt(1));
-//			state.setType(rs.getString(2));
-//			state.setDate(rs.getString(3));
-//			state.setValor(rs.getDouble(4));
-//			state.setMotivo(rs.getString(5));
-//		}
-//		CloseConnection(con, stmt, null, rs);
-//		return state;
-//	}
-//
+	public Egg getEggById(int id) throws SQLException {
+		Egg e = new Egg();
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM EGG WHERE ID = " + id);
+		if (rs.next()) {
+			e.setId(rs.getInt("id"));
+			e.setPostureDate(new java.util.Date(rs.getDate("PostureDate").getTime()));
+			java.sql.Date verifiedFertilityDate = rs.getDate("VerifiedFertilityDate");
+	        if (verifiedFertilityDate != null) {
+	            e.setVerifiedFertilityDate(new java.util.Date(verifiedFertilityDate.getTime()));
+	        }
+	        java.sql.Date outbreakDate = rs.getDate("OutbreakDate");
+	        if (outbreakDate != null) {
+	            e.setOutbreakDate(new java.util.Date(outbreakDate.getTime()));
+	        }
+	        e.setType(rs.getString("Type"));
+            e.setStatute(rs.getString("Statute"));
+            e.setBird(null);//TODO
+		}
+		CloseConnection(con, stmt, null, rs);
+		return e;
+	}
+
 //	public void deleteState(int id) throws SQLException {
 //		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
 //		PreparedStatement stmt = con.prepareStatement("DELETE FROM STATE WHERE ID = ?");
@@ -119,21 +127,20 @@ public class EggRepository {
 //		CloseConnection(con, stmt, null, null);
 //	}
 
-//	public void updateState(State state) throws SQLException {
-//		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-//		PreparedStatement pstmt = con.prepareStatement("UPDATE STATE SET Type=?, Date=?, Valor=?, Motivo=? WHERE id=?");
-//		pstmt.setString(1, state.getType());
-//		pstmt.setString(2, state.getDate());
-//		if (state.getValor() == null)
-//			state.setValor((double) 0);
-//		pstmt.setDouble(3, state.getValor());
-//		if (state.getMotivo() == null)
-//			state.setMotivo("");
-//		pstmt.setString(4, state.getMotivo());
-//		pstmt.setInt(5, state.getId());
-//		int rowsAffected = pstmt.executeUpdate();
-//		CloseConnection(con, null, pstmt, null);
-//		System.out.println(rowsAffected + " row(s) updated.");
-//	}
+	public void updateEgg(Egg egg) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		PreparedStatement pstmt = con.prepareStatement("UPDATE EGG SET PostureDate=?, OutbreakDate=?, Type=?, Statute=? WHERE id=?");
+		pstmt.setDate(1, new java.sql.Date(egg.getPostureDate().getTime()));
+		if (egg.getOutbreakDate() != null)
+			pstmt.setDate(2, new java.sql.Date(egg.getOutbreakDate().getTime()));
+		else
+			pstmt.setNull(2, java.sql.Types.DATE);
+		pstmt.setString(3, egg.getType());
+		pstmt.setString(4, egg.getStatute());
+		pstmt.setInt(5, egg.getId());
+		int rowsAffected = pstmt.executeUpdate();
+		CloseConnection(con, null, pstmt, null);
+		System.out.println(rowsAffected + " egg row updated.");
+	}
 
 }
