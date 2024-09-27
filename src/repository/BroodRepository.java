@@ -117,4 +117,43 @@ public class BroodRepository {
 	    }
 	}
 	
+	public void updateBroodCage(int broodId, int newCageId) throws SQLException {
+	    Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    String sql = "UPDATE BROOD SET CageId = ? WHERE id = ?";
+	    PreparedStatement pstmt = con.prepareStatement(sql);
+
+	    pstmt.setInt(1, newCageId);
+	    pstmt.setInt(2, broodId);
+
+	    int rowsAffected = pstmt.executeUpdate();
+	    System.out.println(rowsAffected + " row(s) updated.");
+
+	    CloseConnection(con, null, pstmt, null);
+	}
+	
+	public Brood getBroodById(int broodId) throws SQLException {
+	    Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    String sql = "SELECT * FROM BROOD WHERE id = ?";
+	    PreparedStatement pstmt = con.prepareStatement(sql);
+	    pstmt.setInt(1, broodId);
+	    ResultSet rs = pstmt.executeQuery();
+	    Brood brood = null;
+	    if (rs.next()) {
+	        brood = new Brood();
+	        brood.setId(rs.getInt("id"));
+	        brood.setStart(rs.getDate("Start"));
+	        brood.setFinish(rs.getDate("Finish"));
+	        brood.setFather(birdsRepository.getBirdWhereInt("id", rs.getInt("FatherId")));
+	        brood.setMother(birdsRepository.getBirdWhereInt("id", rs.getInt("MotherId")));
+	        brood.setCage(cageRepository.getCage(rs.getInt("CageId")));
+	        brood.setEggs(eggRepository.getEggsForBrood(rs.getInt("id")));
+	        brood.setAdoptiveParents(adoptiveParentsRepository.getAdoptiveParentsForBrood(rs.getInt("id")));
+	    }
+	    CloseConnection(con, null, pstmt, rs);
+
+	    return brood;
+	}
+
+
+	
 }

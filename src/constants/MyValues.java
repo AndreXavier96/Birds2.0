@@ -91,6 +91,7 @@ public class MyValues {
 	public static final String CHANGE_IMAGE = "IMAGEM ALTERADA";
 	
 	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
+	public static final String CHANGE_CAGE_SUCCESS = "Gaiola alterada com sucesso!";
 	public static final String CHANGE_SEX_SUCCESS = "Genero alterado com sucesso!";
 	public static final String ADD_COUPLE = "Passaro acasalado";
 	public static final String NO_COUPLE = "Passaro nao acasalado";

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,10 +17,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import constants.MyValues;
+import constants.PathsConstants;
 import controller.HiperligacoesController;
 import controller.bird.ViewSingleBirdController;
 import controller.egg.AddEggViewController;
-import controller.egg.ViewSingleEggController;
 import domains.Bird;
 import domains.Brood;
 import domains.Egg;
@@ -182,5 +185,32 @@ public class ViewSingleBroodController implements Initializable {
 	public void btnClose(ActionEvent event) {
 		Stage stage = (Stage) LabelAlert.getScene().getWindow();
 		stage.close();
+	}
+	
+	@FXML
+	public void btnChangeCage(ActionEvent event) throws IOException, SQLException {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/ChangeBroodCage.fxml"));
+			Parent root = loader.load();
+			ChangeBroodCageController broodCageController = loader.getController();
+			broodCageController.startValues(brood);
+			broodCageController.setViewSingleBroodController(this);
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle(MyValues.TITLE_CHANGE_CAGE);
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+	}
+	
+	public void setSuccess(String msg, Brood brood) throws SQLException {
+		LabelAlert.setStyle(MyValues.ALERT_SUCESS);
+		LabelAlert.setText(msg);
+		updateAllInfo(brood);
+	}
+	
+	@FXML
+	public void btnChangeAdoptiveParents(ActionEvent event) {
+		
 	}
 }

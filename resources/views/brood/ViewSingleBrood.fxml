@@ -19,7 +19,13 @@
                <menus>
                   <Menu mnemonicParsing="false" text="Alterar">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="xx" />
+                        <MenuItem mnemonicParsing="false" onAction="#btnChangeCage" text="Gaiola" />
+                        <MenuItem mnemonicParsing="false" onAction="#btnChangeAdoptiveParents" text="Pais Adotivos" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Apagar">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#btnChangeAdoptiveParents" text="Ninhada" />
                      </items>
                   </Menu>
                </menus>

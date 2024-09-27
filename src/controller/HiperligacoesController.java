@@ -3,18 +3,26 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import constants.MyValues;
+import constants.PathsConstants;
+import controller.bird.ChangeBirdStateController;
 import controller.bird.ViewSingleBirdController;
 import controller.breeder.ViewSingleBreederController;
+import controller.brood.ChangeBroodCageController;
+import controller.brood.ViewSingleBroodController;
 import controller.cage.ViewSingleCageController;
 import controller.couples.ViewSingleCouplesController;
 import controller.egg.ViewSingleEggController;
 import controller.federation.ViewSingleFederationController;
 import controller.mutation.ViewSingleMutationController;
 import controller.species.ViewSingleSpecieController;
+import domains.Brood;
 import domains.Egg;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
