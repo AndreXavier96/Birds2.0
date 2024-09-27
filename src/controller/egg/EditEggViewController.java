@@ -34,7 +34,18 @@ public class EditEggViewController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		CbType.setItems(MyValues.OVO_TYPE);
-		CbStatute.setItems(MyValues.OVO_STATUTE);
+//		CbStatute.setItems(MyValues.OVO_STATUTE);
+		CbType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null) {
+				if (newValue.equals(MyValues.DESCONHECIDO2)) {
+					CbStatute.setItems(MyValues.OVO_STATUTE_DESCONHECIDO2);
+				} else if (newValue.equals(MyValues.FECUNDADO)) {
+					CbStatute.setItems(MyValues.OVO_STATUTE_FECUNDADO);
+				} else if (newValue.equals(MyValues.VAZIO)) {
+					CbStatute.setItems(MyValues.OVO_STATUTE_VAZIO);
+				}
+			}
+		});
 	}
 	
 	@FXML
@@ -106,7 +117,7 @@ public class EditEggViewController implements Initializable {
 				CbType.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Tipo tem de ser escolhido.");
 				validated = false;
-			}if (DtOutbrake.getValue()!=null && CbType.getValue()!=MyValues.FECUNDADO) {
+			}else if (DtOutbrake.getValue()!=null && CbType.getValue()!=MyValues.FECUNDADO) {
 				CbType.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Se existiu eclosao, ovo tem de estar fecundado");
 				validated = false;
@@ -122,7 +133,7 @@ public class EditEggViewController implements Initializable {
 				CbStatute.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Estado tem de ser escolhido.");
 				validated = false;
-			}if (DtOutbrake.getValue()!=null && CbStatute.getValue()!=MyValues.CHOCADO) {//TODO verificar estado chocado ou usar outro
+			}else if (DtOutbrake.getValue()!=null && CbStatute.getValue()!=MyValues.CHOCADO) {//TODO verificar estado chocado ou usar outro
 				CbStatute.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Se existiu eclosao, ovo tem de estar chocado");
 				validated = false;

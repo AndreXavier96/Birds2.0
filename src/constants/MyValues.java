@@ -113,7 +113,9 @@ public class MyValues {
 	public static final String VAZIO = "Vazio";
 	public static final ObservableList<String> OVO_TYPE =  FXCollections.observableArrayList(FECUNDADO,DESCONHECIDO2,VAZIO);
 	public static final ObservableList<String> OVO_STATUTE =  FXCollections.observableArrayList(CHOCADO,EM_DESENVOLVIMENTO,PARTIDO,DESCONHECIDO2,MORTE_NO_OVO,AUSENCIA_DE);
-	
+	public static final ObservableList<String> OVO_STATUTE_FECUNDADO = FXCollections.observableArrayList(CHOCADO,EM_DESENVOLVIMENTO,PARTIDO,MORTE_NO_OVO);
+	public static final ObservableList<String> OVO_STATUTE_DESCONHECIDO2 =  FXCollections.observableArrayList(DESCONHECIDO2);
+	public static final ObservableList<String> OVO_STATUTE_VAZIO = FXCollections.observableArrayList(PARTIDO,MORTE_NO_OVO,AUSENCIA_DE);
 	
 	
 	public static final String EM_TRATAMENTO = "Em Tratamento";
