@@ -7,13 +7,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.EggRepository;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import controller.HiperligacoesController;
 import controller.bird.ViewSingleBirdController;
+import controller.egg.AddEggViewController;
 import controller.egg.ViewSingleEggController;
 import domains.Bird;
 import domains.Brood;
@@ -48,7 +53,10 @@ public class ViewSingleBroodController implements Initializable {
 	private ObservableList<Egg> eggs = FXCollections.observableArrayList();
 	private ObservableList<Bird> adoptiveParents = FXCollections.observableArrayList();
 	
+	private Brood brood;
+	
 	private HiperligacoesController hiperligacoes = new HiperligacoesController();
+	private EggRepository eggRepository = new EggRepository();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -108,19 +116,7 @@ public class ViewSingleBroodController implements Initializable {
 			if (event.getClickCount() == 2) {
 				Egg selectedEgg = TvEggs.getSelectionModel().getSelectedItem();
 				if (selectedEgg != null) {
-					try {
-						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/egg/ViewSingleEgg.fxml"));
-						Parent root = loader.load();
-						ViewSingleEggController viewSingleEggController = loader.getController();
-						viewSingleEggController.startValues(selectedEgg);
-						
-						Stage stage = new Stage();
-						stage.setScene(new Scene(root));
-						stage.initModality(Modality.APPLICATION_MODAL);
-						stage.showAndWait();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					hiperligacoes.openViewEggFromSingleBrood(LbTitle.getScene(),selectedEgg);
 				}
 			}
 		});
@@ -129,7 +125,7 @@ public class ViewSingleBroodController implements Initializable {
 			if (event.getClickCount() == 2) {
 				Bird selectedBird = TvAdoptive.getSelectionModel().getSelectedItem();
 				if (selectedBird != null) {
-					try {
+					try {//TODO use hiperligacoes
 						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ViewSingleBird.fxml"));
 						Parent root = loader.load();
 						ViewSingleBirdController viewSingleBirdController = loader.getController();
@@ -148,11 +144,38 @@ public class ViewSingleBroodController implements Initializable {
 	}
 
 	public void updateAllInfo(Brood b) throws SQLException {
+		this.brood = b;
 		LbMale.setText(b.getFather().getBand());
 		LbFemale.setText(b.getMother().getBand());
 		LbCage.setText(b.getCage().getCode());
-		TvEggs.setItems(FXCollections.observableList(b.getEggs()));
+		ObservableList<Egg> eggsObservableList = FXCollections.observableList(b.getEggs());
+		TvEggs.setItems(eggsObservableList);
+		this.eggs = eggsObservableList;
 		TvAdoptive.setItems(FXCollections.observableList(b.getAdoptiveParents()));
+	}
+	
+	@FXML
+	public void btnAddEggs(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/egg/AddEggView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+	        stage.setScene(scene);
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        AddEggViewController addEggViewController = loader.getController();
+	        addEggViewController.setAddBroodViewController2(this);
+	        stage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addEggToListView(List<Egg> eggs) throws SQLException {
+		this.eggs.addAll(eggs);
+		this.brood.setEggs(eggs);
+		TvEggs.setItems(this.eggs);
+		eggRepository.insert(brood.getId(), eggs);
 	}
 	
 	@FXML

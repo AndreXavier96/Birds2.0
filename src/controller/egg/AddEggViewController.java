@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import constants.MyValues;
 import constants.Regex;
 import controller.brood.AddBroodViewController;
+import controller.brood.ViewSingleBroodController;
 import domains.Egg;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
@@ -34,6 +35,7 @@ public class AddEggViewController implements Initializable {
 	private ComboBox<String> CbType;
 
 	private AddBroodViewController addBroodViewController;
+	private ViewSingleBroodController viewSingleBroodController;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -42,6 +44,10 @@ public class AddEggViewController implements Initializable {
 	
 	public void setAddBroodViewController(AddBroodViewController addBroodViewController) {
 		this.addBroodViewController = addBroodViewController;
+	}
+	
+	public void setAddBroodViewController2(ViewSingleBroodController viewSingleBroodController) {
+		this.viewSingleBroodController = viewSingleBroodController;
 	}
 	
 	@FXML
@@ -61,7 +67,10 @@ public class AddEggViewController implements Initializable {
 			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
 			LabelAlert.setText("Ovos inseridos com sucesso!");
 			clearAllFields();
-			addBroodViewController.addEggToListView(eggsInserted);
+			if (addBroodViewController !=null)
+				addBroodViewController.addEggToListView(eggsInserted);
+			else
+				viewSingleBroodController.addEggToListView(eggsInserted);
 			btnClose(event);
 		}
 	}

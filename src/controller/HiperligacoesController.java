@@ -7,12 +7,15 @@ import controller.bird.ViewSingleBirdController;
 import controller.breeder.ViewSingleBreederController;
 import controller.cage.ViewSingleCageController;
 import controller.couples.ViewSingleCouplesController;
+import controller.egg.ViewSingleEggController;
 import controller.federation.ViewSingleFederationController;
 import controller.mutation.ViewSingleMutationController;
 import controller.species.ViewSingleSpecieController;
+import domains.Egg;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class HiperligacoesController {
@@ -125,5 +128,21 @@ public class HiperligacoesController {
 	    } catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void openViewEggFromSingleBrood(Scene currentScene,Egg egg) {
+	    try {
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/egg/ViewSingleEgg.fxml"));
+	    	Parent root = loader.load();
+	    	ViewSingleEggController controller = loader.getController();
+	    	controller.startValues(egg);
+	    	Stage currentStage =(Stage) currentScene.getWindow();
+	    	currentScene.setRoot(root);
+	    	currentStage.sizeToScene();
+	    	currentStage.initModality(Modality.APPLICATION_MODAL);
+	    	currentStage.showAndWait();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

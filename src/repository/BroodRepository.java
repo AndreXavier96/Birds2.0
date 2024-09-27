@@ -86,28 +86,6 @@ public class BroodRepository {
 		}
 		CloseConnection(con, null, pstmt, null);
 	}
-
-//	public Brood getAllBroodById(int id) {
-//	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
-//	                MyValues.USER, MyValues.PASSWORD);
-//	        Statement stmt = con.createStatement();
-//	        String sql = "SELECT * FROM BROOD WHERE id="+id+";";
-//	        ResultSet rs = stmt.executeQuery(sql);
-//	        Brood b = new Brood();
-//	        while (rs.next()) {
-//	            System.out.println("Get Brood: " + rs.getInt(1));
-//	            b.setId(rs.getInt(1));
-//	            b.setStart(rs.getDate(2));
-//	            b.setFinish(rs.getDate(3));
-//	            b.setFather(birdsRepository.getBirdWhereInt("id", rs.getInt(4)));
-//	            b.setMother(birdsRepository.getBirdWhereInt("id", rs.getInt(5)));
-//	            b.setEggs(eggRepository.getEggsForBrood(rs.getInt(1)));
-//	            b.setAdoptiveParents(adoptiveParentsRepository.getAdoptiveParentsForBrood(rs.getInt(1)));
-//	            broods.add(b);
-//	        }
-//	        CloseConnection(con, stmt, null, rs);
-//	        return broods;
-//	}
 	
 	public ObservableList<Brood> getAllBroods() {
 	    try {

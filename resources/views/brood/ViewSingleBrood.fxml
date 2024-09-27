@@ -102,6 +102,7 @@
                               <TableColumn fx:id="colDateEclo" prefWidth="95.0" text="Data Eclosao" />
                           </columns>
                         </TableView>
+                        <Button layoutX="37.0" layoutY="-4.0" mnemonicParsing="false" onAction="#btnAddEggs" prefHeight="17.0" prefWidth="25.0" text="+" AnchorPane.leftAnchor="37.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="261.0" prefWidth="410.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
