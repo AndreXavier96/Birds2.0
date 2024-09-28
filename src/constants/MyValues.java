@@ -62,6 +62,7 @@ public class MyValues {
 	public static final String TITLE_CHANGE_STATE = "Alterar Estado";
 	public static final String TITLE_CHANGE_CAGE = "Alterar Gaiola";
 	public static final String TITLE_CHANGE_IMAGE = "Alterar Foto";
+	public static final String TITLE_CHANGE_ADOPTIVES = "Alterar Pais Adotivos";
 	
 	public static final String TITLE_DELETE_CLUB = "Apagar Clube ";
 	public static final String TITLE_DELETE_FEDERATION = "Apagar Federacao ";
@@ -90,6 +91,7 @@ public class MyValues {
 	public static final String CHANGE_SEX = "SEXAGEM ALTERADA";
 	public static final String CHANGE_IMAGE = "IMAGEM ALTERADA";
 	
+	public static final String CHANGE_ADOPTIVE_SUCCESS = "Pais adotivos alterados com sucesso!";
 	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
 	public static final String CHANGE_CAGE_SUCCESS = "Gaiola alterada com sucesso!";
 	public static final String CHANGE_SEX_SUCCESS = "Genero alterado com sucesso!";

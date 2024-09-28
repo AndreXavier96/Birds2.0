@@ -48,7 +48,7 @@ public class ChangeBroodCageController {
 			broodRepository.updateBroodCage(brood.getId(), CbCage.getValue().getId());
 		    Stage stage = (Stage) CbCage.getScene().getWindow();
 		    stage.close();
-		    viewSingleBroodController.setSuccess(MyValues.CHANGE_STATE_SUCCESS, broodRepository.getBroodById(brood.getId()));
+		    viewSingleBroodController.setSuccess(MyValues.CHANGE_CAGE_SUCCESS, broodRepository.getBroodById(brood.getId()));
 		}
 	}
 	

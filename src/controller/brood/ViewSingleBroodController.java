@@ -203,14 +203,25 @@ public class ViewSingleBroodController implements Initializable {
 			stage.showAndWait();
 	}
 	
+	@FXML
+	public void btnChangeAdoptiveParents(ActionEvent event) throws IOException, SQLException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/ChangeBroodAdoptiveParents.fxml"));
+		Parent root = loader.load();
+		ChangeBroodAdoptiveParentsController controller = loader.getController();
+		controller.startValues(brood);
+		controller.setViewSingleBroodController(this);
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setTitle(MyValues.TITLE_CHANGE_ADOPTIVES);
+		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+		stage.setScene(scene);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.showAndWait();
+	}
+	
 	public void setSuccess(String msg, Brood brood) throws SQLException {
 		LabelAlert.setStyle(MyValues.ALERT_SUCESS);
 		LabelAlert.setText(msg);
 		updateAllInfo(brood);
-	}
-	
-	@FXML
-	public void btnChangeAdoptiveParents(ActionEvent event) {
-		
 	}
 }
