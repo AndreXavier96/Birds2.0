@@ -104,8 +104,9 @@
                           <columns>
                             <TableColumn fx:id="colDate" prefWidth="95.0" text="Data Postura" />
                             <TableColumn fx:id="colType" prefWidth="144.0" text="Tipo" />
-                              <TableColumn fx:id="colStatute" prefWidth="170.0" text="Estatuto" />
-                              <TableColumn fx:id="colDateEclo" prefWidth="95.0" text="Data Eclosao" />
+                              <TableColumn fx:id="colStatute" prefWidth="137.0" text="Estatuto" />
+                              <TableColumn fx:id="colDateEclo" prefWidth="92.0" text="Data Eclosao" />
+                              <TableColumn fx:id="colDelete" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" resizable="false" text="Apagar" />
                           </columns>
                         </TableView>
                         <Button layoutX="37.0" layoutY="-4.0" mnemonicParsing="false" onAction="#btnAddEggs" prefHeight="17.0" prefWidth="25.0" text="+" AnchorPane.leftAnchor="37.0" />

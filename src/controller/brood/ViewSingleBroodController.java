@@ -32,6 +32,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -47,6 +48,8 @@ public class ViewSingleBroodController implements Initializable {
 	private TableColumn<Egg,String>colType,colStatute;
 	@FXML
 	private TableColumn<Egg,Date>colDate, colDateEclo;
+	@FXML
+	private TableColumn<Egg,String> colDelete;
 	
 	@FXML
 	private TableView<Bird> TvAdoptive;
@@ -144,6 +147,40 @@ public class ViewSingleBroodController implements Initializable {
 			}
 		});
 		
+		// Set up the delete column with buttons
+	    colDelete.setCellValueFactory(new PropertyValueFactory<>("deleteButton"));
+	    colDelete.setCellFactory(column -> new TableCell<Egg, String>() {
+	        private final Button deleteButton = new Button("X");
+	        @Override
+	        protected void updateItem(String item, boolean empty) {
+	            super.updateItem(item, empty);
+	            if (empty) {
+	                setGraphic(null);
+	            } else {
+	                setGraphic(deleteButton);
+	                deleteButton.setOnAction(event -> {
+	                    Egg selectedEgg = getTableView().getItems().get(getIndex());
+	                    try {
+	                        deleteEgg(selectedEgg);
+	                    } catch (SQLException e) {
+	                        e.printStackTrace();
+	                    }
+	                });
+	            }
+	        }
+	    });
+
+	}   
+	
+	private void deleteEgg(Egg egg) throws SQLException {
+		try {
+		    eggRepository.deleteEgg(egg.getId());
+		    eggs.remove(egg);
+		    TvEggs.setItems(eggs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	    TvEggs.refresh();
 	}
 
 	public void updateAllInfo(Brood b) throws SQLException {

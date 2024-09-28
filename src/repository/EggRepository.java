@@ -119,13 +119,14 @@ public class EggRepository {
 		return e;
 	}
 
-//	public void deleteState(int id) throws SQLException {
-//		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-//		PreparedStatement stmt = con.prepareStatement("DELETE FROM STATE WHERE ID = ?");
-//		stmt.setInt(1, id);
-//		stmt.executeUpdate();
-//		CloseConnection(con, stmt, null, null);
-//	}
+	public void deleteEgg(int id) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+	    PreparedStatement pstmt = con.prepareStatement("DELETE FROM EGG WHERE id = ?");
+        pstmt.setInt(1, id);
+        pstmt.executeUpdate();
+        CloseConnection(con, null, pstmt, null);
+        System.out.println("egg deleted");
+	}
 
 	public void updateEgg(Egg egg) throws SQLException {
 		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
