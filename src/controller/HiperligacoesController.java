@@ -130,19 +130,19 @@ public class HiperligacoesController {
 		}
 	}
 	
-	public void openViewEggFromSingleBrood(Scene currentScene,Egg egg) {
+	public void openViewEggFromSingleBrood(Scene currentScene, Egg egg) {
 	    try {
-	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/egg/ViewSingleEgg.fxml"));
-	    	Parent root = loader.load();
-	    	ViewSingleEggController controller = loader.getController();
-	    	controller.startValues(egg);
-	    	Stage currentStage =(Stage) currentScene.getWindow();
-	    	currentScene.setRoot(root);
-	    	currentStage.sizeToScene();
-	    	currentStage.initModality(Modality.APPLICATION_MODAL);
-	    	currentStage.showAndWait();
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/egg/ViewSingleEgg.fxml"));
+	        Parent root = loader.load();
+	        ViewSingleEggController controller = loader.getController();
+	        controller.startValues(egg);
+	        Stage newStage = new Stage();
+	        newStage.setScene(new Scene(root));
+	        newStage.initModality(Modality.APPLICATION_MODAL);
+	        newStage.showAndWait();
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
 	}
+
 }
