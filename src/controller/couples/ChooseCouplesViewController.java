@@ -41,7 +41,7 @@ public class ChooseCouplesViewController implements Initializable{
 	
 	private AddBroodViewController addBroodViewController;
 	
-	public void setAddBroodViewController(AddBroodViewController addBroodViewController) {
+	public void setAddBroodViewControllerCouples(AddBroodViewController addBroodViewController) {
 		this.addBroodViewController = addBroodViewController;
 	}
 	

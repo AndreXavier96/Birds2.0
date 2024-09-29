@@ -110,7 +110,7 @@ public class AddBroodViewController implements Initializable {
 	        stage.setScene(scene);
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	        ChooseCouplesViewController chooseCouplesViewController = loader.getController();
-	        chooseCouplesViewController.setAddBroodViewController(this);
+	        chooseCouplesViewController.setAddBroodViewControllerCouples(this);
 	        stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -127,7 +127,7 @@ public class AddBroodViewController implements Initializable {
 	        stage.setScene(scene);
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	        AddEggViewController addEggViewController = loader.getController();
-	        addEggViewController.setAddBroodViewController(this);
+	        addEggViewController.setAddBroodViewController(this,DtStart.getValue(),DtFinish.getValue());
 	        stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -144,7 +144,7 @@ public class AddBroodViewController implements Initializable {
 	        stage.setScene(scene);
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	        AddAdoptiveParentViewController addAdoptiveParentViewController = loader.getController();
-	        addAdoptiveParentViewController.setAddBroodViewController(this,TfMale.getText(),TfFemale.getText());
+	        addAdoptiveParentViewController.setAdoptiveParentsViewController(this,TfMale.getText(),TfFemale.getText());
 	        stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();

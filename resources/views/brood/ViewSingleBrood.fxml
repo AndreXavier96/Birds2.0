@@ -42,6 +42,22 @@
             <Label fx:id="LabelAlert" alignment="CENTER" layoutY="42.0" prefHeight="17.0" prefWidth="1267.0" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0" />
          </children>
       </AnchorPane>
+      <AnchorPane layoutY="123.0" prefHeight="41.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="123.0">
+         <children>
+            <AnchorPane prefHeight="17.0" prefWidth="229.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+               <children>
+                  <Label text="Data Inicio ninhada:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label fx:id="LbDateStart" layoutX="112.0" prefHeight="17.0" prefWidth="60.0" AnchorPane.leftAnchor="112.0" AnchorPane.rightAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="243.0" layoutY="12.0" prefHeight="17.0" prefWidth="229.0" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="14.0">
+               <children>
+                  <Label text="Data Fim ninhada:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label fx:id="LbDateFinish" layoutX="99.0" prefHeight="17.0" prefWidth="130.0" AnchorPane.leftAnchor="99.0" AnchorPane.rightAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
       <AnchorPane layoutX="-14.0" layoutY="137.0" prefHeight="371.0" prefWidth="572.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <children>
             <AnchorPane prefHeight="85.0" prefWidth="922.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

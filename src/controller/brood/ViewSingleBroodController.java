@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,7 +44,7 @@ import javafx.scene.control.TableView;
 
 public class ViewSingleBroodController implements Initializable {
 	@FXML
-	private Label LbTitle, LabelAlert,LbMale, LbFemale,LbCage;
+	private Label LbTitle, LabelAlert,LbMale, LbFemale,LbCage,LbDateFinish,LbDateStart;
 	
 	@FXML
 	private TableView<Egg> TvEggs;
@@ -65,6 +68,8 @@ public class ViewSingleBroodController implements Initializable {
 	private HiperligacoesController hiperligacoes = new HiperligacoesController();
 	private EggRepository eggRepository = new EggRepository();
 	private BroodRepository broodRepository = new BroodRepository();
+	
+	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -202,6 +207,11 @@ public class ViewSingleBroodController implements Initializable {
 
 	public void updateAllInfo(Brood b) throws SQLException {
 		this.brood = b;
+		LbDateStart.setText(formatter.format(brood.getStart()));
+		if (b.getFinish() != null) 
+		    LbDateFinish.setText(formatter.format(brood.getFinish()));
+		else 
+		    LbDateFinish.setText("N/A");
 		LbMale.setText(b.getFather().getBand());
 		LbFemale.setText(b.getMother().getBand());
 		LbCage.setText(b.getCage().getCode());
@@ -221,7 +231,7 @@ public class ViewSingleBroodController implements Initializable {
 	        stage.setScene(scene);
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	        AddEggViewController addEggViewController = loader.getController();
-	        addEggViewController.setAddBroodViewController2(this);
+	        addEggViewController.setAddBroodViewController2(this,brood.getStart(),brood.getFinish());
 	        stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
