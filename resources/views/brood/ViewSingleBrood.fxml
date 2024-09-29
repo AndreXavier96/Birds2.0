@@ -21,6 +21,7 @@
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#btnChangeCage" text="Gaiola" />
                         <MenuItem mnemonicParsing="false" onAction="#btnChangeAdoptiveParents" text="Pais Adotivos" />
+                        <MenuItem mnemonicParsing="false" onAction="#btnChangeEndBrood" text="Data Fim Ninhada" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Apagar">

@@ -84,6 +84,7 @@ public class MyValues {
 	public static final String TITLE_EDIT_BIRD = "Editar passaro ";
 	public static final String TITLE_EDIT_TREATMENT = "Editar tratamento ";
 	public static final String TITLE_EDIT_EGG = "Editar Ovo ";
+	public static final String TITLE_EDIT_END_DATE = "Editar Data Fim Ninhada";
 	
 	public static final String TITLE_SEPARATE_COUPLE = "Separar Casal ";
 	
@@ -96,6 +97,7 @@ public class MyValues {
 	public static final String CHANGE_ADOPTIVE_SUCCESS = "Pais adotivos alterados com sucesso!";
 	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
 	public static final String CHANGE_CAGE_SUCCESS = "Gaiola alterada com sucesso!";
+	public static final String CHANGE_END_DATE_SUCCESS = "Data fim Ninhada alterada com sucesso!";
 	public static final String CHANGE_SEX_SUCCESS = "Genero alterado com sucesso!";
 	public static final String ADD_COUPLE = "Passaro acasalado";
 	public static final String NO_COUPLE = "Passaro nao acasalado";

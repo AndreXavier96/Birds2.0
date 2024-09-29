@@ -307,6 +307,22 @@ public class ViewSingleBroodController implements Initializable {
 		
 	}
 	
+	@FXML
+	public void btnChangeEndBrood(ActionEvent event) throws IOException, SQLException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/ChangeBroodEndDate.fxml"));
+		Parent root = loader.load();
+		ChangeBroodEndDateController controller = loader.getController();
+		controller.setViewSingleBroodController(this, brood);
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setTitle(MyValues.TITLE_EDIT_END_DATE);
+		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+		stage.setScene(scene);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.showAndWait();
+
+	}
+	
 	public void setSuccess(String msg, Brood brood) throws SQLException {
 		LabelAlert.setStyle(MyValues.ALERT_SUCESS);
 		LabelAlert.setText(msg);

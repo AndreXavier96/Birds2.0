@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import constants.MyValues;
 import domains.Brood;
@@ -166,5 +167,18 @@ public class BroodRepository {
         }
 	}
 
+	public void updateFinishDateBrood(Integer id, Date date) {
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        PreparedStatement pstmt = con.prepareStatement("UPDATE BROOD SET Finish = ? WHERE id=?");
+	        pstmt.setDate(1, new java.sql.Date(date.getTime()));
+	        pstmt.setInt(2, id);
+	        pstmt.executeUpdate();
+	        CloseConnection(con, null, pstmt, null);
+	        System.out.println("Brood with id " + id + " updated,data fim para valor: "+date+" .");
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 }
