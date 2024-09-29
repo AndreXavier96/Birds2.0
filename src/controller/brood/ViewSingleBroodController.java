@@ -8,8 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.BroodRepository;
 import repository.EggRepository;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import constants.MyValues;
 import constants.PathsConstants;
 import controller.ConfirmationController;
@@ -35,6 +34,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -64,6 +64,7 @@ public class ViewSingleBroodController implements Initializable {
 	
 	private HiperligacoesController hiperligacoes = new HiperligacoesController();
 	private EggRepository eggRepository = new EggRepository();
+	private BroodRepository broodRepository = new BroodRepository();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -185,6 +186,7 @@ public class ViewSingleBroodController implements Initializable {
 		stage.setTitle(MyValues.TITLE_DELETE_EGG);
 		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
 		stage.setScene(scene);
+		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.showAndWait();
 		if (confirmationController.isConfirmed()) {
 			try {
@@ -272,19 +274,27 @@ public class ViewSingleBroodController implements Initializable {
 	}
 	
 	@FXML
-	public void btnDeleteBrood(ActionEvent event) throws IOException, SQLException {//TODO delete Brood
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/ChangeBroodAdoptiveParents.fxml"));
-//		Parent root = loader.load();
-//		ChangeBroodAdoptiveParentsController controller = loader.getController();
-//		controller.startValues(brood);
-//		controller.setViewSingleBroodController(this);
-//		Scene scene = new Scene(root);
-//		Stage stage = new Stage();
-//		stage.setTitle(MyValues.TITLE_CHANGE_ADOPTIVES);
-//		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
-//		stage.setScene(scene);
-//		stage.initModality(Modality.APPLICATION_MODAL);
-//		stage.showAndWait();
+	public void btnDeleteBrood(ActionEvent event) throws IOException, SQLException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
+		Parent root = loader.load();
+		ConfirmationController controller = loader.getController();
+		controller.getLbText().setText("Tem a certeza que quer apagar esta ninhada?");
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setTitle(MyValues.TITLE_DELETE_BROOD);
+		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+		stage.setScene(scene);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.showAndWait();
+		if (controller.isConfirmed()) {
+			try {
+			    broodRepository.deleteBroodById(brood.getId());		
+			    ((Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow()).close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 	public void setSuccess(String msg, Brood brood) throws SQLException {

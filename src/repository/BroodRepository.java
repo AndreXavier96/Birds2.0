@@ -154,6 +154,17 @@ public class BroodRepository {
 	    return brood;
 	}
 
+	public void deleteBroodById(int broodId) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    PreparedStatement pstmt = con.prepareStatement("DELETE FROM BROOD WHERE id = ?");
+        pstmt.setInt(1, broodId);
+        int affectedRows = pstmt.executeUpdate();
+        if (affectedRows > 0) {
+            System.out.println("Brood with id " + broodId + " deleted successfully.");
+        } else {
+            System.out.println("No brood found with id " + broodId + ".");
+        }
+	}
 
 	
 }
