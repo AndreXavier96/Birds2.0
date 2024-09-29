@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 
 import constants.MyValues;
 import constants.PathsConstants;
+import controller.ConfirmationController;
 import controller.HiperligacoesController;
 import controller.bird.ViewSingleBirdController;
 import controller.egg.AddEggViewController;
@@ -123,6 +124,8 @@ public class ViewSingleBroodController implements Initializable {
 				Egg selectedEgg = TvEggs.getSelectionModel().getSelectedItem();
 				if (selectedEgg != null) {
 					hiperligacoes.openViewEggFromSingleBrood(LbTitle.getScene(),selectedEgg);
+					eggs = FXCollections.observableArrayList(eggRepository.getEggsForBrood(brood.getId()));
+					TvEggs.setItems(eggs);
 				}
 			}
 		});
@@ -162,7 +165,7 @@ public class ViewSingleBroodController implements Initializable {
 	                    Egg selectedEgg = getTableView().getItems().get(getIndex());
 	                    try {
 	                        deleteEgg(selectedEgg);
-	                    } catch (SQLException e) {
+	                    } catch (SQLException | IOException e) {
 	                        e.printStackTrace();
 	                    }
 	                });
@@ -172,13 +175,25 @@ public class ViewSingleBroodController implements Initializable {
 
 	}   
 	
-	private void deleteEgg(Egg egg) throws SQLException {
-		try {
-		    eggRepository.deleteEgg(egg.getId());
-		    eggs.remove(egg);
-		    TvEggs.setItems(eggs);
-		} catch (Exception e) {
-			e.printStackTrace();
+	private void deleteEgg(Egg egg) throws SQLException, IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));
+		Parent root = loader.load();
+		ConfirmationController confirmationController = loader.getController();
+		confirmationController.getLbText().setText("Tem a certeza que quer apagar este ovo?");
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setTitle(MyValues.TITLE_DELETE_EGG);
+		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+		stage.setScene(scene);
+		stage.showAndWait();
+		if (confirmationController.isConfirmed()) {
+			try {
+			    eggRepository.deleteEgg(egg.getId());
+			    eggs.remove(egg);
+			    TvEggs.setItems(eggs);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	    TvEggs.refresh();
 	}
@@ -254,6 +269,22 @@ public class ViewSingleBroodController implements Initializable {
 		stage.setScene(scene);
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.showAndWait();
+	}
+	
+	@FXML
+	public void btnDeleteBrood(ActionEvent event) throws IOException, SQLException {//TODO delete Brood
+//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/ChangeBroodAdoptiveParents.fxml"));
+//		Parent root = loader.load();
+//		ChangeBroodAdoptiveParentsController controller = loader.getController();
+//		controller.startValues(brood);
+//		controller.setViewSingleBroodController(this);
+//		Scene scene = new Scene(root);
+//		Stage stage = new Stage();
+//		stage.setTitle(MyValues.TITLE_CHANGE_ADOPTIVES);
+//		stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+//		stage.setScene(scene);
+//		stage.initModality(Modality.APPLICATION_MODAL);
+//		stage.showAndWait();
 	}
 	
 	public void setSuccess(String msg, Brood brood) throws SQLException {

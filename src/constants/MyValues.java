@@ -72,6 +72,7 @@ public class MyValues {
 	public static final String TITLE_DELETE_MUTATION = "Apagar criador ";
 	public static final String TITLE_DELETE_BIRD = "Apagar passaro ";
 	public static final String TITLE_DELETE_TREATMENT = "Apagar Tratamento ";
+	public static final String TITLE_DELETE_EGG = "Apagar Ovo";
 	
 	public static final String TITLE_EDIT_CLUB = "Editar Clube ";
 	public static final String TITLE_EDIT_FEDERATION = "Editar Federacao ";
