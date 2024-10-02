@@ -118,6 +118,40 @@ public class BroodRepository {
 	    }
 	}
 	
+	
+	public ObservableList<Brood> getAllBroodsFromCouple(int fatherId, int motherId,Date selectedDate) {
+	    try {
+	        System.out.println("Getting all Broods from couple father["+fatherId+"] mother["+motherId+"]");
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM BROOD WHERE FatherId=? AND MotherId=? AND Start<=? AND (Finish IS NULL OR ? <= Finish)");
+	        pstmt.setInt(fatherId, 1);
+	        pstmt.setInt(motherId, 2);
+	        java.sql.Date sqlSelectedDate = new java.sql.Date(selectedDate.getTime());
+	        pstmt.setDate(3, sqlSelectedDate);
+	        pstmt.setDate(4, sqlSelectedDate);
+	        ResultSet rs = pstmt.executeQuery();
+	        ObservableList<Brood> broods = FXCollections.observableArrayList();
+	        while (rs.next()) {
+	            System.out.println("Get Brood: " + rs.getInt(1));
+	            Brood b = new Brood();
+	            b.setId(rs.getInt(1));
+	            b.setStart(rs.getDate(2));
+	            b.setFinish(rs.getDate(3));
+	            b.setFather(birdsRepository.getBirdWhereInt("id", rs.getInt(4)));
+	            b.setMother(birdsRepository.getBirdWhereInt("id", rs.getInt(5)));
+	            b.setCage(cageRepository.getCage(rs.getInt(6)));
+	            b.setEggs(eggRepository.getEggsForBrood(rs.getInt(1)));
+	            b.setAdoptiveParents(adoptiveParentsRepository.getAdoptiveParentsForBrood(rs.getInt(1)));
+	            broods.add(b);
+	        }
+	        CloseConnection(con, null, pstmt, rs);
+	        return broods;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+	
 	public void updateBroodCage(int broodId, int newCageId) throws SQLException {
 	    Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
 	    String sql = "UPDATE BROOD SET CageId = ? WHERE id = ?";

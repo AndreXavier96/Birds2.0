@@ -13,6 +13,8 @@ import domains.Egg;
 
 public class EggRepository {
 	
+	private BirdsRepository birdsRepository = new BirdsRepository();
+	
 	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
             rs.close();
@@ -85,7 +87,7 @@ public class EggRepository {
 	                e.setOutbreakDate(rs.getDate("OutbreakDate"));
 	                e.setType(rs.getString("Type"));
 	                e.setStatute(rs.getString("Statute"));
-	                e.setBird(null);//TODO
+	                e.setBird(birdsRepository.getBirdWhereInt("id",rs.getInt("BirdId") ));
 	                eggs.add(e);
 	            }
 	            CloseConnection(con, null, pstmt, rs);
@@ -139,6 +141,16 @@ public class EggRepository {
 		pstmt.setString(3, egg.getType());
 		pstmt.setString(4, egg.getStatute());
 		pstmt.setInt(5, egg.getId());
+		int rowsAffected = pstmt.executeUpdate();
+		CloseConnection(con, null, pstmt, null);
+		System.out.println(rowsAffected + " egg row updated.");
+	}
+	
+	public void updateEggBird(int birdId,int eggId) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		PreparedStatement pstmt = con.prepareStatement("UPDATE EGG SET BirdId=? WHERE id=?");
+		pstmt.setInt(1, birdId);
+		pstmt.setInt(2, eggId);
 		int rowsAffected = pstmt.executeUpdate();
 		CloseConnection(con, null, pstmt, null);
 		System.out.println(rowsAffected + " egg row updated.");

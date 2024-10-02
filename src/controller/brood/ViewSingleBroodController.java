@@ -46,7 +46,7 @@ public class ViewSingleBroodController implements Initializable {
 	@FXML
 	private TableView<Egg> TvEggs;
 	@FXML
-	private TableColumn<Egg,String>colType,colStatute;
+	private TableColumn<Egg,String>colType,colStatute,colBirdBorn;
 	@FXML
 	private TableColumn<Egg,Date>colDate, colDateEclo;
 	@FXML
@@ -104,6 +104,14 @@ public class ViewSingleBroodController implements Initializable {
 
 		colType.setCellValueFactory(new PropertyValueFactory<>("type"));
 		colStatute.setCellValueFactory(new PropertyValueFactory<>("statute"));
+		colBirdBorn.setCellValueFactory(cellData -> {
+	        Egg egg = cellData.getValue();
+	        if (egg.getBird() != null && egg.getBird().getBand() != null) {
+	            return new SimpleStringProperty(egg.getBird().getBand());
+	        } else {
+	            return new SimpleStringProperty("N/A");
+	        }
+	    });
 		TvEggs.setItems(eggs);
 		
 		colBand.setCellValueFactory(new PropertyValueFactory<>("Band"));
@@ -317,7 +325,6 @@ public class ViewSingleBroodController implements Initializable {
 		stage.setScene(scene);
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.showAndWait();
-
 	}
 	
 	public void setSuccess(String msg, Brood brood) throws SQLException {
