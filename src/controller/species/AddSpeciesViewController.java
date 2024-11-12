@@ -164,7 +164,7 @@ public class AddSpeciesViewController {
 			}
 		}
 		if (validate) {
-			if (!TfBandSize.getText().matches(Regex.INT)) {
+			if (!TfBandSize.getText().matches(Regex.DOUBLES)) {
 				TfBandSize.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Tamanho de anilha nao esta no formato correto");
 				validate=false;
@@ -264,7 +264,7 @@ public class AddSpeciesViewController {
 			}
 		}
 		if (validate) {
-			if (!TfBandSize.getText().matches(Regex.INT)) {
+			if (!TfBandSize.getText().matches(Regex.DOUBLES)) {
 				TfBandSize.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Tamanho de anilha nao esta no formato correto");
 				validate=false;
