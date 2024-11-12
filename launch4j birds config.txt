@@ -1,0 +1,9 @@
+Launch4j
+BASIC:
+	Output file: C:\Users\xavi6\Desktop\Birds\Birds.exe
+	jar: select the birds.jar
+	ico: C:\Users\xavi6\Desktop\Birds\resources\images\img\icon.ico
+JRE:
+	Min JRE version:16.0.2
+	JVM OPTIONS:
+	--module-path "C:\Program Files\Java\javafx-sdk-19\lib" --add-modules javafx.controls,javafx.fxml
