@@ -25,3 +25,19 @@
   -fx-background-color: #234F1E;
   -fx-text-fill: #FFFFFF;
 }
+
+.delete-button {
+    -fx-background-color: lightcoral;
+    -fx-text-fill: white;
+    -fx-border-color: red;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.add-button {
+    -fx-background-color: lightgreen;
+    -fx-text-fill: white;
+    -fx-border-color: green;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}

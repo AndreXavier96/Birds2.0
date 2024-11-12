@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import constants.MyValues;
 import domains.Brood;
@@ -86,28 +87,6 @@ public class BroodRepository {
 		}
 		CloseConnection(con, null, pstmt, null);
 	}
-
-//	public Brood getAllBroodById(int id) {
-//	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME,
-//	                MyValues.USER, MyValues.PASSWORD);
-//	        Statement stmt = con.createStatement();
-//	        String sql = "SELECT * FROM BROOD WHERE id="+id+";";
-//	        ResultSet rs = stmt.executeQuery(sql);
-//	        Brood b = new Brood();
-//	        while (rs.next()) {
-//	            System.out.println("Get Brood: " + rs.getInt(1));
-//	            b.setId(rs.getInt(1));
-//	            b.setStart(rs.getDate(2));
-//	            b.setFinish(rs.getDate(3));
-//	            b.setFather(birdsRepository.getBirdWhereInt("id", rs.getInt(4)));
-//	            b.setMother(birdsRepository.getBirdWhereInt("id", rs.getInt(5)));
-//	            b.setEggs(eggRepository.getEggsForBrood(rs.getInt(1)));
-//	            b.setAdoptiveParents(adoptiveParentsRepository.getAdoptiveParentsForBrood(rs.getInt(1)));
-//	            broods.add(b);
-//	        }
-//	        CloseConnection(con, stmt, null, rs);
-//	        return broods;
-//	}
 	
 	public ObservableList<Brood> getAllBroods() {
 	    try {
@@ -137,6 +116,135 @@ public class BroodRepository {
 	        e.printStackTrace();
 	        return null;
 	    }
+	}
+	
+	
+	public ObservableList<Brood> getAllBroodsFromCouple(int fatherId, int motherId,Date selectedDate) {
+	    try {
+	        System.out.println("Getting all Broods from couple father["+fatherId+"] mother["+motherId+"]");
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM BROOD WHERE FatherId=? AND MotherId=? AND Start<=? AND (Finish IS NULL OR ? <= Finish)");
+	        pstmt.setInt(fatherId, 1);
+	        pstmt.setInt(motherId, 2);
+	        java.sql.Date sqlSelectedDate = new java.sql.Date(selectedDate.getTime());
+	        pstmt.setDate(3, sqlSelectedDate);
+	        pstmt.setDate(4, sqlSelectedDate);
+	        ResultSet rs = pstmt.executeQuery();
+	        ObservableList<Brood> broods = FXCollections.observableArrayList();
+	        while (rs.next()) {
+	            System.out.println("Get Brood: " + rs.getInt(1));
+	            Brood b = new Brood();
+	            b.setId(rs.getInt(1));
+	            b.setStart(rs.getDate(2));
+	            b.setFinish(rs.getDate(3));
+	            b.setFather(birdsRepository.getBirdWhereInt("id", rs.getInt(4)));
+	            b.setMother(birdsRepository.getBirdWhereInt("id", rs.getInt(5)));
+	            b.setCage(cageRepository.getCage(rs.getInt(6)));
+	            b.setEggs(eggRepository.getEggsForBrood(rs.getInt(1)));
+	            b.setAdoptiveParents(adoptiveParentsRepository.getAdoptiveParentsForBrood(rs.getInt(1)));
+	            broods.add(b);
+	        }
+	        CloseConnection(con, null, pstmt, rs);
+	        return broods;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+	
+	public void updateBroodCage(int broodId, int newCageId) throws SQLException {
+	    Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    String sql = "UPDATE BROOD SET CageId = ? WHERE id = ?";
+	    PreparedStatement pstmt = con.prepareStatement(sql);
+
+	    pstmt.setInt(1, newCageId);
+	    pstmt.setInt(2, broodId);
+
+	    int rowsAffected = pstmt.executeUpdate();
+	    System.out.println(rowsAffected + " row(s) updated.");
+
+	    CloseConnection(con, null, pstmt, null);
+	}
+	
+	public Brood getBroodById(int broodId) throws SQLException {
+	    Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    String sql = "SELECT * FROM BROOD WHERE id = ?";
+	    PreparedStatement pstmt = con.prepareStatement(sql);
+	    pstmt.setInt(1, broodId);
+	    ResultSet rs = pstmt.executeQuery();
+	    Brood brood = null;
+	    if (rs.next()) {
+	        brood = new Brood();
+	        brood.setId(rs.getInt("id"));
+	        brood.setStart(rs.getDate("Start"));
+	        brood.setFinish(rs.getDate("Finish"));
+	        brood.setFather(birdsRepository.getBirdWhereInt("id", rs.getInt("FatherId")));
+	        brood.setMother(birdsRepository.getBirdWhereInt("id", rs.getInt("MotherId")));
+	        brood.setCage(cageRepository.getCage(rs.getInt("CageId")));
+	        brood.setEggs(eggRepository.getEggsForBrood(rs.getInt("id")));
+	        brood.setAdoptiveParents(adoptiveParentsRepository.getAdoptiveParentsForBrood(rs.getInt("id")));
+	    }
+	    CloseConnection(con, null, pstmt, rs);
+
+	    return brood;
+	}
+
+	public void deleteBroodById(int broodId) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	    PreparedStatement pstmt = con.prepareStatement("DELETE FROM BROOD WHERE id = ?");
+        pstmt.setInt(1, broodId);
+        int affectedRows = pstmt.executeUpdate();
+        if (affectedRows > 0) {
+            System.out.println("Brood with id " + broodId + " deleted successfully.");
+        } else {
+            System.out.println("No brood found with id " + broodId + ".");
+        }
+	}
+
+	public void updateFinishDateBrood(Integer id, Date date) {
+	    try {
+	        Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+	        PreparedStatement pstmt = con.prepareStatement("UPDATE BROOD SET Finish = ? WHERE id=?");
+	        pstmt.setDate(1, new java.sql.Date(date.getTime()));
+	        pstmt.setInt(2, id);
+	        pstmt.executeUpdate();
+	        CloseConnection(con, null, pstmt, null);
+	        System.out.println("Brood with id " + id + " updated,data fim para valor: "+date+" .");
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public boolean activeBroodCouple(int fatherId,int MotherId) throws SQLException {
+		int count = 0;
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+		String sql = "SELECT COUNT(*) FROM BROOD WHERE FatherId = ? AND MotherId = ? AND Finish IS NULL ";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, fatherId);
+		pstmt.setInt(2, MotherId);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+        	count = rs.getInt(1);
+        }
+        CloseConnection(con, null, pstmt, rs);
+        return count>0;
+	}
+	
+	public boolean existeBroodSameDates(int fatherId,int MotherId,Date startDate, Date endDate ) throws SQLException {
+		int count = 0;
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+		String sql = "SELECT COUNT(*) FROM BROOD WHERE FatherId = ? AND MotherId = ? AND Start <= ? AND Finish >= ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, fatherId);
+		pstmt.setInt(2, MotherId);
+        pstmt.setDate(3, new java.sql.Date(endDate != null ? endDate.getTime() : startDate.getTime()));
+        pstmt.setDate(4, new java.sql.Date(startDate.getTime()));
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+        	count = rs.getInt(1);
+        }
+        CloseConnection(con, null, pstmt, rs);
+        return count>0;
 	}
 	
 }

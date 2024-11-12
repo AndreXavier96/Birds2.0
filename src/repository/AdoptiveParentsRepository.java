@@ -81,4 +81,27 @@ public class AdoptiveParentsRepository {
 	        }
 	        return birds;
 	    }
+	 
+	 
+		public void updateAdoptiveParents(int broodId, List<Bird> newAdoptiveParents) throws SQLException {
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+			String deleteSQL = "DELETE FROM ADOPTIVE_PARENTS WHERE BroodId = ?";
+			String insertSQL = "INSERT INTO ADOPTIVE_PARENTS (AdoptiveParentId, BroodId) VALUES (?, ?)";
+
+			PreparedStatement pstmt = con.prepareStatement(deleteSQL);
+			pstmt.setInt(1, broodId);
+			pstmt.executeUpdate();
+
+			pstmt = con.prepareStatement(insertSQL);
+			for (Bird bird : newAdoptiveParents) {
+				pstmt.setInt(1, bird.getId());
+				pstmt.setInt(2, broodId);
+				pstmt.addBatch();
+			}
+			pstmt.executeBatch();
+			
+			System.out.println("Adoptive Parents updated.");
+			CloseConnection(con, null, pstmt, null);
+		}
+
 }

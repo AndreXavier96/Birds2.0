@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.ResourceBundle;
 import constants.MyValues;
 import constants.Regex;
 import controller.brood.AddBroodViewController;
+import controller.brood.ViewSingleBroodController;
 import domains.Egg;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
@@ -34,14 +36,27 @@ public class AddEggViewController implements Initializable {
 	private ComboBox<String> CbType;
 
 	private AddBroodViewController addBroodViewController;
+	private ViewSingleBroodController viewSingleBroodController;
+	private Date startDate;
+	private Date finishDate;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		CbType.setItems(MyValues.OVO_LIST);
+		CbType.setItems(MyValues.OVO_STATUTE);
 	}
 	
-	public void setAddBroodViewController(AddBroodViewController addBroodViewController) {
+	public void setAddBroodViewController(AddBroodViewController addBroodViewController, LocalDate startDate, LocalDate finishDate) {
 		this.addBroodViewController = addBroodViewController;
+		this.startDate = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		if(finishDate!=null)
+			this.finishDate = Date.from(finishDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+	
+	public void setAddBroodViewController2(ViewSingleBroodController viewSingleBroodController, Date startDate, Date finishDate) {
+		this.viewSingleBroodController = viewSingleBroodController;
+		this.startDate = startDate;
+		if(finishDate!=null)
+			this.finishDate = finishDate;
 	}
 	
 	@FXML
@@ -61,7 +76,10 @@ public class AddEggViewController implements Initializable {
 			LabelAlert.setStyle(MyValues.ALERT_SUCESS);
 			LabelAlert.setText("Ovos inseridos com sucesso!");
 			clearAllFields();
-			addBroodViewController.addEggToListView(eggsInserted);
+			if (addBroodViewController !=null)
+				addBroodViewController.addEggToListView(eggsInserted);
+			else
+				viewSingleBroodController.addEggToListView(eggsInserted);
 			btnClose(event);
 		}
 	}
@@ -72,8 +90,6 @@ public class AddEggViewController implements Initializable {
 			return new String[] { MyValues.DESCONHECIDO2, MyValues.DESCONHECIDO2 };
 		case MyValues.PARTIDO:
 			return new String[] { MyValues.DESCONHECIDO2, MyValues.PARTIDO };
-		case MyValues.ESVAZIAR:
-			return new String[] {MyValues.ESVAZIAR, MyValues.ESVAZIAR};
 		case MyValues.EM_DESENVOLVIMENTO:
 			return new String[] {MyValues.FECUNDADO, MyValues.EM_DESENVOLVIMENTO};
 		case MyValues.CHOCADO:
@@ -118,7 +134,7 @@ public class AddEggViewController implements Initializable {
 				LabelAlert.setText("Tipo tem de ser escolhido.");
 				validated = false;
 			} else {
-				TfQuantidade.setStyle(null);
+				CbType.setStyle(null);
 				LabelAlert.setText("");
 				validated = true;
 			}
@@ -128,7 +144,7 @@ public class AddEggViewController implements Initializable {
 			try {
 				DtPosture.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				DtPosture.setStyle(null);
-				LabelAlert.setStyle("");
+//				LabelAlert.setStyle("");
 				validated=true;
 			} catch (Exception e) {
 				DtPosture.setStyle(MyValues.ERROR_BOX_STYLE);
@@ -136,6 +152,32 @@ public class AddEggViewController implements Initializable {
 				validated=false;
 			}
 		}
+		
+	    if (validated) {
+	    	Date choosenDate = Date.from(DtPosture.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+	    	if (choosenDate.before(startDate)) {
+	            DtPosture.setStyle(MyValues.ERROR_BOX_STYLE);
+	            LabelAlert.setText("Data postura nao pode ser antes de data inicio postura de ninhada!");
+	            validated = false;
+	        } else {
+	            DtPosture.setStyle(null);
+	            LabelAlert.setText("");
+	            validated = true;
+	        }
+	    }
+	    
+	    if (validated && finishDate != null) {
+	    	Date choosenDate = Date.from(DtPosture.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+	        if (choosenDate.after(finishDate)) {
+	            DtPosture.setStyle(MyValues.ERROR_BOX_STYLE);
+	            LabelAlert.setText("Data postura nao pode ser depois de data fim postura de ninhada!");
+	            validated = false;
+	        } else {
+	            DtPosture.setStyle(null);
+	            LabelAlert.setText("");
+	            validated = true;
+	        }
+	    }
 		return validated;
 	}
 		

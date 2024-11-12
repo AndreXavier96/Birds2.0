@@ -1,6 +1,7 @@
 package repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +10,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import constants.MyValues;
+import domains.Bird;
 import domains.Egg;
 
 public class EggRepository {
+	
+	private BirdsRepository birdsRepository = new BirdsRepository();
 	
 	private void CloseConnection(Connection con, Statement stmt,PreparedStatement pstmt, ResultSet rs) throws SQLException {
 		if (rs != null) {
@@ -85,7 +89,7 @@ public class EggRepository {
 	                e.setOutbreakDate(rs.getDate("OutbreakDate"));
 	                e.setType(rs.getString("Type"));
 	                e.setStatute(rs.getString("Statute"));
-	                e.setBird(null);//TODO
+	                e.setBird(birdsRepository.getBirdWhereInt("id",rs.getInt("BirdId") ));
 	                eggs.add(e);
 	            }
 	            CloseConnection(con, null, pstmt, rs);
@@ -95,45 +99,86 @@ public class EggRepository {
 	        return eggs;
 	    }
 
-//	public State getStateById(int id) throws SQLException {
-//		State state = new State();
-//		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-//		Statement stmt = con.createStatement();
-//		ResultSet rs = stmt.executeQuery("SELECT * FROM STATE WHERE ID = " + id);
-//		if (rs.next()) {
-//			state.setId(rs.getInt(1));
-//			state.setType(rs.getString(2));
-//			state.setDate(rs.getString(3));
-//			state.setValor(rs.getDouble(4));
-//			state.setMotivo(rs.getString(5));
-//		}
-//		CloseConnection(con, stmt, null, rs);
-//		return state;
-//	}
-//
-//	public void deleteState(int id) throws SQLException {
-//		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-//		PreparedStatement stmt = con.prepareStatement("DELETE FROM STATE WHERE ID = ?");
-//		stmt.setInt(1, id);
-//		stmt.executeUpdate();
-//		CloseConnection(con, stmt, null, null);
-//	}
+	public Egg getEggById(int id) throws SQLException {
+		Egg e = new Egg();
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM EGG WHERE ID = " + id);
+		if (rs.next()) {
+			e.setId(rs.getInt("id"));
+			e.setPostureDate(new java.util.Date(rs.getDate("PostureDate").getTime()));
+			java.sql.Date verifiedFertilityDate = rs.getDate("VerifiedFertilityDate");
+	        if (verifiedFertilityDate != null) {
+	            e.setVerifiedFertilityDate(new java.util.Date(verifiedFertilityDate.getTime()));
+	        }
+	        java.sql.Date outbreakDate = rs.getDate("OutbreakDate");
+	        if (outbreakDate != null) {
+	            e.setOutbreakDate(new java.util.Date(outbreakDate.getTime()));
+	        }
+	        e.setType(rs.getString("Type"));
+            e.setStatute(rs.getString("Statute"));
+            e.setBird(null);//TODO
+		}
+		CloseConnection(con, stmt, null, rs);
+		return e;
+	}
 
-//	public void updateState(State state) throws SQLException {
-//		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-//		PreparedStatement pstmt = con.prepareStatement("UPDATE STATE SET Type=?, Date=?, Valor=?, Motivo=? WHERE id=?");
-//		pstmt.setString(1, state.getType());
-//		pstmt.setString(2, state.getDate());
-//		if (state.getValor() == null)
-//			state.setValor((double) 0);
-//		pstmt.setDouble(3, state.getValor());
-//		if (state.getMotivo() == null)
-//			state.setMotivo("");
-//		pstmt.setString(4, state.getMotivo());
-//		pstmt.setInt(5, state.getId());
-//		int rowsAffected = pstmt.executeUpdate();
-//		CloseConnection(con, null, pstmt, null);
-//		System.out.println(rowsAffected + " row(s) updated.");
-//	}
+	public void deleteEgg(int id) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+	    PreparedStatement pstmt = con.prepareStatement("DELETE FROM EGG WHERE id = ?");
+        pstmt.setInt(1, id);
+        pstmt.executeUpdate();
+        CloseConnection(con, null, pstmt, null);
+        System.out.println("egg deleted");
+	}
+
+	public void updateEgg(Egg egg) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		PreparedStatement pstmt = con.prepareStatement("UPDATE EGG SET PostureDate=?, OutbreakDate=?, Type=?, Statute=? WHERE id=?");
+		pstmt.setDate(1, new java.sql.Date(egg.getPostureDate().getTime()));
+		if (egg.getOutbreakDate() != null)
+			pstmt.setDate(2, new java.sql.Date(egg.getOutbreakDate().getTime()));
+		else
+			pstmt.setNull(2, java.sql.Types.DATE);
+		pstmt.setString(3, egg.getType());
+		pstmt.setString(4, egg.getStatute());
+		pstmt.setInt(5, egg.getId());
+		int rowsAffected = pstmt.executeUpdate();
+		CloseConnection(con, null, pstmt, null);
+		System.out.println(rowsAffected + " egg row updated.");
+	}
+	
+	public void updateEggBird(Bird bird,int eggId) throws SQLException {
+		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+		PreparedStatement pstmt = con.prepareStatement("UPDATE EGG SET BirdId=?, OutbreakDate=?, Type=?, Statute=? WHERE id=?");
+		pstmt.setInt(1, bird.getId());
+		pstmt.setDate(2, (Date) bird.getEntryDate());
+		pstmt.setString(3,MyValues.FECUNDADO);
+		pstmt.setString(4, MyValues.CHOCADO);
+		pstmt.setInt(5, eggId);
+		int rowsAffected = pstmt.executeUpdate();
+		CloseConnection(con, null, pstmt, null);
+		System.out.println(rowsAffected + " egg row updated.");
+	}
+	
+	public boolean existEggWithBirdId(int birdId) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) FROM EGG WHERE BirdId = ?";
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, birdId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				exists = count > 0;
+			}
+			CloseConnection(con, null, pstmt, rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
 
 }

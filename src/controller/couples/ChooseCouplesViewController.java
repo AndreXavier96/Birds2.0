@@ -41,7 +41,7 @@ public class ChooseCouplesViewController implements Initializable{
 	
 	private AddBroodViewController addBroodViewController;
 	
-	public void setAddBroodViewController(AddBroodViewController addBroodViewController) {
+	public void setAddBroodViewControllerCouples(AddBroodViewController addBroodViewController) {
 		this.addBroodViewController = addBroodViewController;
 	}
 	
@@ -105,10 +105,10 @@ public class ChooseCouplesViewController implements Initializable{
 	
 	private ObservableList<Bird> filterBirdsMale(String searchTerm) {
 		ObservableList<Bird> listMale = birdsRepository.getAllWhere("Sex", MyValues.MACHO);
-		ObservableList<Bird> ListMaleCouples = couplesRepository.getAllBirdsWhere("MaleId", "State", MyValues.SEPARADOS);
+		ObservableList<Bird> ListMaleCouples = couplesRepository.getAllBirdsWhere("MaleId", "State", MyValues.JUNTOS);
 		Set<Integer> maleCoupleIds = ListMaleCouples.stream().map(Bird::getId).collect(Collectors.toSet());
 		List<Bird> filteredListMale = listMale.stream()
-	            .filter(bird -> !maleCoupleIds.contains(bird.getId()))
+	            .filter(bird -> maleCoupleIds.contains(bird.getId()))
 	            .collect(Collectors.toList());
 		 List<Bird> filteredBirds = filteredListMale.stream()
 		            .filter(bird -> bird.getBand().toLowerCase().contains(searchTerm.toLowerCase()))

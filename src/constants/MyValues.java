@@ -62,6 +62,7 @@ public class MyValues {
 	public static final String TITLE_CHANGE_STATE = "Alterar Estado";
 	public static final String TITLE_CHANGE_CAGE = "Alterar Gaiola";
 	public static final String TITLE_CHANGE_IMAGE = "Alterar Foto";
+	public static final String TITLE_CHANGE_ADOPTIVES = "Alterar Pais Adotivos";
 	
 	public static final String TITLE_DELETE_CLUB = "Apagar Clube ";
 	public static final String TITLE_DELETE_FEDERATION = "Apagar Federacao ";
@@ -71,6 +72,9 @@ public class MyValues {
 	public static final String TITLE_DELETE_MUTATION = "Apagar criador ";
 	public static final String TITLE_DELETE_BIRD = "Apagar passaro ";
 	public static final String TITLE_DELETE_TREATMENT = "Apagar Tratamento ";
+	public static final String TITLE_DELETE_EGG = "Apagar Ovo";
+	public static final String TITLE_DELETE_BROOD = "Apagar Ninhada";
+	public static final String TITLE_DISASSOCIATE_EGG = "Desassociar Ovo";
 	
 	public static final String TITLE_EDIT_CLUB = "Editar Clube ";
 	public static final String TITLE_EDIT_FEDERATION = "Editar Federacao ";
@@ -80,6 +84,8 @@ public class MyValues {
 	public static final String TITLE_EDIT_MUTATION = "Editar criador ";
 	public static final String TITLE_EDIT_BIRD = "Editar passaro ";
 	public static final String TITLE_EDIT_TREATMENT = "Editar tratamento ";
+	public static final String TITLE_EDIT_EGG = "Editar Ovo ";
+	public static final String TITLE_EDIT_END_DATE = "Editar Data Fim Ninhada";
 	
 	public static final String TITLE_SEPARATE_COUPLE = "Separar Casal ";
 	
@@ -89,7 +95,10 @@ public class MyValues {
 	public static final String CHANGE_SEX = "SEXAGEM ALTERADA";
 	public static final String CHANGE_IMAGE = "IMAGEM ALTERADA";
 	
+	public static final String CHANGE_ADOPTIVE_SUCCESS = "Pais adotivos alterados com sucesso!";
 	public static final String CHANGE_STATE_SUCCESS = "Estado alterado com sucesso!";
+	public static final String CHANGE_CAGE_SUCCESS = "Gaiola alterada com sucesso!";
+	public static final String CHANGE_END_DATE_SUCCESS = "Data fim Ninhada alterada com sucesso!";
 	public static final String CHANGE_SEX_SUCCESS = "Genero alterado com sucesso!";
 	public static final String ADD_COUPLE = "Passaro acasalado";
 	public static final String NO_COUPLE = "Passaro nao acasalado";
@@ -108,9 +117,14 @@ public class MyValues {
 	public static final String CHOCADO = "Chocado";
 	public static final String MORTE_NO_OVO = "Morte No Ovo";
 	public static final String AUSENCIA_DE = "Ausencia De Embriao";
-	public static final ObservableList<String> OVO_LIST = FXCollections.observableArrayList(PARTIDO,DESCONHECIDO2,ESVAZIAR,EM_DESENVOLVIMENTO,CHOCADO,MORTE_NO_OVO,AUSENCIA_DE);
-
 	public static final String FECUNDADO = "Fecundado";
+	public static final String VAZIO = "Vazio";
+	public static final ObservableList<String> OVO_TYPE =  FXCollections.observableArrayList(FECUNDADO,DESCONHECIDO2,VAZIO);
+	public static final ObservableList<String> OVO_STATUTE =  FXCollections.observableArrayList(CHOCADO,EM_DESENVOLVIMENTO,PARTIDO,DESCONHECIDO2,MORTE_NO_OVO,AUSENCIA_DE);
+	public static final ObservableList<String> OVO_STATUTE_FECUNDADO = FXCollections.observableArrayList(CHOCADO,EM_DESENVOLVIMENTO,PARTIDO,MORTE_NO_OVO);
+	public static final ObservableList<String> OVO_STATUTE_DESCONHECIDO2 =  FXCollections.observableArrayList(DESCONHECIDO2);
+	public static final ObservableList<String> OVO_STATUTE_VAZIO = FXCollections.observableArrayList(PARTIDO,MORTE_NO_OVO,AUSENCIA_DE);
+	
 	
 	public static final String EM_TRATAMENTO = "Em Tratamento";
 	

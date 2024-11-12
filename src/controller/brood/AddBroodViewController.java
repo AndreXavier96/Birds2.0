@@ -36,6 +36,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repository.BirdsRepository;
 import repository.BroodRepository;
 import repository.CageRepository;
 
@@ -63,6 +64,7 @@ public class AddBroodViewController implements Initializable {
 	
 	private BroodRepository broodRepository = new BroodRepository();
 	private CageRepository cageRepository = new CageRepository();
+	private BirdsRepository birdsRepository = new BirdsRepository();
 	
 	private ObservableList<Egg> eggs = FXCollections.observableArrayList();
 	private ObservableList<Bird> adoptiveParents = FXCollections.observableArrayList();
@@ -110,7 +112,7 @@ public class AddBroodViewController implements Initializable {
 	        stage.setScene(scene);
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	        ChooseCouplesViewController chooseCouplesViewController = loader.getController();
-	        chooseCouplesViewController.setAddBroodViewController(this);
+	        chooseCouplesViewController.setAddBroodViewControllerCouples(this);
 	        stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -127,7 +129,7 @@ public class AddBroodViewController implements Initializable {
 	        stage.setScene(scene);
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	        AddEggViewController addEggViewController = loader.getController();
-	        addEggViewController.setAddBroodViewController(this);
+	        addEggViewController.setAddBroodViewController(this,DtStart.getValue(),DtFinish.getValue());
 	        stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -144,7 +146,7 @@ public class AddBroodViewController implements Initializable {
 	        stage.setScene(scene);
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	        AddAdoptiveParentViewController addAdoptiveParentViewController = loader.getController();
-	        addAdoptiveParentViewController.setAddBroodViewController(this,TfMale.getText(),TfFemale.getText());
+	        addAdoptiveParentViewController.setAdoptiveParentsViewController(this,TfMale.getText(),TfFemale.getText());
 	        stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -204,18 +206,6 @@ public class AddBroodViewController implements Initializable {
 			TfFemale.setStyle(MyValues.ERROR_BOX_STYLE);
 			LabelAlert.setText("Casal tem de ser preenchido.");
 			validated = false;
-//		} else if (!TfCouple.getText().matches(Regex.FULL_BAND)) {
-//			TfCouple.setStyle(MyValues.ERROR_BOX_STYLE);
-//			LabelAlert.setText("Anilha nao esta no formato correto.");
-//			validated = false;
-//		} else if (bird==null) {
-//			TfCouple.setStyle(MyValues.ERROR_BOX_STYLE);
-//			LabelAlert.setText("Passaro do casal nao existe");
-//			validated = false;
-//		} else if (!couplesRepository.checkIfCouplesExist(bird)) {
-//			TfCouple.setStyle(MyValues.ERROR_BOX_STYLE);
-//			LabelAlert.setText("Passaro nao acasalado");
-//			validated = false;
 		} else {
 			TfMale.setStyle(null);
 			TfFemale.setStyle(null);
@@ -248,8 +238,35 @@ public class AddBroodViewController implements Initializable {
 				LabelAlert.setText("Data inicio postura nao esta no formato correto");
 				validated = false;
 			}
+		
+		if (validated) {
+			if (broodRepository.activeBroodCouple(birdsRepository.getBirdWhereString("Band", TfMale.getText()).getId(), birdsRepository.getBirdWhereString("Band", TfFemale.getText()).getId())) {
+				DtStart.setStyle(MyValues.ERROR_BOX_STYLE);
+				DtFinish.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Casal ja tem uma ninhada em aberto(Sem data fim ninhada)");
+				validated = false;
+		    }else {
+		    	LabelAlert.setText("");
+				validated = true;
+			}
+		}
+		if (validated) {
+			Date startDate = Date.from(DtStart.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+			Date endDate = null;
+			if (DtFinish.getValue() != null)
+		        endDate = Date.from(DtFinish.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+			if (broodRepository.existeBroodSameDates(birdsRepository.getBirdWhereString("Band", TfMale.getText()).getId(), birdsRepository.getBirdWhereString("Band", TfFemale.getText()).getId(),startDate,endDate)) {
+				DtStart.setStyle(MyValues.ERROR_BOX_STYLE);
+				DtFinish.setStyle(MyValues.ERROR_BOX_STYLE);
+				LabelAlert.setText("Casal ja tem uma ninhada no mesmo periodo de tempo");
+				validated = false;
+		    }else {
+		    	LabelAlert.setText("");
+				validated = true;
+			}
+		}
 		return validated;
-	}
+	}	
 
 	public void clearAllErrors() {
 		TfMale.setStyle(null);

@@ -38,7 +38,7 @@ public class AddAdoptiveParentViewController implements Initializable {
 	private String fatherBand;
 	private String motherBand;
 	
-	public void setAddBroodViewController(AddBroodViewController addBroodViewController,String fatherBand, String motherBand) {
+	public void setAdoptiveParentsViewController(AddBroodViewController addBroodViewController,String fatherBand, String motherBand) {
 		this.addBroodViewController = addBroodViewController;
 		this.fatherBand = fatherBand;
 		this.motherBand = motherBand;
