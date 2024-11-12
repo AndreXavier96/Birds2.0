@@ -15,7 +15,7 @@
          <children>
             <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <menus>
-                  <Menu mnemonicParsing="false" text="Alterar">
+                  <Menu fx:id="MenuEditar" mnemonicParsing="false" text="Alterar">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#btnEdit" text="editar" />
                      </items>

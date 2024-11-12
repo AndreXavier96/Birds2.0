@@ -215,4 +215,36 @@ public class BroodRepository {
 	    }
 	}
 	
+	public boolean activeBroodCouple(int fatherId,int MotherId) throws SQLException {
+		int count = 0;
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+		String sql = "SELECT COUNT(*) FROM BROOD WHERE FatherId = ? AND MotherId = ? AND Finish IS NULL ";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, fatherId);
+		pstmt.setInt(2, MotherId);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+        	count = rs.getInt(1);
+        }
+        CloseConnection(con, null, pstmt, rs);
+        return count>0;
+	}
+	
+	public boolean existeBroodSameDates(int fatherId,int MotherId,Date startDate, Date endDate ) throws SQLException {
+		int count = 0;
+		Connection con = DriverManager.getConnection("jdbc:h2:./Database/" + MyValues.DBNAME, MyValues.USER, MyValues.PASSWORD);
+		String sql = "SELECT COUNT(*) FROM BROOD WHERE FatherId = ? AND MotherId = ? AND Start <= ? AND Finish >= ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, fatherId);
+		pstmt.setInt(2, MotherId);
+        pstmt.setDate(3, new java.sql.Date(endDate != null ? endDate.getTime() : startDate.getTime()));
+        pstmt.setDate(4, new java.sql.Date(startDate.getTime()));
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+        	count = rs.getInt(1);
+        }
+        CloseConnection(con, null, pstmt, rs);
+        return count>0;
+	}
+	
 }

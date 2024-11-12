@@ -312,7 +312,7 @@ public class AddBreederViewController implements Initializable {
 		clearAllErrors();
 	}
 
-	public void startValuesEdit(Breeder breeder) throws SQLException {//TODO ALL FILE
+	public void startValuesEdit(Breeder breeder) throws SQLException {
 		btnAdd.setVisible(false);
 		btnEdit.setVisible(true);
 		btnClose.setVisible(true);

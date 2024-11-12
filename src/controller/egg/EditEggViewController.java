@@ -133,7 +133,7 @@ public class EditEggViewController implements Initializable {
 				CbStatute.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Estado tem de ser escolhido.");
 				validated = false;
-			}else if (DtOutbrake.getValue()!=null && CbStatute.getValue()!=MyValues.CHOCADO) {//TODO verificar estado chocado ou usar outro
+			}else if (DtOutbrake.getValue()!=null && CbStatute.getValue()!=MyValues.CHOCADO) {
 				CbStatute.setStyle(MyValues.ERROR_BOX_STYLE);
 				LabelAlert.setText("Se existiu eclosao, ovo tem de estar chocado");
 				validated = false;

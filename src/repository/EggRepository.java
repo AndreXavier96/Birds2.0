@@ -1,6 +1,7 @@
 package repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import constants.MyValues;
+import domains.Bird;
 import domains.Egg;
 
 public class EggRepository {
@@ -146,14 +148,37 @@ public class EggRepository {
 		System.out.println(rowsAffected + " egg row updated.");
 	}
 	
-	public void updateEggBird(int birdId,int eggId) throws SQLException {
+	public void updateEggBird(Bird bird,int eggId) throws SQLException {
 		Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
-		PreparedStatement pstmt = con.prepareStatement("UPDATE EGG SET BirdId=? WHERE id=?");
-		pstmt.setInt(1, birdId);
-		pstmt.setInt(2, eggId);
+		PreparedStatement pstmt = con.prepareStatement("UPDATE EGG SET BirdId=?, OutbreakDate=?, Type=?, Statute=? WHERE id=?");
+		pstmt.setInt(1, bird.getId());
+		pstmt.setDate(2, (Date) bird.getEntryDate());
+		pstmt.setString(3,MyValues.FECUNDADO);
+		pstmt.setString(4, MyValues.CHOCADO);
+		pstmt.setInt(5, eggId);
 		int rowsAffected = pstmt.executeUpdate();
 		CloseConnection(con, null, pstmt, null);
 		System.out.println(rowsAffected + " egg row updated.");
 	}
+	
+	public boolean existEggWithBirdId(int birdId) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) FROM EGG WHERE BirdId = ?";
+		try {
+			Connection con = DriverManager.getConnection("jdbc:h2:" + "./Database/" + MyValues.DBNAME, MyValues.USER,MyValues.PASSWORD);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, birdId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				exists = count > 0;
+			}
+			CloseConnection(con, null, pstmt, rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
 
 }

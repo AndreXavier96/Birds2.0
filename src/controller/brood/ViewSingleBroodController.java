@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import repository.BroodRepository;
@@ -145,7 +146,7 @@ public class ViewSingleBroodController implements Initializable {
 			if (event.getClickCount() == 2) {
 				Bird selectedBird = TvAdoptive.getSelectionModel().getSelectedItem();
 				if (selectedBird != null) {
-					try {//TODO use hiperligacoes
+					try {
 						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/birds/ViewSingleBird.fxml"));
 						Parent root = loader.load();
 						ViewSingleBirdController viewSingleBirdController = loader.getController();
@@ -161,30 +162,76 @@ public class ViewSingleBroodController implements Initializable {
 			}
 		});
 		
-		// Set up the delete column with buttons
-	    colDelete.setCellValueFactory(new PropertyValueFactory<>("deleteButton"));
+		colDelete.setCellValueFactory(new PropertyValueFactory<>("deleteButton"));
 	    colDelete.setCellFactory(column -> new TableCell<Egg, String>() {
 	        private final Button deleteButton = new Button("X");
+	        private final Button addButton = new Button("+Adicionar Passaro");
+	        private final HBox buttonBox = new HBox(5);
+	        {
+	        	  deleteButton.setStyle("-fx-background-color: lightcoral; " +
+                          "-fx-text-fill: white; " +
+                          "-fx-border-color: red; " +
+                          "-fx-border-radius: 3; " +
+                          "-fx-background-radius: 3;");
+	        	  addButton.setStyle("-fx-background-color: green; " +
+                          "-fx-text-fill: white; " +
+                          "-fx-border-color: lightgreen; " +
+                          "-fx-border-radius: 3; " +
+                          "-fx-background-radius: 3;");
+	        	deleteButton.setOnAction(event -> {
+	                Egg selectedEgg = getTableView().getItems().get(getIndex());
+	                try {
+	                    deleteEgg(selectedEgg);
+	                } catch (SQLException | IOException e) {
+	                    e.printStackTrace();
+	                }
+	            });
+	        	addButton.setOnAction(event -> {
+	                Egg selectedEgg = getTableView().getItems().get(getIndex());
+	                addBirdToEgg(selectedEgg,brood);
+	            });
+	        	
+	        	buttonBox.getChildren().addAll(deleteButton, addButton);
+	        }
+	        
 	        @Override
 	        protected void updateItem(String item, boolean empty) {
 	            super.updateItem(item, empty);
-	            if (empty) {
-	                setGraphic(null);
-	            } else {
-	                setGraphic(deleteButton);
-	                deleteButton.setOnAction(event -> {
-	                    Egg selectedEgg = getTableView().getItems().get(getIndex());
-	                    try {
-	                        deleteEgg(selectedEgg);
-	                    } catch (SQLException | IOException e) {
-	                        e.printStackTrace();
-	                    }
-	                });
-	            }
-	        }
+				if (empty) {
+					setGraphic(null);
+				} else {
+					Egg egg = getTableView().getItems().get(getIndex());
+					if (egg.getBird() != null) {
+						addButton.setDisable(true);
+					} else {
+						addButton.setDisable(false);
+					}
+					setGraphic(buttonBox);
+				}
+			}
 	    });
 
 	}   
+	
+	
+	private void addBirdToEgg(Egg egg, Brood brood) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/brood/ViewAddBirdToEgg.fxml"));
+			Parent root = loader.load();
+			ViewAddBirdToEggController controller = loader.getController();
+			controller.setViewSingleBroodController(this, egg, brood);
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.getIcons().add(new Image(PathsConstants.ICON_PATH));
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.showAndWait();
+			TvEggs.setItems(eggs);
+			TvEggs.refresh();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private void deleteEgg(Egg egg) throws SQLException, IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Confirmation.fxml"));

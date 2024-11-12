@@ -18,12 +18,16 @@ import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 
 public class ViewSingleEggController implements Initializable {
 	
 	@FXML
 	private Label LabelAlert,LbTitle,LbDatePosture,LbDateOutBrake,LbVerifiedFertilityDate,LbType,LbStatute;
+	@FXML
+	private Menu MenuEditar;
 	@FXML
 	private ViewSingleBroodController viewSingleBroodController;
 	
@@ -50,6 +54,9 @@ public class ViewSingleEggController implements Initializable {
 			LbVerifiedFertilityDate.setText(formatter.format(e.getVerifiedFertilityDate()));
 		LbType.setText(e.getType());
 		LbStatute.setText(e.getStatute());
+		if (e.getBird()!=null) {
+			MenuEditar.setVisible(false);
+		}
 	}
 	
 	@FXML

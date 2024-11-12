@@ -416,7 +416,7 @@ public class AddBirdViewController implements Initializable {
 					Egg selectedEgg = selectedBrood.getEggs().stream()
 							.filter(egg -> MyValues.CHOCADO.equals(egg.getStatute()) && egg.getBird() == null)
 							.findFirst().get();
-					eggRepository.updateEggBird(BirdId, selectedEgg.getId());
+					eggRepository.updateEggBird(bird, selectedEgg.getId());
 				}
 				String obs = "";
 				String formatedDate = new SimpleDateFormat(MyValues.DATE_FORMATE).format(bird.getEntryDate());

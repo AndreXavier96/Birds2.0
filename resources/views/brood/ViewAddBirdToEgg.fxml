@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="451.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.brood.ViewAddBirdToEggController">
+   <children>
+      <AnchorPane prefHeight="50.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="LbTittle" alignment="CENTER" contentDisplay="CENTER" text="Passaros Disponiveis Do Ovo Selecionado" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelError" alignment="CENTER" layoutY="45.0" prefHeight="17.0" prefWidth="886.0" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="77.0" prefHeight="285.0" prefWidth="600.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="77.0">
+         <children>
+            <AnchorPane layoutX="42.0" layoutY="5.0" prefHeight="42.0" prefWidth="151.0" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <Label text="Macho" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label fx:id="LbFather" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="17.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="193.0" layoutY="9.0" prefHeight="34.0" prefWidth="137.0" AnchorPane.leftAnchor="193.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <Label text="Femea" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label fx:id="LbMother" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="17.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
+               <children>
+                  <Label text="Passaros Disponiveis:" />
+                  <TextField fx:id="TfBird" layoutX="112.0" layoutY="-4.0" prefHeight="25.0" prefWidth="163.0" />
+                  <ListView fx:id="LvBirds" layoutX="112.0" layoutY="21.0" prefHeight="245.0" prefWidth="163.0" visible="false" />
+               </children>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets left="14.0" right="14.0" />
+         </padding>
+      </AnchorPane>
+      <AnchorPane prefHeight="17.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#btnClose" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="111.0" layoutY="4.0" text="Campos obrigatorios marcados com*">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button cancelButton="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnAdd" text="Adicionar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
