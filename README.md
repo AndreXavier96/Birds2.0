@@ -12,6 +12,7 @@
 - [Licença](#licença)
 
 ---
+## Instalação
 
 ### Pré-requisitos
 - **Java JDK 16.0.2** ou versão superior
