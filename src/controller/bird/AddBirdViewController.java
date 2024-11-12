@@ -175,6 +175,10 @@ public class AddBirdViewController implements Initializable {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+				TfFather.clear();
+			    TfMother.clear();
+			    LvFathers.setVisible(false);
+			    LvMothers.setVisible(false);
 				CbMutation.setDisable(false);
 				CbMutation.setConverter(new StringConverter<Mutation>() {
 					public String toString(Mutation m) {
